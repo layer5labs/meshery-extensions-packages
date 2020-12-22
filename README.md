@@ -1,1 +1,2 @@
-# meshery-plugin-packages
+# Registry for Meshery Remote Provider Packages
+
