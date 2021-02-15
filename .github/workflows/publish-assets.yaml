@@ -1,0 +1,41 @@
+name: Publish Assets for public
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to be released'
+        required: true
+        default: 'stale'
+
+jobs:
+  release:
+    name: build artifact
+    runs-on: ubuntu-latest
+    steps:
+    - name: fetch release asset
+      uses: dsaltares/fetch-gh-release-asset@master
+      with:
+        repo: "layer5labs/meshery-extensions"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        version: ${{ github.event.inputs.version }}
+        file: provider-${{ github.event.inputs.version }}.tar.gz
+        target: provider-${{ github.event.inputs.version }}.tar.gz
+    - name: create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.inputs.version }}
+        release_name: Meshery Extensions for Meshery version ${{ github.event.inputs.version }}
+        draft: false
+        prerelease: false
+    - name: upload release artifact to the release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./provider-${{ github.event.inputs.version }}.tar.gz
+        asset_name: provider-${{ github.event.inputs.version }}.tar.gz
+        asset_content_type: application/tar
