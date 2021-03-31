@@ -1,0 +1,38 @@
+name: Publish Assets
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to be released'
+        required: true
+        default: 'stale'
+
+jobs:
+  release:
+    name: publish assets
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 10
+      matrix:
+        os: ["ubuntu-18.04","macos-latest"]
+        include:
+          - os: "ubuntu-18.04"
+            distro: "linux"
+          - os: "macos-latest"
+            distro: "darwin"
+    steps:
+    - name: pull packages
+      run: |
+      curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/layer5labs/meshery-extensions/releases" | jq -r '.[] | select(.tag_name == "${{ github.event.inputs.version }}")' | jq -r .assets | jq -r '.[].browser_download_url'
+      for out in $urls; do curl $out; done
+    - name: publish
+      uses: ncipollo/release-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag:  ${{ github.event.inputs.version }}
+        name: Meshery Extensions for Meshery version ${{ github.event.inputs.version }}
+        allowUpdates: true
+        artifactErrorsFailBuild: true
+        artifacts: ./*.tar.gz
+        omitNameDuringUpdate: true
+        replacesArtifacts: true
