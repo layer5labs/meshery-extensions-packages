@@ -33,6 +33,6 @@ jobs:
         name: Meshery Extensions for Meshery version ${{ github.event.inputs.version }}
         allowUpdates: true
         artifactErrorsFailBuild: true
-        artifacts: ./*.tar.gz
+        artifacts: ./provider-${{ matrix.distro }}.tar.gz
         omitNameDuringUpdate: true
         replacesArtifacts: true
