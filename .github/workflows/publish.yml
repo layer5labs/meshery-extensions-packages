@@ -23,12 +23,12 @@ jobs:
     steps:
     - name: pull packages
       run: |
-        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/layer5labs/meshery-extensions/releases" | jq -r '.[] | select(.tag_name == "${{ github.event.inputs.version }}")' | jq -r .assets | jq -r '.[].browser_download_url'
+        curl -H "Authorization: token ${{ secrets.GH_ACCESS_TOKEN}}" "https://api.github.com/repos/layer5labs/meshery-extensions/releases" | jq -r '.[] | select(.tag_name == "${{ github.event.inputs.version }}")' | jq -r .assets | jq -r '.[].browser_download_url'
         for out in $urls; do curl $out; done
     - name: publish
       uses: ncipollo/release-action@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GH_ACCESS_TOKEN }}
         tag:  ${{ github.event.inputs.version }}
         name: Meshery Extensions for Meshery version ${{ github.event.inputs.version }}
         allowUpdates: true
