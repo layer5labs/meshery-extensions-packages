@@ -31,7 +31,7 @@ jobs:
       with:
         token: ${{ secrets.GH_ACCESS_TOKEN }}
         tag:  ${{ github.event.inputs.version }}
-        name: Meshery Extensions for Meshery version ${{ github.event.inputs.version }}
+        name: Meshery Extensions ${{ github.event.inputs.version }}
         allowUpdates: true
         artifactErrorsFailBuild: true
         artifacts: /home/runner/work/provider-${{ matrix.distro }}.tar.gz
