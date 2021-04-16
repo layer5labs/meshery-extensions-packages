@@ -10,7 +10,6 @@ on:
 jobs:
   release:
     name: publish assets
-    runs-on: ubuntu-latest
     strategy:
       max-parallel: 10
       matrix:
@@ -20,6 +19,7 @@ jobs:
             distro: "linux"
           - os: "macos-latest"
             distro: "darwin"
+    runs-on: ${{ matrix.os }}
     steps:
     - name: pull packages
       run: |
