@@ -25,7 +25,7 @@ jobs:
       run: |
         asset_id=$(curl -H "Authorization: token ${{ secrets.GLOBAL_TOKEN}}" "https://api.github.com/repos/layer5labs/meshery-extensions/releases" | jq -r '.[] | select(.tag_name == "${{ github.event.inputs.version }}")' | jq -r .assets | jq -r '.[] | select(.name == "provider-${{ matrix.distro }}.tar.gz")' | jq -r .id)
         echo $asset_id
-        wget  --auth-no-challenge --header='Accept:application/octet-stream' https://${{ secrets.GLOBAL_TOKEN }}:@api.github.com/repos/layer5labs/meshery-extensions/releases/assets/$asset_id -O /home/runner/work/provider-${{ matrix.distro }}.tar.gz
+        wget  --auth-no-challenge --header='Accept:application/octet-stream' https://${{ secrets.GLOBAL_TOKEN }}:@api.github.com/repos/layer5labs/meshery-extensions/releases/assets/$asset_id -O provider-${{ matrix.distro }}.tar.gz
     - name: publish
       uses: ncipollo/release-action@v1
       with:
@@ -34,6 +34,6 @@ jobs:
         name: Meshery Extensions ${{ github.event.inputs.version }}
         allowUpdates: true
         artifactErrorsFailBuild: true
-        artifacts: /home/runner/work/provider-${{ matrix.distro }}.tar.gz
+        artifacts: provider-${{ matrix.distro }}.tar.gz
         omitNameDuringUpdate: true
         replacesArtifacts: true
