@@ -13,12 +13,10 @@ jobs:
     strategy:
       max-parallel: 10
       matrix:
-        os: ["ubuntu-18.04","macos-latest"]
+        os: ["ubuntu-18.04"]
         include:
           - os: "ubuntu-18.04"
             distro: "linux"
-          - os: "macos-latest"
-            distro: "darwin"
     runs-on: ${{ matrix.os }}
     steps:
     - name: pull packages
