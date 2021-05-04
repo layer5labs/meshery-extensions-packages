@@ -16,7 +16,7 @@ jobs:
         os: ["ubuntu-18.04"]
         include:
           - os: "ubuntu-18.04"
-            distro: "linux"
+            distro: "meshery"
     runs-on: ${{ matrix.os }}
     steps:
     - name: pull packages
