@@ -2,3 +2,4 @@
 
 1. MeshMap
    - MeshMap Preferences
+   - MeshMap GraphQL Resolvers
