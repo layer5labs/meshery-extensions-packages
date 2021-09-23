@@ -35,7 +35,7 @@ jobs:
           # Optional plain body:
           body: Build job of ${{github.repository}} completed successfully!
           # Optional HTML body read from file:
-          html_body: file://template.html
+          html_body: file://README.md
           # Optional carbon copy recipients:
           cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
