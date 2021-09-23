@@ -27,7 +27,7 @@ jobs:
           # Required mail subject:
           subject: Github Actions job result
           # Required recipients' addresses:
-          to: lee.calcote@layer5.io
+          to: speak2adi@gmail.com
           # Required sender full name (address can be skipped):
           from: L5io Release Manager # <user@example.com>
           # Optional whether this connection use TLS (default is true if server_port is 465)
@@ -38,25 +38,572 @@ jobs:
           html_body: '
             <html>
             <style>
-                .container {
-                  height: 200px;
-                  position: relative;
-                  border: 3px solid green;
-                }
+                  * {
+                      margin: 0;
+                      padding: 0;
+                      box-sizing: border-box;
+                  }
 
-                .center {
-                  margin: 0;
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  width:70%;
-                  -ms-transform: translate(-50%, -50%);
-                  transform: translate(-50%, -50%);
-                }
+                  .li {
+                      padding: 50px;
+                  }
+
+                  .container-header{
+                      display: flex;
+                      background-color: #1e2117;
+                      height: 250px;
+                  }
+
+                  .footer{
+                      background-color: #1e2117;
+                      height: 350px;
+                      display: block;
+                      flex-direction: column;
+                      overflow-x: hidden;
+                  } 
+
+                  .head-logo {
+                      display: block;
+                      height: 140px;
+                      width: 550px;
+                
+                      position: relative;
+                      margin-top: 17px;
+                      margin-left: auto;
+                      margin-right: 30rem;
+                      
+                    
+                  }
+                  .icons{
+                      
+            
+                      
+                      margin-right:20rem;
+                  }
+                  .foot-logo {
+                      display: block;
+                      height: 80px;
+                      width: 300px;
+                      position: relative;
+                    margin-left: 28rem;
+                    margin-right: auto;
+                      top: 20px;
+                  }
+
+
+                  .body-container-full {
+                      background-color: white;
+                  }
+
+                  .body-container {
+                      background-color: white;
+                      margin: auto;
+                      width: 75%;
+                      padding-left: 160px;
+                  }
+                  
+                  .announcement-text {
+                      font-size: 22px;
+                      padding: 10px;
+                      margin-top: 5px;
+                    
+                      font-weight: bold;
+                    
+                  }
+
+                  .release-note {
+                      margin-top: 30px;
+                      margin-bottom: 10px;
+                      margin-left: auto;
+                      margin-right: auto;
+                      font-size: 18px !important;
+                  }
+
+                  .list-feature {
+                      margin-left: 95px;
+                      font-size: 18px;
+                      color: gray;
+                  }
+
+                  .general {
+                      padding: 10px;
+                      margin-bottom: 10px;
+                      font-size: 22px;
+                      text-align: left; 
+                      font-weight:bolder;
+                  }
+
+                  .release-heading {
+                      margin-top: 15px;
+                      margin-bottom: 19px;
+                      
+                  }
+
+                  .contributor-list {
+                      
+                      font-size: 16px;
+                      margin-right: 80px;
+                      text-align: justify;
+                      color: gray;
+                      line-height: 25px;
+                  }
+
+                  .join-community {
+                      display: block;
+                    margin-right: auto;
+                    margin-left:7rem;
+                    
+                      
+                      
+                  }
+
+                  .Join-community-button {
+                      padding: 15px;
+                    margin-left:auto;
+                    margin-bottom:7px;
+                      font-size: 18px;
+                      background-color: #00D3A9;
+                      border: none;
+                      color: white;
+                      border-radius: 6px;
+                      
+                    
+                      
+                  }
+
+                  .tweet{
+                      height: 2rem;
+                      position: relative;
+                      top: 4rem;
+                      left: 31rem;
+                  }
+
+                  .link {
+                      top: 4rem;
+                      left: 32rem;
+                  }
+
+                  .slack {
+                      top : 4rem;
+                      left: 33rem;
+                  }
+
+                  .tube {
+                      top: 4rem;
+                      left: 34rem;
+                  } 
+
+                  .para {
+                      color: aliceblue;
+                      padding: 3px;
+                      position: relative;
+                      top: 5rem;
+                      left: 28rem;
+                  }
+                  
+                  .para1 {
+                      left: 31rem;
+                  }
+                  
+
+                      @media (max-width:840px) and (min-width:641px){
+                      .container-header {
+                          height: 130px;
+                      }
+                      .footer{
+                          height: 300px;
+                        
+                      }
+
+                      .head-logo {
+                          margin-left:10px;
+                          height: 70px;
+                          width: 250px;
+                      }
+                      .foot-logo{
+                          height: 45px;
+                          width: 180px;
+                          margin-left: 9rem;
+                      }
+                      hr {
+                          left: 6rem !important; 
+                          width: 18rem !important;
+                      }
+
+                      .hr1{
+                          top: 1.6rem !important;
+
+                      }
+
+                      .hr2{
+                          top: 4rem !important;
+                      }
+
+                      .tweet {
+                          height: 1rem;
+                          left: 12rem;
+                          top: 3rem; 
+                      }
+
+                      .para {
+                          font-size: 15px;
+                          left: 6rem;
+                      }
+
+                      .para0 {
+                          padding-top: 0.5rem !important;
+                          
+                      }
+
+                      .para2 {
+                          top:6rem !important;
+                          font-size: 13px;
+                      }
+
+                      .para1{
+                          padding-left: 50px;
+                      } 
+
+                      .announcement-text {
+                          font-size: 10px;
+
+                      }
+
+
+
+                    .release-note {
+                          font-size: 9px;
+                          margin-left: 15px;
+                      }
+
+                
+                      .list-feature {
+                          margin-left: 29px;
+                          font-size: 9px;
+                      }
+
+
+                      .body-container {
+                          padding-left: 0px !important;
+                          width: 70%;
+                      }
+
+                      .general {
+                          font-size: 13px;
+                      }
+                      .contributor-list {
+                      font-size: 9px;
+                  }
+                      .join-community{
+                          padding-right: 1px;
+                          
+                          margin-left: 4rem;
+                      }
+                      .Join-community-button {
+                          font-size: 9px;
+                          margin-right: 20px;
+                      }
+                      .contributor-list{
+                          margin-right: 30px;
+                          text-align: left;
+                      }
+                      
+                  
+
+                      
+                  }
+
+                      @media (max-width: 640px) and (min-width: 446px) {
+                      .container-header {
+                          height: 130px;
+                      }
+                      .footer{
+                          height: 300px;
+                        
+                      }
+
+                      .head-logo {
+                          margin-left:10px;
+                          height: 70px;
+                          width: 250px;
+                      }
+                      .foot-logo{
+                          height: 45px;
+                          width: 180px;
+                          margin-left: 9rem;
+                      }
+                      hr {
+                          left: 6rem !important; 
+                          width: 18rem !important;
+                      }
+
+                      .hr1{
+                          top: 1.6rem !important;
+
+                      }
+
+                      .hr2{
+                          top: 4rem !important;
+                      }
+
+                      .tweet {
+                          height: 1rem;
+                          left: 12rem;
+                          top: 3rem; 
+                      }
+
+                      .para {
+                          font-size: 15px;
+                          left: 6rem;
+                      }
+
+                      .para0 {
+                          padding-top: 0.5rem !important;
+                          
+                      }
+
+                      .para2 {
+                          top:6rem !important;
+                          font-size: 13px;
+                      }
+
+                      .para1{
+                          padding-left: 50px;
+                      } 
+
+                      .announcement-text {
+                          font-size: 10px;
+
+                      }
+
+
+
+                    .release-note {
+                          font-size: 9px;
+                          margin-left: 15px;
+                      }
+
+                
+                      .list-feature {
+                          margin-left: 29px;
+                          font-size: 9px;
+                      }
+
+
+                      .body-container {
+                          padding-left: 0px !important;
+                          width: 70%;
+                      }
+
+                      .general {
+                          font-size: 13px;
+                      }
+                      .contributor-list {
+                      font-size: 9px;
+                  }
+                      .join-community{
+                          padding-right: 1px;
+                          
+                          margin-left: 4rem;
+                      }
+                      .Join-community-button {
+                          font-size: 9px;
+                          margin-right: 20px;
+                      }
+                      .contributor-list{
+                          margin-right: 30px;
+                          text-align: left;
+                      }
+                      
+                  }
+
+                  @media (max-width:445px) and (min-width: 370px){
+                      .container-header {
+                          height: 130px;
+                      }
+                      .footer{
+                          height: 300px;
+                        
+                      }
+
+                      .head-logo {
+                          margin-left:10px;
+                          height: 70px;
+                          width: 250px;
+                      }
+                      .foot-logo{
+                          height: 45px;
+                          width: 180px;
+                          margin-left: 7rem;
+                      }
+                      hr {
+                          left: 4rem !important; 
+                          width: 18rem !important;
+                      }
+
+                      .hr1{
+                          top: 1.6rem !important;
+
+                      }
+
+                      .hr2{
+                          top: 4rem !important;
+                      }
+
+                      .tweet {
+                          height: 1rem;
+                          left: 10rem;
+                          top: 3rem; 
+                      }
+
+                      .para {
+                          font-size: 15px;
+                          left: 4rem;
+                      }
+
+                      .para0 {
+                          padding-top: 0.5rem !important;
+                          
+                      }
+
+                      .para2 {
+                          top:6rem !important;
+                          font-size: 13px;
+                      }
+
+                      .para1{
+                          padding-left: 50px;
+                      } 
+
+                      .announcement-text {
+                          font-size: 10px;
+
+                      }
+
+
+
+                    .release-note {
+                          font-size: 9px;
+                          margin-left: 15px;
+                      }
+
+                
+                      .list-feature {
+                          margin-left: 29px;
+                          font-size: 9px;
+                      }
+
+
+                      .body-container {
+                          padding-left: 0px !important;
+                          width: 70%;
+                      }
+
+                      .general {
+                          font-size: 13px;
+                      }
+                      .contributor-list {
+                      font-size: 9px;
+                  }
+                      .join-community{
+                          padding-right: 1px;
+                          
+                          margin-left: 4rem;
+                      }
+                      .Join-community-button {
+                          font-size: 9px;
+                          margin-right: 20px;
+                      }
+                      .contributor-list{
+                          margin-right: 30px;
+                          text-align: left;
+                      }
+                      
+                  }
                 </style>
         <body style="
-        background: linear-gradient(122.25deg, #00B39F -2.45%, #195E4A 52.7%, #00B352 96.5%);
-        border-radius: 10px 10px 0px 0px;">
+       <div class="container-header">
+        <div class="body-container" style="background-color: #1e2117 !important;">
+        <img class="head-logo"
+            src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/ec6ea8a8-5643-e9a0-9b03-62f776554aad.png"
+            alt="mesherywhite.png">
+        </div>
+    </div>
+    <div class="body-container-full">
+        <div class="body-container">
+            <div class="announcement">
+                <span class="announcement-text">
+                    <h1>Announcing Meshery v0.5.0</h1>
+                </span>
+            </div>
+            <hr style="background-color: aliceblue; width: 37rem">
+            <div class="release-note">
+                <h2>Release Notes</h2>
+                <div class="features">
+                    <div class="release-heading">
+                        <span class="general">🔤 General</span>
+                    </div>
+                    <div class="list-feature">
+                        <ul>
+                            <li>Fix RJSF stale state issue @utkarsh-pro (#3418)</li>
+                            <li>Fix RJSF stale state issue @utkarsh-pro (#3418)</li>
+                        </ul>
+                    </div>
+                    <div class="release-heading">
+                        <span class="general">🧰 Maintanance</span>
+                    </div>
+                    <div class="list-feature">
+                        <ul>
+                            <li>Fix RJSF stale state issue @utkarsh-pro (#3418)</li>
+                            <li>Fix RJSF stale state issue @utkarsh-pro (#3418)</li>
+                        </ul>
+                    </div>
+                    <div class="release-heading">
+                        <span class="general">📖 Documentation</span>
+                    </div>
+                    <div class="list-feature">
+                        <ul>
+                            <li>Fix RJSF stale state issue @utkarsh-pro (#3418)</li>
+                            <li>Fix RJSF stale state issue @utkarsh-pro (#3418)</li>
+                        </ul>
+                    </div>
+                    <div class="release-heading">
+                        <span class="general">👨🏽‍💻 Contributors</span>
+                    </div>
+                    <div class="general" style="font-size:23px;">
+                        <p class="contributor-list">Thank you to our contributors for making this release possible: @Aisuko,<br> @Chadha93,
+                            @Nikhil-Ladha, @Shreyas220,
+                            @amino19, @debjani1413,<br> @dhruv0000, @hexxdump, @jeantiston, @killbotXD, @kumarabd, @l5io,<br>
+                            @leecalcote,
+                            @metonymic-smokey, @navendu-pottekkat, @piyushsingariya,<br> @samirparhi-dev, @suhaniii,
+                            @utkarsh-pro and l5io</p>
+                    </div>
+                </div>
+            </div>
+            <div class="join-community">
+                <button class="Join-community-button"><b>Join the service mesh community</b></button>
+            </div>
+            </div>
+        </div>
+    </div>
+     <div class="footer">
+     <img class="foot-logo"
+            src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/ec6ea8a8-5643-e9a0-9b03-62f776554aad.png"
+            alt="mesherywhite.png">
+        <hr class="hr1" style="width: 33rem;  background-color:aliceblue !important; top: 3rem; position: relative; left: 22rem">
+        <div class="icons">
+            <img class="tweet" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/7547690c-0a33-4f92-985a-d8109765db24.png">
+            <img class="tweet link" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/c3115a39-5f32-43a7-92d4-e0a14b3a626d.png">
+            <img class="tweet slack" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/7d98d789-47d6-4fe0-8074-f65de989eb08.png">
+            <img class="tweet tube" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/1cce1b1a-c045-40cd-9a49-39ac5f193516.png">
+        </div>
+        <hr class="hr2" style="width: 33rem; background-color: aliceblue!important; top: 5rem; position: relative; left: 22rem">
+    <!-- </div> -->
+        <p class="para para0" style="padding-top: 1.2rem; font-size: 13px;">Want to change how you recieve these emails?</p>
+        <p class="para para1" style="font-size: 13px;">Manage your email preferences.</p>
+        <i class="para para2" style="top:5.5rem; font-size: 14px;">Copyright 2021, Layer5, Inc. All right reserved.</i>
+    </div> 
+</body>
         </body>
         </html>'
           # Optional carbon copy recipients:
