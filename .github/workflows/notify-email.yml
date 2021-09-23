@@ -521,7 +521,7 @@ jobs:
                       
                   }
                 </style>
-        <body style="
+        <body>
        <div class="container-header">
         <div class="body-container" style="background-color: #1e2117 !important;">
         <img class="head-logo"
