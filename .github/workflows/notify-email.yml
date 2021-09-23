@@ -35,7 +35,30 @@ jobs:
           # Optional plain body:
           body: Build job of ${{github.repository}} completed successfully!
           # Optional HTML body read from file:
-          html_body: https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/README.md
+          html_body: '
+            <html>
+            <style>
+                .container {
+                  height: 200px;
+                  position: relative;
+                  border: 3px solid green;
+                }
+
+                .center {
+                  margin: 0;
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  width:70%;
+                  -ms-transform: translate(-50%, -50%);
+                  transform: translate(-50%, -50%);
+                }
+                </style>
+        <body style="
+        background: linear-gradient(122.25deg, #00B39F -2.45%, #195E4A 52.7%, #00B352 96.5%);
+        border-radius: 10px 10px 0px 0px;">
+        </body>
+        </html>'
           # Optional carbon copy recipients:
           cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
