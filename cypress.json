@@ -1,0 +1,10 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "projectId": "mesheryExt",
+  "env": {
+    "token": "",
+    "codeCoverage": {
+      "url": "/api/__coverage__"
+    }
+  }
+}
