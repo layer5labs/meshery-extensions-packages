@@ -25,7 +25,7 @@ jobs:
       with:
         go-version: '1.17'
     - name: Setup Cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
@@ -54,7 +54,7 @@ jobs:
     - run: sudo npm i -g npm@7
     - name: Cache node modules
       id: node-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ~/cache
@@ -85,13 +85,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: meshery/meshery
           fetch-depth: 0
           path: .
       - name: Check out meshery-consul code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: layer5io/meshery-consul
           path: ./meshery-consul
@@ -100,7 +100,7 @@ jobs:
         with:
           name: meshery
       - name: Setup go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: ${{ secrets.GO_VERSION }}
       - name: Setup node
@@ -109,7 +109,7 @@ jobs:
           node-version: ${{ secrets.NODE_VERSION }}
       - name: Cache node modules
         id: node-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/cache
@@ -148,7 +148,7 @@ jobs:
           chmod +x ./main
           ./main &
       - name: checkout cypress code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           path: ./cypress
