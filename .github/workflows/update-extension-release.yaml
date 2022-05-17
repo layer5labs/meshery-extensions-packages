@@ -1,0 +1,25 @@
+name: Meshery Extension Release updater
+on:
+  release:
+    types: [published]
+jobs:
+  Update:
+    name: Release updater
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        # token here with write access to meshery-istio repo
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          ref: 'master'
+          repository: 'layer5labs/meshery-extensions'
+      - name: Update extensions_releases.json
+        run: rm -f extension_releases.json && curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> extension_releases.json;
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: l5io
+          commit_user_email: ci@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit_options: '--signoff'
+          commit_message: 'updated extension_releases.json'
