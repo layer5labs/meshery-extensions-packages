@@ -14,30 +14,29 @@ jobs:
     name: Backend build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@master
-      with:
-        repository: meshery/meshery
-        fetch-depth: 1
-        path: .
-    - name: Setup Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: '1.17'
-    - name: Setup Cache
-      uses: actions/cache@v3
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
-    - run: |
-        GOPROXY=https://proxy.golang.org,direct GOSUMDB=off GO111MODULE=on go build -tags draft ./cmd/main.go
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: meshery
-        path: ./main
+      - name: Check out code
+        uses: actions/checkout@master
+        with:
+          repository: meshery/meshery
+          fetch-depth: 1
+      - name: Setup Go
+        uses: actions/setup-go@v3.0.0
+        with:
+          go-version: "1.17"
+      - name: Setup Cache
+        uses: actions/cache@v3.0.0
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-      
+      - run: |
+          GOPROXY=https://proxy.golang.org,direct GOSUMDB=off GO111MODULE=on go build -tags draft ./cmd/main.go
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: meshery
+          path: ./main
   build-ui:
     name: UI build
     runs-on: ubuntu-latest
