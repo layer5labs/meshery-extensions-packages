@@ -14,7 +14,7 @@ jobs:
           ref: 'master'
           repository: 'layer5labs/meshery-extensions'
       - name: Update extensions_releases.json
-        run: rm -f extension_releases.json && curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> extension_releases.json;
+        run: rm -f build/extension_releases.json && curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> build/extension_releases.json;
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
