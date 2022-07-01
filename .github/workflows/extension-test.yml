@@ -22,7 +22,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3.0.0
         with:
-          go-version: "1.17"
+          go-version: ${{ secrets.GO_VERSION }}
       - name: Setup Cache
         uses: actions/cache@v3.0.0
         with:
@@ -33,7 +33,7 @@ jobs:
       - run: |
           GOPROXY=https://proxy.golang.org,direct GOSUMDB=off GO111MODULE=on go build -tags draft ./cmd/main.go
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3
         with:
           name: meshery
           path: ./main
@@ -47,13 +47,13 @@ jobs:
         repository: meshery/meshery
         fetch-depth: 1
         path: .
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
         node-version: ${{ secrets.NODE_VERSION }}
-    - run: sudo npm i -g npm@7
+    - run: sudo npm i -g npm@latest
     - name: Cache node modules
       id: node-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v3.0.0
       with:
         path: |
           ~/cache
@@ -68,16 +68,26 @@ jobs:
     - name: Install dependencies
       run: |
         cd ui
-        npm i
+        npm ci
         cd ..
         cd provider-ui
-        npm i
+        npm ci
     - name: build meshery-ui
       run: |
         make build-meshery-ui
     - name: build provider-ui
       run: |
         make build-provider-ui
+    - name: upload meshery-ui artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: meshery-ui-build
+        path: ui/out/
+    - name: upload Meshery-provider-ui artifacts
+      uses: actions/upload-artifact@v3
+      with: 
+        name: meshery-provider-ui build
+        path: provider-ui/out/
   tests-ui-e2e:
     needs: [build-backend, build-ui]
     name: UI end-to-end tests
