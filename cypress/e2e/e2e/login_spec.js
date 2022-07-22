@@ -1,9 +1,9 @@
 // <reference types="cypress" /> // Add and extra '/' to load the cypress auto-complete feature following npm i cypress
 
-function altercapabilityFixture(version) { 
+function altercapabilityFixture(version) {
   cy.readFile("cypress/fixtures/capabilities.json", (err, data) => {
     if (err) {
-        return console.error(err);
+      return console.error(err);
     };
   }).then((data) => {
     data["package_version"] = version;
@@ -15,7 +15,7 @@ function altercapabilityFixture(version) {
 // The Extension Modes
 const MODES = {
   DESIGNER: "designer",
-  VISUALISER: "visualiser"
+  VISUALIZER: "visualizer"
 }
 
 function setMode(mode) {
@@ -23,7 +23,7 @@ function setMode(mode) {
 }
 
 describe("Login", () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     const token = Cypress.env('token')
     const releasetag = Cypress.env("releasetag")
     cy.setCookie("meshery-provider", "Meshery")
@@ -32,8 +32,8 @@ describe("Login", () => {
     altercapabilityFixture(releasetag)
   })
 
-  beforeEach(()=>{
-    cy.intercept('GET', '/api/provider/capabilities', {fixture: 'capabilities.json'}).as('getCapabilites')
+  beforeEach(() => {
+    cy.intercept('GET', '/api/provider/capabilities', { fixture: 'capabilities.json' }).as('getCapabilites')
   })
 
   it("Visit MeshMap Designer", () => {
@@ -49,9 +49,9 @@ describe("Login", () => {
     cy.contains("Filters")
   });
 
-  // visualiser test is skipped until the gql-plugin error sorts out in meshery
-  it.skip("Visit MeshMap Visualiser", () => {
-    setMode(MODES.VISUALISER)
+  // visualizer test is skipped until the gql-plugin error sorts out in Meeshery
+  it.skip("Visit MeshMap Visualizer", () => {
+    setMode(MODES.VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
     cy.wait(15000)
