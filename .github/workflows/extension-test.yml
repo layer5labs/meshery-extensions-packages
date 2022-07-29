@@ -173,7 +173,7 @@ jobs:
         run: |
           rm -rf ui/cypress
           mv cypress/cypress ui/
-          mv cypress/cypress.json ui/cypress.json
+          mv cypress/cypress.config.js ui/cypress.config.js
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
