@@ -180,10 +180,12 @@ jobs:
           working-directory: ui
           spec: cypress/integration/e2e/**/*
           browser: chrome 
+          record: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v3
