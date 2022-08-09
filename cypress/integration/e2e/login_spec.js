@@ -49,8 +49,16 @@ describe("Login", () => {
     cy.contains("Filters")
   });
 
-  // visualizer test is skipped until the gql-plugin error sorts out in meshery
-  it.skip("Visit MeshMap Visualiser", () => {
+  it("MeshMap Design Tab", () => {
+    setMode(MODES.DESIGNER);
+    cy.visit("/extension/meshmap");
+    cy.get("[data-cy='design-drawer']").click();
+    cy.wait(3000);
+    cy.get("#MUIDataTableBodyRow-patterns-0").click();
+  })
+
+  // visualizer test is skipped until the gql-plugin error sorts out in Meshery
+  it.skip("Visit MeshMap Visualizer", () => {
     setMode(MODES.VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
