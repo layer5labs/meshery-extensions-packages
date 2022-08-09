@@ -23,3 +23,32 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', () => {
+  const token = Cypress.env('token');
+  cy.setCookie("meshery-provider", "Meshery");
+  cy.setCookie("token", token);
+});
+
+Cypress.Commands.add("setReleaseTag", (version) => {
+  cy.readFile("cypress/fixtures/capabilities.json", (err, data) => {
+    if (err) {
+      return console.error(err);
+    };
+  }).then((data) => {
+    if(!version) {
+      version = Cypress.env("releasetag")
+    }
+    data["package_version"] = version;
+    data["package_url"] = `https://github.com/layer5labs/meshery-extensions-packages/releases/download/${version}/provider-meshery.tar.gz`
+    cy.writeFile("cypress/fixtures/capabilities.json", JSON.stringify(data))
+  });
+});
+
+Cypress.Commands.add("setMode", (mode) => {
+  window.localStorage.setItem("mode", mode)
+})
+
+Cypress.Commands.add("interceptCapabilities", () => {
+  cy.intercept('GET', '/api/provider/capabilities', { fixture: 'capabilities.json' }).as('getCapabilites')
+})

@@ -1,43 +1,15 @@
-// <reference types="cypress" /> // Add and extra '/' to load the cypress auto-complete feature following npm i cypress
-
-function altercapabilityFixture(version) {
-  cy.readFile("cypress/fixtures/capabilities.json", (err, data) => {
-    if (err) {
-      return console.error(err);
-    };
-  }).then((data) => {
-    data["package_version"] = version;
-    data["package_url"] = `https://github.com/layer5labs/meshery-extensions-packages/releases/download/${version}/provider-meshery.tar.gz`
-    cy.writeFile("cypress/fixtures/capabilities.json", JSON.stringify(data))
-  })
-}
-
-// The Extension Modes
-const MODES = {
-  DESIGNER: "designer",
-  VISUALIZER: "visualizer"
-}
-
-function setMode(mode) {
-  window.localStorage.setItem("mode", mode)
-}
-
+/// <reference types="cypress" /> // Add and extra '/' to load the cypress auto-complete feature following npm i cypress
+import {DESIGNER, VISUALIZER} from "../../support/constants"
 describe("Login", () => {
   beforeEach(() => {
-    const token = Cypress.env('token')
-    const releasetag = Cypress.env("releasetag")
-    cy.setCookie("meshery-provider", "Meshery")
-    cy.setCookie("token", token)
+    cy.login();
+    cy.setReleaseTag();
+    cy.interceptCapabilities();
     window.localStorage.setItem("tab", 0)
-    altercapabilityFixture(releasetag)
-  })
-
-  beforeEach(() => {
-    cy.intercept('GET', '/api/provider/capabilities', { fixture: 'capabilities.json' }).as('getCapabilites')
   })
 
   it("Visit MeshMap Designer", () => {
-    setMode(MODES.DESIGNER);
+    cy.setMode(DESIGNER)
     cy.visit("/")
     cy.wait("@getCapabilites")
     cy.get('[data-cy="MeshMap"]').click();
@@ -49,17 +21,9 @@ describe("Login", () => {
     cy.contains("Filters")
   });
 
-  it("MeshMap Design Tab", () => {
-    setMode(MODES.DESIGNER);
-    cy.visit("/extension/meshmap");
-    cy.get("[data-cy='design-drawer']").click();
-    cy.wait(3000);
-    cy.get("#MUIDataTableBodyRow-patterns-0").click();
-  })
-
   // visualizer test is skipped until the gql-plugin error sorts out in Meshery
   it.skip("Visit MeshMap Visualizer", () => {
-    setMode(MODES.VISUALIZER)
+    cy.setMode(VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
     cy.wait(15000)
