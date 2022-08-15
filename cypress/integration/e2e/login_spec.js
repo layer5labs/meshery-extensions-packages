@@ -22,11 +22,18 @@ describe("Login", () => {
   });
 
   // visualizer test is skipped until the gql-plugin error sorts out in Meshery
-  it.skip("Visit MeshMap Visualizer", () => {
+  it("Visit MeshMap Visualizer", () => {
     cy.setMode(VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
-    cy.wait(15000)
+    cy.intercept("/api/provider/extension*").as("extensionFileLoad")
+    cy.wait("@extensionFileLoad", { timeout: 20000 });
+    cy.wait(1000);
+    cy.get("body").then(body => {
+      if (body.find('[data-cy="modal-close-btn"]').length > 0) {
+        cy.get('[data-cy="modal-close-btn"]').click();
+      }
+    })
     cy.contains("MeshMap")
     cy.contains("View Selector")
     //tabs
