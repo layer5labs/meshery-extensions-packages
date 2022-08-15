@@ -75,7 +75,7 @@ describe("Designer Spec", () => {
     cy.get(".component-drawer-svg-container").each(ele => {
        const elem = cy.get(ele);
        elem.click();
-       elem.should('be.visible').drag("#cy-canvas-container")
+       elem.drag("#cy-canvas-container")
        cy.wait(500)
     })
   });
