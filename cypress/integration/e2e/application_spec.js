@@ -12,6 +12,8 @@ describe("Application Spec", () => {
     cy.wait("@extensionFileLoad", { timeout: 20000 });
   })
 
+  const applicationName = "emoji.yaml" // sample name of an application
+
   it("Render MeshMap Application", () => {
     cy.get('[data-cy="application-drawer"]').click();
     cy.contains("Applications")
@@ -26,7 +28,7 @@ describe("Application Spec", () => {
 
   it("Rename and Saving Application", () => {
     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container")
-    cy.get("#design-name-textfield").type("Changed Application Name with cypress");
+    cy.get("#design-name-textfield").type(applicationName);
     cy.intercept('/api/application*').as('applicationSave')
  
     // TODO - Saving Application request intercept need to be fixed.
@@ -35,12 +37,11 @@ describe("Application Spec", () => {
         // move to drawer and check for update
         cy.get("[data-cy='design-drawer']").click();
         cy.wait(5000); // wait for seconds, because the subscritions cannot be tracked for now
-        cy.get("#MUIDataTableBodyRow-applications-0 p").contains("Changed Application Name with cypress");
+        cy.get("#MUIDataTableBodyRow-applications-0 p").contains(applicationName);
       })
   })
 
   it("Search an Application", () => {
-    const applicationName = "emoji.yaml" // sample name of an application
     cy.get("[data-cy='application-drawer']").click();
     cy.get('[data-test-id="Search"]').type(applicationName);
     cy.intercept("/api/application*").as("applicationSearch")
@@ -49,7 +50,6 @@ describe("Application Spec", () => {
   })
 
   it("Deploy an Application", () => {
-    const applicationName = "emoji.yaml" // sample name of an application
     cy.get("[data-cy='application-drawer']").click();
     cy.get('[data-test-id="Search"]').type(applicationName);
     cy.intercept("/api/application*").as("patternPost")
