@@ -40,18 +40,18 @@ describe("Designer Spec", () => {
   it("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
-    cy.intercept("/api/pattern*").as("patternDelete")
-    cy.wait(3000)
+    cy.intercept("/api/pattern*").as("patternSearch")
+    cy.wait("@patternSearch")
     cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains("Changed Name with cypress");
   })
 
   it("Deploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
-    cy.intercept("/api/pattern*").as("patternDelete")
-    cy.wait(3000)
+    cy.intercept("/api/pattern*").as("patternPost")
+    cy.wait("@patternPost")
     cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains("Changed Name with cypress").click();
-    cy.wait(3000);
+    cy.wait(2000);
     cy.get("body").then(body => {
       if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
         cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Unable to render")
@@ -72,11 +72,11 @@ describe("Designer Spec", () => {
   });
 
   it("Drag All Visible component on canvas", () => {
-    cy.get(".component-drawer-svg-container").each(ele => {
-       const elem = cy.get(ele);
-       elem.click();
-       elem.drag("#cy-canvas-container")
-       cy.wait(500)
+    cy.get(".component-drawer-svg-container[draggable='true']").each(ele => {
+      const elem = cy.get(ele);
+      elem.click();
+      elem.drag("#cy-canvas-container")
+      cy.wait(500)
     })
   });
 })
