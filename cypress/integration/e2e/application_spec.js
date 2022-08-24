@@ -52,8 +52,8 @@ describe("Application Spec", () => {
   it("Deploy an Application", () => {
     cy.get("[data-cy='application-drawer']").click();
     cy.get('[data-test-id="Search"]').type(applicationName);
-    cy.intercept("/api/application*").as("patternPost")
-    cy.wait("@patternPost")
+    cy.intercept("/api/application*").as("applicationPost")
+    cy.wait("@applicationPost")
     cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(applicationName).click();
     cy.wait(2000);
     cy.get("body").then(body => {
@@ -72,15 +72,6 @@ describe("Application Spec", () => {
           cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
         }
       })
-    })
-  });
-
-  it("Drag All Visible component on canvas", () => {
-    cy.get(".component-drawer-svg-container[draggable='true']").each(ele => {
-      const elem = cy.get(ele);
-      elem.click();
-      elem.drag("#cy-canvas-container")
-      cy.wait(500)
     })
   });
 
