@@ -1,0 +1,182 @@
+name: Extension Test On PR Dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+  workflow_call:
+    inputs:
+      branch_name:
+        required: true
+        type: string
+      pr_number: 
+        required: false 
+        type: string
+    secrets: 
+      PAT_TOK:
+        required: true
+      PROVIDER_TOKEN: 
+        required: true
+      NODE_VERSION: 
+        required: true
+      GO_VERSION: 
+        required: true
+      PAT: 
+        required: true
+      CYPRESS_RECORD_KEY:
+        required: true
+
+jobs:
+  build-ui-and-server:
+    uses: Abhishek-kumar09/meshery/.github/workflows/build-ui-and-server.yml@master # build-ui-server-reusable-workflow.yml 
+    secrets:
+      NODE_VERSION: "v16.15.1"
+      GO_VERSION: "1.17"
+  build-meshery-extension: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Meshery-extensions code
+        uses: actions/checkout@v3
+        with:
+          repository: layer5labs/meshery-extensions
+          path: ./meshery-extensions
+          fetch-depth: 1
+          ref: ${{ inputs.branch_name }}
+          token: ${{ secrets.PAT }}
+      - name: Setup go
+        uses: actions/setup-go@v3.0.0
+        with:
+          go-version: "1.17"
+      - name:  setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+      - name: Build Meshery Extension UI
+        working-directory: ./meshery-extensions
+        run: make meshmap # gql build is not done for now
+      - name: Show runner tree
+        run: tree /home/runner/.meshery
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: meshery-extension-ui
+          path: /home/runner/.meshery/provider/Meshery/undefined/provider
+          retention-days: 1
+  tests-ui-e2e:
+    needs: [build-ui-and-server, build-meshery-extension]
+    name: UI end-to-end tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Meshery code
+        uses: actions/checkout@v3
+        with:
+          repository: meshery/meshery
+          fetch-depth: 1
+          path: .
+      - name: Check out meshery-consul code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          repository: layer5io/meshery-consul
+          path: ./meshery-consul
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: meshery
+          path: cmd/
+      - name: Setup go
+        uses: actions/setup-go@v3.0.0
+        with:
+          go-version: ${{ secrets.GO_VERSION }}
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+      - name: Create k8s Kind Cluster
+        uses: helm/kind-action@v1.1.0
+        with:
+          cluster_name: "kind-cluster"
+      - name: Create a out/ folder in meshery ui
+        run: |
+          mkdir -p ui/out
+      - name: Download Meshery-ui artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: meshery-ui-build
+          path: ui/out/
+      - name: Update /etc/hosts
+        run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
+      - name: Run meshery-consul
+        run: |
+          mkdir -p /home/runner/.meshery/bin
+          cd ./meshery-consul
+          go run main.go &
+          sleep 60
+      - name: Set Release extensions
+        run: |
+          curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> extension_releases.json
+          export TAG=$(jq .[0].tag_name extension_releases.json)
+          echo tag=$TAG >> $GITHUB_ENV
+          echo $TAG
+      - name: make directories
+        run: |
+          echo ${{env.tag}}
+          echo ${{env}}
+          mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/navigator
+      - name: Run backend
+        env:
+          PROVIDER_BASE_URLS: https://meshery.layer5.io
+          PORT: 9081
+          ADAPTER_URLS: "mesherylocal.layer5.io:10000 mesherylocal.layer5.io:10001 mesherylocal.layer5.io:10002 mesherylocal.layer5.io:10003 mesherylocal.layer5.io:10004 mesherylocal.layer5.io:10008 mesherylocal.layer5.io:10009 mesherylocal.layer5.io:10007"
+        run: |
+          cd cmd
+          chmod +x ./main
+          BUILD=${{env.tag}} ./main &
+      - name: Download Meshery-extension-ui artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: meshery-extension-ui
+          path: provider
+      - name: Move provider files
+        run: |
+          mv /home/runner/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
+      - name: show runner tree
+        run: tree /home/runner/.meshery
+      - name: checkout cypress code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          path: ./cypress
+      - name: Move cypress tests
+        run: |
+          rm -rf ui/cypress
+          rm ui/cypress.json
+          mv cypress/cypress ui/
+          mv cypress/cypress.config.js ui/cypress.config.js
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ui
+          spec: cypress/integration/e2e/**/*
+          browser: chrome 
+          # record: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
+          CYPRESS_releasetag: ${{env.tag}}
+          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-ss
+          path: ui/cypress/screenshots
+      - name: Upload Videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-ss
+          path: ui/cypress/videos
+

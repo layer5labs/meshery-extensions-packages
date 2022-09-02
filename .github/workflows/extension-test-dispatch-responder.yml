@@ -1,0 +1,17 @@
+name: Extension Test Dispatch Responder
+on: [repository_dispatch]
+
+jobs:
+  build-ui-and-server:
+    if: github.event.action == 'dispatch-pr-test'
+    uses: Abhishek-kumar09/test/.github/workflows/re-usable-workflow.yml@master
+    with: 
+      branch_name: ${{ github.event.client_payload.branch_name }}
+      pr_number: ${{ github.event.client_payload.pr_number }} 
+    secrets: 
+      PAT_TOK: ${{ secrets.PAT_TOK }}
+      PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
+      NODE_VERSION: ${{ secrets.NODE_VERSION }}
+      GO_VERSION: ${{ secrets.GO_VERSION }}
+      PAT: ${{ secrets.PAT }}
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
