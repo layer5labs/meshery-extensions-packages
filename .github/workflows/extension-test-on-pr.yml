@@ -30,7 +30,7 @@ on:
 
 jobs:
   build-ui-and-server:
-    uses: meshery/meshery/.github/workflows/build-ui-and-server.yml@master # build-ui-server-reusable-workflow.yml 
+    uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
     secrets:
       NODE_VERSION: ${{ secrets.NODE_VERSION }}
       GO_VERSION: ${{ secrets.GO_VERSION }}
