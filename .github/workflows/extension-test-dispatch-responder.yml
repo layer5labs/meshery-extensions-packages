@@ -9,7 +9,7 @@ jobs:
       branch_name: ${{ github.event.client_payload.branch_name }}
       pr_number: ${{ github.event.client_payload.pr_number }} 
     secrets: 
-      PAT_TOK: ${{ secrets.PAT_TOK }}
+      # PAT_TOK: ${{ secrets.PAT_TOK }}
       PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
       NODE_VERSION: ${{ secrets.NODE_VERSION }}
       GO_VERSION: ${{ secrets.GO_VERSION }}

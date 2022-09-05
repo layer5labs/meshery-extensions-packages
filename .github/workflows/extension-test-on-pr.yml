@@ -15,8 +15,8 @@ on:
         required: false 
         type: string
     secrets: 
-      PAT_TOK:
-        required: true
+      # PAT_TOK:
+      #   required: true
       PROVIDER_TOKEN: 
         required: true
       NODE_VERSION: 
