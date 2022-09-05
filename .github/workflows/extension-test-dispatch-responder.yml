@@ -4,7 +4,7 @@ on: [repository_dispatch]
 jobs:
   build-ui-and-server:
     if: github.event.action == 'dispatch-pr-test'
-    uses: Abhishek-kumar09/test/.github/workflows/re-usable-workflow.yml@master
+    uses: layer5labs/meshery-extensions-packages/.github/workflows/extension-test-on-pr.yml@master
     with: 
       branch_name: ${{ github.event.client_payload.branch_name }}
       pr_number: ${{ github.event.client_payload.pr_number }} 

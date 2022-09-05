@@ -30,10 +30,10 @@ on:
 
 jobs:
   build-ui-and-server:
-    uses: Abhishek-kumar09/meshery/.github/workflows/build-ui-and-server.yml@master # build-ui-server-reusable-workflow.yml 
+    uses: meshery/meshery/.github/workflows/build-ui-and-server.yml@master # build-ui-server-reusable-workflow.yml 
     secrets:
-      NODE_VERSION: "v16.15.1"
-      GO_VERSION: "1.17"
+      NODE_VERSION: ${{ secrets.NODE_VERSION }}
+      GO_VERSION: ${{ secrets.GO_VERSION }}
   build-meshery-extension: 
     runs-on: ubuntu-latest
     steps:
