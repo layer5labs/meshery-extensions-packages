@@ -236,7 +236,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':x: Bad News, The cypress tests just failed, see the results visiting workflow actions'
+          message: ':x: Bad News, The cypress tests just failed, see the results visiting workflow action'
           append: true
       - name: Comment Final Status
         uses: hasura/comment-progress@v2.1.0
