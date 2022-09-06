@@ -10,84 +10,11 @@ on:
         default: 'warning'
 
 jobs:
-  build-backend:
-    name: Backend build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Meshery code
-        uses: actions/checkout@master
-        with:
-          repository: meshery/meshery
-          fetch-depth: 1
-      - name: Setup Go
-        uses: actions/setup-go@v3.0.0
-        with:
-          go-version: '1.17.8'
-      - name: Setup Cache
-        uses: actions/cache@v3.0.0
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-      
-      - run: |
-          make server
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: meshery
-          path: ./main
-  build-ui:
-    name: UI build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check out Meshery code
-      uses: actions/checkout@master
-      with:
-        repository: meshery/meshery
-        fetch-depth: 1
-        path: .
-    - uses: actions/setup-node@v3
-      with:
-        node-version: ${{ secrets.NODE_VERSION }}
-    - run: sudo npm i -g npm@latest
-    - name: Cache node modules
-      id: node-cache
-      uses: actions/cache@v3.0.0
-      with:
-        path: |
-          ~/cache
-          ~/.cache
-          /home/runner/.cache
-          !~/cache/exclude
-          **/node_modules
-          /home/runner/.cache/Cypress
-        key: ${{ runner.os }}-node-${{ hashFiles('**/lockfiles') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install dependencies
-      run: |
-        cd ui
-        npm ci
-        cd ..
-        cd provider-ui
-        npm ci
-    - name: build meshery-ui
-      run: |
-        make build-meshery-ui
-    - name: build provider-ui
-      run: |
-        make build-provider-ui
-    - name: upload meshery-ui artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: meshery-ui-build
-        path: ui/out/
-    - name: upload Meshery-provider-ui artifacts
-      uses: actions/upload-artifact@v3
-      with: 
-        name: meshery-provider-ui build
-        path: provider-ui/out/
+  build-ui-and-server:
+    uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
+    secrets:
+      NODE_VERSION: ${{ secrets.NODE_VERSION }}
+      GO_VERSION: ${{ secrets.GO_VERSION }}
   tests-ui-e2e:
     needs: [build-backend, build-ui]
     name: UI end-to-end tests
