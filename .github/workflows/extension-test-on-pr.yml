@@ -231,6 +231,7 @@ jobs:
           path: ui/cypress/videos
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
+        if: failure()
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: 'layer5labs/meshery-extensions'
