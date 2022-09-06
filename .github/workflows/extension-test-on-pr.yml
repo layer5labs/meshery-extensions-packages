@@ -14,9 +14,7 @@ on:
       pr_number: 
         required: false 
         type: string
-    secrets: 
-      # PAT_TOK:
-      #   required: true
+    secrets:
       PROVIDER_TOKEN: 
         required: true
       NODE_VERSION: 
@@ -29,11 +27,37 @@ on:
         required: true
 
 jobs:
+  comment-starting-point: 
+    runs-on: ubuntu-latest
+    needs: [build-ui-and-server]
+    steps:
+      - name: comment starting point
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':rocket: The Extension Test has started, the progress can be seen [here](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}). '
+          recreate: true
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
     secrets:
       NODE_VERSION: ${{ secrets.NODE_VERSION }}
       GO_VERSION: ${{ secrets.GO_VERSION }}
+  comment-success:
+    runs-on: ubuntu-latest
+    needs: [build-ui-and-server]
+    steps:
+      - name: comment progress
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':sparkles: The ui and server build was successful'
+          append: true
   build-meshery-extension: 
     runs-on: ubuntu-latest
     steps:
@@ -64,6 +88,15 @@ jobs:
           name: meshery-extension-ui
           path: /home/runner/.meshery/provider/Meshery/undefined/provider
           retention-days: 1
+      - name: comment progress
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':star_struck: The extension build was successful'
+          append: true
   tests-ui-e2e:
     needs: [build-ui-and-server, build-meshery-extension]
     name: UI end-to-end tests
@@ -179,13 +212,13 @@ jobs:
         with:
           name: cypress-ss
           path: ui/cypress/videos
-      - name: Send the acknowledgement
-        if: always()
-        uses: peter-evans/create-or-update-comment@v1
+      - name: Comment Final Status
+        uses: hasura/comment-progress@v2.1.0
         with:
-          issue-number: ${{ inputs.pr_number }}
-          repository: layer5labs/meshery-extensions
-          body: |
-            Your Test results are ready to be seen. 
-          reactions: rocket
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':white_check_mark: The github action has been completed. See the results [here](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}).'
+          append: true
 
