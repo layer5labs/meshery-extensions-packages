@@ -29,7 +29,6 @@ on:
 jobs:
   comment-starting-point: 
     runs-on: ubuntu-latest
-    needs: [build-ui-and-server]
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.1.0
@@ -102,6 +101,15 @@ jobs:
     name: UI end-to-end tests
     runs-on: ubuntu-latest
     steps:
+      - name: comment progress start
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':rocket: Setting Up the environment for UI end-to-end tests...'
+          append: true
       - name: Check out Meshery code
         uses: actions/checkout@v3
         with:
@@ -188,6 +196,15 @@ jobs:
           rm ui/cypress.json
           mv cypress/cypress ui/
           mv cypress/cypress.config.js ui/cypress.config.js
+      - name: comment progress start
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':thumbsup: All done, running the UI end-to-end tests with Cypress...'
+          append: true
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
@@ -212,6 +229,15 @@ jobs:
         with:
           name: cypress-ss
           path: ui/cypress/videos
+      - name: Comment Test failure
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':x: Bad News, The cypress tests just failed, see the results visiting workflow actions'
+          append: true
       - name: Comment Final Status
         uses: hasura/comment-progress@v2.1.0
         with:
