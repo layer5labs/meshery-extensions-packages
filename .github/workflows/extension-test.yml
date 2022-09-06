@@ -16,7 +16,7 @@ jobs:
       NODE_VERSION: ${{ secrets.NODE_VERSION }}
       GO_VERSION: ${{ secrets.GO_VERSION }}
   tests-ui-e2e:
-    needs: [build-backend, build-ui]
+    needs: [build-ui-and-server]
     name: UI end-to-end tests
     runs-on: ubuntu-latest
     steps:
