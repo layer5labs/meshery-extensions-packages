@@ -43,7 +43,7 @@ jobs:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
           fetch-depth: 1
-          ref: ${{ inputs.branch_name }}
+          ref: master
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Setup go
         uses: actions/setup-go@v3.0.0
