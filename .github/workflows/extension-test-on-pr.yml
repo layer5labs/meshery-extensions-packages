@@ -179,4 +179,13 @@ jobs:
         with:
           name: cypress-ss
           path: ui/cypress/videos
+      - name: Send the acknowledgement
+        if: always()
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ inputs.pr_number }}
+          repository: layer5labs/meshery-extensions
+          body: |
+            Your Test results are ready to be seen. 
+          reactions: rocket
 
