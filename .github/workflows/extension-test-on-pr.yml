@@ -29,7 +29,6 @@ on:
 jobs:
   comment-starting-point: 
     runs-on: ubuntu-latest
-    needs: [build-ui-and-server]
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.1.0
@@ -213,6 +212,7 @@ jobs:
           name: cypress-ss
           path: ui/cypress/videos
       - name: Comment Final Status
+        if: always()
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
