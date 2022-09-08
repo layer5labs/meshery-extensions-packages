@@ -70,13 +70,4 @@ describe("Designer Spec", () => {
       })
     })
   });
-
-  it("Drag All Visible component on canvas", () => {
-    cy.get(".component-drawer-svg-container[draggable='true']").each(ele => {
-      const elem = cy.get(ele);
-      elem.click();
-      elem.drag("#cy-canvas-container")
-      cy.wait(500)
-    })
-  });
 })
