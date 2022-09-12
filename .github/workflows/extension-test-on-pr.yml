@@ -37,7 +37,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':rocket: The Extension Test has started, the progress can be seen [here](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}). '
+          message: ':heavy_check_mark: The Extension Test has started, [see progress](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}).'
           recreate: true
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
@@ -55,7 +55,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':sparkles: The ui and server build was successful'
+          message: ':heavy_check_mark: The ui and server build was successful.'
           append: true
   build-meshery-extension: 
     runs-on: ubuntu-latest
@@ -94,7 +94,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':star_struck: The extension build was successful'
+          message: ':heavy_check_mark: The extension build was successful.'
           append: true
   tests-ui-e2e:
     needs: [build-ui-and-server, build-meshery-extension]
@@ -108,7 +108,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':rocket: Setting Up the environment for UI end-to-end tests...'
+          message: ':heavy_check_mark: starting environment setup.'
           append: true
       - name: Check out Meshery code
         uses: actions/checkout@v3
@@ -203,7 +203,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':thumbsup: All done, running the UI end-to-end tests with Cypress...'
+          message: ':heavy_check_mark: All done, running tests.'
           append: true
       - name: Cypress run
         uses: cypress-io/github-action@v4
@@ -237,7 +237,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':x: Bad News, The cypress tests just failed, see the results visiting workflow action'
+          message: ':x: One or more tests has failed.'
           append: true
       - name: Comment Final Status
         if: always()
@@ -247,6 +247,6 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':white_check_mark: The github action has been completed. See the results [here](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}).'
+          message: ':white_check_mark: Extension tests completed, [See results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}).'
           append: true
 
