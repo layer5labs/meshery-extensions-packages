@@ -182,7 +182,7 @@ jobs:
           path: provider
       - name: Move provider files
         run: |
-          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
+          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
       - name: show runner tree
         run: tree /home/runner/.meshery
       - name: checkout cypress code
