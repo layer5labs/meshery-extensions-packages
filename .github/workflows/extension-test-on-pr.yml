@@ -165,7 +165,7 @@ jobs:
         run: |
           echo ${{env.tag}}
           echo ${{env}}
-          mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/navigator
+          mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
       - name: Run backend
         env:
           PROVIDER_BASE_URLS: https://meshery.layer5.io
