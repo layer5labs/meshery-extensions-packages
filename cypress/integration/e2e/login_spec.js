@@ -21,8 +21,8 @@ describe("Login", () => {
     cy.contains("Filters")
   });
 
-  // visualizer test is skipped until the gql-plugin error sorts out in Meshery
-  it.skip("Visit MeshMap Visualizer", () => {
+  // visualizer test is skipped until the gql-plugin error sorts out in Meshery -- Fixed via infinite token.
+  it("Visit MeshMap Visualizer", () => {
     cy.setMode(VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
