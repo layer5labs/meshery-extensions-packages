@@ -21,14 +21,18 @@ describe("Login", () => {
     cy.contains("Filters")
   });
 
-  // visualizer test is skipped until the gql-plugin error sorts out in Meshery -- Fixed via infinite token.
   it("Visit MeshMap Visualizer", () => {
     cy.setMode(VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
-    cy.wait(15000)
+    cy.intercept("/api/provider/extension*").as("extensionFileLoad")
+    cy.wait("@extensionFileLoad");
+    cy.get("body").then(body => {
+      if (body.find('[data-cy="modal-close-btn"]').length > 0) {
+        cy.get('[data-cy="modal-close-btn"]').click();
+      }
+    })
     cy.contains("MeshMap")
-    cy.contains("View Selector")
     //tabs
     cy.contains("Details")
     cy.contains("Metrics")
