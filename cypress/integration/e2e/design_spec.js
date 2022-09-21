@@ -3,6 +3,7 @@ import '@4tw/cypress-drag-drop'
 
 describe("Designer Spec", () => {
   beforeEach(() => {
+    cy.viewport(1500, 900) 
     cy.login();
     cy.setReleaseTag();
     cy.interceptCapabilities();
@@ -15,7 +16,8 @@ describe("Designer Spec", () => {
 
   it("Load MeshMap Design with a click", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
+    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000});
+    cy.get("#MUIDataTableBodyRow-patterns-0").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
     // cy.get("[data-cy='progress-snackbar']").contains("Rendering your MeshMap...");
     cy.wait(2000);
     cy.get("body").then(body => {
@@ -26,6 +28,7 @@ describe("Designer Spec", () => {
   });
 
   it("Rename Design", () => {
+    cy.wait(1000);
     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container")
     cy.get("#design-name-textfield").type("Changed Name with cypress");
     cy.intercept('/api/pattern').as('patternSave')
@@ -39,6 +42,8 @@ describe("Designer Spec", () => {
 
   it("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
+    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
+    cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
     cy.intercept("/api/pattern*").as("patternSearch")
     cy.wait("@patternSearch")
@@ -47,6 +52,8 @@ describe("Designer Spec", () => {
 
   it("Deploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
+    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
+    cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
     cy.intercept("/api/pattern*").as("patternPost")
     cy.wait("@patternPost")
