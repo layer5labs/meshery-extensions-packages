@@ -1,5 +1,6 @@
 import {DESIGNER} from "../../support/constants"
 import '@4tw/cypress-drag-drop'
+
 describe("Application Spec", () => {
   beforeEach(() => {
     cy.login();
@@ -10,14 +11,16 @@ describe("Application Spec", () => {
     cy.visit("/extension/meshmap");
     cy.intercept("/api/provider/extension*").as("extensionFileLoad");
     cy.wait("@extensionFileLoad", { timeout: 20000 });
+    cy.get('[data-cy="application-drawer"]').click();
+    cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000}).should("be.visible"); // start tests only when the application table is populated
   })
 
-  const applicationName = "emoji.yaml" // sample name of an application
+  const bookInfoUrlUploadedName = "k8s.yaml" // sample name of an application
+  const bookInfoApp = "bookInfo-istio-cy"; // book-info istio application to search
 
   it("Render MeshMap Application", () => {
-    cy.get('[data-cy="application-drawer"]').click();
     cy.contains("Applications")
-    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
+    cy.get("#MUIDataTableBodyRow-applications-0").click({force: true}); //convention: MUIDataTableBodyRow + type  + rowIndex
     cy.wait(2000);
     cy.get("body").then(body => {
         if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
@@ -26,9 +29,9 @@ describe("Application Spec", () => {
       })
   });
 
-  it("Rename and Saving Application", () => {
-    cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container")
-    cy.get("#design-name-textfield").type(applicationName);
+  it.skip("Rename and Saving Application", () => { // renaming application is skipped until the import test is present
+    cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000}).should("be.visible").click(); // drop the first application
+    cy.get("#design-name-textfield").type(bookInfoUrlUploadedName);
     cy.intercept('/api/application*').as('applicationSave')
  
     // TODO - Saving Application request intercept need to be fixed.
@@ -37,24 +40,15 @@ describe("Application Spec", () => {
         // move to drawer and check for update
         cy.get("[data-cy='design-drawer']").click();
         cy.wait(5000); // wait for seconds, because the subscritions cannot be tracked for now
-        cy.get("#MUIDataTableBodyRow-applications-0 p").contains(applicationName);
+        cy.get("#MUIDataTableBodyRow-applications-0 p").contains(bookInfoUrlUploadedName);
       })
   })
 
-  it("Search an Application", () => {
-    cy.get("[data-cy='application-drawer']").click();
-    cy.get('[data-test-id="Search"]').type(applicationName);
-    cy.intercept("/api/application*").as("applicationSearch")
-    cy.wait("@applicationSearch")
-    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(applicationName);
-  })
-
   it("Deploy an Application", () => {
-    cy.get("[data-cy='application-drawer']").click();
-    cy.get('[data-test-id="Search"]').type(applicationName);
+    cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.intercept("/api/application*").as("applicationPost")
     cy.wait("@applicationPost")
-    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(applicationName).click();
+    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(bookInfoApp).click();
     cy.wait(2000);
     cy.get("body").then(body => {
       if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
@@ -75,4 +69,10 @@ describe("Application Spec", () => {
     })
   });
 
+  it("Search an Application", () => {
+    cy.get('[data-test-id="Search"]').type(bookInfoApp);
+    cy.intercept("/api/application*").as("applicationSearch")
+    cy.wait("@applicationSearch")
+    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(bookInfoApp);
+  })
 })
