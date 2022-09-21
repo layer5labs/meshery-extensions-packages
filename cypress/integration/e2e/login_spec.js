@@ -21,7 +21,7 @@ describe("Login", () => {
     cy.contains("Filters")
   });
 
-  it("Visit MeshMap Visualizer", () => {
+  it.skip("Visit MeshMap Visualizer", () => {
     cy.setMode(VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
