@@ -50,7 +50,22 @@ describe("Designer Spec", () => {
     cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains("Changed Name with cypress");
   })
 
-  it("Deploy a design", () => {
+  it("Validate a design", () => {
+    cy.get("[data-cy='design-drawer']").click();
+    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
+    cy.get("#MUIDataTableBodyRow-patterns-0").click();
+    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
+    cy.intercept("/api/pattern*").as("patternPost")
+    cy.wait("@patternPost")
+    cy.get("body").then(body => {
+      if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
+        cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Unable to render")
+      }
+    })
+    cy.get("#verify-design-btn").click();
+  })
+
+  it("Deploy and Undeploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
@@ -69,6 +84,19 @@ describe("Designer Spec", () => {
     cy.intercept("/api/pattern/deploy*").as("patternDeploy")
     cy.get('[data-cy="deploy-btn-confirm"]').click();
     cy.wait("@patternDeploy").then(() => {
+      // cy.get("[data-cy='progress-snackbar']").contains("Deploying design");
+      cy.get("body").then(body => {
+        if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
+          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
+        }
+      })
+    })
+    //Undeploy 
+    cy.get('#undeploy-design-btn').click();
+    // modal opens
+    cy.intercept("/api/pattern/deploy*").as("patternUndeploy")
+    cy.get('[data-cy="deploy-btn-confirm"]').click();
+    cy.wait("@patternUndeploy").then(() => {
       // cy.get("[data-cy='progress-snackbar']").contains("Deploying design");
       cy.get("body").then(body => {
         if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
