@@ -11,24 +11,24 @@ describe("Filter Spec", () => {
         cy.visit("/extension/meshmap");
         cy.intercept("/api/provider/extension*").as("extensionFileLoad")
         cy.wait("@extensionFileLoad", { timeout: 20000 });
+        cy.get('[data-cy="filter-drawer"]').click();
+        cy.get("#MUIDataTableBodyRow-filters-0", {timeout: 30000}).should("be.visible"); // start tests only when the filter table is populated
       })
 
       const filterName = "Basic Auth for Istio" // sample name of an application
 
       it("Render Filters", () => {
-        cy.get("[data-cy='filter-drawer']").click();
-        cy.get("#MUIDataTableBodyRow-filters-0").should("be.visible").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
-        // cy.get("[data-cy='progress-snackbar']").contains("Rendering your MeshMap...");
-        cy.wait(2000);
+        cy.contains("Filters")
+        cy.get("#MUIDataTableBodyRow-filters-0").should("be.visible"); //convention: MUIDataTableBodyRow + type  + rowIndex
         cy.get("body").then(body => {
-          if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
-            cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Unable to render")
-          }
-        })
+        if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
+          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
+        }
+      })
       });
 
-      it("Rename Filter", () => {
-        cy.get("#component-drawer-Application").should('be.visible') // .drag("#cy-canvas-container") Filters drag and drop on canvas is disabled for now.
+      // Filters are not clickable for now. So they are skipped.
+      it.skip("Rename Filter", () => {
         cy.get("#design-name-textfield").type(filterName);
         cy.intercept('/api/filter').as('filterSave')
         cy.wait("@filterSave").then(() => {
