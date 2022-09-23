@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: meshery-extension-ui
-          path: /home/runner/.meshery/provider/Meshery/undefined/provider
+          path: /home/runner/.meshery/provider/Meshery/*/provider
           retention-days: 1
       - name: comment progress
         uses: hasura/comment-progress@v2.1.0
