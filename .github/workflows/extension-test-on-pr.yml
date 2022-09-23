@@ -81,12 +81,16 @@ jobs:
         run: make meshmap # gql build is not done for now
       - name: Show runner tree
         run: tree /home/runner/.meshery
+      - name: relocate meshery-extension-ui
+        run: mv /home/runner/.meshery/provider/Meshery/*/provider /home/runner/provider
+      - name: Show runner tree
+        run: tree /home/runner/ -L 3
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: meshery-extension-ui
-          path: /home/runner/.meshery/provider/Meshery/*/provider
-          retention-days: 1
+          path: /home/runner/provider
+          if-no-files-found: error
       - name: comment progress
         uses: hasura/comment-progress@v2.1.0
         with:
