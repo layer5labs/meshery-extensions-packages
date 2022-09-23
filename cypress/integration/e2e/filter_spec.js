@@ -15,9 +15,9 @@ describe("Filter Spec", () => {
         cy.get("#MUIDataTableBodyRow-filters-0", {timeout: 30000}).should("be.visible"); // start tests only when the filter table is populated
       })
 
-      const filterName = "Basic Auth for Istio" // sample name of an application
+      const filterName = "Basic Auth for Istio" // sample name of an filter
 
-      it("Render Filters", () => {
+      it.skip("Render Filters", () => { // filters are not rendered on canvas for now
         cy.contains("Filters")
         cy.get("#MUIDataTableBodyRow-filters-0").should("be.visible"); //convention: MUIDataTableBodyRow + type  + rowIndex
         cy.get("body").then(body => {
@@ -46,5 +46,4 @@ describe("Filter Spec", () => {
         cy.wait("@filterSearch")
         cy.get("#MUIDataTableBodyRow-filters-0").should("be.visible").contains(filterName);
       });
-
 })
