@@ -17,7 +17,7 @@ describe("Component Spec", () => {
     cy.get(".component-drawer-svg-container[draggable='true']").each(ele => {
       const elem = cy.get(ele);
       elem.click();
-      elem.drag("#cy-canvas-container")
+      elem.drag("#cy-canvas-container", {force: true});
       cy.get("#component-delete", {timeout: 3000}).click();
       cy.wait(100);
     })

@@ -33,24 +33,26 @@ describe("Designer Spec", () => {
   });
 
   it("Rename Design", () => {
-    cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container");
+    cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
     cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
-    cy.get("#design-name-textfield").type("Changed Name with cypress");
     cy.intercept('/api/pattern').as('patternSave')
+    cy.get("#design-name-textfield").type("Changed Name with cypress");
     cy.wait("@patternSave").then(() => {
       // move to drawer and check for update
       cy.get("[data-cy='design-drawer']").click();
-      cy.get("#MUIDataTableBodyRow-patterns-0 p", {timeout: 30000}).contains("Changed Name with cypress");
+      cy.get("#MUIDataTableBodyRow-patterns-0 p", {timeout: 30000});
+      cy.wait(2000);
+      cy.get("#MUIDataTableBodyRow-patterns-0 p").contains("Changed Name with cypress");
     })
   })
-
+  
   it("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.wait(2000);
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
-    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
     cy.intercept("/api/pattern*").as("patternSearch")
+    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
     cy.wait("@patternSearch")
     cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains("Changed Name with cypress");
   })

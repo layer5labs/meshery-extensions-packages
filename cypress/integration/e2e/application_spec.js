@@ -70,8 +70,8 @@ describe("Application Spec", () => {
   });
 
   it("Search an Application", () => {
-    cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.intercept("/api/application*").as("applicationSearch")
+    cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.wait("@applicationSearch")
     cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(bookInfoApp);
   })
