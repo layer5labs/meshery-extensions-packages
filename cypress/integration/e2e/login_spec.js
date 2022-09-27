@@ -5,15 +5,16 @@ describe("Login", () => {
     cy.login();
     cy.setReleaseTag();
     cy.interceptCapabilities();
-    window.localStorage.setItem("tab", 0)
+    window.localStorage.setItem("tab", 0);
+    cy.intercept("/api/provider/extension*").as("extensionFileLoad")
   })
 
   it("Visit MeshMap Designer", () => {
     cy.setMode(DESIGNER)
-    cy.visit("/")
+    cy.visit("/extension/meshmap")
     cy.wait("@getCapabilites")
-    cy.get('[data-cy="MeshMap"]').click();
-    cy.wait(3000)
+    cy.wait("@extensionFileLoad")
+    cy.wait(1000)
     cy.contains("MeshMap")
     cy.contains("Components")
     cy.contains("Designs")
