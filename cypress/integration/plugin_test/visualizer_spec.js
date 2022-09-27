@@ -8,7 +8,7 @@ describe("Visualizer Spec", () => {
     cy.setReleaseTag();
     window.localStorage.setItem("tab", 0);
     const token = Cypress.env('token');
-    cy.request(`http://localhost:9081/api/user/token?token=${token}`);
+    cy.request(`/api/user/token?token=${token}`);
   })
 
   it("Visit MeshMap Visualizer, check gql status", () => {
