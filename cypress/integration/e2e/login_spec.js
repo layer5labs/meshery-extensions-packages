@@ -20,22 +20,4 @@ describe("Login", () => {
     cy.contains("Applications")
     cy.contains("Filters")
   });
-
-  it.skip("Visit MeshMap Visualizer", () => {
-    cy.setMode(VISUALIZER)
-    cy.visit("/extension/meshmap")
-    cy.wait("@getCapabilites")
-    cy.intercept("/api/provider/extension*").as("extensionFileLoad")
-    cy.wait("@extensionFileLoad");
-    cy.get("body").then(body => {
-      if (body.find('[data-cy="modal-close-btn"]').length > 0) {
-        cy.get('[data-cy="modal-close-btn"]').click();
-      }
-    })
-    cy.contains("MeshMap")
-    //tabs
-    cy.contains("Details")
-    cy.contains("Metrics")
-    cy.contains("Actions")
-  });
 })
