@@ -222,6 +222,15 @@ jobs:
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Comment Success Status
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':white_check_mark: All tests passed!'
+          append: true
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v3
