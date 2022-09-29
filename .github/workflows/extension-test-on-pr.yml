@@ -37,7 +37,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':heavy_check_mark: Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})...'
+          message: 'Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})...'
           recreate: true
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
@@ -81,12 +81,16 @@ jobs:
         run: make meshmap # gql build is not done for now
       - name: Show runner tree
         run: tree /home/runner/.meshery
+      - name: relocate meshery-extension-ui
+        run: mv /home/runner/.meshery/provider/Meshery/*/provider /home/runner/provider
+      - name: Show runner tree
+        run: tree /home/runner/ -L 3
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: meshery-extension-ui
-          path: /home/runner/.meshery/provider/Meshery/undefined/provider
-          retention-days: 1
+          path: /home/runner/provider
+          if-no-files-found: error
       - name: comment progress
         uses: hasura/comment-progress@v2.1.0
         with:
@@ -194,6 +198,7 @@ jobs:
         run: |
           rm -rf ui/cypress
           rm ui/cypress.json
+          rm -r cypress/cypress/integration/plugin_test
           mv cypress/cypress ui/
           mv cypress/cypress.config.js ui/cypress.config.js
       - name: comment progress start
@@ -217,6 +222,15 @@ jobs:
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Comment Success Status
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':white_check_mark: All tests passed!'
+          append: true
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v3
