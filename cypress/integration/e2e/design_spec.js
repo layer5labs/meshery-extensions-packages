@@ -70,6 +70,7 @@ describe("Designer Spec", () => {
       }
     })
     cy.get("#verify-design-btn").click();
+    cy.contains("OK");
   })
 
   it("Deploy and Undeploy a design", () => {
@@ -114,7 +115,7 @@ describe("Designer Spec", () => {
       // cy.get("[data-cy='progress-snackbar']").contains("Deploying design");
       cy.get("body").then(body => {
         if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
-          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
+          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Failed")
         }
       })
     })

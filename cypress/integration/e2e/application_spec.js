@@ -57,6 +57,7 @@ describe("Application Spec", () => {
       }
     })
     cy.get("#verify-design-btn").click();
+    cy.contains("OK");
   })
 
   it("Deploy and Undeploy an Application", () => {
@@ -78,7 +79,7 @@ describe("Application Spec", () => {
       // cy.get("[data-cy='progress-snackbar']").contains(`Deploying application: ${bookInfoApp}`);
       cy.get("body").then(body => {
         if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
-          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
+          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Failed")
         }
       })
     })
@@ -91,7 +92,7 @@ describe("Application Spec", () => {
     cy.wait("@applicationUndeploy").then(() => {
       cy.get("body").then(body => {
         if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
-         cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
+         cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Failed")
         }
       })
     })
