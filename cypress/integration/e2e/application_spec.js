@@ -35,7 +35,6 @@ describe("Application Spec", () => {
     cy.intercept('/api/application*').as('applicationSave')
  
     // TODO - Saving Application request intercept need to be fixed.
-
     cy.wait("@applicationSave").then(() => {
         // move to drawer and check for update
         cy.get("[data-cy='application-drawer']").click();
