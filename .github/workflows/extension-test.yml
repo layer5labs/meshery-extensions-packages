@@ -2,6 +2,7 @@ name: Meshery Extension Test
 on:
   release:
     types: [published]
+  pull_request:
   workflow_dispatch:
     inputs:
       logLevel:
