@@ -1,5 +1,5 @@
 /// <reference types="cypress" /> // Add and extra '/' to load the cypress auto-complete feature following npm i cypress
-import { VISUALIZER } from "../../support/constants"
+import { VISUALIZER } from "../../../support/constants"
 
 // DO NOT INTERCEPT CAPABILITIES WITH FIXTURES 
 describe("Visualizer Spec", () => {
