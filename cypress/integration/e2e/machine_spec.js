@@ -30,10 +30,6 @@ describe("State Machine Spec", () => {
                 }
             })
         });
-
-        // it("DO save design every time node attributes are configured", () => {
-        //     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
-        // })
     })
 
 });
