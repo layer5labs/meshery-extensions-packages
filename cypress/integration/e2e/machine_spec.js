@@ -30,6 +30,26 @@ describe("State Machine Spec", () => {
                 }
             })
         });
+
+        it('DO save design every time a node is added or removed', () => {
+        // Save on Additon of node  
+            // A node is added on canvas    
+            cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
+            // Go to that design
+            cy.get("[data-cy='design-drawer']").click();
+            cy.get("#MUIDataTableBodyRow-patterns-0").click();
+            // Save the design
+            cy.intercept('/api/pattern').as('patternSave')
+            cy.wait("@patternSave");
+        // Save on deletion of node
+            cy.get('[data-cy="component-drawer"]').click()
+            cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
+            // Perform delete action
+            cy.get("#component-delete").click();
+            // Save the design
+            cy.intercept('/api/pattern').as('patternSave')
+            cy.wait("@patternSave");
+          })
     })
 
 });
