@@ -198,7 +198,7 @@ jobs:
         run: |
           rm -rf ui/cypress
           rm ui/cypress.json
-          rm -r cypress/cypress/integration/plugin_test
+          rm -r cypress/cypress/integration/e2e/plugin_test
           mv cypress/cypress ui/
           mv cypress/cypress.config.js ui/cypress.config.js
       - name: comment progress start
