@@ -36,12 +36,12 @@ describe("Designer Spec", () => {
     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
     cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
     cy.intercept('/api/pattern').as('patternSave')
-    cy.get("#design-name-textfield").type("Changed Name with cypress");
+    cy.get("#design-name-textfield").clear().type("Changed Name with cypress");
     cy.wait("@patternSave").then(() => {
       // move to drawer and check for update
       cy.get("[data-cy='design-drawer']").click();
       cy.get("#MUIDataTableBodyRow-patterns-0 p", {timeout: 30000});
-      cy.wait(2000);
+      cy.wait(2500);
       cy.get("#MUIDataTableBodyRow-patterns-0 p").contains("Changed Name with cypress");
     })
   })
