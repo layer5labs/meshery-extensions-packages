@@ -78,7 +78,7 @@ describe("Application Spec", () => {
       // cy.get("[data-cy='progress-snackbar']").contains(`Deploying application: ${bookInfoApp}`);
       cy.get("body").then(body => {
         if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
-          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Error")
+          cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Failed")
         }
       })
     })
