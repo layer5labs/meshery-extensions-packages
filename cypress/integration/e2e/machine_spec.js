@@ -49,7 +49,21 @@ describe("State Machine Spec", () => {
             // Save the design
             cy.intercept('/api/pattern').as('patternSave')
             cy.wait("@patternSave");
-          })
+          });
+
+        it("DO save designs when all nodes are emptied on user request (reset canvas or all node deletes)", () => {
+            // Drop a node on canvas
+            cy.get('[data-cy="component-drawer"]').click()
+            cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
+            // Go to that design
+            cy.get("[data-cy='design-drawer']").click();
+            cy.get("#MUIDataTableBodyRow-patterns-0").click();
+            // Reset canvas by clear/delete all nodes
+            cy.get('[data-cy="reset-btn"]').click();
+            // Save the design
+            cy.intercept('/api/pattern').as('patternSave')
+            cy.wait("@patternSave");
+          });
     })
 
 });
