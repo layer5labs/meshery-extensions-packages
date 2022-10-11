@@ -11,7 +11,7 @@ describe("Visualizer Spec", () => {
     cy.request(`/api/user/token?token=${token}`);
   })
 
-  it("Visit MeshMap Visualizer, check gql status", () => {
+  it.skip("Visit MeshMap Visualizer, check gql status", () => {
     cy.setMode(VISUALIZER)
     cy.visit("/extension/meshmap")
     cy.intercept("/api/provider/extension*").as("extensionFileLoad")
