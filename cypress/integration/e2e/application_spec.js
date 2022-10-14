@@ -59,7 +59,7 @@ describe("Application Spec", () => {
     cy.contains("OK");
   })
 
-  it("Deploy and Undeploy an Application", () => {
+  it.skip("Deploy and Undeploy an Application", () => {
     cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.intercept("/api/application*").as("applicationPost")
     cy.wait("@applicationPost")
