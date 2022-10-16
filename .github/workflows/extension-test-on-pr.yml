@@ -100,6 +100,16 @@ jobs:
           id: extension-test
           message: ':heavy_check_mark: Meshery Extensions build complete.'
           append: true
+      - name: comment Failure
+        if: failure()
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ':x: Meshery Extensions build Failed.'
+          append: true
   tests-ui-e2e:
     needs: [build-ui-and-server, build-meshery-extension]
     name: UI end-to-end tests
