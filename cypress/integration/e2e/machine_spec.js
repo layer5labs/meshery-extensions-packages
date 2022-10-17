@@ -37,6 +37,8 @@ describe("State Machine Spec", () => {
             // Save on Additon of node  
             // A node is added on canvas    
             cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
+            cy.get('#design-name-textfield').click();
+            cy.wait(1000);
             cy.wait("@patternSave");
             // Save on deletion of node
             cy.wait(2000);
