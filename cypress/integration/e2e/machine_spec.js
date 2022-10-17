@@ -23,7 +23,8 @@ describe("State Machine Spec", () => {
             cy.get("#MUIDataTableBodyRow-patterns-0").click();
 
             // Drop same design on canvas to test (do not merge) 
-            cy.get("#MUIDataTableBodyRow-patterns-0").drag("#cy-canvas-container", { force: true });
+            cy.wait(1000)
+            cy.get("#MUIDataTableBodyRow-patterns-0[draggable='true']").drag("#cy-canvas-container", { force: true });
             cy.wait(2000);
             cy.get("body").then(body => {
                 if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
@@ -35,10 +36,11 @@ describe("State Machine Spec", () => {
         it('DO save design every time a node is added or removed', () => {
             // Save on Additon of node  
             // A node is added on canvas    
-            cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", { force: true });
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
             cy.wait("@patternSave");
             // Save on deletion of node
-            cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", { force: true });
+            cy.wait(2000);
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
             // Perform delete action
             cy.get("#component-delete").click();
             // Check Saving of the design
@@ -47,8 +49,7 @@ describe("State Machine Spec", () => {
 
         it("DO save designs when all nodes are emptied on user request (reset canvas or all node deletes)", () => {
             // Drop a node on canvas
-            cy.get('[data-cy="component-drawer"]').click()
-            cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", { force: true });
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
             // Reset canvas by clear/delete all nodes
             cy.get('[data-cy="reset-btn"]').click();
             // Check Saving the design
