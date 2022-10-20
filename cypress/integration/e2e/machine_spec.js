@@ -33,7 +33,7 @@ describe("State Machine Spec", () => {
             })
         });
 
-        it('DO save design every time a node is added or removed', () => {
+        it.skip('DO save design every time a node is added or removed', () => {
             // Save on Additon of node  
             // A node is added on canvas    
             cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
