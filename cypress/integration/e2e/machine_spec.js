@@ -42,7 +42,8 @@ describe("State Machine Spec", () => {
             cy.wait(2000);
             cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
             // Perform delete action
-            cy.get("#component-delete").click();
+            cy.get("#component-delete",{timeout: 3000}).click();
+            cy.wait(200);
             // Check Saving of the design
             cy.wait("@patternSave");
         });
