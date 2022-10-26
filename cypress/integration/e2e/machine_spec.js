@@ -18,14 +18,12 @@ describe("State Machine Spec", () => {
         it("DO NOT allow merge of a design into itself", () => {
             cy.get('[data-cy="design-drawer"]').click();
             cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 }).should("be.visible");
-
+            cy.wait(1000)
             // First design dropped on canvas
             cy.get("#MUIDataTableBodyRow-patterns-0").click();
 
             // Drop same design on canvas to test (do not merge) 
-            cy.wait(1000)
-            cy.get("#MUIDataTableBodyRow-patterns-0[draggable='true']").drag("#cy-canvas-container", { force: true });
-            cy.wait(2000);
+            cy.get("#MUIDataTableBodyRow-patterns-0[draggable='true']").trigger("dragstart")
             cy.get("body").then(body => {
                 if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
                     cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("contain", "Cannot merge a design into itself.")
@@ -33,17 +31,20 @@ describe("State Machine Spec", () => {
             })
         });
 
+        // test is failing because delete operation is not triggering save, 
+        // so no problem with the test but with the extension code
         it.skip('DO save design every time a node is added or removed', () => {
-            // Save on Additon of node  
+            // Check Save Operation on Additon of node  
             // A node is added on canvas    
             cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
-            cy.get('#design-name-textfield').click();
             cy.wait(1000);
+            cy.get('#design-name-textfield').click();
             cy.wait("@patternSave");
-            // Save on deletion of node
-            cy.wait(2000);
+            
+            // Check Save on deletion of node
             cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
             // Perform delete action
+            cy.wait(1000);
             cy.get("#component-delete").click();
             // Check Saving of the design
             cy.wait("@patternSave");
