@@ -23,6 +23,7 @@ describe("State Machine Spec", () => {
             cy.get("#MUIDataTableBodyRow-patterns-0").click();
 
             // Drop same design on canvas to test (do not merge) 
+            cy.wait(1000)
             cy.get("#MUIDataTableBodyRow-patterns-0[draggable='true']").trigger("dragstart")
             cy.get("body").then(body => {
                 if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
