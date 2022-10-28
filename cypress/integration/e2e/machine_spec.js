@@ -59,6 +59,41 @@ describe("State Machine Spec", () => {
             // Check Saving the design
             cy.wait("@patternSave");
         });
+        it("DO save design every time node attributes are configured",() => {
+            // Drop a node on canvas
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true});
+            cy.wait(1000);
+            // Changing node attributes
+            cy.get("#Application_replicas").type(100);
+            // Check Saving the design
+            cy.wait("@patternSave");
+        });
+        it("DO save design with client-side validation failures",() => {
+            // Drop a node on canvas
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true});
+            cy.wait(1000);
+            // Changing node attributes
+            cy.get("#Application_replicas").type(999999);
+            // Check Saving the design
+            cy.wait("@patternSave");
+        });
+        it("DO allow user to create duplicate design (save as) if all changes are saved.",()=>{
+            // Drop a node on canvas
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true});
+            cy.wait(1000)
+            cy.get("#design-name-textfield").click().clear().type("duplicate");
+            cy.wait(2000)
+            cy.wait("@patternSave");
+            // Save as for the duplicate design
+            cy.get('#save-as-btn').click();
+            cy.get('#dialog-save-btn').click();
+            cy.wait(2000)
+            cy.get("body").then(body => {
+                if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
+                    cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("contain", "Design saved successfully as duplicate-copy")
+                }
+            })
+        });
     })
 
 });
