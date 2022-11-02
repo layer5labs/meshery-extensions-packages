@@ -60,16 +60,14 @@ jobs:
     a { color: #00B39F; }
     a:visited { color: #00B39F; }
     div.verify {
-        border-radius: .5rem;
-        color: #1e2117;
-        /* background-color: slategray; */
-        border: #7A848E 1px solid;
-        padding: 1rem;
-        margin: 1rem;
-        font-family: "Qanelas Soft";
-        align-content: center;
         display: flex;
         flex-direction: column;
+        border-radius: .5rem;
+        color: #1e2117;
+        border: #7A848E 1px solid;
+        font-family: "Qanelas Soft";
+        align-content: center;
+        
     }
     .header {
         display: flex;
@@ -113,6 +111,9 @@ jobs:
         padding: 0 .75rem;
         align-self: center;
     }
+    .social > img {
+        height: 1rem;
+    }
     .copyright { 
         margin-top:.75rem; font-size: .9rem; color: #7A848E;   
         font-style: italic; 
@@ -127,8 +128,7 @@ jobs:
                 alt="Meshery logo" />
         </div>
         <div class="verify">
-            <p>Hi,</p>
-            <p>
+            <p>Hi,<br /><br />
                 Thanks for registering for an account on Meshery Cloud! Click below to verify your email address or copy and paste the link below into your browser.
             </p>
             <button class="button">Verify email address</button>
