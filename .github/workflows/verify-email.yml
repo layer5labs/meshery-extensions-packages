@@ -13,6 +13,8 @@ jobs:
     name: Prepare email
     runs-on: "ubuntu-latest"
     steps:
+      - uses: actions/checkout@master
+      - name: Clone repo
       - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
