@@ -29,7 +29,7 @@ jobs:
           # Required recipients' addresses:
           to: lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
-          from: Layer5 # <user@example.com>
+          from: "Meshery Cloud" # <user@example.com>
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:
