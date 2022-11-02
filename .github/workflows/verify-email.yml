@@ -35,7 +35,7 @@ jobs:
           # Optional plain body:
           body: Verify your email. Follow the link below.
           # Optional HTML body read from file:
-          html_body: file://./verify-email.html
+          html_body: https://github.com/layer5labs/meshery-extensions-packages/raw/master/.github/workflows/verify-email.html
           # Optional carbon copy recipients:
           # cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
