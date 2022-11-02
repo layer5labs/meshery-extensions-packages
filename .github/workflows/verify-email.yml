@@ -48,6 +48,7 @@ jobs:
           ignore_cert: true
           # Optional converting Markdown to HTML (set content_type to text/html too):
           convert_markdown: false
+          content_type: text/html
           # Optional attachments:
           # attachments: attachments.zip,git.diff,./dist/static/*.js
           # Optional priority: 'high', 'normal' (default) or 'low'
