@@ -51,8 +51,7 @@ jobs:
           # Optional priority: 'high', 'normal' (default) or 'low'
           priority: normal
           # Optional HTML body read from file:
-          html_body: |
-            <html>
+          html_body: '<html>
             <style>
                 body {
                     margin: 0;
@@ -158,4 +157,4 @@ jobs:
                     </div>    
                     <p class="copyright">Copyright 2022, Layer5, Inc. All right reserved.</p>
                 </body>
-            </html>
+            </html>'
