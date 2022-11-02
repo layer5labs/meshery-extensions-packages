@@ -55,7 +55,7 @@ jobs:
     p { font-family: "Qanelas Soft";        
         padding: 1rem;
         margin: 1rem;
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     a { color: #00B39F; }
     a:visited { color: #00B39F; }
@@ -107,12 +107,12 @@ jobs:
         padding: 1rem;
     } 
     .social {
-        height: 1rem;
+        height: 1.25rem;
         padding: 0 .75rem;
         align-self: center;
     }
     .social > img {
-        height: 1rem;
+        height: 1.25rem;
     }
     .copyright { 
         margin-top:.75rem; font-size: .9rem; color: #7A848E;   
