@@ -37,7 +37,7 @@ jobs:
           # Optional plain body:
           body: Verify your email. Follow the link below.
           # Optional HTML body read from file:
-          html_body: file://.github/workflows/test.html
+          html_body: file://.github/workflows/kubecon.html
           # Optional carbon copy recipients:
           # cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
