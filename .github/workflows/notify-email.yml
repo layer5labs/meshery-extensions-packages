@@ -27,9 +27,9 @@ jobs:
           # Required mail subject:
           subject: Github Actions job result
           # Required recipients' addresses:
-          to: speak2adi@gmail.com, rudrakshpareek3601@gmail.com, lee.calcote@layer5.io
+          to: lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
-          from: L5io Release Manager # <user@example.com>
+          from: Layer5 # <user@example.com>
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:
