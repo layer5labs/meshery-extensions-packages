@@ -47,7 +47,7 @@ jobs:
           # Optional unsigned/invalid certificates allowance:
           ignore_cert: true
           # Optional converting Markdown to HTML (set content_type to text/html too):
-          convert_markdown: false
+          convert_markdown: true
           content_type: text/html
           # Optional attachments:
           # attachments: attachments.zip,git.diff,./dist/static/*.js
