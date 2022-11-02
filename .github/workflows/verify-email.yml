@@ -76,7 +76,7 @@ jobs:
                 a:visited { color: #00B39F; }
                 div.verify {
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     border-radius: .5rem;
                     color: #1e2117;
                     border: #7A848E 1px solid;
