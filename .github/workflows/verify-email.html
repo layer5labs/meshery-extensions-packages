@@ -1,0 +1,103 @@
+<html>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    @font-face {
+        font-family: "Qanelas Soft";
+         src: url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.eot"); /* IE9*/
+        src: url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.woff2") format("woff2"), /* chrome firefox */
+        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.woff") format("woff"), /* chrome firefox */
+        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
+        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.svg#Qanelas Soft") format("svg"); /* iOS 4.1- */
+    }
+    p { font-family: "Qanelas Soft"; }
+    a:visited { color: #00B39F; }
+    div.verify {
+        border-radius: .5rem;
+        color: #1e2117;
+        /* background-color: slategray; */
+        border: #7A848E 1px solid;
+        padding: 1rem;
+        margin: 1rem;
+        font-family: "Qanelas Soft";
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .header {
+        display: flex;
+        background-color: #1e2117;
+        padding: 1rem;
+        justify-content: center;
+    }
+    .header-logo {
+        width: 20rem;
+    }
+    .button {
+        padding: 1rem;
+        margin: 1 4rem;
+        font-size: .9rem;
+        background-color: #00B39F;
+        border: none;
+        cursor: pointer;
+        color: white;
+        border-radius: .5rem;
+    }
+    .button:hover {
+        background-color: #00D3A9;
+    }
+    .contact {
+        display: flex;
+        justify-content: center;
+        font-size: .8rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0rem;
+    }
+    .footer {
+        background-color: #1e2117;
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        padding: 1rem;
+    } 
+    .social {
+        height: 1rem;
+        padding: 0 .75rem;
+        align-self: center;
+    }
+    .copyright { 
+        margin-top:.75rem; font-size: .7rem; color: #7A848E;   
+        font-style: italic; 
+        display: flex;
+        justify-content: center;
+    }
+    </style>
+    <body>
+        <div class="header">
+            <img class="header-logo"
+                src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/ec6ea8a8-5643-e9a0-9b03-62f776554aad.png"
+                alt="Meshery logo" />
+        </div>
+        <div class="verify">
+            <p>Hi,</p>
+            <p>
+                Thanks for registering for an account on Meshery Cloud! Click below to verify your email address or copy and paste the link below into your browser.
+            </p>
+            <button class="button">Verify email address</button>
+            <p class="contact">Need any help?&nbsp;<a href="https://discuss.layer5.io">Contact us</a>.</p>
+        </div>
+        <div class="footer">
+                <a href="https://twitter.com/layer5"><img class="social" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/7547690c-0a33-4f92-985a-d8109765db24.png"></a>
+                <a href="https://www.linkedin.com/company/layer5"></a><img class="social" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/c3115a39-5f32-43a7-92d4-e0a14b3a626d.png"></a>
+                <a href="https://slack.layer5.io"><img class="social" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/7d98d789-47d6-4fe0-8074-f65de989eb08.png"></a>
+                <a href="https://www.youtube.com/c/Layer5io"><img class="social" src="https://mcusercontent.com/6b50be5aea3dfe1fd4c041d80/images/1cce1b1a-c045-40cd-9a49-39ac5f193516.png"></a>
+        </div>    
+        <p class="copyright">Copyright 2022, Layer5, Inc. All right reserved.</p>
+    </body>
+</html>
