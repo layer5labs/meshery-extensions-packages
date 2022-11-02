@@ -25,7 +25,7 @@ jobs:
           # Optional (recommended) mail server password:
           password: ${{secrets.MAIL_PASSWORD}}
           # Required mail subject:
-          subject: Github Actions job result
+          subject: Verify your email address on Meshery Cloud
           # Required recipients' addresses:
           to: lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
@@ -33,7 +33,7 @@ jobs:
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:
-          body: Build job of ${{github.repository}} completed successfully!
+          body: Verify your email. Follow the link below.
           # Optional HTML body read from file:
           html_body: '
 <html>
