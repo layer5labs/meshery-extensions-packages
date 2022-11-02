@@ -27,7 +27,7 @@ jobs:
           # Optional (recommended) mail server password:
           password: ${{secrets.MAIL_PASSWORD}}
           # Required mail subject:
-          subject: Verify your email address on Meshery Cloud
+          subject: Verify your email address
           # Required recipients' addresses:
           to: ${{ inputs.to }}, lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
@@ -47,7 +47,7 @@ jobs:
           # Optional unsigned/invalid certificates allowance:
           ignore_cert: true
           # Optional converting Markdown to HTML (set content_type to text/html too):
-          convert_markdown: true
+          convert_markdown: false
           # Optional attachments:
           # attachments: attachments.zip,git.diff,./dist/static/*.js
           # Optional priority: 'high', 'normal' (default) or 'low'
