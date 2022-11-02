@@ -4,7 +4,7 @@ on:
     inputs:
       to:
         description: 'recipient(s)'
-        required: true
+        required: false
       # revision:
       #   description: 'Revision of release'
       #   required: true
@@ -27,7 +27,7 @@ jobs:
           # Required mail subject:
           subject: Verify your email address on Meshery Cloud
           # Required recipients' addresses:
-          to: ${{ inputs.to }} 
+          to: ${{ inputs.to }}, lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
           from: "Meshery Cloud" # <user@example.com>
           # Optional whether this connection use TLS (default is true if server_port is 465)
@@ -35,7 +35,7 @@ jobs:
           # Optional plain body:
           body: Verify your email. Follow the link below.
           # Optional HTML body read from file:
-          html_body: .github/workflows/verify-email.html
+          html_body: file://.github/workflows/verify-email.html
           # Optional carbon copy recipients:
           # cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
