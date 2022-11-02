@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       to:
-        description: 'recipient'
-        required: false
+        description: 'recipient(s)'
+        required: true
       # revision:
       #   description: 'Revision of release'
       #   required: true
@@ -27,7 +27,7 @@ jobs:
           # Required mail subject:
           subject: Verify your email address on Meshery Cloud
           # Required recipients' addresses:
-          to: lee.calcote@layer5.io
+          to: ${{ inputs.to }} 
           # Required sender full name (address can be skipped):
           from: "Meshery Cloud" # <user@example.com>
           # Optional whether this connection use TLS (default is true if server_port is 465)
@@ -144,7 +144,7 @@ jobs:
     </body>
 </html>'
           # Optional carbon copy recipients:
-          cc: leecalcote@icloud.com
+          # cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
           # bcc: r2d2@example.com,hansolo@example.com
           # Optional recipient of the email response:
@@ -154,7 +154,7 @@ jobs:
           # Optional converting Markdown to HTML (set content_type to text/html too):
           convert_markdown: true
           # Optional attachments:
-          attachments: attachments.zip,git.diff,./dist/static/*.js
+          # attachments: attachments.zip,git.diff,./dist/static/*.js
           # Optional priority: 'high', 'normal' (default) or 'low'
-          priority: low
+          priority: normal
 
