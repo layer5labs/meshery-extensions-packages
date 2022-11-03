@@ -141,7 +141,7 @@ jobs:
         </div>
         <div class="verify">
             <p>Hi,<br /><br />
-                Thanks for registering for an account on Meshery Cloud! Click below to verify your email address or copy and paste the link below into your browser.
+                Click below to verify your email address and enable your Meshery Cloud account.
             </p>
             <button class="button">Verify email address</button>
             <p class="contact">Need any help?&nbsp;<a href="https://discuss.layer5.io">Contact us</a>.</p>
