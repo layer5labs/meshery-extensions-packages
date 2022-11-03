@@ -53,21 +53,17 @@ jobs:
           # Optional HTML body read from file:
           html_body: '<html>
 <style>
-    * {
+    body {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: "Qanelas Soft,Arial"; 
     }
     @font-face {
         font-family: "Qanelas Soft";
-         src: url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.eot"); /* IE9*/
-        src: url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.woff2") format("woff2"), /* chrome firefox */
-        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.woff") format("woff"), /* chrome firefox */
-        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
-        url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.svg#Qanelas Soft") format("svg"); /* iOS 4.1- */
+        src: url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.woff2") format("woff2"), url("http://db.onlinewebfonts.com/t/5173256ffa3e08c4cbed8986369258a6.woff") format("woff");
     }
-    p { font-family: "Qanelas Soft";        
+    p { font-family: "Qanelas Soft,Arial";        
         padding: 1rem;
         margin: 1rem;
         font-size: 1.1rem;
@@ -80,7 +76,7 @@ jobs:
         border-radius: .5rem;
         color: #1e2117;
         border: #7A848E 1px solid;
-        font-family: "Qanelas Soft";
+        font-family: "Qanelas Soft,Arial";
         align-content: center;
         margin: 1rem;
         
@@ -93,7 +89,7 @@ jobs:
         justify-content: center;
     }
     .header-logo {
-        width: 20rem;
+        width: 20vh;
     }
     .button {
         padding: 1rem;
