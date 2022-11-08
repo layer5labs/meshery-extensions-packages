@@ -1,0 +1,91 @@
+name: Release and Deploy Meshery Cloud
+on:
+  workflow_dispatch:
+    inputs:
+      release-environment: 
+        description: "Staging or Production"
+        required: true
+        default: "staging"
+
+jobs:
+  staging:
+    name: Staging - Docker build and push
+    runs-on: ubuntu-latest
+    if: inputs.release-environment == 'staging'
+    steps:
+    - name: Checkout Meshery Cloud code
+      uses: actions/checkout@v3
+      with:
+        repository: layer5io/meshery-cloud
+        path: ./meshery-cloud
+        fetch-depth: 1
+        # ref: ${{ inputs.branch_name }}
+        token: ${{ secrets.GH_ACCESS_TOKEN }}
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Docker staging build & tag
+      if: success()
+      run: |
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:staging-latest --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION="staging-latest" .
+        docker tag layer5/meshery-cloud:staging-latest layer5/meshery-cloud:staging-${GITHUB_SHA::7}
+    - name: Docker staging push
+      if: success()
+      run: |
+        docker push layer5/meshery-cloud:staging-latest
+        docker push layer5/meshery-cloud:staging-${GITHUB_SHA::7}
+    - name: Deploy staging
+      if: success()
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.AWS_STG_HOST }}
+        username: ${{ secrets.AWS_PROD_USERNAME }}
+        key: ${{ secrets.AWS_PROD_KEY }}
+        port: 22
+        script: |
+          cd meshery-cloud
+          git pull
+          sudo docker pull layer5/meshery-cloud:staging-latest
+          sudo make hydra-stg-run 
+          sudo make kratos-stg-run 
+          sudo make docker-stg-run
+  prod:
+    name: Production - Docker build and push
+    if: inputs.release-environment == 'production'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 1
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }} 
+    - name: Docker production build & tag
+      if: success()
+      run: |
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${GITHUB_REF/refs\/tags\//} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} .
+        docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${GITHUB_REF/refs\/tags\//}
+        docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${GITHUB_SHA::7}
+    - name: Docker production push
+      if: success()
+      run: |
+        docker push layer5/meshery-cloud:production-latest
+        docker push layer5/meshery-cloud:production-${GITHUB_REF/refs\/tags\//}
+        docker push layer5/meshery-cloud:production-${GITHUB_SHA::7}
+    - name: Deploy production
+      if: success()
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.AWS_PROD_HOST }}
+        username: ${{ secrets.AWS_PROD_USERNAME }}
+        key: ${{ secrets.AWS_PROD_KEY }}
+        port: 22
+        script: |
+          cd meshery-cloud
+          sudo docker pull layer5/meshery-cloud:production-latest
+          sudo make prod-deploy
