@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: layer5io/meshery-cloud
-        path: ./meshery-cloud
+        #path: ./meshery-cloud
         fetch-depth: 1
         # ref: ${{ inputs.branch_name }}
         token: ${{ secrets.GH_ACCESS_TOKEN }}
