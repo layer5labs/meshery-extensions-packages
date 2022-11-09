@@ -70,13 +70,13 @@ jobs:
     - name: Docker production build & tag
       if: success()
       run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${inputs.release-version} .
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{ inputs.release-version }} .
         docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${inputs.release-version}
     - name: Docker production push
       if: success()
       run: |
         docker push layer5/meshery-cloud:production-latest
-        docker push layer5/meshery-cloud:production-${inputs.release-version}
+        docker push layer5/meshery-cloud:production-${{ inputs.release-version }}
     - name: Deploy production
       if: success()
       uses: appleboy/ssh-action@master
