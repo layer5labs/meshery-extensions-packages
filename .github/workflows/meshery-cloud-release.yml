@@ -11,6 +11,9 @@ on:
         required: true
         default: "latest"
 
+env:
+  GIT_VERSION: ${{inputs.release-version}}
+
 jobs:
   staging:
     name: Staging - Docker build and push
@@ -74,13 +77,13 @@ jobs:
     - name: Docker production build & tag
       if: success()
       run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{ inputs.release-version }} .
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} .
         docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${inputs.release-version}
     - name: Docker production push
       if: success()
       run: |
         docker push layer5/meshery-cloud:production-latest
-        docker push layer5/meshery-cloud:production-${{ inputs.release-version }}
+        docker push layer5/meshery-cloud:production-${{env.GIT_VERSION}}
     - name: Deploy production
       if: success()
       uses: appleboy/ssh-action@master
@@ -92,7 +95,7 @@ jobs:
         script: |
           cd meshery-cloud
           git pull
-          sudo docker pull layer5/meshery-cloud:staging-latest
+          sudo docker pull layer5/meshery-cloud:production-latest
           sudo make hydra-prod-run
           sudo make kratos-prod-run 
           sudo make docker-prod-run
