@@ -7,7 +7,7 @@ on:
         required: true
         default: "staging"
       release-version: 
-        description: "Staging or Production (lowercase)"
+        description: "e.g. v0.6.26"
         required: true
         default: "latest"
 
