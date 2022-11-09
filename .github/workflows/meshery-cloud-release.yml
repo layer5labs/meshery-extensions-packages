@@ -3,9 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       release-environment: 
-        description: "Staging or Production"
+        description: "Staging or Production (lowercase)"
         required: true
         default: "staging"
+      release-version: 
+        description: "Staging or Production (lowercase)"
+        required: true
+        default: "latest"
 
 jobs:
   staging:
@@ -66,11 +70,13 @@ jobs:
     - name: Docker production build & tag
       if: success()
       run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${inputs.release-version} .
+        docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${inputs.release-version}
     - name: Docker production push
       if: success()
       run: |
         docker push layer5/meshery-cloud:production-latest
+        docker push layer5/meshery-cloud:production-${inputs.release-version}
     - name: Deploy production
       if: success()
       uses: appleboy/ssh-action@master
@@ -81,5 +87,10 @@ jobs:
         port: 22
         script: |
           cd meshery-cloud
-          sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make prod-deploy
+          git pull
+          sudo docker pull layer5/meshery-cloud:staging-latest
+          sudo make hydra-prod-run
+          sudo make kratos-prod-run 
+          sudo make docker-prod-run
+          # sudo make prod-deploy
+          
