@@ -78,7 +78,7 @@ jobs:
       if: success()
       run: |
         DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} .
-        docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${inputs.release-version}
+        docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${{env.GIT_VERSION}}
     - name: Docker production push
       if: success()
       run: |
