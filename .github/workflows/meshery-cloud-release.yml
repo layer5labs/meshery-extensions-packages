@@ -28,7 +28,7 @@ jobs:
   staging:
     name: Staging - Docker build and push
     runs-on: ubuntu-latest
-    if: inputs.release-environment == 'staging' || inputs.call-release-environment == 'staging'
+    if: inputs.release-environment == 'staging' || workflow_call.inputs.call-release-environment == 'staging'
     steps:
     - name: Checkout Meshery Cloud code
       uses: actions/checkout@v3
