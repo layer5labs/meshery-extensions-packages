@@ -6,10 +6,12 @@ on:
         description: "Staging or Production (lowercase)"
         required: true
         default: "staging"
+        type: string
       call-release-version: 
         description: "e.g. v0.6.26"
         required: true
         default: "latest"
+        type: string
   workflow_dispatch:
     inputs:
       release-environment: 
