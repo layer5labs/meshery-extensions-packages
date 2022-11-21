@@ -17,7 +17,3 @@ jobs:
   meshery-cloud-deploy:
     if: github.event.action == 'meshery-cloud-deploy'
     uses: layer5labs/meshery-extensions-packages/.github/workflows/meshery-cloud-release.yml@master
-    secrets: 
-      PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
-      GO_VERSION: ${{ secrets.GO_VERSION }}
-      GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
