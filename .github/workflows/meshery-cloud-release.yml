@@ -1,6 +1,15 @@
 name: Release and Deploy Meshery Cloud
 on:
   workflow_call:
+      inputs:
+      call-release-environment: 
+        description: "Staging or Production (lowercase)"
+        required: true
+        default: "staging"
+      call-release-version: 
+        description: "e.g. v0.6.26"
+        required: true
+        default: "latest"
   workflow_dispatch:
     inputs:
       release-environment: 
@@ -19,7 +28,7 @@ jobs:
   staging:
     name: Staging - Docker build and push
     runs-on: ubuntu-latest
-    if: inputs.release-environment == 'staging'
+    if: inputs.release-environment == 'staging' || inputs.call-release-environment == 'staging'
     steps:
     - name: Checkout Meshery Cloud code
       uses: actions/checkout@v3

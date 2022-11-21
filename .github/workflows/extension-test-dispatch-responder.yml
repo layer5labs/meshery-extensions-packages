@@ -17,3 +17,6 @@ jobs:
   meshery-cloud-deploy:
     if: github.event.action == 'meshery-cloud-deploy'
     uses: layer5labs/meshery-extensions-packages/.github/workflows/meshery-cloud-release.yml@master
+    with: 
+      call-release-environment: ${{ github.event.client_payload.release-environment }}
+      call-release-version: ${{ github.event.client_payload.release-version}} 
