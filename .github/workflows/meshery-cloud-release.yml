@@ -1,7 +1,7 @@
 name: Release and Deploy Meshery Cloud
 on:
   workflow_call:
-      inputs:
+    inputs:
       call-release-environment: 
         description: "Staging or Production (lowercase)"
         required: true
