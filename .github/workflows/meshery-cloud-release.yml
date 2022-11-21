@@ -1,5 +1,6 @@
 name: Release and Deploy Meshery Cloud
 on:
+  workflow_call:
   workflow_dispatch:
     inputs:
       release-environment: 
