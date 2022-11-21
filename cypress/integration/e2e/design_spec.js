@@ -32,18 +32,18 @@ describe("Designer Spec", () => {
     })
   });
 
-  it("Rename Design", () => {
-    cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
-    cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
-    cy.intercept('/api/pattern').as('patternSave')
-    cy.get("#design-name-textfield").focus().clear().type("Changed Name with cypress");
-    cy.wait("@patternSave").then(() => {
-      // move to drawer and check for update
-      cy.get("[data-cy='design-drawer']").click();
-      cy.get("#MUIDataTableBodyRow-patterns-0 p", {timeout: 30000});
-      cy.wait(2500);
-      cy.get("#MUIDataTableBodyRow-patterns-0 p").contains("Changed Name with cypress");
-    })
+  it.skip("Rename and Saving Design", () => {
+    cy.get("[data-cy='design-drawer']").click();//getMap issue
+    cy.wait(2000);
+    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 3000}).should("be.visible").click(); // drop the first design
+    cy.get("#design-name-textfield").type(argoRolloutDesign);
+    cy.intercept('/api/pattern*').as('patternSave')
+ 
+    cy.wait("@applicationSave").then(() => {
+        // move to drawer and check for update
+        cy.get("[data-cy='design-drawer']").click();
+        cy.get("#MUIDataTableBodyRow-design-0 p").contains(argoRolloutDesign);
+      })
   })
   
   it("Search a design", () => {
@@ -52,16 +52,16 @@ describe("Designer Spec", () => {
     cy.wait(2000);
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.intercept("/api/pattern*").as("patternSearch")
-    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
+    cy.get('[data-test-id="Search"]').type(argoRolloutDesign);
     cy.wait("@patternSearch")
-    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains("Changed Name with cypress");
+    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains(argoRolloutDesign);
   })
 
   it("Validate a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
-    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
+    cy.get('[data-test-id="Search"]').type(argoRolloutDesign);
     cy.intercept("/api/pattern*").as("patternPost")
     cy.wait("@patternPost")
     cy.get("body").then(body => {
@@ -73,7 +73,7 @@ describe("Designer Spec", () => {
     cy.contains("OK");
   })
 
-  it("Deploy and Undeploy a design", () => {
+  it.skip("Deploy and Undeploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.wait(2000);

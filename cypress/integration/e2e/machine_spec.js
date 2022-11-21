@@ -51,9 +51,12 @@ describe("State Machine Spec", () => {
             cy.wait("@patternSave");
         });
 
-        it("DO save designs when all nodes are emptied on user request (reset canvas or all node deletes)", () => {
+        it.skip("DO save designs when all nodes are emptied on user request (reset canvas or all node deletes)", () => {
             // Drop a node on canvas
-            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
+            cy.get(".component-drawer-svg-container[draggable='true']").click().drag("#cy-canvas-container", {force: true})
+            // visit designer drawer to close schema
+            cy.get("[data-cy='design-drawer']").click();
+            cy.wait(2000);
             // Reset canvas by clear/delete all nodes
             cy.get('[data-cy="reset-btn"]').click();
             // Check Saving the design
