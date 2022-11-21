@@ -1,4 +1,4 @@
-name: Meshery-extension Tests on Pull Request
+name: Workflow Dispatcher
 on: [repository_dispatch]
 
 jobs:
@@ -21,4 +21,4 @@ jobs:
       call-release-environment: ${{ github.event.client_payload.release_environment }}
       call-release-version: ${{ github.event.client_payload.release_version}} 
     secrets: 
-      GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+      GH_ACCESS_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
