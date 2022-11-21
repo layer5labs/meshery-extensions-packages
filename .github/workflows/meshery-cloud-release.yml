@@ -14,7 +14,7 @@ on:
         type: string
     secrets:
       GH_ACCESS_TOKEN: 
-        required: true  
+        required: true
   workflow_dispatch:
     inputs:
       release-environment: 
