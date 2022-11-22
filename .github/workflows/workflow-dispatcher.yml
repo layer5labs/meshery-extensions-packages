@@ -21,4 +21,4 @@ jobs:
       call-release-environment: ${{ github.event.client_payload.release_environment }}
       release-version: ${{ github.event.client_payload.release_version}} 
     secrets: 
-      GH_ACCESS_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+      GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
