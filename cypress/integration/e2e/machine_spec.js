@@ -8,8 +8,8 @@ describe("State Machine Spec", () => {
         cy.interceptCapabilities();
         window.localStorage.setItem("tab", 0)
         cy.setMode(DESIGNER)
-        cy.visit("/extension/meshmap");
         cy.intercept("/api/provider/extension*").as("extensionFileLoad");
+        cy.visit("/extension/meshmap");
         cy.wait("@extensionFileLoad", { timeout: 20000 });
         cy.intercept('/api/pattern').as('patternSave')
     })
@@ -37,13 +37,13 @@ describe("State Machine Spec", () => {
         it.skip('DO save design every time a node is added or removed', () => {
             // Check Save Operation on Additon of node  
             // A node is added on canvas    
-            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", { force: true })
             cy.wait(1000);
             cy.get('#design-name-textfield').click();
             cy.wait("@patternSave");
-            
+
             // Check Save on deletion of node
-            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", {force: true})
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", { force: true })
             // Perform delete action
             cy.wait(1000);
             cy.get("#component-delete").click();
@@ -51,14 +51,14 @@ describe("State Machine Spec", () => {
             cy.wait("@patternSave");
         });
 
-        it.skip("DO save designs when all nodes are emptied on user request (reset canvas or all node deletes)", () => {
+        it("DO save designs when all nodes are emptied on user request (reset canvas or all node deletes)", () => {
             // Drop a node on canvas
-            cy.get(".component-drawer-svg-container[draggable='true']").click().drag("#cy-canvas-container", {force: true})
+            cy.get(".component-drawer-svg-container[draggable='true']").first().click().drag("#cy-canvas-container", { force: true });
             // visit designer drawer to close schema
-            cy.get("[data-cy='design-drawer']").click();
             cy.wait(2000);
+            cy.get("[data-cy='design-drawer']").click();
             // Reset canvas by clear/delete all nodes
-            cy.get('[data-cy="reset-btn"]').click();
+            cy.get('[data-cy="reset-btn"]').click({force: true});
             // Check Saving the design
             cy.wait("@patternSave");
         });
