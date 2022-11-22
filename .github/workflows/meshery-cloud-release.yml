@@ -7,7 +7,7 @@ on:
         required: true
         default: "staging"
         type: string
-      call-release-version: 
+      release-version:
         description: "e.g. v0.6.26"
         required: true
         default: "latest"
