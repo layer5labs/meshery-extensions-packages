@@ -19,6 +19,6 @@ jobs:
     uses: layer5labs/meshery-extensions-packages/.github/workflows/meshery-cloud-release.yml@master
     with: 
       call-release-environment: ${{ github.event.client_payload.release_environment }}
-      call-release-version: ${{ github.event.client_payload.release_version}} 
+      release-version: ${{ github.event.client_payload.release_version}} 
     secrets: 
       GH_ACCESS_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
