@@ -15,6 +15,7 @@ describe("Designer Spec", () => {
   })
 
   const argoRolloutDesign = "no-modify-argo-rollout-application-for-cypress";
+  const cypressModifiedDesignName = "changed Name with cypress"
 
   it("Load MeshMap Design with a click", () => {
     cy.get("[data-cy='design-drawer']").click();
@@ -34,15 +35,16 @@ describe("Designer Spec", () => {
 
   it("Rename Design", () => {
     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
+    cy.wait(2000); // let it open the rjsf successfully
     cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
     cy.intercept('/api/pattern').as('patternSave')
-    cy.get("#design-name-textfield").focus().clear().type("Changed Name with cypress");
+    cy.get("#design-name-textfield").focus().clear().type(cypressModifiedDesignName);
     cy.wait("@patternSave").then(() => {
       // move to drawer and check for update
       cy.get("[data-cy='design-drawer']").click();
       cy.get("#MUIDataTableBodyRow-patterns-0 p", {timeout: 30000});
       cy.wait(2500);
-      cy.get("#MUIDataTableBodyRow-patterns-0 p").contains("Changed Name with cypress");
+      cy.get("#MUIDataTableBodyRow-patterns-0 p").contains(cypressModifiedDesignName);
     })
   })
   
@@ -52,16 +54,16 @@ describe("Designer Spec", () => {
     cy.wait(2000);
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.intercept("/api/pattern*").as("patternSearch")
-    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
+    cy.get('[data-test-id="Search"]').type(cypressModifiedDesignName);
     cy.wait("@patternSearch")
-    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains("Changed Name with cypress");
+    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains(cypressModifiedDesignName);
   })
 
   it("Validate a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
-    cy.get('[data-test-id="Search"]').type("Changed Name with cypress");
+    cy.get('[data-test-id="Search"]').type(cypressModifiedDesignName);
     cy.intercept("/api/pattern*").as("patternPost")
     cy.wait("@patternPost")
     cy.get("body").then(body => {
