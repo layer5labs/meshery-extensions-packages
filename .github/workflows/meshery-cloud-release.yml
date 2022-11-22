@@ -2,7 +2,7 @@ name: Release and Deploy Meshery Cloud
 on:
   workflow_call:
     inputs:
-      call-release-environment: 
+      release-environment: 
         description: "Staging or Production (lowercase)"
         required: true
         default: "staging"
@@ -46,7 +46,7 @@ jobs:
   staging:
     name: Staging - Docker build and push
     runs-on: ubuntu-latest
-    if: inputs.release-environment == 'staging' || inputs.call-release-environment == 'staging'
+    if: inputs.release-environment == 'staging' 
     steps:
     - name: Checkout Meshery Cloud code
       uses: actions/checkout@v3
@@ -101,17 +101,14 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
     - name: Docker production build & tag
-      if: success()
       run: |
         DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} .
         docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${{env.GIT_VERSION}}
     - name: Docker production push
-      if: success()
       run: |
         docker push layer5/meshery-cloud:production-latest
         docker push layer5/meshery-cloud:production-${{env.GIT_VERSION}}
     - name: Deploy production
-      if: success()
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
