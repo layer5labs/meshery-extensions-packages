@@ -29,8 +29,9 @@ describe("Application Spec", () => {
       })
   });
 
-  it("Rename and Saving Application", () => { 
+  it.skip("Rename and Saving Application", () => { // renaming application is skipped until the import test is present, because it may change the users app name
     cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000}).should("be.visible").click(); // drop the first application
+    cy.wait(3000); // let it be dropped on the canvas
     cy.get("#design-name-textfield").type(bookInfoUrlUploadedName);
     cy.intercept('/api/application*').as('applicationSave')
  
@@ -38,6 +39,7 @@ describe("Application Spec", () => {
     cy.wait("@applicationSave").then(() => {
         // move to drawer and check for update
         cy.get("[data-cy='application-drawer']").click();
+        cy.wait(5000); // wait for seconds, because the subscritions cannot be tracked for now
         cy.get("#MUIDataTableBodyRow-applications-0 p").contains(bookInfoUrlUploadedName);
       })
   })
@@ -58,11 +60,11 @@ describe("Application Spec", () => {
     cy.contains("OK");
   })
 
-  it("Deploy and Undeploy an Application", () => {
+  it.skip("Deploy and Undeploy an Application", () => {
     cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.intercept("/api/application*").as("applicationPost")
     cy.wait("@applicationPost")
-    cy.get("#MUIDataTableBodyRow-applications-0").contains(bookInfoApp).click();
+    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(bookInfoApp).click();
     cy.wait(2000);
     cy.get("body").then(body => {
       if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
@@ -96,11 +98,10 @@ describe("Application Spec", () => {
     })
   });
 
-  it.skip("Search an Application", () => {
-    cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000}).should("be.visible").contains(bookInfoApp);
-    cy.wait(1000);
+  it("Search an Application", () => {
     cy.intercept("/api/application*").as("applicationSearch")
     cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.wait("@applicationSearch")
+    cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(bookInfoApp);
   })
 })
