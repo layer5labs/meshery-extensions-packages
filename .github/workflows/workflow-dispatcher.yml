@@ -22,3 +22,9 @@ jobs:
       release-version: ${{ github.event.client_payload.release_version}} 
     secrets: 
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      MESHERY_CLOUD_AWS_PROD_HOST: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
+      MESHERY_CLOUD_AWS_PROD_USERNAME: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
+      MESHERY_CLOUD_AWS_PROD_KEY: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
+      MESHERY_CLOUD_AWS_STG_HOST: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
