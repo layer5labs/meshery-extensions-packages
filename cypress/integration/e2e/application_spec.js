@@ -29,8 +29,9 @@ describe("Application Spec", () => {
       })
   });
 
-  it.skip("Rename and Saving Application", () => { // renaming application is skipped until the import test is present
+  it.skip("Rename and Saving Application", () => { // renaming application is skipped until the import test is present, because it may change the users app name
     cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000}).should("be.visible").click(); // drop the first application
+    cy.wait(3000); // let it be dropped on the canvas
     cy.get("#design-name-textfield").type(bookInfoUrlUploadedName);
     cy.intercept('/api/application*').as('applicationSave')
  
