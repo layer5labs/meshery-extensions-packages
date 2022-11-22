@@ -1,4 +1,4 @@
-name: Meshery-extension Tests on Pull Request
+name: Workflow Dispatcher
 on: [repository_dispatch]
 
 jobs:
@@ -14,3 +14,11 @@ jobs:
       GO_VERSION: ${{ secrets.GO_VERSION }}
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  meshery-cloud-deploy:
+    if: github.event.action == 'meshery-cloud-deploy'
+    uses: layer5labs/meshery-extensions-packages/.github/workflows/meshery-cloud-release.yml@master
+    with: 
+      call-release-environment: ${{ github.event.client_payload.release_environment }}
+      call-release-version: ${{ github.event.client_payload.release_version}} 
+    secrets: 
+      GH_ACCESS_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
