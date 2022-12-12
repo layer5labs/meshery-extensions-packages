@@ -48,14 +48,7 @@ describe("Application Spec", () => {
     cy.get("[data-cy='application-drawer']").click();
     cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000})
     cy.get("#MUIDataTableBodyRow-applications-0").click();
-    cy.get('[data-test-id="Search"]').type(bookInfoApp);
-    cy.intercept("/api/application*").as("applicationPost")
-    cy.wait("@applicationPost")
-    cy.get("body").then(body => {
-      if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
-        cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Unable to render")
-      }
-    })
+    cy.wait(2000);
     cy.get("#verify-design-btn").click();
     cy.contains("OK");
   })
