@@ -17,7 +17,7 @@ describe("Designer Spec", () => {
   const argoRolloutDesign = "no-modify-argo-rollout-application-for-cypress";
   const cypressModifiedDesignName = "changed Name with cypress"
 
-  it.skip("Load MeshMap Design with a click", () => {
+  it("Load MeshMap Design with a click", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000});
     cy.wait(2000);
@@ -33,7 +33,7 @@ describe("Designer Spec", () => {
     })
   });
 
-  it.skip("Rename Design", () => {
+  it("Rename Design", () => {
     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
     cy.wait(2000); // let it open the rjsf successfully
     cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
@@ -48,7 +48,7 @@ describe("Designer Spec", () => {
     })
   })
   
-  it.skip("Search a design", () => {
+  it("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.wait(2000);
@@ -71,7 +71,7 @@ describe("Designer Spec", () => {
     cy.contains("OK");
   })
 
-  it.skip("Deploy and Undeploy a design", () => {
+  it("Deploy and Undeploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.wait(2000);
