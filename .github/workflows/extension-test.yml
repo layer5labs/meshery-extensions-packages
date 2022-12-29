@@ -107,7 +107,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           working-directory: ui
-          spec: cypress/integration/e2e/**/*
+          spec: cypress/e2e/e2e/**/*
           browser: chrome 
           record: true
         env:
