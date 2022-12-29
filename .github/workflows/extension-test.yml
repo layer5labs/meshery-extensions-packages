@@ -100,7 +100,7 @@ jobs:
       - name: Move cypress tests
         run: |
           rm -rf ui/cypress
-          rm ui/cypress.json
+          rm ui/cypress.config.js
           mv cypress/cypress ui/
           mv cypress/cypress.config.js ui/cypress.config.js
       - name: Cypress run
