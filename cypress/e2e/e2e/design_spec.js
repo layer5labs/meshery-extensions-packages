@@ -9,8 +9,8 @@ describe("Designer Spec", () => {
     cy.interceptCapabilities();
     window.localStorage.setItem("tab", 0) // its a bug in designer
     cy.setMode(DESIGNER)
-    cy.visit("/extension/meshmap");
     cy.intercept("/api/provider/extension*").as("extensionFileLoad")
+    cy.visit("/extension/meshmap");
     cy.wait("@extensionFileLoad", { timeout: 20000 });
   })
 
@@ -62,8 +62,11 @@ describe("Designer Spec", () => {
   it("Validate a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
+    cy.wait(1500);
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
+    cy.wait(1500); // wait for design to load
     cy.get("#verify-design-btn").click();
+    cy.get('[data-cy="validate-btn-modal"]').click();
     cy.contains("Validate");
     cy.contains("OK");
   })
@@ -75,6 +78,7 @@ describe("Designer Spec", () => {
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.get('[data-test-id="Search"]').type(argoRolloutDesign);
     cy.intercept("/api/pattern*").as("patternPost")
+    cy.wait(1500);
     cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains(argoRolloutDesign);
     cy.wait(2000);
     cy.get("#MUIDataTableBodyRow-patterns-0").click({force: true}).wait("@patternPost");
@@ -87,8 +91,10 @@ describe("Designer Spec", () => {
       }
     })
 
-    cy.get("#deploy-design-btn").click();
     // modal opens
+    cy.get("#deploy-design-btn").click();
+    cy.get('[data-cy="deploy-btn-modal"]').click();
+    
     cy.intercept("/api/pattern/deploy*").as("patternDeploy")
     cy.get('[data-cy="deploy-btn-confirm"]').click();
     cy.wait("@patternDeploy").then(() => {
@@ -101,6 +107,7 @@ describe("Designer Spec", () => {
     })
     //Undeploy 
     cy.get('#undeploy-design-btn').click();
+    cy.get('[data-cy="Undeploy-btn-modal"]').click();
     // modal opens
     cy.intercept("/api/pattern/deploy*").as("patternUndeploy")
     cy.get('[data-cy="deploy-btn-confirm"]').click();
