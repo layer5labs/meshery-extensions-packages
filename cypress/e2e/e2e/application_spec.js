@@ -8,8 +8,8 @@ describe("Application Spec", () => {
     cy.interceptCapabilities();
     window.localStorage.setItem("tab", 0)
     cy.setMode(DESIGNER)
-    cy.visit("/extension/meshmap");
     cy.intercept("/api/provider/extension*").as("extensionFileLoad");
+    cy.visit("/extension/meshmap");
     cy.wait("@extensionFileLoad", { timeout: 20000 });
     cy.get('[data-cy="application-drawer"]').click();
     cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000}).should("be.visible"); // start tests only when the application table is populated
@@ -47,9 +47,11 @@ describe("Application Spec", () => {
   it("Validate an application", () => {
     cy.get("[data-cy='application-drawer']").click();
     cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000})
+    cy.wait(1500);
     cy.get("#MUIDataTableBodyRow-applications-0").click();
     cy.wait(2000);
     cy.get("#verify-design-btn").click();
+    cy.get('[data-cy="validate-btn-modal"]').click();
     cy.contains("OK");
   })
 
@@ -57,6 +59,7 @@ describe("Application Spec", () => {
     cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.intercept("/api/application*").as("applicationPost")
     cy.wait("@applicationPost")
+    cy.wait(1500);
     cy.get("#MUIDataTableBodyRow-applications-0").should("be.visible").contains(bookInfoApp).click();
     cy.wait(2000);
     cy.get("body").then(body => {
@@ -65,6 +68,7 @@ describe("Application Spec", () => {
       }
     })
     cy.get("#deploy-design-btn").click();
+    cy.get('[data-cy="deploy-btn-modal"]').click();
     // modal opens
     cy.intercept("/api/pattern/deploy*").as("applicationDeploy")
     cy.get('[data-cy="deploy-btn-confirm"]').click();
@@ -78,6 +82,8 @@ describe("Application Spec", () => {
     })
     //Undeploy 
     cy.get('#undeploy-design-btn').click();
+    cy.get('[data-cy="Undeploy-btn-modal"]').click();
+
     // modal opens
     cy.intercept("/api/pattern/deploy*").as("applicationUndeploy")
     cy.get('[data-cy="deploy-btn-confirm"]').click();
