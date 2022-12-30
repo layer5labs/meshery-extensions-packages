@@ -80,7 +80,7 @@ func KratosTest(hostURL, hostName string, wg *sync.WaitGroup) []ory.Message {
 			})).Execute()
 				
 			for i := 0; i < retries; i++ {
-				status := GetEmailStatus(recipient[0])
+				status := GetEmailStatus(monitorAccount)
 				if status == EMAIL_SENT {
 					break
 				}
