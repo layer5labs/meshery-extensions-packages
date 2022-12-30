@@ -1,7 +1,7 @@
 name: Synthetic Tests
 on: 
   schedule: 
-    - cron: "30 * * * *"
+    - cron: "15 * * * *"
 jobs:
   test: 
     name: Test for Hydra, Kratos and Courier Service
