@@ -117,7 +117,7 @@ jobs:
         port: 22
         script: |
           cd meshery-cloud
-          git pull
+          sudo git pull
           sudo docker pull layer5/meshery-cloud:production-latest
           sudo make hydra-prod-run
           sudo make kratos-prod-run 
