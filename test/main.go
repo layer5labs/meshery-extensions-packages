@@ -56,7 +56,7 @@ func HealthCheck(hostURL, hostName string, wg *sync.WaitGroup) bool {
 
 		bd, _ := io.ReadAll(resp.Body)
 		_ = json.Unmarshal(bd, &result)
-		if (string(result.Status) != HealthResponse) {
+		if resp.StatusCode != http.StatusOK {
 			message := fmt.Sprintf("Subject: %s Health Status\n\n" + "This is an alert email. The %s Container is not healthy/down." + time.Now().UTC().Format("Mon 02 January 2006 15:04:05 UTC"), hostName)
 			issueAlert(message)
 			wg.Done()
@@ -76,7 +76,7 @@ func KratosTest(hostURL, hostName string, wg *sync.WaitGroup) []ory.Message {
 			kratosApiClient.FrontendApi.UpdateVerificationFlow(ctx).Flow(flow.Id).
 			UpdateVerificationFlowBody(ory.UpdateVerificationFlowWithLinkMethodAsUpdateVerificationFlowBody(&ory.UpdateVerificationFlowWithLinkMethod{
 				Email:  monitorAccount,
-				Method: "link",
+				Method: "code",
 			})).Execute()
 				
 			for i := 0; i < retries; i++ {
