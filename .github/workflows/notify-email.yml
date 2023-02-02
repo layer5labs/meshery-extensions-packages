@@ -5,9 +5,11 @@ on:
       to:
         description: 'recipient'
         required: false
-      # revision:
-      #   description: 'Revision of release'
-      #   required: true
+  workflow_call:
+    inputs:
+      to:
+        description: 'recipient'
+        required: false
 jobs:
   email:
     name: Prepare email
@@ -35,7 +37,7 @@ jobs:
           # Optional plain body:
           body: Meshery Released!
           # Optional HTML body read from file:
-          html_body: file://meshery/meshery-release-notifier.html
+          html_body: https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/.github/workflows/meshery/meshery-release-notifier.html
           # Optional carbon copy recipients:
           cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
