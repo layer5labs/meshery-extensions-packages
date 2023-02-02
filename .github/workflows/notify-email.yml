@@ -16,10 +16,11 @@ jobs:
     name: Prepare email
     runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout 🛎️ repo
+        uses: actions/checkout@master    
         with:
             fetch-depth: 1
+            repository: layer5labs/meshery-extensions-packages
             token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Send email
         uses: dawidd6/action-send-mail@v3.7.1
