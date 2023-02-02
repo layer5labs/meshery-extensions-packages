@@ -9,6 +9,7 @@ on:
     inputs:
       to:
         description: 'recipient'
+        type: string
         required: false
 jobs:
   email:
