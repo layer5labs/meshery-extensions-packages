@@ -41,9 +41,9 @@ jobs:
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:
-          body: Meshery Released!
+          body: New Meshery Release. Find details at https://docs.meshery.io/project/releases
           # Optional HTML body read from file:
-          html_body: file://email/meshery-release-notifier.html
+          html_body: file://email/verify-email.html
           # Optional carbon copy recipients:
           cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
