@@ -16,6 +16,11 @@ jobs:
     name: Prepare email
     runs-on: "ubuntu-latest"
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            fetch-depth: 1
+            token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Send email
         uses: dawidd6/action-send-mail@v3.7.1
         with:
@@ -32,7 +37,7 @@ jobs:
           # Required recipients' addresses:
           to: lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
-          from: Meshery # <user@example.com>
+          from: Meshery <no-reply@meshery.io>
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:
