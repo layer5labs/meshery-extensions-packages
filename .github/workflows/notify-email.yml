@@ -43,7 +43,7 @@ jobs:
           # Optional plain body:
           body: Meshery Released!
           # Optional HTML body read from file:
-          html_body: file://meshery-release-notifier.html
+          html_body: file://meshery-release-notification.html
           # Optional carbon copy recipients:
           cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
