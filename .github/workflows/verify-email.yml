@@ -142,7 +142,7 @@ jobs:
     <body>
         <div class="header">
             <img class="header-logo"
-                src="https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/.github/workflows/meshery-cloud.svg"
+                src="https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/email/layer5-cloud/meshery-cloud.svg"
                 alt="Meshery logo" />
         </div>
         <div class="verify">
