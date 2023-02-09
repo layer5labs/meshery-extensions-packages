@@ -79,8 +79,6 @@ jobs:
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:staging-latest
-          sudo make hydra-stg-run 
-          sudo make kratos-stg-run 
           sudo make docker-stg-run
   prod:
     name: Production - Docker build and push
@@ -119,8 +117,6 @@ jobs:
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make hydra-prod-run
-          sudo make kratos-prod-run 
           sudo make docker-prod-run
           # sudo make prod-deploy
           
