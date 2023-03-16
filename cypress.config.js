@@ -17,5 +17,7 @@ module.exports = defineConfig({
     },
     baseUrl: 'http://localhost:9081',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    viewportWidth: 1240,
+    viewportHeight: 660
   },
 })

@@ -120,4 +120,27 @@ describe("Designer Spec", () => {
       })
     })
   });
+
+  it.only("Drop node onto Designer canvas)", () => {
+    // Drop a node on canvas
+    cy.get('img[src*="cloud-native-application"]').click();
+    cy.get('[cy="[object Object]"]').click();
+    cy.get(".component-drawer-svg-container[draggable='true']").first().drag("#cy-canvas-container", { force: true });
+    // // visit designer drawer to close schema
+    cy.wait(2000);
+    // cy.get("[data-cy='design-drawer']").click();
+    // // Reset canvas by clear/delete all nodes
+    // // cy.get('[data-cy="reset-btn"]').click({force: true});
+    // // Check Saving the design
+    // cy.wait("@patternSave");
+    
+    cy.window().then(window => {
+      cy.log(`window.cytoscape is ${JSON.stringify(window.cytoscape.elements)}`)
+      cy.wrap(window.cytoscape.elements.nodes[0].data.type).should('equal', 'Application')
+      cy.wrap(window.cytoscape.elements.nodes[0].data.apiVersion).should('equal', 'core.oam.dev/v1alpha1')
+      cy.wrap(window.cytoscape.elements.nodes[0].data.version).should('equal', 'v1.0.0')
+      cy.wrap(window.cytoscape.elements.nodes[0].data.meshType).should('equal', 'core')
+      cy.wrap(window.cytoscape.elements.nodes[0].group).should('equal', 'nodes')
+    })
+});
 })
