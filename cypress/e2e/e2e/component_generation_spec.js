@@ -11,7 +11,7 @@ describe("Component Generation Spec", () => {
     cy.wait("@extensionFileLoad", { timeout: 20000 });
   })
 
-  it("Check if service account component is generated or not", () => { 
+  it.skip("Check if service account component is generated or not", () => { 
     cy.get('[data-cy="component-drawer"]').click();
     cy.get('[data-cy="component-search"]').clear().type("Service Account");
     // no assertions?

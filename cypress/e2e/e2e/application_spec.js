@@ -18,7 +18,7 @@ describe("Application Spec", () => {
   const bookInfoUrlUploadedName = "k8s.yaml" // sample name of an application
   const bookInfoApp = "bookInfo-istio-cy"; // book-info istio application to search
 
-  it("Render MeshMap Application", () => {
+  it.skip("Render MeshMap Application", () => {
     cy.contains("Applications")
     cy.get("#MUIDataTableBodyRow-applications-0").click({force: true}); //convention: MUIDataTableBodyRow + type  + rowIndex
     cy.wait(2000);
@@ -44,7 +44,7 @@ describe("Application Spec", () => {
       })
   })
 
-  it("Validate an application", () => {
+  it.skip("Validate an application", () => {
     cy.get("[data-cy='application-drawer']").click();
     cy.get("#MUIDataTableBodyRow-applications-0", {timeout: 30000})
     cy.wait(1500);

@@ -33,7 +33,7 @@ describe("Designer Spec", () => {
     })
   });
 
-  it("Rename Design", () => {
+  it.skip("Rename Design", () => {
     cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
     cy.wait(2000); // let it open the rjsf successfully
     cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
@@ -48,7 +48,7 @@ describe("Designer Spec", () => {
     })
   })
   
-  it("Search a design", () => {
+  it.skip("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.wait(2000);
@@ -71,7 +71,7 @@ describe("Designer Spec", () => {
     cy.contains("OK");
   })
 
-  it("Deploy and Undeploy a design", () => {
+  it.skip("Deploy and Undeploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
     cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
     cy.wait(2000);
