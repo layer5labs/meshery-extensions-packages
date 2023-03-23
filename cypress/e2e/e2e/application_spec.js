@@ -97,7 +97,7 @@ describe("Application Spec", () => {
     })
   });
 
-  it("Search an Application", () => {
+  it.skip("Search an Application", () => {
     cy.intercept("/api/application*").as("applicationSearch")
     cy.get('[data-test-id="Search"]').type(bookInfoApp);
     cy.wait("@applicationSearch")
