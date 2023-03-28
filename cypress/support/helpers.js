@@ -17,5 +17,5 @@ export const beforeEachCallback = () => {
   cy.setMode(DESIGNER);
   cy.intercept(extension.path).as(extension.alias);
   cy.visit(MESHMAP_PATH)
-  cy.wait(waitFor(extension.alias));
+  cy.wait(`@${extension.alias}`, {timeout: 20000});
 }
