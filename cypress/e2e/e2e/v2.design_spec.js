@@ -2,7 +2,6 @@
 /// <reference types="cypress" />
 /// <reference types="../../support" /> 
 
-import { expect } from "chai";
 import { canvasLayer0, designEndpoint, TIME } from "../../support/constants";
 import { beforeEachCallback, waitFor } from "../../support/helpers";
 
@@ -56,11 +55,8 @@ describe("canvas test", () => {
 
     cy.window().its("cyto").should("exist") // there should be a global cytoscape property exposed
     cy.window().then(window => {
-      // assert whether the canvas object has now 1 element due to click operation
-      cy.wait(TIME.SMALL);
       const cyto = window.cyto;
       cy.wrap(cyto.nodes().length).should("equal", 1)
     })
   })
 })
-// cy.get('[data-cy="canvas-component-menu"] > [data-cy="category-menu"] > :nth-child(1)')

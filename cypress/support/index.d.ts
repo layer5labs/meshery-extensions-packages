@@ -31,15 +31,15 @@ declare namespace Cypress {
     /**
      * Set Release tag
      * @example
-     *  cy.setMode()
+     *  cy.setReleaseTag()
      */
     setReleaseTag(): Chainable<any>
 
     /**
      * Delete design with id
      * @example
-     *  cy.setMode()
+     *  cy.deleteDesign(designId)
      */
-    deleteDesign(id: string): Chainable<any>
+    deleteDesign(designId: string): Chainable<any>
   }
 }
