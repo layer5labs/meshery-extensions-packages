@@ -24,6 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+const { designEndpoint } = require("./constants");
+
 Cypress.Commands.add('login', () => {
   const token = Cypress.env('token');
   cy.setCookie("meshery-provider", "Meshery");
@@ -36,7 +38,7 @@ Cypress.Commands.add("setReleaseTag", (version) => {
       return console.error(err);
     };
   }).then((data) => {
-    if(!version) {
+    if (!version) {
       version = Cypress.env("releasetag")
     }
     data["package_version"] = version;
@@ -51,4 +53,18 @@ Cypress.Commands.add("setMode", (mode) => {
 
 Cypress.Commands.add("interceptCapabilities", () => {
   cy.intercept('GET', '/api/provider/capabilities', { fixture: 'capabilities.json' }).as('getCapabilites')
+})
+
+Cypress.Commands.add("setViewPort", () => {
+  cy.viewport(1500, 900)
+})
+
+Cypress.Commands.add("deleteDesign", (designId) => {
+  cy.request({
+    url: `${designEndpoint.absolutePath}/${designId}`,
+    method: "DELETE"
+  }).then(resp => {
+    console.log("resp", resp)
+    cy.log(resp.status)
+  })
 })

@@ -1,9 +1,9 @@
-import { DESIGNER } from "../../support/constants"
+import { cypressTestDesign, cytoConversion, DESIGNER, TIME } from "../../support/constants"
 import '@4tw/cypress-drag-drop'
 
 describe("Designer Spec", () => {
   beforeEach(() => {
-    cy.viewport(1500, 900) 
+    cy.viewport(1500, 900)
     cy.login();
     cy.setReleaseTag();
     cy.interceptCapabilities();
@@ -19,7 +19,7 @@ describe("Designer Spec", () => {
 
   it("Load MeshMap Design with a click", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000});
+    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 });
     cy.wait(2000);
     cy.intercept("/api/pattern*").as("patternLoad")
     cy.get("#MUIDataTableBodyRow-patterns-0").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
@@ -34,7 +34,7 @@ describe("Designer Spec", () => {
   });
 
   it.skip("Rename Design", () => {
-    cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", {force: true});
+    cy.get("#component-drawer-Application").should('be.visible').drag("#cy-canvas-container", { force: true });
     cy.wait(2000); // let it open the rjsf successfully
     cy.get("[data-cy='design-drawer']").click(); // to close the rjsf form by click event
     cy.intercept('/api/pattern').as('patternSave')
@@ -42,15 +42,15 @@ describe("Designer Spec", () => {
     cy.wait("@patternSave").then(() => {
       // move to drawer and check for update
       cy.get("[data-cy='design-drawer']").click();
-      cy.get("#MUIDataTableBodyRow-patterns-0 p", {timeout: 30000});
+      cy.get("#MUIDataTableBodyRow-patterns-0 p", { timeout: 30000 });
       cy.wait(2500);
       cy.get("#MUIDataTableBodyRow-patterns-0 p").contains(cypressModifiedDesignName);
     })
   })
-  
+
   it.skip("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
+    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 })
     cy.wait(2000);
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.intercept("/api/pattern*").as("patternSearch")
@@ -60,11 +60,11 @@ describe("Designer Spec", () => {
   })
 
   it("Validate a design", () => {
-    cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
-    cy.wait(1500);
-    cy.get("#MUIDataTableBodyRow-patterns-0").click();
-    cy.wait(1500); // wait for design to load
+    cy.visit(cypressTestDesign.url);
+    cy.intercept({ url: cytoConversion.url, method: cytoConversion.method }).as(cytoConversion.alias)
+    cy.wait("@extensionFileLoad", { timeout: 10000 }) // wait for MeshMap UI
+    cy.wait(cytoConversion.wait);
+    cy.wait(TIME.XLARGE); // wait for rendering
     cy.get("#verify-design-btn").click();
     cy.get('[data-cy="validate-btn-modal"]').click();
     cy.contains("Validate");
@@ -73,7 +73,7 @@ describe("Designer Spec", () => {
 
   it.skip("Deploy and Undeploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", {timeout: 30000})
+    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 })
     cy.wait(2000);
     cy.get("#MUIDataTableBodyRow-patterns-0").click();
     cy.get('[data-test-id="Search"]').type(argoRolloutDesign);
@@ -81,7 +81,7 @@ describe("Designer Spec", () => {
     cy.wait(1500);
     cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains(argoRolloutDesign);
     cy.wait(2000);
-    cy.get("#MUIDataTableBodyRow-patterns-0").click({force: true}).wait("@patternPost");
+    cy.get("#MUIDataTableBodyRow-patterns-0").click({ force: true }).wait("@patternPost");
     cy.wait(2000);
 
     // rendering done up until this point
@@ -94,7 +94,7 @@ describe("Designer Spec", () => {
     // modal opens
     cy.get("#deploy-design-btn").click();
     cy.get('[data-cy="deploy-btn-modal"]').click();
-    
+
     cy.intercept("/api/pattern/deploy*").as("patternDeploy")
     cy.get('[data-cy="deploy-btn-confirm"]').click();
     cy.wait("@patternDeploy").then(() => {
