@@ -30,6 +30,18 @@ export const canvasContainer = {
   alias: "canvas"
 }
 
+export const cypressTestDesign = {
+  url: "/extension/meshmap?design=c81d8e82-7627-48c4-b419-5438daf0f100",
+  id: "c81d8e82-7627-48c4-b419-5438daf0f100",
+}
+
+export const cytoConversion = {
+  url: "/api/pattern?output=cytoscape",
+  method: "POST",
+  alias: "cytoPatternConversion",
+  wait: "@cytoPatternConversion"
+}
+
 /**
  * Selection and general Event Binding Layer
  */
