@@ -55,6 +55,8 @@ describe("canvas test", () => {
 
     cy.window().its("cyto").should("exist") // there should be a global cytoscape property exposed
     cy.window().then(window => {
+      // assert whether the canvas object has now 1 element due to click operation
+      cy.wait(TIME.SMALL);
       const cyto = window.cyto;
       cy.wrap(cyto.nodes().length).should("equal", 1)
     })
