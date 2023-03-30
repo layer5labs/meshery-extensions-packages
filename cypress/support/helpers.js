@@ -9,13 +9,24 @@ export function id(str) {
   return "#" + str
 }
 
-export const beforeEachCallback = () => {
-  cy.viewport(1500, 900);
+const doInitialSetup = () => {
+  cy.setViewPort();
   cy.login();
   cy.setReleaseTag();
   cy.interceptCapabilities();
   cy.setMode(DESIGNER);
+}
+
+export const beforeEachCallback = () => {
+  doInitialSetup();
   cy.intercept(extension.path).as(extension.alias);
   cy.visit(MESHMAP_PATH)
-  cy.wait(`@${extension.alias}`, {timeout: 20000});
+  cy.wait(waitFor(extension.alias), { timeout: 15000 });
+}
+
+export const beforeEachCallbackForCustomUrl = (customPath) => {
+  doInitialSetup();
+  cy.intercept(extension.path).as(extension.alias);
+  cy.visit(customPath);
+  cy.wait(waitFor(extension.alias), { timeout: 15000 });
 }

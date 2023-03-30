@@ -41,5 +41,15 @@ declare namespace Cypress {
      *  cy.deleteDesign(designId)
      */
     deleteDesign(designId: string): Chainable<any>
+
+    /**
+     * Disable collaboration by posting to user prefs
+     */
+    disableCollaboration(): Chainable<any>
+
+    /**
+     * Enable collaboration by posting to user prefs
+     */
+    enableCollaboration(): Chainable<any>
   }
 }

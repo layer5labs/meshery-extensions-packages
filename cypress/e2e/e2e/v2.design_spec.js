@@ -5,7 +5,7 @@
 import { canvasLayer0, designEndpoint, TIME } from "../../support/constants";
 import { beforeEachCallback, waitFor } from "../../support/helpers";
 
-describe("canvas test", () => {
+describe("Canvas Double Click Test", () => {
   beforeEach(beforeEachCallback)
 
   it("add element on canvas with double click", () => {

@@ -68,3 +68,12 @@ Cypress.Commands.add("deleteDesign", (designId) => {
     cy.log(resp.status)
   })
 })
+
+Cypress.Commands.add("disableCollaboration", () => {
+  cy.request("POST", "http://localhost:9081/api/user/prefs", { "usersExtensionPreferences": { "canvasSettings": { "hideGrid": true, "snapToGrid": false, "collaborationIsEnabled": false }, "showTutorialVideo": false } })
+})
+
+
+Cypress.Commands.add("enableCollaboration", () => {
+  cy.request("POST", "http://localhost:9081/api/user/prefs", { "usersExtensionPreferences": { "canvasSettings": { "hideGrid": true, "snapToGrid": false, "collaborationIsEnabled": true }, "showTutorialVideo": false } })
+})

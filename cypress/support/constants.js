@@ -22,7 +22,8 @@ export const TIME = {
   SMALL: 500,
   MEDIUM: 1000,
   LARGE: 1500,
-  XLARGE: 2000
+  XLARGE: 2000,
+  XXLARGE: 5000
 }
 
 export const canvasContainer = {
@@ -33,6 +34,10 @@ export const canvasContainer = {
 export const cypressTestDesign = {
   url: "/extension/meshmap?design=c81d8e82-7627-48c4-b419-5438daf0f100",
   id: "c81d8e82-7627-48c4-b419-5438daf0f100",
+}
+export const hierarchyRelationshipDesign = {
+  url: "/extension/meshmap?design=fd3d7210-75be-484b-9561-862e788adea3",
+  id: "fd3d7210-75be-484b-9561-862e788adea3"
 }
 
 export const cytoConversion = {
