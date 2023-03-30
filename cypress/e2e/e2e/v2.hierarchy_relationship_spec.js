@@ -11,7 +11,7 @@ describe("Hierarchy relationship Test", () => {
     cy.disableCollaboration(); // disable-collaboration for async modification while design is being tested
   });
 
-  it("[RJSF] should change the namespace value when dragged inside it", () => {
+  it("[RJSF] should change the namespace value to its parent label when dragged inside it", () => {
     cy.wait(TIME.XLARGE);
     cy.window().then(window => {
       const cyto = window.cyto;
@@ -28,7 +28,7 @@ describe("Hierarchy relationship Test", () => {
     })
   })
 
-  it("[RJSF] should change the namespace value when dragged out from Namespace", () => {
+  it("[RJSF] should change the namespace value to 'default' when dragged out from that Namespace Node", () => {
     cy.wait(TIME.XLARGE)
     cy.window().then(window => {
       const cyto = window.cyto;
@@ -47,7 +47,7 @@ describe("Hierarchy relationship Test", () => {
     })
   })
 
-  it("[Cytoscape] should change the namespace value when dragged inside it", () => {
+  it("[cytoscape/request] should change the namespace value to label of its parent when dragged inside it, should verified with the request body change", () => {
     cy.wait(TIME.XLARGE);
     cy.window().then(window => {
       const cyto = window.cyto;
@@ -72,7 +72,7 @@ describe("Hierarchy relationship Test", () => {
     })
   })
 
-  it("[Cytoscape] should change the namespace value when dragged out from Namespace", () => {
+  it("[cytoscape/request] should change the namespace value to 'default' when dragged out from Namespace, should verified with the request body change", () => {
     cy.wait(TIME.XLARGE);
     cy.window().then(window => {
       const cyto = window.cyto;
