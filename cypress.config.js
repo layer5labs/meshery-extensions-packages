@@ -18,4 +18,11 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:9081',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/results',
+    overwrite: false,
+    html: false,
+    json: true,
+  },
 })

@@ -232,6 +232,10 @@ jobs:
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Mochawesome merge
+        run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
+      - name: show tree 
+        run: tree ui/cypress/results
       - name: Comment Success Status
         uses: hasura/comment-progress@v2.1.0
         with:
@@ -240,6 +244,37 @@ jobs:
           number: ${{ inputs.pr_number }}
           id: extension-test
           message: ':white_check_mark: All tests passed!'
+          append: true
+      - name: Checkout cypress action PR
+        if: always()
+        uses: actions/checkout@v3
+        with:
+          repository: layer5labs/cypress-test-summary
+          fetch-depth: 1
+          path: ./cypress-action
+      - name: show tree
+        if: always()
+        run:  tree /home/runner/.cypress-action
+      - name: mv output.json to __tests__
+        if: always()
+        run: |
+          pwd . 
+          mv ui/cypress/results/output.json cypress-action/__tests__/output.json
+      - name: run cypresss-summary
+        if: always()
+        uses: cypress-action/
+        id: cypress_summary
+        with:
+          jsonArtifact: "cypress-summary/__tests__/ouput.json"
+      - name: comment the summary
+        uses: hasura/comment-progress@v2.1.0
+        if: always()
+        with: 
+          message:  ${{join(steps.cypress_summary.outputs.*, '\n')}}
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: 'layer5labs/meshery-extensions'
+          number: ${{ inputs.pr_number }}
+          id: extension-test
           append: true
       - name: Upload artifacts
         if: always()
