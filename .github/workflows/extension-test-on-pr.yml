@@ -298,7 +298,7 @@ jobs:
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':x: One or more tests have failed.'
+          message: '\n:x: One or more tests have failed.'
           append: true
       - name: Comment Final Status
         if: always()
