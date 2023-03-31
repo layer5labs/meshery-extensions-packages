@@ -262,7 +262,7 @@ jobs:
           mv ui/cypress/results/output.json cypress-action/__tests__/output.json
       - name: run cypresss-summary
         if: always()
-        uses: cypress-action/
+        uses: ./cypress-action/
         id: cypress_summary
         with:
           jsonArtifact: "cypress-summary/__tests__/ouput.json"
