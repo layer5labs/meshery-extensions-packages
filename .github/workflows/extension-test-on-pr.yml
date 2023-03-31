@@ -233,8 +233,10 @@ jobs:
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: Mochawesome merge
+        if: always()
         run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
       - name: show tree 
+        if: always()
         run: tree ui/cypress/results
       - name: Comment Success Status
         uses: hasura/comment-progress@v2.1.0
@@ -254,7 +256,7 @@ jobs:
           path: ./cypress-action
       - name: show tree
         if: always()
-        run:  tree /home/runner/.cypress-action
+        run:  tree /home/runner/cypress-action
       - name: mv output.json to __tests__
         if: always()
         run: |
