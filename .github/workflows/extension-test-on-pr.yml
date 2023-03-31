@@ -232,6 +232,10 @@ jobs:
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Mochawesome merge
+        run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
+      - name: show tree 
+        run: tree ui/cypress/results
       - name: Comment Success Status
         uses: hasura/comment-progress@v2.1.0
         with:
