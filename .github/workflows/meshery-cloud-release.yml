@@ -43,7 +43,34 @@ env:
   GIT_VERSION: ${{inputs.release-version}}
 
 jobs:
+  update-doc-release-version:
+    name: Docs version updater
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Meshery Cloud code
+        uses: actions/checkout@v3
+        with:
+          repository: layer5io/meshery-cloud
+          fetch-depth: 1
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Update schema.yml
+        uses: actions/checkout@v3
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          repository: l5io/meshery-cloud
+          branch: master
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          valueFile: 'models/openapi-schema/schema.yml'
+          commitChange: true
+          propertyPath: 'info.version'
+          value: ${{inputs.release-version}}
+          message: Updated meshery-cloud version to ${{inputs.release-version}}
+          commitUserName: l5io
+          commitUserEmail: l5io@layer5.io
+        
   staging:
+    needs: update-doc-release-version
+    if: ${{ always() }}
     name: Staging - Docker build and push
     runs-on: ubuntu-latest
     if: inputs.release-environment == 'staging' 
@@ -83,6 +110,8 @@ jobs:
           sudo make kratos-stg-run 
           sudo make docker-stg-run
   prod:
+    needs: update-doc-release-version
+    if: ${{ always() }}
     name: Production - Docker build and push
     if: inputs.release-environment == 'production'
     runs-on: ubuntu-latest
