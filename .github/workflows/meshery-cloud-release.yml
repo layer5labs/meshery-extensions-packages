@@ -53,6 +53,9 @@ jobs:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Install Redocly
+        uses: actions/setup-node@v3
+      - run: npm i -g @redocly/cli@latest
       - name: Update schema.yml
         uses: fjogeleit/yaml-update-action@main
         with:
@@ -81,6 +84,7 @@ jobs:
         token: ${{ secrets.GH_ACCESS_TOKEN }}
     - name: Build Docs
       run:  |
+        npm i -g @redocly/cli@latest
         make docs-build
     - name: Login to DockerHub
       uses: docker/login-action@v2
