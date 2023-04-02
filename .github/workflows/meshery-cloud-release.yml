@@ -44,7 +44,7 @@ env:
 
 jobs:
   update-doc-release-version:
-    name: Docs version updater
+    name: API Docs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery Cloud code
@@ -53,10 +53,10 @@ jobs:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - name: Install Redocly
+      - name: API Docs - Install Redocly
         uses: actions/setup-node@v3
       - run: npm i -g @redocly/cli@latest
-      - name: Update schema.yml
+      - name: API Docs - Update schema.yml
         uses: fjogeleit/yaml-update-action@main
         with:
           repository: l5io/meshery-cloud
