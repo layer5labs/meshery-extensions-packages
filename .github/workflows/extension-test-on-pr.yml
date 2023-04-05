@@ -254,9 +254,6 @@ jobs:
           repository: layer5labs/cypress-test-summary
           fetch-depth: 1
           path: ./cypress-action
-      - name: show tree
-        if: always()
-        run:  tree /home/runner/cypress-action
       - name: mv output.json to __tests__
         if: always()
         run: |
