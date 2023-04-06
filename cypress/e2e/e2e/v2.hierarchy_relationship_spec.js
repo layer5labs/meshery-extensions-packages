@@ -23,7 +23,7 @@ describe("Hierarchy relationship Test", () => {
       })
       setTimeout(()=> {
         podNode.emit("tap")
-      }, 500)
+      }, TIME.SMALL)
       cy.wait(TIME.XXLARGE)
       cy.get("#root_namespace").invoke("val").should("contain", nsNode.data("label"))
     })
@@ -43,7 +43,7 @@ describe("Hierarchy relationship Test", () => {
 
       setTimeout(()=> {
         podNode.emit("tap")
-      }, 500)
+      }, TIME.SMALL)
       cy.wait(TIME.XXLARGE)
       cy.get("#root_namespace").invoke("val").should("contain", "default") // "default" is the default namespace value
 
