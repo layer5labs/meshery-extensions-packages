@@ -221,6 +221,7 @@ jobs:
           message: ':heavy_check_mark: Test environment ready. Starting tests...'
           append: true
       - name: Cypress run
+        id: runTest
         uses: cypress-io/github-action@v4
         with:
           working-directory: ui
@@ -249,6 +250,23 @@ jobs:
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: remove output folder in case of failure to retry
+        if: steps.retryTest.outcome == 'failure'
+        run: rm -rf ui/cypress/results
+      - name: retry Cypress 2nd Time
+        if: steps.retryTest.outcome == 'failure'
+        id: retryTest2
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ui
+          spec: cypress/e2e/e2e/**/*
+          browser: chrome 
+          record: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
+          CYPRESS_releasetag: ${{env.tag}}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: Mochawesome merge
         if: always()
         run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
@@ -256,6 +274,7 @@ jobs:
         if: always()
         run: tree ui/cypress/results
       - name: Comment Success Status
+        if: steps.runTest.outcome == 'success' || steps.retryTest.outcome == 'success' || steps.retryTest2.outcome == 'success'
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -305,13 +324,13 @@ jobs:
           path: ui/cypress/videos
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
-        if: steps.retryTest.outcome == 'failure'
+        if: steps.retryTest2.outcome == 'failure'
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: 'layer5labs/meshery-extensions'
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: '\n:x: One or more tests have failed.'
+          message: ':x: One or more tests have failed.'
           append: true
       - name: Comment Final Status
         if: always()
