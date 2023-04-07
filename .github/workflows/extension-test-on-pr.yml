@@ -232,6 +232,23 @@ jobs:
           CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: remove output folder in case of failure to retry
+        if: failure()
+        run: rm -rf ui/cypress/results
+      - name: retry Cypress
+        if: failure()
+        id: retryTest
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ui
+          spec: cypress/e2e/e2e/**/*
+          browser: chrome 
+          record: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
+          CYPRESS_releasetag: ${{env.tag}}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: Mochawesome merge
         if: always()
         run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
@@ -257,7 +274,6 @@ jobs:
       - name: mv output.json to __tests__
         if: always()
         run: |
-          pwd . 
           mv ui/cypress/results/output.json cypress-action/__tests__/output.json
       - name: run cypresss-summary
         if: always()
@@ -289,7 +305,7 @@ jobs:
           path: ui/cypress/videos
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
-        if: failure()
+        if: steps.retryTest.outcome == 'failure'
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: 'layer5labs/meshery-extensions'
@@ -307,4 +323,3 @@ jobs:
           id: extension-test
           message: ':heavy_check_mark: Extension [test results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}).'
           append: true
-

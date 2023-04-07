@@ -17,12 +17,13 @@ describe("Hierarchy relationship Test", () => {
       const cyto = window.cyto;
       const nsNode = cyto.nodes('[type="Namespace"]')[0]
       const podNode = cyto.nodes('[type="Pod"]')[0]
-      console.log("see this...", { cyto, nsNode, podNode })
 
       podNode.move({
         parent: nsNode.data("id")
       })
-      podNode.emit("tap")
+      setTimeout(()=> {
+        podNode.emit("tap")
+      }, TIME.SMALL)
       cy.wait(TIME.XXLARGE)
       cy.get("#root_namespace").invoke("val").should("contain", nsNode.data("label"))
     })
@@ -40,7 +41,9 @@ describe("Hierarchy relationship Test", () => {
         parent: null
       })
 
-      podNode.emit("tap")
+      setTimeout(()=> {
+        podNode.emit("tap")
+      }, TIME.SMALL)
       cy.wait(TIME.XXLARGE)
       cy.get("#root_namespace").invoke("val").should("contain", "default") // "default" is the default namespace value
 
