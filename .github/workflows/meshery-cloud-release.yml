@@ -45,6 +45,7 @@ env:
 jobs:
   update-doc-release-version:
     name: API Docs
+    if: inputs.release-environment == 'production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery Cloud code
