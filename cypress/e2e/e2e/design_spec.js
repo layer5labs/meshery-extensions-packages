@@ -19,17 +19,23 @@ describe("Designer Spec", () => {
 
   it("Load MeshMap Design with a click", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 });
+    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 60000 });
     cy.wait(2000);
     cy.intercept("/api/pattern*").as("patternLoad")
     cy.get("#MUIDataTableBodyRow-patterns-0").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
     cy.wait("@patternLoad");
     // cy.get("[data-cy='progress-snackbar']").contains("Rendering your MeshMap...");
-    cy.wait(2000);
+    cy.wait(4000);
     cy.get("body").then(body => {
       if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
         cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("not.contain", "Unable to render")
       }
+    })
+    // Fails on empty design
+    cy.window().then(window => {
+      const cyto = window.cyto;
+      const nodes = cyto.nodes();
+      cy.wrap(nodes.length).should("be.greaterThan", 0)
     })
   });
 
