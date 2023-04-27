@@ -19,10 +19,10 @@ describe("Designer Spec", () => {
 
   it("Load MeshMap Design with a click", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 60000 });
+    cy.get("[data-test-id='muidatatable-0']", { timeout: 60000 });
     cy.wait(2000);
     cy.intercept("/api/pattern*").as("patternLoad")
-    cy.get("#MUIDataTableBodyRow-patterns-0").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
+    cy.get("[data-test-id='muidatatable-0']").click(); //convention: MUIDataTableBodyRow + type  + rowIndex
     cy.wait("@patternLoad");
     // cy.get("[data-cy='progress-snackbar']").contains("Rendering your MeshMap...");
     cy.wait(4000);
@@ -48,21 +48,21 @@ describe("Designer Spec", () => {
     cy.wait("@patternSave").then(() => {
       // move to drawer and check for update
       cy.get("[data-cy='design-drawer']").click();
-      cy.get("#MUIDataTableBodyRow-patterns-0 p", { timeout: 30000 });
+      cy.get("[data-test-id='muidatatable-0'] p", { timeout: 30000 });
       cy.wait(2500);
-      cy.get("#MUIDataTableBodyRow-patterns-0 p").contains(cypressModifiedDesignName);
+      cy.get("[data-test-id='muidatatable-0'] p").contains(cypressModifiedDesignName);
     })
   })
 
   it.skip("Search a design", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 })
+    cy.get("[data-test-id='muidatatable-0']", { timeout: 30000 })
     cy.wait(2000);
-    cy.get("#MUIDataTableBodyRow-patterns-0").click();
+    cy.get("[data-test-id='muidatatable-0']").click();
     cy.intercept("/api/pattern*").as("patternSearch")
     cy.get('[data-test-id="Search"]').type(cypressModifiedDesignName);
     cy.wait("@patternSearch")
-    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains(cypressModifiedDesignName);
+    cy.get("[data-test-id='muidatatable-0']").should("be.visible").contains(cypressModifiedDesignName);
   })
 
   it("Validate a design", () => {
@@ -79,15 +79,15 @@ describe("Designer Spec", () => {
 
   it.skip("Deploy and Undeploy a design", () => {
     cy.get("[data-cy='design-drawer']").click();
-    cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 })
+    cy.get("[data-test-id='muidatatable-0']", { timeout: 30000 })
     cy.wait(2000);
-    cy.get("#MUIDataTableBodyRow-patterns-0").click();
+    cy.get("[data-test-id='muidatatable-0']").click();
     cy.get('[data-test-id="Search"]').type(argoRolloutDesign);
     cy.intercept("/api/pattern*").as("patternPost")
     cy.wait(1500);
-    cy.get("#MUIDataTableBodyRow-patterns-0").should("be.visible").contains(argoRolloutDesign);
+    cy.get("[data-test-id='muidatatable-0']").should("be.visible").contains(argoRolloutDesign);
     cy.wait(2000);
-    cy.get("#MUIDataTableBodyRow-patterns-0").click({ force: true }).wait("@patternPost");
+    cy.get("[data-test-id='muidatatable-0']").click({ force: true }).wait("@patternPost");
     cy.wait(2000);
 
     // rendering done up until this point
