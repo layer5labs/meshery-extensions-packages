@@ -251,10 +251,10 @@ jobs:
           CYPRESS_releasetag: ${{env.tag}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: remove output folder in case of failure to retry
-        if: steps.retryTest.outcome == 'failure'
+        if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
         run: rm -rf ui/cypress/results
       - name: retry Cypress 2nd Time
-        if: steps.retryTest.outcome == 'failure'
+        if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
         id: retryTest2
         uses: cypress-io/github-action@v4
         with:
@@ -274,7 +274,7 @@ jobs:
         if: always()
         run: tree ui/cypress/results
       - name: Comment Success Status
-        if: steps.runTest.outcome == 'success' || steps.retryTest.outcome == 'success' || steps.retryTest2.outcome == 'success'
+        if: ${{ success() || steps.runTest.outcome == 'success' || steps.retryTest.outcome == 'success' || steps.retryTest2.outcome == 'success' }}
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -324,7 +324,7 @@ jobs:
           path: ui/cypress/videos
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
-        if: steps.retryTest2.outcome == 'failure'
+        if: ${{ failure() && steps.retryTest2.outcome == 'failure' }}
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: 'layer5labs/meshery-extensions'

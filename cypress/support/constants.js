@@ -32,13 +32,10 @@ export const canvasContainer = {
 }
 
 export const cypressTestDesign = {
-  url: "/extension/meshmap?design=c81d8e82-7627-48c4-b419-5438daf0f100",
-  id: "c81d8e82-7627-48c4-b419-5438daf0f100",
+  url: "/extension/meshmap?design=142f0054-d9ae-4352-8618-887104a81928",
+  id: "142f0054-d9ae-4352-8618-887104a81928",
 }
-export const hierarchyRelationshipDesign = {
-  url: "/extension/meshmap?design=fd3d7210-75be-484b-9561-862e788adea3",
-  id: "fd3d7210-75be-484b-9561-862e788adea3"
-}
+export const hierarchyRelationshipDesign = cypressTestDesign;
 
 export const cytoConversion = {
   url: "/api/pattern?output=cytoscape",
