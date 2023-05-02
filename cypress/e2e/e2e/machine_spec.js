@@ -17,14 +17,14 @@ describe("State Machine Spec", () => {
     context("State Machine Test", () => {
         it("DO NOT allow merge of a design into itself", () => {
             cy.get('[data-cy="design-drawer"]').click();
-            cy.get("#MUIDataTableBodyRow-patterns-0", { timeout: 30000 }).should("be.visible");
+            cy.get("[data-test-id='muidatatable-0']", { timeout: 30000 }).should("be.visible");
             cy.wait(1000)
             // First design dropped on canvas
-            cy.get("#MUIDataTableBodyRow-patterns-0").click();
+            cy.get("[data-test-id='muidatatable-0']").click();
 
             // Drop same design on canvas to test (do not merge) 
             cy.wait(1000)
-            cy.get("#MUIDataTableBodyRow-patterns-0[draggable='true']").trigger("dragstart")
+            cy.get("[data-test-id='muidatatable-0'][draggable='true']").trigger("dragstart")
             cy.get("body").then(body => {
                 if (body.find("[aria-describedby='notistack-snackbar'] #notistack-snackbar").length > 0) {
                     cy.get("[aria-describedby='notistack-snackbar'] #notistack-snackbar").should("contain", "Cannot merge a design into itself.")
