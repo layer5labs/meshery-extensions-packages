@@ -49,6 +49,8 @@ func InitKratosClient() *ory.APIClient {
 }
 
 func HealthCheck(hostURL, hostName string, wg *sync.WaitGroup) bool {
+	t := time.Now().UTC()
+	logrus.Infof("%s health check - %s", hostName, t.Format("2006-01-02T15:04:05Z"))
 	resp, err := http.Get(hostURL)
 	result := &Health{}
 	if err == nil {
