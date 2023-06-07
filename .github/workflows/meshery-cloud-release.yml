@@ -95,7 +95,7 @@ jobs:
     - name: Docker staging build & tag
       if: success()
       run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:staging-latest --build-arg GIT_VERSION="staging-latest" .
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:staging-latest --build-arg GIT_VERSION="staging-latest" --build-arg ENVIRONMENT="stg" .
     - name: Docker staging push
       if: success()
       run: |
@@ -140,7 +140,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }} 
     - name: Docker production build & tag
       run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} .
+        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} --build-arg ENVIRONMENT="prod" .
         docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${{env.GIT_VERSION}}
     - name: Docker production push
       run: |
