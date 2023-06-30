@@ -11,6 +11,9 @@ on:
         description: 'recipient'
         type: string
         required: false
+    secrets:
+      token:
+        required: true        
 jobs:
   email:
     name: Prepare email
