@@ -49,7 +49,7 @@ jobs:
           # Optional plain body:
           body: New Meshery Release. Find details at https://docs.meshery.io/project/releases
           # Optional HTML body read from file:
-          html_body: file://email/meshery-release-notification.html
+          html_body: file://email/meshery/meshery-release-notification.html
           # Optional carbon copy recipients:
           cc: leecalcote@icloud.com
           # Optional blind carbon copy  recipients:
