@@ -12,9 +12,10 @@ on:
         type: string
         required: false
     secrets:
-      GH_ACCESS_TOKEN:
+      token:
         description: 'A token passed from the caller workflow'
-        required: true      
+        required: true
+
 jobs:
   email:
     name: Prepare email
@@ -25,7 +26,7 @@ jobs:
         with:
             fetch-depth: 1
             repository: layer5labs/meshery-extensions-packages
-            token: ${{ secrets.GH_ACCESS_TOKEN }}
+            token: ${{ secrets.token }}
       - name: Send email
         uses: dawidd6/action-send-mail@v3.7.1
         with:
