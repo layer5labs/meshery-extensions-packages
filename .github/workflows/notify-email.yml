@@ -12,8 +12,9 @@ on:
         type: string
         required: false
     secrets:
-      token:
-        required: true        
+      GH_ACCESS_TOKEN:
+        description: 'A token passed from the caller workflow'
+        required: true      
 jobs:
   email:
     name: Prepare email
