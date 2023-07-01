@@ -13,17 +13,15 @@ on:
         required: false
       release-tag:
         type: string
-        required: false
+        required: true
     secrets:
       token:
         description: 'A token passed from the caller workflow'
         required: true
       MAIL_PASSWORD:
-        required: false
+        required: true
       MAIL_USERNAME:
-        required: false
-
-        
+        required: true
 
 jobs:
   email:
@@ -32,12 +30,6 @@ jobs:
     steps:
       - name: grab release notes
         run: curl https://raw.githubusercontent.com/meshery/meshery/master/docs/_releases/${{inputs.release-tag}}.md | sed -e '1,5d' > meshery-release-notification.html
-#       - name: Checkout 🛎️ repo
-#         uses: actions/checkout@master    
-#         with:
-#             fetch-depth: 1
-#             repository: meshery/meshery
-#             token: ${{ secrets.token }}
       - name: Send email
         uses: dawidd6/action-send-mail@v3.7.1
         with:
@@ -50,15 +42,16 @@ jobs:
           # Optional (recommended) mail server password:
           password: ${{secrets.MAIL_PASSWORD}}
           # Required mail subject:
-          subject: New Meshery Release
+          subject: Meshery ${{inputs.release-tag}} Release Notes
           # Required recipients' addresses:
           to: lee.calcote@layer5.io
           # Required sender full name (address can be skipped):
-          from: Meshery <no-reply@meshery.io>
+          from: Meshery Releaser <no-reply@meshery.io>
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional plain body:
-          body: New Meshery Release. Find details at https://docs.meshery.io/project/releases
+          body: |
+            New Release: Meshery ${{inputs.release-tag}}. Find details at https://docs.meshery.io/project/releases/${{inputs.release-tag}}
           # Optional HTML body read from file:
           html_body: file://meshery-release-notification.html
           # Optional carbon copy recipients:
