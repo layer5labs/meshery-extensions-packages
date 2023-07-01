@@ -11,6 +11,9 @@ on:
         description: 'recipient'
         type: string
         required: false
+      release-tag:
+        type: string
+        required: false
     secrets:
       token:
         description: 'A token passed from the caller workflow'
@@ -19,8 +22,7 @@ on:
         required: false
       MAIL_USERNAME:
         required: false
-      release-tag:
-        required: false
+
         
 
 jobs:
