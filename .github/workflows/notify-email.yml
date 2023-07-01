@@ -15,6 +15,10 @@ on:
       token:
         description: 'A token passed from the caller workflow'
         required: true
+      MAIL_PASSWORD:
+        required: false
+      MAIL_USERNAME:
+        required: false
 
 jobs:
   email:
