@@ -62,7 +62,7 @@ jobs:
           # Optional HTML body read from file:
           html_body: file://meshery-release-notification.html
           # Optional carbon copy recipients:
-          cc: leecalcote@icloud.com
+          # cc:
           # Optional blind carbon copy  recipients:
           # bcc: r2d2@example.com,hansolo@example.com
           # Optional recipient of the email response:
