@@ -31,7 +31,10 @@ jobs:
       - name: grab release notes
         run: |
           curl https://raw.githubusercontent.com/meshery/meshery/master/docs/_releases/${{inputs.release-tag}}.md | sed -e '1,5d' > meshery-release-notification.html
-          echo "<br /><br />## 🛝 Access in the [Meshery Playground](https://playground.meshery.io) <br />" >> meshery-release-notification.html
+          echo "|
+          
+          ## 🛝 Access in the [Meshery Playground](https://playground.meshery.io) 
+          " >> meshery-release-notification.html
       - name: Send email
         uses: dawidd6/action-send-mail@v3.7.1
         with:
