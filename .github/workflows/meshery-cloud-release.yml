@@ -112,7 +112,7 @@ jobs:
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:staging-latest
-          sudo make stg-deploy
+          sudo make docker-stg-deploy
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -155,5 +155,5 @@ jobs:
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make prod-deploy
+          sudo make docker-prod-deploy
           
