@@ -21,6 +21,11 @@
 
 <h5><p align="center"><i>If you’re using Layer5 products or if you like the project, please <a href="https://github.com/layer5io/layer5/stargazers">★</a> this repository to show your support! 🤩</i></p></h5>
 
+# Layer5 Badges
+*Collect the whole set!*
+
+[![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshmap/meshmap.png)](https://meshery.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
+
 # Registry for Meshery Cloud Remote Provider Packages
 Access Meshery Cloud at https://meshery.layer5.io 
 
