@@ -25,16 +25,15 @@
 *Collect the whole set!*
 
 [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshmap/meshmap.svg)](https://meshery.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/bring-a-buddy/bring-a-buddy.svg)](https://meshery.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-application/first-application.svg)](https://meshery.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/docker-extension/docker-extension.svg)](https://meshery.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
-
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshery-operator/meshery-operator.svg]
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-share/first-share.svg]
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-log-streaming-session/first-log-streaming-session.svg]
-
+![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshery-operator/meshery-operator.svg)
+![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-share/first-share.svg)
+![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-log-streaming-session/first-log-streaming-session.svg)
 
 
 
-# Registry for Meshery Cloud Remote Provider Packages
-Access Meshery Cloud at https://meshery.layer5.io 
+
+# Registry for Layer5 Cloud Remote Provider Packages
+Access Layer5 Cloud at https://meshery.layer5.io 
 
 
 ## About Layer5
