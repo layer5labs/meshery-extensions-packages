@@ -82,7 +82,7 @@ const SignupForm = ({ onSubmit }) => {
               // twitter: twitter,
               // linkedin: linkedin,
               role: role,
-              form: 'playground'
+              form: 'badges'
             }}
             onSubmit={(values) => {
               if (!validateEmail(values.email)) {
@@ -255,9 +255,9 @@ The Meshery Playground is connected to live Kubernetes cluster(s) and allows use
     return (
       <>
         <div className='thankyou-box'>
-          <h2>Thank you for your interest in Meshery Playground early access program!</h2>
+          <h2>Thank you for your interest in Layer5 Recognition Program  early access program!</h2>
           <p>
-            You are now signed up for the Meshery Playground early access program and your position
+            You are now signed up for the Layer5 Recognition Program early access program and your position
             on the waiting list is confirmed. Please wait patiently for a response from the Meshery
             team.
           </p>

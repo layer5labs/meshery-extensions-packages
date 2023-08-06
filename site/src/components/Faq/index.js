@@ -43,8 +43,7 @@ const Faq = (props) => {
     <FaqSectionWrapper>
         <Accordion allowMultipleExpanded="true" allowZeroExpanded="true">
           {faq_keys.map((key) => (
-            <>
-              <h2 className="category_name" style={{ paddingBottom: 25 }} >{key}</h2>
+            <> 
               {faqs[key].map((faq, index) => (
                 <AccordionItem key={index}>
                   <AccordionTitle>

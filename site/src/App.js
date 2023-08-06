@@ -36,7 +36,14 @@ const App = () => {
             <p className="desc-text">
             Layer5 badges are one of the many ways that we recognize the efforts of our contributors and uplift our users. Layer5 badges represent milestones that you achieve both in using and in contributing to Layer5-supported open source projects. As a contributor, this is how you demonstrate your ownership, dedication, skills and loyalty to Layer5. As a user, this is how you demonstrate your prowess.
             </p>
-            <BadgeGrid  />
+            <section className="faq">
+              {/* <h1>Frequently Asked Questions</h1> */}
+              <Faq category={["Layer5 Badges"]}   
+                  display-category-title={"false"} />
+            </section>
+            <section className="badges">
+              <BadgeGrid  />
+            </section>
             {/* <ReactPlayer
               url="https://youtu.be/Do7htKrRzDA"
               playing
@@ -49,13 +56,10 @@ const App = () => {
             {/* <p className="caption">Launch and learn with Meshery</p>
             <p className="byline">The cloud native playground contains a set of learning paths that incorporate an application networking centric curriculum featuring training on 200+ integrations.</p> */}
           </section>
-          <section className="form" id="signup-form">
+          {/* <section className="form" id="signup-form">
             <SignupForm onSubmit={handleSignUpFormSubmit}  />
-          </section>
-          <section className="faq">
-            <h1>Frequently Asked Questions</h1>
-            <Faq category={["Layer5 Badges"]}/>
-          </section>
+          </section> */}
+
           <section className="join-community">
             <div>
               <h1>Join the community!</h1>
