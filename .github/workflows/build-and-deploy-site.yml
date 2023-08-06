@@ -1,9 +1,19 @@
 name: Build and Deploy Site
 on:
   push:
-    branches: [ master ]
-    paths:
-      - 'site/**'
+    branches:
+      - "*"
+    tags:
+      - "v*"
+    paths-ignore:
+      - 'docs/**/*'
+      - 'ui/**/*'
+      - 'provider-ui/**/*'
+      - '.github/**/*'
+      - '*.md'
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
   build-and-deploy:
