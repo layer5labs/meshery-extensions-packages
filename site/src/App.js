@@ -36,6 +36,7 @@ const App = () => {
             <p className="desc-text">
             Layer5 badges are one of the many ways that we recognize the efforts of our contributors and uplift our users. Layer5 badges represent milestones that you achieve both in using and in contributing to Layer5-supported open source projects. As a contributor, this is how you demonstrate your ownership, dedication, skills and loyalty to Layer5. As a user, this is how you demonstrate your prowess.
             </p>
+            <p>See the <a href="https://layer5.io/community/handbook/recognition">Recognition</a> section of the <a href="https://layer5.io/community/handbook/recognition">Layer5 Community Handbook</a> for details of when and how each badge is awarded.</p>
             <section className="faq">
               {/* <h1>Frequently Asked Questions</h1> */}
               <Faq category={["Layer5 Badges"]}   
