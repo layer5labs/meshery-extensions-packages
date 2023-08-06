@@ -69,7 +69,7 @@ const data = {
             question: "How many badges are there?",
             category: "Layer5 Badges",
             answer: [
-                "Our collection of badges consists of 22 in total and is divided into two subcategories: 'Achievement Badges' and 'Project and Contribution Badges'",
+                "Our collection of badges consists of 22 in total and is divided into two subcategories: 'Achievement Badges (9)' and 'Project and Contribution Badges (13)'",
             ],
         },
         {
