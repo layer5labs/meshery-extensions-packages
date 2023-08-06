@@ -65,6 +65,36 @@ const data = {
             link: "https://meshery.io",
             linktext: "Get Started with Meshery"
         },
+        {
+            question: "How many badges are there?",
+            category: "Layer5 Badges",
+            answer: [
+                "Our collection of badges consists of 22 in total and is divided into two subcategories: 'Achievement Badges' and 'Project and Contribution Badges'",
+            ],
+        },
+        {
+            question: "Will there be other categories in the future?",
+            category: "Layer5 Badges",
+            answer: [
+                "Yes, we aim to expand badge categories to recognize a broader range of achievements and contributions, fostering a more inclusive and diverse community.",
+            ],
+        },
+        {
+            question: "Should I add these to my résumé?",
+            category: "Layer5 Badges",
+            answer: [
+                "Yes, incorporating Layer5 recognition badges into your résumé showcases your technical proficiency, commitment, and collaborative spirit, adding credibility to your open source contributions and skills.",
+            ],
+        },
+        {
+            question: "Can I design a badge?",
+            category: "Layer5 Badges",
+            answer: [
+                "No, but Layer5 encourages collaboration and welcomes your ideas to enhance the badge design process and community engagement.",
+            ],
+            link: "https://discuss.layer5.io/",
+            linktext: "Share your ideas"
+        },
     ]
 }
 
