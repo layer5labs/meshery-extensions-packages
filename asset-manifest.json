@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.fa7da8c8.css",
-    "main.js": "./static/js/main.03cf08e4.js",
+    "main.js": "./static/js/main.23ff2f0a.js",
     "static/js/787.9ec81dd0.chunk.js": "./static/js/787.9ec81dd0.chunk.js",
     "static/media/QanelasSoftBlackItalic.otf": "./static/media/QanelasSoftBlackItalic.bc806bf9672b5e5c6169.otf",
     "static/media/QanelasSoftMediumItalic.otf": "./static/media/QanelasSoftMediumItalic.9bf3c3b0d52e48a90e0d.otf",
@@ -32,11 +32,11 @@
     "static/media/github.svg": "./static/media/github.4fc0796482288278ba7897731ea3a2d6.svg",
     "static/media/youtube.svg": "./static/media/youtube.e5e6132f56bf262c7b7ce8b0fe25d38e.svg",
     "main.fa7da8c8.css.map": "./static/css/main.fa7da8c8.css.map",
-    "main.03cf08e4.js.map": "./static/js/main.03cf08e4.js.map",
+    "main.23ff2f0a.js.map": "./static/js/main.23ff2f0a.js.map",
     "787.9ec81dd0.chunk.js.map": "./static/js/787.9ec81dd0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fa7da8c8.css",
-    "static/js/main.03cf08e4.js"
+    "static/js/main.23ff2f0a.js"
   ]
 }
