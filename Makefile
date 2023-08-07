@@ -32,7 +32,7 @@ site:
 
 ## Empty build cache and run layer5.io on your local machine.
 clean: 
-	gatsby clean && make site
+	cd site; gatsby clean; cd ..; make site
 
 #-----------------------------------------------------------------------------
 # Docker-based Builds

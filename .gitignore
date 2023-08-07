@@ -26,9 +26,11 @@ site/.pnp.js
 
 # testing
 site/coverage
+site/.cache
 
 # production
 site/build
+site/public
 
 # misc
 site/.DS_Store
