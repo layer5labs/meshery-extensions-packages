@@ -15,10 +15,8 @@ jobs:
 
       - name: Install and Build 🔧 
         run: |
-          npm install
-          npm run 
-          npm clean
-          npm run build
+          make setup
+          make build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.4.3
