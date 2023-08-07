@@ -15,7 +15,7 @@ jobs:
 
       - name: Install and Build 🔧 
         run: |
-          make setup-libs
+          make setup
           make build
 
       - name: Deploy 🚀
