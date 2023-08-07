@@ -27,7 +27,7 @@ const data = {
             question: "Can I participate in the program?",
             category: "Layer5 Badges",
             answer: [
-                "Yes, It does not matter if you are an experienced developer, a newbie figuring out your way into open source, documentation enthusiast, a community socialite... we have a badge you can earn and display proudly!"
+                "Yes, it doesn't matter if you are an experienced developer, a newbie figuring out your way into open source, documentation enthusiast, a community socialite... we have a badge you can earn and display proudly!"
             ],
         },
         {
