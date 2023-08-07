@@ -4,6 +4,17 @@
   "private": true,
   "description": "layer5-recognition-program",
   "author": "Lee Calcote",
+  "dependencies": {
+    "@parcel/watcher-darwin-x64": "^2.3.0-alpha.1",
+    "gatsby": "^5.11.0",
+    "gatsby-plugin-image": "^3.11.0",
+    "gatsby-source-filesystem": "^5.11.0",
+    "react": "^18.1.0",
+    "react-accessible-accordion": "^5.0.0",
+    "react-dom": "^18.1.0",
+    "react-icons": "^4.10.1",
+    "styled-components": "^6.0.7"
+  },
   "keywords": [
     "gatsby"
   ],
@@ -13,20 +24,5 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
-  },
-  "dependencies": {
-    "@mdx-js/react": "^2.3.0",
-    "babel-plugin-styled-components": "^2.1.4",
-    "gatsby": "^5.11.0",
-    "gatsby-plugin-image": "^3.11.0",
-    "gatsby-plugin-mdx": "^5.11.0",
-    "gatsby-plugin-sharp": "^5.11.0",
-    "gatsby-plugin-sitemap": "^6.11.0",
-    "gatsby-plugin-styled-components": "^6.11.0",
-    "gatsby-source-filesystem": "^5.11.0",
-    "gatsby-transformer-sharp": "^5.11.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "styled-components": "^6.0.7"
   }
 }
