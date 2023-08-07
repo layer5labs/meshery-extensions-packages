@@ -15,12 +15,12 @@ jobs:
 
       - name: Install and Build 🔧 
         run: |
-          npm install
-          npm build
+          make setup
+          make build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: site # The branch the action should deploy to.
-          folder: site/build # The folder the action should deploy.
+          folder: public # The folder the action should deploy.
           clean: true
