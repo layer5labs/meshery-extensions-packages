@@ -19,51 +19,39 @@ const data = {
             question: "What is the Layer5 Badge Program?",
             category: "Layer5 Badges",
             answer: [
-                "The Playground is connected to live Kubernetes clusters, and while these clusters are refreshed on a daily basis, the clusters do need to be protected from nefarious actors, who might use these clusters for cryptomining, for example.",
-                "Sign-up to receive a user account, entitled with perpetually free and full access the Playground environment.",
-                "The Meshery Playground is connected to live Kubernetes cluster(s) and allows users full-control over those clusters. Requiring users to register a user account keeps the Playground safe and healthy for all to enjoy. Without requiring users to sign-in, the Meshery Playground would allow anonymous access for anyone and everyone to potentially perform nefarious acts.",
+                "The Layer5 Recognition Program is a system where badges symbolize contributors' achievements and skills in the Layer5 community.",
+                "These badges showcase dedication, ownership, and proficiency, representing various contributions and skill sets, underlining the importance of individual contributions, and fostering loyalty within the community."
             ],
         },
         {
             question: "Can I participate in the program?",
             category: "Layer5 Badges",
             answer: [
-                "No, all of the designs that you have created in the Meshery Playground are saved to your user account and will be available to you each time that you sign into your account. Your designs will be available in the Meshery Playground and any your other Meshery deployments, too.",
-                "In other words, all work done in MeshMap Designer is persisted to your user account.",
+                "Yes, It does not matter if you are an experienced developer, a newbie figuring out your way into open source, documentation enthusiast, a community socialite... we have a badge you can earn and display proudly!"
             ],
         },
         {
             question: "How do I earn badges?",
             category: "Layer5 Badges",
             answer: [
-                "Yes, the Meshery Playground clusters are reset on a daily basis. However, only deployments (not designs) that you may have created will be lost.",
-                "In other words, only MeshMap Visualizer is reset. All of your work in Meshery UI and MeshMap Designer will remain in your user account.",
+                "Layer5 badges are divided into two categories, namely 'Achievement Badges' and 'Project and Contribution' Badges",
+                "Project and Contribution Badges are assigned by the admin to the user when a user contributes to a particular project.",
+                "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, etc."
             ],
         },
-        // {
-        //     question: "What is the difference between the Cloud Native Playground and MeshMap?",
-        //     category: "Layer5 Badges",
-        //     answer: [
-        //         "The Cloud Native Playground (aka Meshery Playground) is a managed instance of Meshery that offers a sandbox environment in which half of MeshMap functionality is enabled (Designer mode) and the other half of MeshMap functionality is disabled (Visualizer mode).",
-        //         "The sandbox environment is not connected to an active Kuberentes cluster, and as such, depending upon which Meshery Playgrouns environment you use specific actions within MeshMap Designer are also disabled. Meshery and MeshMap are feature-rich, sophisticated management applications for cloud native infrastructure. To access their full set of capabilities, simply deploy your own copy of Meshery into the environment of your choosing.",
-        //     ],
-        // },
         {
             question: "Is there a limit to the number of badges that I can earn?",
             category: "Layer5 Badges",
             answer: [
-                "Yes, all of the designs that you have created in the Meshery Playground are saved to your user account and will be available to you each time that you return to the Playground. The designs will also be available in your other Meshery deployments.",
+                "There is no set limit to the number of badges you can earn within the Layer5 Recognition Program. Your achievements and contributions determine the badges you receive, showcasing your dedication and skills within the community.",
             ],
         },
         {
             question: "How do I share my badges on other social profiles?",
             category: "Layer5 Badges",
             answer: [
-                "Yes, Meshery can be deployed on-premises with a single command to download, install, and run your own instance of Meshery in your environment.",
-                "See all supported platforms to deploy your own Meshery instance at https://meshery.io",
+                "To share your badges on other social profiles, utilize the provided embedded code and direct share functionality. Access your badges from the Layer5 Cloud profile badges section, and then use it to seamlessly post your achievements on social media platforms. This enables you to showcase your Layer5 contributions and milestones to a wider audience."
             ],
-            link: "https://meshery.io",
-            linktext: "Get Started with Meshery"
         },
         {
             question: "How many badges are there?",
