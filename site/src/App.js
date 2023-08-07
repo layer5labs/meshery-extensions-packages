@@ -1,4 +1,4 @@
-import SignupForm from "./components/SignupForm";
+// import SignupForm from "./components/SignupForm";
 import { Main } from './App.style.js';
 // import mesheryPlayground from "./assets/images/meshery-playground-meshmap.png";
 import Footer from "./components/Footer";
@@ -17,9 +17,9 @@ const App = () => {
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [showSignUpButton, setShowSignUpButton] = useState(true);
 
-  const handleSignUpFormSubmit = () => {
-    setShowSignUpButton(false);
-  };
+  // const handleSignUpFormSubmit = () => {
+  //   setShowSignUpButton(false);
+  // };
 
   return (
     <>
