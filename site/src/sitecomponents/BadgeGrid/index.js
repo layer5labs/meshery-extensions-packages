@@ -15,7 +15,7 @@ const Footer = () => {
       <h3>Achievement Badges</h3>
       <div class="badge-grid">
         <div>
-          <img src="https://badges.layer5.io/assets/badges/bring-a-buddy/bring-a-buddy.svg" alt="Layer5 badges" /><span>Bring a Buddy</span> <p>This badge is awarded to the users who invite someone to Layer5 cloud.</p>
+          <img src="https://github.com/layer5labs/meshery-extensions-packages/raw/master/assets/badges/bring-a-buddy/bring-a-buddy.svg" alt="Layer5 badges" /><span>Bring a Buddy</span> <p>This badge is awarded to the users who invite someone to Layer5 cloud.</p>
         </div>
         <div>
           <img src="https://github.com/layer5labs/meshery-extensions-packages/raw/master/assets/badges/first-application/first-application.svg" alt="Layer5 badges" />

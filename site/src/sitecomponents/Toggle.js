@@ -1,3 +1,4 @@
+import React from "react";
 
 const toggleStyle = {
   transition: "all .5s ease 0s",
