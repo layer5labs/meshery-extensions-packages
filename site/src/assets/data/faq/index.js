@@ -19,7 +19,7 @@ const data = {
             question: "What is the Layer5 Badge Program?",
             category: "Layer5 Badges",
             answer: [
-                "The Layer5 Recognition Program is a system where badges symbolize contributors' achievements and skills in the Layer5 community.",
+                "The Layer5 Recognition Program is a system wherein badges symbolize users' and contributors' achievements and skills in the Layer5 community.",
                 "These badges showcase dedication, ownership, and proficiency, representing various contributions and skill sets, underlining the importance of individual contributions, and fostering loyalty within the community."
             ],
         },
