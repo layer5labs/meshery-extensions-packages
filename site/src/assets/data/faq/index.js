@@ -36,7 +36,7 @@ const data = {
             answer: [
                 "Layer5 badges are divided into two categories, namely 'Achievement Badges' and 'Project and Contribution' Badges",
                 "Project and Contribution Badges are assigned by the admin to the user when a user contributes to a particular project.",
-                "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, etc."
+                "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, and so on."
             ],
         },
         {
@@ -57,7 +57,7 @@ const data = {
             question: "How many badges are there?",
             category: "Layer5 Badges",
             answer: [
-                "Our collection of badges consists of 22 in total and is divided into two subcategories: 'Achievement Badges (9)' and 'Project and Contribution Badges (13)'",
+                "Our collection of badges consists of the set that you see posted on this site. New badges are developed on occassion, so keep your eyes peeled for their emergence... or help us design a new one!",
             ],
         },
         {
@@ -78,7 +78,7 @@ const data = {
             question: "Can I design a badge?",
             category: "Layer5 Badges",
             answer: [
-                "No, but Layer5 encourages collaboration and welcomes your ideas to enhance the badge design process and community engagement.",
+                "Yes, Layer5 encourages collaboration and welcomes your ideas to enhance the badge design process and community engagement.",
             ],
             link: "https://discuss.layer5.io/",
             linktext: "Share your ideas"
