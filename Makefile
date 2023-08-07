@@ -14,12 +14,8 @@
 
 include install/Makefile.show-help.mk
 
-setup-libs: site-setup
-
 ## Install site dependencies
-setup: site-setup
-
-site-setup: 
+setup:
 	cd site; npm install; cd ..
 
 ## Build and run site in development environment
