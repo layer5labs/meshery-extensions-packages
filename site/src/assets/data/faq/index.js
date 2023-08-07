@@ -35,7 +35,7 @@ const data = {
             category: "Layer5 Badges",
             answer: [
                 "Layer5 badges are divided into two categories, namely 'Achievement Badges' and 'Project and Contribution' Badges",
-                "Project and Contribution Badges are assigned by the admin to the user when a user contributes to a particular project.",
+                "Project and Contribution Badges are assigned by community managers to a user when they contributes to a particular project.",
                 "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, and so on."
             ],
         },
