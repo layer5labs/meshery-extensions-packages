@@ -1,11 +1,11 @@
 import React from 'react';
-import SlackIcon from "../../assets/images/social-icons/slack.svg";
-import DockerIcon from "../../assets/images/social-icons/docker.svg";
-import YoutubeIcon from "../../assets/images/social-icons/youtube.svg";
-import TwitterIcon from "../../assets/images/social-icons/twitter.svg";
-import GithubIcon from "../../assets/images/social-icons/github.svg";
-import CalendarIcon from "../../assets/images/social-icons/calendar.png";
-import LinkedinIcon from "../../assets/images/social-icons/linkedin.png";
+import SlackIcon from "../../../static/assets/images/social-icons/slack.svg";
+import DockerIcon from "../../../static/assets/images/social-icons/docker.svg";
+import YoutubeIcon from "../../../static/assets/images/social-icons/youtube.svg";
+import TwitterIcon from "../../../static/assets/images/social-icons/twitter.svg";
+import GithubIcon from "../../../static/assets/images/social-icons/github.svg";
+import CalendarIcon from "../../../static/assets/images/social-icons/calendar.png";
+import LinkedinIcon from "../../../static/assets/images/social-icons/linkedin.png";
 import FooterWrapper from './Footer.styles';
 
 const Footer = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import data from "../../assets/data/faq";
+import data from "../../../static/assets/data/faq";
 import FaqSectionWrapper from "./faqSection.style";
 import Button from "../../reusecore/Button";
 import { IoIosArrowDown, IoIosArrowUp  } from "react-icons/io";
