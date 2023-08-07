@@ -30,12 +30,16 @@ build:
 site:
 	cd site; npm start; cd ..
 
+## Empty build cache and run layer5.io on your local machine.
+clean: 
+	gatsby clean && make site
+
 #-----------------------------------------------------------------------------
 # Docker-based Builds
 #-----------------------------------------------------------------------------
 
-## Build and run site in a container
-docker:
-	docker run --name site -d --rm -p 4000:4000 -v `pwd`:"/srv/jekyll" jekyll/jekyll:4.0.0 bash -c "bundle install; jekyll serve --drafts --livereload"
+# ## Build and run site in a container
+# docker:
+# 	docker run --name site -d --rm -p 4000:4000 -v `pwd`:"/srv/jekyll" jekyll/jekyll:4.0.0 bash -c "bundle install; jekyll serve --drafts --livereload"
 
 .PHONY: setup-libs site-setup build docker site setup
