@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "./Navigation.styles";
-import layer5Logo from '../../../static/assets/images/layer5/layer5-badges.png';
-import layer5LogoLight from '../../../static/assets/images/layer5/layer5-badges-white.png';
+import layer5Logo from '../../assets/images/layer5/layer5-badges.png';
+import layer5LogoLight from '../../assets/images/layer5/layer5-badges-white.png';
 import { Toggle } from "../Toggle";
 
 function Navigation({theme, toggleTheme, showSignUpButton}) {
