@@ -90,11 +90,19 @@ const Footer = () => {
           <span>Meshery Catalog</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://meshery.io/catalog">Meshery Catalog</a> of Meshery project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
+          <img src="assets/badges/meshery-operator/meshery-operator.png" alt="Layer5 badges" />
+          <span>Meshery Operator</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to Meshery Operator of the Meshery project in recognition and appreciation of their efforts.</p>
+        </div>
+        <div>
           <img src="assets/badges/docker-extension/docker-extension.png" alt="Layer5 badges" />
           <span>Docker Extension</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the Docker Extension of meshery project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
           <img src="assets/badges/meshery-docs/meshery-docs.png" alt="Layer5 badges" /> <span>Meshery Docs</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://docs.meshery.io">Meshery Docs</a> in recognition and appreciation of their efforts.</p>
+        </div>
+        <div>
+          <img src="assets/badges/writer-program/writer-program.png" alt="Layer5 badges" />
+          <span>Writer's program</span> <p>This badge is awarded to the community members who make with two or more published writings whether in article, blog post, project documentation or other form in recognition and appreciation of their efforts.</p>
         </div>
       </div>
       {/* <div className="container">
