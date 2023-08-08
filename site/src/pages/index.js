@@ -7,7 +7,7 @@ import Navigation from "../sitecomponents/Navigation/index";
 import Faq from "../sitecomponents/Faq/index";
 import React, { useState } from "react";
 import BadgeGrid from "../sitecomponents/BadgeGrid/index";
-
+import '../fonts.css'
 const App = () => {
 
   const [theme, toggleTheme] = useDarkMode();
