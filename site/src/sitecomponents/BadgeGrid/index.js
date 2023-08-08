@@ -7,52 +7,27 @@ import React from 'react';
 // import CalendarIcon from "../../assets/images/social-icons/calendar.png";
 // import LinkedinIcon from "../../assets/images/social-icons/linkedin.png";
 import BadgesWrapper from './Badges.styles';
-
+const jsonData = require('../../badgesInfo.json')
 
 const Footer = () => {
   return (
     <BadgesWrapper>
       <h3>Achievement Badges</h3>
-      <div class="badge-grid">
-        <div>
-          <img src="assets/badges/bring-a-buddy/bring-a-buddy.svg" alt="Layer5 badges" /><span>Bring a Buddy</span> <p>This badge is awarded to the users who invite someone to Layer5 cloud.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-application/first-application.svg" alt="Layer5 badges" />
-          <span>Application Pioneer</span> <p>This badge is awarded to the Layer5 cloud users when they create their first application.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-design/first-design.svg" alt="Layer5 badges" />
-          <span>Design Pioneer</span> <p>This badge is awarded to the Layer5 cloud users when they create their first design.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-share/first-share.svg" alt="Layer5 badges" />
-          <span>Sharing is Caring</span> <p>This badge is awarded upon first-time sharing one of your designs.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-deployment/first-deployment.svg" alt="Layer5 badges" />
-          <span>Shipped</span> <p>This badge is awarded upon the success of your first design deployment.</p>
-        </div>
-        <div>
-          <img src="assets/badges/need-for-speed/need-for-speed.svg" alt="Layer5 badges" />
-          <span>Need for Speed</span> <p>This badge is awarded upon successful execution of your first performance test.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.svg" alt="Layer5 badges" />
-          <span>Hip Hacker</span> <p>This badge is awarded the first time that you establish an interactive terminal session with a Kubernetes Pod.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-log-streaming-session/first-log-streaming-session.svg" alt="Layer5 badges" /> <span>Log Streamer</span> <p>This badge is awarded the first time that you stream logs from a Kubernetes Pod.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-collaborator/first-collaborator.svg" alt="Layer5 badges" />
-          <span>GitOps with Friends</span> <p>This badge is awarded the first time a collaborator saves changes to one of your designs.</p>
-        </div>
+      <div className="badge-grid">
+        {jsonData.achievementBadges.map((badge) => {
+          return (
+            <div key={badge.slug}>
+              <img src={badge.location} alt="Layer5 badges" />
+              <span>{badge.title}</span>
+              <p>{badge.description}</p>
+            </div>
+          );
+        })}
       </div>
 
       <h3>Project Badges</h3>
 
-      <div class="badge-grid">
+      <div className="badge-grid">
         <div>
           <img src="assets/badges/ui-ux/ui-ux.svg" alt="Layer5 badges" />
           <span>UI/UX</span> <p>This badge is awarded to the community members who create or improve designs for visual aspects or user flow for any of the websites, flyers, promotions, Meshery UI, and so on in recognition and appreciation of their efforts.</p>
