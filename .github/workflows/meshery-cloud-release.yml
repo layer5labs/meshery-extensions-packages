@@ -112,7 +112,7 @@ jobs:
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:staging-latest
-          sudo make docker-stg-deploy
+          sudo make stg-deploy
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -155,24 +155,5 @@ jobs:
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make docker-prod-deploy
-    
-  cloud:           
-    needs: 
-    - prod
-    if: always() && inputs.release-environment == 'cloud'
-    name: Layer5 Cloud
-    runs-on: ubuntu-latest
-    steps:
-    - name: Deploy to Layer5 Cloud
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.LAYER5_CLOUD_HOST }}
-        username: ${{ secrets.LAYER5_CLOUD_USERNAME }}
-        key: ${{ secrets.LAYER5_CLOUD_KEY }}
-        port: 22
-        script: |
-          cd meshery-cloud
-          sudo git pull
-          sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make docker-cloud-deploy
+          sudo make prod-deploy
+          
