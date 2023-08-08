@@ -15,34 +15,34 @@ const Footer = () => {
       <h3>Achievement Badges</h3>
       <div class="badge-grid">
         <div>
-          <img src="assets/badges/bring-a-buddy/bring-a-buddy.svg" alt="Layer5 badges" /><span>Bring a Buddy</span> <p>This badge is awarded to the users who invite someone to Layer5 cloud.</p>
+          <img src="assets/badges/bring-a-buddy/bring-a-buddy.png" alt="Layer5 badges" /><span>Bring a Buddy</span> <p>This badge is awarded to the users who invite someone to Layer5 cloud.</p>
         </div>
         <div>
-          <img src="assets/badges/first-application/first-application.svg" alt="Layer5 badges" />
+          <img src="assets/badges/first-application/first-application.png" alt="Layer5 badges" />
           <span>Application Pioneer</span> <p>This badge is awarded to the Layer5 cloud users when they create their first application.</p>
         </div>
         <div>
-          <img src="assets/badges/first-design/first-design.svg" alt="Layer5 badges" />
+          <img src="assets/badges/first-design/first-design.png" alt="Layer5 badges" />
           <span>Design Pioneer</span> <p>This badge is awarded to the Layer5 cloud users when they create their first design.</p>
         </div>
         <div>
-          <img src="assets/badges/first-share/first-share.svg" alt="Layer5 badges" />
+          <img src="assets/badges/first-share/first-share.png" alt="Layer5 badges" />
           <span>Sharing is Caring</span> <p>This badge is awarded upon first-time sharing one of your designs.</p>
         </div>
         <div>
-          <img src="assets/badges/first-deployment/first-deployment.svg" alt="Layer5 badges" />
+          <img src="assets/badges/first-deployment/first-deployment.png" alt="Layer5 badges" />
           <span>Shipped</span> <p>This badge is awarded upon the success of your first design deployment.</p>
         </div>
         <div>
-          <img src="assets/badges/need-for-speed/need-for-speed.svg" alt="Layer5 badges" />
+          <img src="assets/badges/need-for-speed/need-for-speed.png" alt="Layer5 badges" />
           <span>Need for Speed</span> <p>This badge is awarded upon successful execution of your first performance test.</p>
         </div>
         <div>
-          <img src="assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.svg" alt="Layer5 badges" />
+          <img src="assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.png" alt="Layer5 badges" />
           <span>Hip Hacker</span> <p>This badge is awarded the first time that you establish an interactive terminal session with a Kubernetes Pod.</p>
         </div>
         <div>
-          <img src="assets/badges/first-log-streaming-session/first-log-streaming-session.svg" alt="Layer5 badges" /> <span>Log Streamer</span> <p>This badge is awarded the first time that you stream logs from a Kubernetes Pod.</p>
+          <img src="assets/badges/first-log-streaming-session/first-log-streaming-session.png" alt="Layer5 badges" /> <span>Log Streamer</span> <p>This badge is awarded the first time that you stream logs from a Kubernetes Pod.</p>
         </div>
         <div>
           <img src="assets/badges/first-collaborator/first-collaborator.svg" alt="Layer5 badges" />
@@ -54,47 +54,47 @@ const Footer = () => {
 
       <div class="badge-grid">
         <div>
-          <img src="assets/badges/ui-ux/ui-ux.svg" alt="Layer5 badges" />
+          <img src="assets/badges/ui-ux/ui-ux.png" alt="Layer5 badges" />
           <span>UI/UX</span> <p>This badge is awarded to the community members who create or improve designs for visual aspects or user flow for any of the websites, flyers, promotions, Meshery UI, and so on in recognition and appreciation of their efforts.</p>
         </div>
         <div>
-          <img src="assets/badges/meshmap/meshmap.svg" alt="Layer5 badges" />
+          <img src="assets/badges/meshmap/meshmap.png" alt="Layer5 badges" />
           <span>MeshMap</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://layer5.io/cloud-native-management/meshmap">MeshMap</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer.</p>
         </div>
         <div>
-          <img src="assets/badges/smp/smp.svg" alt="Layer5 badges" />
+          <img src="assets/badges/smp/smp.png" alt="Layer5 badges" />
           <span>Service Mesh Performance</span> <p>This badge isawarded to the community members who make consistent and impactful contributions to the Service Mesh Performance project. Community members who earn this badge occasionally become a project maintainer.</p>
         </div>
         <div>
-          <img src="assets/badges/community/community.svg" alt="Layer5 badges" />
+          <img src="assets/badges/community/community.png" alt="Layer5 badges" />
           <span>Community</span> <p>This badge is awarded to the community members who repeatedly engage in welcoming, encouraging, and supporting other Layer5 community members. Community members who earn this badge occasionally graduate to undertaking the Community Manager role.</p>
         </div>
         <div>
-          <img src="assets/badges/meshery/meshery.svg" alt="Layer5 badges" />
+          <img src="assets/badges/meshery/meshery.png" alt="Layer5 badges" />
           <span>Meshery</span> <p>This badge isawarded to the community members who make consistent and impactful contributions to the Meshery project. Community members who earn this badge occasionally become a project maintainer.</p>
         </div>
         <div>
-          <img src="assets/badges/patterns/patterns.svg" alt="Layer5 badges" />
+          <img src="assets/badges/patterns/patterns.png" alt="Layer5 badges" />
           <span>Patterns</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://service-mesh-patterns.github.io/service-mesh-patterns">Service Mesh Patterns</a> project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
-          <img src="assets/badges/landscape/landscape.svg" alt="Layer5 badges" />
+          <img src="assets/badges/landscape/landscape.png" alt="Layer5 badges" />
           <span>Landscape</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the layer5.io website.</p>
         </div>
         <div>
-          <img src="assets/badges/nighthawk/nighthawk.svg" alt="Layer5 badges" />
+          <img src="assets/badges/nighthawk/nighthawk.png" alt="Layer5 badges" />
           <span>Nighthawk</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the NightHawk project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer.</p>
         </div>
         <div>
-          <img src="assets/badges/meshery-catalog/meshery-catalog.svg" alt="Layer5 badges" />
+          <img src="assets/badges/meshery-catalog/meshery-catalog.png" alt="Layer5 badges" />
           <span>Meshery Catalog</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://meshery.io/catalog">Meshery Catalog</a> of Meshery project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
-          <img src="assets/badges/docker-extension/docker-extension.svg" alt="Layer5 badges" />
+          <img src="assets/badges/docker-extension/docker-extension.png" alt="Layer5 badges" />
           <span>Docker Extension</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the Docker Extension of meshery project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
-          <img src="assets/badges/meshery-docs/meshery-docs.svg" alt="Layer5 badges" /> <span>Meshery Docs</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://docs.meshery.io">Meshery Docs</a> in recognition and appreciation of their efforts.</p>
+          <img src="assets/badges/meshery-docs/meshery-docs.png" alt="Layer5 badges" /> <span>Meshery Docs</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://docs.meshery.io">Meshery Docs</a> in recognition and appreciation of their efforts.</p>
         </div>
       </div>
       {/* <div className="container">
