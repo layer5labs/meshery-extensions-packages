@@ -19,7 +19,7 @@ const data = {
             question: "What is the Layer5 Badge Program?",
             category: "Layer5 Badges",
             answer: [
-                "The Layer5 Recognition Program is a system where badges symbolize contributors' achievements and skills in the Layer5 community.",
+                "The Layer5 Recognition Program is a system wherein badges symbolize users' and contributors' achievements and skills in the Layer5 community.",
                 "These badges showcase dedication, ownership, and proficiency, representing various contributions and skill sets, underlining the importance of individual contributions, and fostering loyalty within the community."
             ],
         },
@@ -27,7 +27,7 @@ const data = {
             question: "Can I participate in the program?",
             category: "Layer5 Badges",
             answer: [
-                "Yes, It does not matter if you are an experienced developer, a newbie figuring out your way into open source, documentation enthusiast, a community socialite... we have a badge you can earn and display proudly!"
+                "Yes, it doesn't matter if you are an experienced developer, a newbie figuring out your way into open source, documentation enthusiast, a community socialite... we have a badge you can earn and display proudly!"
             ],
         },
         {
@@ -35,8 +35,8 @@ const data = {
             category: "Layer5 Badges",
             answer: [
                 "Layer5 badges are divided into two categories, namely 'Achievement Badges' and 'Project and Contribution' Badges",
-                "Project and Contribution Badges are assigned by the admin to the user when a user contributes to a particular project.",
-                "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, etc."
+                "Project and Contribution Badges are assigned by community managers to a user when they contributes to a particular project.",
+                "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, and so on."
             ],
         },
         {
@@ -57,7 +57,7 @@ const data = {
             question: "How many badges are there?",
             category: "Layer5 Badges",
             answer: [
-                "Our collection of badges consists of 22 in total and is divided into two subcategories: 'Achievement Badges (9)' and 'Project and Contribution Badges (13)'",
+                "Our collection of badges consists of the set that you see posted on this site. New badges are developed on occassion, so keep your eyes peeled for their emergence... or help us design a new one!",
             ],
         },
         {
@@ -78,7 +78,7 @@ const data = {
             question: "Can I design a badge?",
             category: "Layer5 Badges",
             answer: [
-                "No, but Layer5 encourages collaboration and welcomes your ideas to enhance the badge design process and community engagement.",
+                "Yes, Layer5 encourages collaboration and welcomes your ideas to enhance the badge design process and community engagement.",
             ],
             link: "https://discuss.layer5.io/",
             linktext: "Share your ideas"

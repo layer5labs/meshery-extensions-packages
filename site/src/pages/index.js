@@ -1,15 +1,12 @@
-import SignupForm from "./components/SignupForm";
-import { Main } from './App.style.js';
-// import mesheryPlayground from "./assets/images/meshery-playground-meshmap.png";
-import Footer from "./components/Footer";
+import { Main } from '../sitecomponents/App.style';
+import Footer from "../sitecomponents/Footer/index";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, GlobalStyle, lightTheme } from './index.style.js';
-import { useDarkMode } from "./components/useDarkMode";
-// import ReactPlayer from 'react-player/youtube'
-import Navigation from "./components/Navigation";
-import Faq from "./components/Faq";
-import { useState } from "react";
-import BadgeGrid from "./components/BadgeGrid";
+import { darkTheme, GlobalStyle, lightTheme } from '../sitecomponents/index.style.js';
+import { useDarkMode } from "../sitecomponents/useDarkMode";
+import Navigation from "../sitecomponents/Navigation/index";
+import Faq from "../sitecomponents/Faq/index";
+import React, { useState } from "react";
+import BadgeGrid from "../sitecomponents/BadgeGrid/index";
 
 const App = () => {
 
@@ -17,9 +14,9 @@ const App = () => {
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [showSignUpButton, setShowSignUpButton] = useState(true);
 
-  const handleSignUpFormSubmit = () => {
-    setShowSignUpButton(false);
-  };
+  // const handleSignUpFormSubmit = () => {
+  //   setShowSignUpButton(false);
+  // };
 
   return (
     <>

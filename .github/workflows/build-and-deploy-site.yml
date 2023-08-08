@@ -5,6 +5,8 @@ on:
     branches: [ master ]
     paths:
       - 'site/**'
+  workflow_dispatch:
+    
 
 jobs:
   build-and-deploy:
@@ -22,5 +24,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: site # The branch the action should deploy to.
-          folder: site/build # The folder the action should deploy.
+          folder: site/public # The folder the action should deploy.
           clean: true

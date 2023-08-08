@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Header } from "./Navigation.styles";
 import layer5Logo from '../../assets/images/layer5/layer5-badges.png';
 import layer5LogoLight from '../../assets/images/layer5/layer5-badges-white.png';
@@ -29,7 +29,7 @@ function Navigation({theme, toggleTheme, showSignUpButton}) {
         <img className="logo" src={Logo} alt="Layer5 Logo" />
         <div className="btn-container">
           <Toggle theme={theme} toggleTheme={toggleTheme} />
-          {showSignUpButton && <a href="#signup-form" className="signup-btn" role="button">Sign Up</a>}
+          {showSignUpButton && <a href="https://meshery.layer5.io" className="signup-btn" role="button">Login</a>}
         </div>
         <div className="dropdown_btn" onClick={handleNavOpen}>
           {openNav ? 
@@ -46,7 +46,7 @@ function Navigation({theme, toggleTheme, showSignUpButton}) {
               <Toggle theme={theme} toggleTheme={toggleTheme} />
             </div>
             <div className="action-btns">
-              <a href="#signup-form" className="signup-btn" role="button">Sign Up</a>
+              <a href="https://meshery.layer5.io" className="signup-btn" role="button">Login</a>
               {/* <a href="https://demo.meshery.io" className="login-btn" role="button">Login</a> */}
             </div>
       </div>
