@@ -50,7 +50,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://github.com/meshery/play"
+                href="https://github.com/layer5labs/meshery-extensions-packages"
               >
                 <img src={GithubIcon} alt="GitHub Icon" />
                 Github
@@ -180,7 +180,7 @@ const Footer = () => {
           <li>
               <a
                 className="category-link"
-                href="https://twitter.com/mesheryio/"
+                href="https://twitter.com/layer5"
               >
                 <img src={TwitterIcon} alt="Twitter Icon"/>
                 Twitter
@@ -198,7 +198,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://www.linkedin.com/company/meshery/"
+                href="https://www.linkedin.com/company/layer5/"
               >
                 <img src={LinkedinIcon} alt="Linkedin Icon" />
                 Linkedin
@@ -208,7 +208,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container flex copyright">
-        <div className="text">&copy; {new Date().getFullYear()}- The Meshery Authors</div>
+        <div className="text">&copy; {new Date().getFullYear()}- The Layer5 Authors</div>
         <div className="text">Proudly representing every CNCF project</div>
         <div className="text"><a href="https://github.com/meshery/meshery/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a></div>
       </div>
