@@ -8,6 +8,8 @@ import Faq from "../sitecomponents/Faq/index";
 import React, { useState } from "react";
 import BadgeGrid from "../sitecomponents/BadgeGrid/index";
 import recognitionLogo from "../assets/images/recognition-program.png";
+import recognitionBanner from "../assets/images/recognition-banner.png";
+import githubBadges from "../assets/images/github-badges.png";
 import '../fonts.css'
 const App = () => {
 
@@ -21,6 +23,8 @@ const App = () => {
 
   return (
     <>
+      <title>Layer5 Recognition Program</title>
+      <meta name="description" content="Showcasing Your Achievements as a User and a Contributor" />
       <ThemeProvider theme={themeMode}>
         <GlobalStyle />
         <Navigation theme={theme} toggleTheme={toggleTheme} showSignUpButton={showSignUpButton} />
@@ -35,7 +39,11 @@ const App = () => {
             <p className="desc-text">
             Layer5 badges are one of the many ways that we recognize the efforts of our contributors and uplift our users. Layer5 badges represent milestones that you achieve both in using and in contributing to Layer5-supported open source projects. As a contributor, this is how you demonstrate your ownership, dedication, skills and loyalty to Layer5. As a user, this is how you demonstrate your prowess.
             </p>
-            <p>See the <a href="https://layer5.io/community/handbook/recognition">Recognition</a> section of the <a href="https://layer5.io/community/handbook/recognition">Layer5 Community Handbook</a> for details of when and how each badge is awarded.</p>
+            <p>See the <a href="https://layer5.io/community/handbook/recognition">Recognition</a> section of the <a href="https://layer5.io/community/handbook/recognition">Layer5 Community Handbook</a> for details of when and how each badge is awarded. Take pride and embed your badges on GitHub profiles.</p>
+            <div className="banner-logos">
+              <img src={recognitionBanner} alt="Recognition Program Banner"/>
+              <img src={githubBadges} alt="Recognition Program Banner"/>
+            </div>
             <section className="faq">
               {/* <h1>Frequently Asked Questions</h1> */}
               <Faq category={["Layer5 Badges"]}   

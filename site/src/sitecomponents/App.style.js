@@ -265,6 +265,17 @@ export const Main = styled.main`
     width:calc(30% - 30px);
   }
 
+  .banner-logos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+  .banner-logos img{
+    max-width: 480px;
+    margin: 1rem;
+  }
   .faq {
     text-align: center;
     margin: 4rem auto 0rem auto;
@@ -281,6 +292,9 @@ export const Main = styled.main`
       width: 100%;
     }
     max-width: 90%;
+    .banner-logos img{
+      max-width: 350px;
+    }
   }
 
   @media screen and (max-width: 344px){
