@@ -4,25 +4,25 @@
             "slug": "bring-a-buddy",
             "location": "assets/badges/bring-a-buddy/bring-a-buddy.svg",
             "title": "Bring a Buddy",
-            "description": "This badge is awarded to the users who invite someone to Layer5 cloud."
+            "description": "This badge is awarded to the users who invite someone to Layer5 Cloud."
         },
         {
             "slug": "first-application",
             "location": "assets/badges/first-application/first-application.svg",
             "title": "Application Pioneer",
-            "description": "This badge is awarded to the Layer5 cloud users when they create their first application."
+            "description": "This badge is awarded to the Layer5 Cloud users when they create their first application."
         },
         {
             "slug": "first-design",
             "location": "assets/badges/first-design/first-design.svg",
             "title": "Design Pioneer",
-            "description": "This badge is awarded to the Layer5 cloud users when they create their first design."
+            "description": "This badge is awarded to the Layer5 Cloud users when they create their first design."
         },
         {
             "slug": "first-share",
             "location": "assets/badges/first-share/first-share.svg",
             "title": "Sharing is Caring",
-            "description": "This badge is awarded upon first-time sharing one of your designs.."
+            "description": "This badge is awarded upon first-time sharing one of your Meshery designs."
         },
         {
             "slug": "first-deployment",
@@ -34,7 +34,7 @@
             "slug": "need-for-speed",
             "location": "assets/badges/need-for-speed/need-for-speed.svg",
             "title": "Need for Speed",
-            "description": "This badge is awarded upon successful execution of your first performance test."
+            "description": "This badge is awarded upon successful execution of your first Meshery performance test."
         },
         {
             "slug": "first-interactive-terminal-session",

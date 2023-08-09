@@ -26,13 +26,12 @@ const App = () => {
         <Navigation theme={theme} toggleTheme={toggleTheme} showSignUpButton={showSignUpButton} />
         <Main>
           <section className="hero">
+            <img className="program-logo" src={recognitionLogo} alt="Recognition Program Logo"/>
             <h3 className="try-now-txt">Showcasing Your Achievements as a User and a Contributor</h3>
             <h1>
             Layer5 Recognition Program
             </h1>
-            <div className="program-logo">
-              <img src={recognitionLogo} alt="Recognition Program Logo"/>
-            </div>
+            
             <p className="desc-text">
             Layer5 badges are one of the many ways that we recognize the efforts of our contributors and uplift our users. Layer5 badges represent milestones that you achieve both in using and in contributing to Layer5-supported open source projects. As a contributor, this is how you demonstrate your ownership, dedication, skills and loyalty to Layer5. As a user, this is how you demonstrate your prowess.
             </p>

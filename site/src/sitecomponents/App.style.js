@@ -162,7 +162,7 @@ export const Main = styled.main`
   margin: 5rem auto;
 
   p {
-			font-size: 1.35rem;
+			font-size: 1.05rem;
       text-align: center;
   }
 
@@ -259,11 +259,10 @@ export const Main = styled.main`
   }
 
   .program-logo{
-    text-align: center;
-    margin: 2rem;
-  }
-  .program-logo img {
-    max-width: 230px;
+    float: left;
+    margin: 1rem;
+    max-width: 225px;
+    width:calc(30% - 30px);
   }
 
   .faq {
