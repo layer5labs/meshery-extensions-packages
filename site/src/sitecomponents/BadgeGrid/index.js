@@ -7,52 +7,27 @@ import React from 'react';
 // import CalendarIcon from "../../assets/images/social-icons/calendar.png";
 // import LinkedinIcon from "../../assets/images/social-icons/linkedin.png";
 import BadgesWrapper from './Badges.styles';
-
+const jsonData = require('../../badgesInfo.json')
 
 const Footer = () => {
   return (
     <BadgesWrapper>
       <h3>Achievement Badges</h3>
-      <div class="badge-grid">
-        <div>
-          <img src="assets/badges/bring-a-buddy/bring-a-buddy.png" alt="Layer5 badges" /><span>Bring a Buddy</span> <p>This badge is awarded to the users who invite someone to Layer5 cloud.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-application/first-application.png" alt="Layer5 badges" />
-          <span>Application Pioneer</span> <p>This badge is awarded to the Layer5 cloud users when they create their first application.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-design/first-design.png" alt="Layer5 badges" />
-          <span>Design Pioneer</span> <p>This badge is awarded to the Layer5 cloud users when they create their first design.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-share/first-share.png" alt="Layer5 badges" />
-          <span>Sharing is Caring</span> <p>This badge is awarded upon first-time sharing one of your designs.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-deployment/first-deployment.png" alt="Layer5 badges" />
-          <span>Shipped</span> <p>This badge is awarded upon the success of your first design deployment.</p>
-        </div>
-        <div>
-          <img src="assets/badges/need-for-speed/need-for-speed.png" alt="Layer5 badges" />
-          <span>Need for Speed</span> <p>This badge is awarded upon successful execution of your first performance test.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.png" alt="Layer5 badges" />
-          <span>Hip Hacker</span> <p>This badge is awarded the first time that you establish an interactive terminal session with a Kubernetes Pod.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-log-streaming-session/first-log-streaming-session.png" alt="Layer5 badges" /> <span>Log Streamer</span> <p>This badge is awarded the first time that you stream logs from a Kubernetes Pod.</p>
-        </div>
-        <div>
-          <img src="assets/badges/first-collaborator/first-collaborator.svg" alt="Layer5 badges" />
-          <span>GitOps with Friends</span> <p>This badge is awarded the first time a collaborator saves changes to one of your designs.</p>
-        </div>
+      <div className="badge-grid">
+        {jsonData.achievementBadges.map((badge) => {
+          return (
+            <div key={badge.slug}>
+              <img src={badge.location} alt="Layer5 badges" />
+              <span>{badge.title}</span>
+              <p>{badge.description}</p>
+            </div>
+          );
+        })}
       </div>
 
       <h3>Project Badges</h3>
 
-      <div class="badge-grid">
+      <div className="badge-grid">
         <div>
           <img src="assets/badges/ui-ux/ui-ux.png" alt="Layer5 badges" />
           <span>UI/UX</span> <p>This badge is awarded to the community members who create or improve designs for visual aspects or user flow for any of the websites, flyers, promotions, Meshery UI, and so on in recognition and appreciation of their efforts.</p>
@@ -90,19 +65,11 @@ const Footer = () => {
           <span>Meshery Catalog</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://meshery.io/catalog">Meshery Catalog</a> of Meshery project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
-          <img src="assets/badges/meshery-operator/meshery-operator.png" alt="Layer5 badges" />
-          <span>Meshery Operator</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to Meshery Operator of the Meshery project in recognition and appreciation of their efforts.</p>
-        </div>
-        <div>
           <img src="assets/badges/docker-extension/docker-extension.png" alt="Layer5 badges" />
           <span>Docker Extension</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the Docker Extension of meshery project in recognition and appreciation of their efforts.</p>
         </div>
         <div>
           <img src="assets/badges/meshery-docs/meshery-docs.png" alt="Layer5 badges" /> <span>Meshery Docs</span> <p>This badge is awarded to the community members who make consistent and impactful contributions to the <a href="https://docs.meshery.io">Meshery Docs</a> in recognition and appreciation of their efforts.</p>
-        </div>
-        <div>
-          <img src="assets/badges/writer-program/writer-program.png" alt="Layer5 badges" />
-          <span>Writer's program</span> <p>This badge is awarded to the community members who make with two or more published writings whether in article, blog post, project documentation or other form in recognition and appreciation of their efforts.</p>
         </div>
       </div>
       {/* <div className="container">
