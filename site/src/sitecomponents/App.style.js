@@ -258,6 +258,14 @@ export const Main = styled.main`
 
   }
 
+  .program-logo{
+    text-align: center;
+    margin: 2rem;
+  }
+  .program-logo img {
+    max-width: 230px;
+  }
+
   .faq {
     text-align: center;
     margin: 4rem auto 0rem auto;
