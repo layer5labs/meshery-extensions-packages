@@ -14,7 +14,7 @@ const Footer = () => {
       <div className="container">
       <div className='footer-links resources'> 
           <h3 className="section-title">
-            <a className="title-link" href='https://meshery.io/community'>
+            <a className="title-link" href='https://layer5.io/community'>
               Project
             </a>
           </h3>
@@ -22,7 +22,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://meshery.io/calendar"
+                href="https://layer5.io/calendar"
               >
                 <img src={CalendarIcon} alt="Calendar Icon" />
                 Calendar
@@ -32,7 +32,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://hub.docker.com/u/meshery/"
+                href="https://hub.docker.com/u/layer5/"
               >
                 <img src={DockerIcon} alt="Docker Icon" />
                 Docker Hub
@@ -41,7 +41,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://slack.meshery.io/"
+                href="https://slack.layer5.io/"
               >
                 <img src={SlackIcon} alt="Slack Icon" />
                 Slack
@@ -50,7 +50,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://github.com/meshery/play"
+                href="https://github.com/layer5"
               >
                 <img src={GithubIcon} alt="GitHub Icon" />
                 Github
@@ -60,7 +60,7 @@ const Footer = () => {
         </div>
         <div className='footer-links getting-started'> 
           <h3 className="section-title">
-            <a className="title-link" href="https://meshery.io/#getting-started">
+            <a className="title-link" href="https://layer5.io/community">
               Getting Started
             </a>
           </h3>
@@ -83,7 +83,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://meshery.io/integrations"
+                href="https://layer5.io/cloud-native-management/meshery/integrations"
               >
                 Integrations
               </a>
@@ -99,7 +99,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://meshery.io/catalog"
+                href="https://meshery.layer5.io/catalog"
               >
                 Meshery Catalog
               </a>
@@ -116,7 +116,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="http://discuss.meshery.io/"
+                href="https://discuss.layer5.io/"
               >
                 Discussion Forum
               </a>
@@ -131,9 +131,9 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://cloud.meshery.io"
+                href="https://meshery.layer5.io"
               >
-                Meshery Cloud
+                Layer5 Cloud
               </a>
             </li>
             <li>
@@ -155,7 +155,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://meshery.io/subscribe"
+                href="https://layer5.io/subscribe"
               >
                 Mailing Lists
               </a>
@@ -180,7 +180,7 @@ const Footer = () => {
           <li>
               <a
                 className="category-link"
-                href="https://twitter.com/mesheryio/"
+                href="https://twitter.com/layer5"
               >
                 <img src={TwitterIcon} alt="Twitter Icon"/>
                 Twitter
@@ -198,7 +198,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://www.linkedin.com/company/meshery/"
+                href="https://www.linkedin.com/company/layer5/"
               >
                 <img src={LinkedinIcon} alt="Linkedin Icon" />
                 Linkedin
@@ -208,9 +208,9 @@ const Footer = () => {
         </div>
       </div>
       <div className="container flex copyright">
-        <div className="text">&copy; {new Date().getFullYear()}- The Meshery Authors</div>
-        <div className="text">Proudly representing every CNCF project</div>
-        <div className="text"><a href="https://github.com/meshery/meshery/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a></div>
+        <div className="text">&copy; {new Date().getFullYear()}- The Layer5 Authors</div>
+        <div className="text">Empowering engineers all around the world</div>
+        <div className="text"><a href="https://layer5.io/about">About</a></div>
       </div>
     </FooterWrapper> 
   )
