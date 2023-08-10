@@ -4,7 +4,7 @@ on:
     types: [published]
   pull_request:
     paths-ignore:
-      - 'site/**'
+      - 'site/**/**'
   workflow_dispatch:
     inputs:
       logLevel:
