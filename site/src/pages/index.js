@@ -39,10 +39,10 @@ const App = () => {
             <p className="desc-text">
             Layer5 badges are one of the many ways that we recognize the efforts of our contributors and uplift our users. Layer5 badges represent milestones that you achieve both in using and in contributing to Layer5-supported open source projects. As a contributor, this is how you demonstrate your ownership, dedication, skills and loyalty to Layer5. As a user, this is how you demonstrate your prowess.
             </p>
-            <p>See the <a href="https://layer5.io/community/handbook/recognition">Recognition</a> section of the <a href="https://layer5.io/community/handbook/recognition">Layer5 Community Handbook</a> for details of when and how each badge is awarded. Take pride and embed your badges on GitHub profiles.</p>
+            
+            <img src={recognitionBanner} alt="Recognition Program Banner"/>
+            <p>See the <a href="https://layer5.io/community/handbook/recognition">Recognition</a> section of the <a href="https://layer5.io/community/handbook/recognition">Layer5 Community Handbook</a> for details of when and how each badge is awarded.</p>
             <div className="banner-logos">
-              <img src={recognitionBanner} alt="Recognition Program Banner"/>
-              <img src={githubBadges} alt="Recognition Program Banner"/>
             </div>
             <section className="faq">
               {/* <h1>Frequently Asked Questions</h1> */}
@@ -52,6 +52,10 @@ const App = () => {
             <section className="badges">
               <BadgeGrid  />
             </section>
+            <div className="banner-logos">
+              <h4> Take pride and embed your Layer5 badges in your GitHub profile</h4>
+              <img src={githubBadges} alt="Recognition Program Banner"/>
+            </div>
             {/* <ReactPlayer
               url="https://youtu.be/Do7htKrRzDA"
               playing

@@ -1,18 +1,14 @@
 import React from 'react';
-// import SlackIcon from "../../assets/images/social-icons/slack.svg";
-// import DockerIcon from "../../assets/images/social-icons/docker.svg";
-// import YoutubeIcon from "../../assets/images/social-icons/youtube.svg";
-// import TwitterIcon from "../../assets/images/social-icons/twitter.svg";
-// import GithubIcon from "../../assets/images/social-icons/github.svg";
-// import CalendarIcon from "../../assets/images/social-icons/calendar.png";
-// import LinkedinIcon from "../../assets/images/social-icons/linkedin.png";
+import CertificationProgram from "../../assets/images/certification-program.png";
+import MeshMasterCertified from "../../assets/images/meshmaster-certified.png";
+
 import BadgesWrapper from './Badges.styles';
-const jsonData = require('../../badgesInfo.json')
+const jsonData = require('../../badgesInfo.json');
 
 const Footer = () => {
   return (
     <BadgesWrapper>
-      <h3>Achievement Badges</h3>
+      <h2>Achievement Badges</h2>
       <div className="badge-grid">
         {jsonData.achievementBadges.map((badge) => {
           return (
@@ -25,7 +21,7 @@ const Footer = () => {
         })}
       </div>
 
-      <h3>Project Badges</h3>
+      <h2>Project Badges</h2>
 
       <div className="badge-grid">
         <div>
@@ -273,6 +269,19 @@ const Footer = () => {
         <div className="text">Proudly representing every CNCF project</div>
         <div className="text"><a href="https://github.com/meshery/meshery/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a></div>
       </div> */}
+
+
+<h2 id="certification">Certification Badges</h2>
+    <div className="badge-grid">
+        <div>
+        <img style={{width:"20vw"}} src={MeshMasterCertified} alt="Layer5 badges" />
+          <span>MeshMaster</span> <p>This badge is awarded to individuals who have demonstrated a clear and holistic understanding of cloud native infrastructure management.</p>
+        </div>
+        <div>
+        <img style={{width:"20vw"}} src={CertificationProgram} alt="Layer5 badges" />
+          <span>Coming soon...</span> <p>Additional certications are coming soon!</p>
+        </div>
+      </div>
     </BadgesWrapper>
   )
 }

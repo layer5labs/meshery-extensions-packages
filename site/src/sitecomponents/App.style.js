@@ -278,7 +278,7 @@ export const Main = styled.main`
   }
   .faq {
     text-align: center;
-    margin: 4rem auto 0rem auto;
+    margin: 0rem auto 0rem auto;
   }
 
   @media screen and (max-width: 768px) {
