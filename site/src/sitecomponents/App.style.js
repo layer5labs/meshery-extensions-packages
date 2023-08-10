@@ -266,14 +266,35 @@ export const Main = styled.main`
   }
 
   .banner-logos{
+    color: ${({ theme }) => theme.text};
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     width: 100%;
   }
   .banner-logos img{
     max-width: 480px;
+    margin: 1rem;
+  }
+  .banner-logos h4{
+    margin: 1rem;
+  }
+  .banner-logos ul{
+    margin: 0rem;
+  }
+  .banner-main{
+    text-align: center;
+  }
+  .github-badges{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .github-badges img{
+    height: 290px;
     margin: 1rem;
   }
   .faq {
@@ -294,6 +315,10 @@ export const Main = styled.main`
     max-width: 90%;
     .banner-logos img{
       max-width: 350px;
+    }
+    .github-badges img{
+      height: auto;
+      width: 90%;
     }
   }
 
