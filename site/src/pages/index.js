@@ -55,12 +55,12 @@ const App = () => {
             <div className="banner-logos">
               <h3> Wear your badge pride proudly. Embed your Layer5 badges in your GitHub profile</h3>
               <h4>Follow these steps to display your badge:</h4>
-              <ul>
+              <ol>
                 <li>Visit your Layer5 Cloud Profile to see the badges</li>
                 <li>Click on the badge, which you wanted to display</li>
                 <li>Copy the markdown code by clicking the Embed Code icon</li>
                 <li>Paste the code in your GitHub profile README.</li>
-              </ul>
+              </ol>
               <div className="github-badges">
                 <img src={githubGopi} alt="Recognition Program Banner"/>
                 <img src={githubKaran} alt="Recognition Program Banner"/>
