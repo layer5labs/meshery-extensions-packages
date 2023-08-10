@@ -53,7 +53,7 @@ const App = () => {
               <BadgeGrid  />
             </section>
             <div className="banner-logos">
-              <h3> Take pride and embed your Layer5 badges in your GitHub profile</h3>
+              <h3> Wear your badge pride proudly. Embed your Layer5 badges in your GitHub profile</h3>
               <h4>Follow these steps to display your badge:</h4>
               <ul>
                 <li>Visit your Layer5 Cloud Profile to see the badges</li>
