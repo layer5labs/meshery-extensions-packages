@@ -50,7 +50,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://github.com/layer5"
+                href="https://github.com/layer5io/"
               >
                 <img src={GithubIcon} alt="GitHub Icon" />
                 Github
