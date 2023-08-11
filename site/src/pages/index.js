@@ -11,6 +11,8 @@ import recognitionLogo from "../assets/images/recognition-program.png";
 import recognitionBanner from "../assets/images/recognition-banner.png";
 import githubGopi from "../assets/images/github-badges.png";
 import githubKaran from "../assets/images/github-badges-karan.png";
+import githubGopi from "../assets/images/github-badges.png";
+import githubKaran from "../assets/images/github-badges-karan.png";
 import '../fonts.css'
 const App = () => {
 
@@ -43,6 +45,9 @@ const App = () => {
             <div className="banner-main">
               <img src={recognitionBanner} alt="Recognition Program Banner"/>
             </div>
+            <div className="banner-main">
+              <img src={recognitionBanner} alt="Recognition Program Banner"/>
+            </div>
             <p>See the <a href="https://layer5.io/community/handbook/recognition">Recognition</a> section of the <a href="https://layer5.io/community/handbook/recognition">Layer5 Community Handbook</a> for details of when and how each badge is awarded.</p>
             <section className="faq">
               {/* <h1>Frequently Asked Questions</h1> */}
@@ -53,14 +58,14 @@ const App = () => {
               <BadgeGrid  />
             </section>
             <div className="banner-logos">
-              <h3> Take pride and embed your Layer5 badges in your GitHub profile</h3>
+              <h3> Wear your badge pride proudly. Embed your Layer5 badges in your GitHub profile</h3>
               <h4>Follow these steps to display your badge:</h4>
-              <ul>
+              <ol>
                 <li>Visit your Layer5 Cloud Profile to see the badges</li>
                 <li>Click on the badge, which you wanted to display</li>
                 <li>Copy the markdown code by clicking the Embed Code icon</li>
                 <li>Paste the code in your GitHub profile README.</li>
-              </ul>
+              </ol>
               <div className="github-badges">
                 <img src={githubGopi} alt="Recognition Program Banner"/>
                 <img src={githubKaran} alt="Recognition Program Banner"/>
