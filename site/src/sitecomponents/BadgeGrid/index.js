@@ -29,7 +29,7 @@ const Footer = () => {
             <div key={badge.slug}>
               <img src={badge.imageSource} alt="Layer5 badges" />
               <span>{badge.title}</span>
-              <p>{badge.description}</p>
+              <p dangerouslySetInnerHTML={{__html: badge.description}}></p>
             </div>
           );
        })}
