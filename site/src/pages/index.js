@@ -56,7 +56,7 @@ const App = () => {
               <h3> Wear your badge pride proudly. Embed your Layer5 badges in your GitHub profile</h3>
               <h4>Follow these steps to display your badge:</h4>
               <ol>
-                <li>Visit your Layer5 Cloud Profile to see the badges</li>
+                <li>Visit your <a href="https://meshery.layer5.io">Layer5 Cloud</a> Profile to see the badges</li>
                 <li>Click on the badge, which you wanted to display</li>
                 <li>Copy the markdown code by clicking the Embed Code icon</li>
                 <li>Paste the code in your GitHub profile README.</li>
