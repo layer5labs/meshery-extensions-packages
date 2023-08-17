@@ -2,9 +2,9 @@ name: Meshery Extension Test
 on:
   release:
     types: [published]
-  pull_request:
-    paths-ignore:
-      - 'site/**/**'
+  # pull_request:
+  #   paths-ignore:
+  #     - 'site/**/**'
   workflow_dispatch:
     inputs:
       logLevel:
