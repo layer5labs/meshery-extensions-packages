@@ -42,5 +42,73 @@
             "title": "GitOps with Friends",
             "description": "This badge is awarded the first time a collaborator saves changes to one of your designs."
         }
+    ],
+    "projectBadges": [
+        {
+            "slug": "ui-ux",
+            "imageSource": "assets/badges/ui-ux/ui-ux.png",
+            "title": "UI/UX",
+            "description": "This badge is awarded to the community members who create or improve designs for visual aspects or user flow for any of the websites, flyers, promotions, Meshery UI, and so on in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "meshmap",
+            "imageSource": "assets/badges/meshmap/meshmap.png",
+            "title": "MeshMap",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/meshmap'>MeshMap</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer"
+        },
+        {
+            "slug": "service-mesh-performance",
+            "imageSource": "assets/badges/smp/smp.png",
+            "title": "Service Mesh Performance",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Service Mesh Performance project. Community members who earn this badge occasionally become a project maintainer."
+        },
+        {
+            "slug": "community",
+            "imageSource": "assets/badges/community/community.png",
+            "title": "Community",
+            "description": "This badge is awarded to the community members who repeatedly engage in welcoming, encouraging, and supporting other Layer5 community members. Community members who earn this badge occasionally graduate to undertaking the Community Manager role."
+        },
+        {
+            "slug": "meshery",
+            "imageSource": "assets/badges/meshery/meshery.png",
+            "title": "Meshery",
+            "description": "This badge isawarded to the community members who make consistent and impactful contributions to the Meshery project. Community members who earn this badge occasionally become a project maintainer."
+        },
+        {
+            "slug": "patterns",
+            "imageSource": "assets/badges/patterns/patterns.png",
+            "title": "Patterns",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://service-mesh-patterns.github.io/service-mesh-patterns'>Service Mesh Patterns</a> project in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "landscape",
+            "imageSource": "assets/badges/landscape/landscape.png",
+            "title": "Landscape",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the layer5.io website."
+        },
+        {
+            "slug": "nighthawk",
+            "imageSource": "assets/badges/nighthawk/nighthawk.png",
+            "title": "Nighthawk",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the NightHawk project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
+        },
+        {
+            "slug": "meshery-catalog",
+            "imageSource": "assets/badges/meshery-catalog/meshery-catalog.png",
+            "title": "Meshery Catalog",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://meshery.io/catalog'>Meshery Catalog</a> of Meshery project in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "docker-extension",
+            "imageSource": "assets/badges/docker-extension/docker-extension.png",
+            "title": "Docker Extension",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Docker Extension of meshery project in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "meshery-docs",
+            "imageSource": "assets/badges/meshery-docs/meshery-docs.png",
+            "title": "Meshery Docs",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://docs.meshery.io'>Meshery Docs</a> in recognition and appreciation of their efforts."
+        }
     ]
 }
