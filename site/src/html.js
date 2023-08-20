@@ -32,7 +32,7 @@ export default function HTML(props) {
             zIndex: 2,
           }}
         >
-          <img src={LoaderSVG} alt="Loading spinner" width="250" height="300" />
+          <img src={LoaderSVG} alt="Loading spinner" width="225px" height="318.13px" />
         </div>
         <div
           key={`body`}
