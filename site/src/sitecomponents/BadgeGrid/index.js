@@ -1,6 +1,6 @@
 import React from 'react';
-import CertificationProgram from "../../assets/images/certification-program.png";
-import MeshMasterCertified from "../../assets/images/meshmaster-certified.png";
+import CertificationProgram from "../../../static/assets/badges/certification-program/certification-program.png";
+import MeshMasterCertified from "../../../static/assets/badges/meshmaster-certified/meshmaster-certified.png";
 
 import BadgesWrapper from './Badges.styles';
 const jsonData = require('../../badgesInfo.json');
@@ -245,7 +245,7 @@ const Footer = () => {
         </div>
         <div>
         <img style={{width:"20vw"}} src={CertificationProgram} alt="Layer5 badges" />
-          <span>Coming soon...</span> <p>Additional certications are coming soon!</p>
+          <span>Coming Soon...</span> <p>Additional certications are coming soon!</p>
         </div>
       </div>
     </BadgesWrapper>

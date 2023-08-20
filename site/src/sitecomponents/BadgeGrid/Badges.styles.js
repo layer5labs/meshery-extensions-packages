@@ -5,6 +5,7 @@ export const BadgesWrapper = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    gap: "1rem";
     > div {
       display: flex;
       flex-direction: column;
@@ -13,11 +14,14 @@ export const BadgesWrapper = styled.div`
       margin: 1rem;
       align-items: center;
       > span {
-        font-weight: bold;
+        text-align: center;
+        font-weight: 600;
+        margin-bottom: 0.3125rem;
+        font-size: 1.3125rem;
         color: ${({ theme }) => theme.text};
       }
       > img {
-        max-width: 150px;
+        max-width: 250px;
       }
     }
 

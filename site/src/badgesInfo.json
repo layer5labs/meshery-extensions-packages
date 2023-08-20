@@ -2,55 +2,43 @@
     "achievementBadges": [
         {
             "slug": "bring-a-buddy",
-            "location": "assets/badges/bring-a-buddy/bring-a-buddy.svg",
+            "location": "assets/badges/bring-a-buddy/bring-a-buddy.png",
             "title": "Bring a Buddy",
             "description": "This badge is awarded to the users who invite someone to Layer5 Cloud."
         },
         {
-            "slug": "first-application",
-            "location": "assets/badges/first-application/first-application.svg",
-            "title": "Application Pioneer",
-            "description": "This badge is awarded to the Layer5 Cloud users when they create their first application."
-        },
-        {
-            "slug": "first-design",
-            "location": "assets/badges/first-design/first-design.svg",
-            "title": "Design Pioneer",
-            "description": "This badge is awarded to the Layer5 Cloud users when they create their first design."
-        },
-        {
             "slug": "first-share",
-            "location": "assets/badges/first-share/first-share.svg",
+            "location": "assets/badges/first-share/first-share.png",
             "title": "Sharing is Caring",
             "description": "This badge is awarded upon first-time sharing one of your Meshery designs."
         },
         {
             "slug": "first-deployment",
-            "location": "assets/badges/first-deployment/first-deployment.svg",
+            "location": "assets/badges/first-deployment/first-deployment.png",
             "title": "Shipped",
             "description": "This badge is awarded upon the success of your first design deployment."
         },
         {
             "slug": "need-for-speed",
-            "location": "assets/badges/need-for-speed/need-for-speed.svg",
+            "location": "assets/badges/need-for-speed/need-for-speed.png",
             "title": "Need for Speed",
             "description": "This badge is awarded upon successful execution of your first Meshery performance test."
         },
         {
             "slug": "first-interactive-terminal-session",
-            "location": "assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.svg",
+            "location": "assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.png",
             "title": "Hip Hacker",
             "description": "This badge is awarded the first time that you establish an interactive terminal session with a Kubernetes Pod."
         },
         {
             "slug": "first-log-streaming-session",
-            "location": "assets/badges/first-log-streaming-session/first-log-streaming-session.svg",
+            "location": "assets/badges/first-log-streaming-session/first-log-streaming-session.png",
             "title": "Log Streamer",
             "description": "This badge is awarded the first time that you stream logs from a Kubernetes Pod."
         },
         {
             "slug": "first-collaborator",
-            "location": "assets/badges/first-collaborator/first-collaborator.svg",
+            "location": "assets/badges/first-collaborator/first-collaborator.png",
             "title": "GitOps with Friends",
             "description": "This badge is awarded the first time a collaborator saves changes to one of your designs."
         }
