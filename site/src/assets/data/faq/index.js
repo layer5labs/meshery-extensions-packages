@@ -57,7 +57,7 @@ const data = {
             question: "How many badges are there?",
             category: "Layer5 Badges",
             answer: [
-                "Our collection of badges consists of the set that you see posted on this site. New badges are developed on occassion, so keep your eyes peeled for their emergence... or help us design a new one!",
+                "New badges are being developed, so keep your eyes peeled for their emergence... or help us design a new one!",
             ],
         },
         {
