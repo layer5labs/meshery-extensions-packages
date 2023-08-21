@@ -188,6 +188,7 @@ export const Main = styled.main`
 
   .desc-text {
     margin: 0 0 3rem;
+    line-height: 150%;
   }
 
   .embedVideo {

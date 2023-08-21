@@ -3,6 +3,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 
 ### Badges included in this folder are:
 - Bring a buddy
+- Certification Program
 - Community
 - Docker Extension
 - First Application
@@ -13,13 +14,15 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - First Log Streaming Session
 - First Share
 - Landscape
+- Meshery
 - Meshery Catalog
 - Meshery Docs
 - Meshery Operator
-- Meshery
 - MeshMap
+- MeshMaster Certified
 - Need for Speed
 - Nighthawk
 - Patterns
 - Service Mesh Performance
 - UI/UX
+- Writer's Program
