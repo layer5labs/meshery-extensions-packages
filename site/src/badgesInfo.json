@@ -41,6 +41,12 @@
             "location": "assets/badges/first-collaborator/first-collaborator.png",
             "title": "GitOps with Friends",
             "description": "This badge is awarded the first time a collaborator saves changes to one of your designs."
+        },
+        {
+            "slug": "gitops-connected",
+            "location": "assets/badges/gitops-connected/gitops-connected.png",
+            "title": "GitOps Connected",
+            "description": "This badge is awarded to users upon establishment of a connection with Meshery GitHub App."
         }
     ],
     "projectBadges": [
