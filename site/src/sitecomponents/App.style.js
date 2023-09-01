@@ -276,17 +276,39 @@ export const Main = styled.main`
     width: 100%;
   }
   .banner-logos img{
-    max-width: 480px;
-    margin: 1rem;
+    max-width: 472px;
+    margin: 1.5rem 0;
+  }
+  .banner-logos h3{
+    font-weight: 380;
+    font-size: 1.67rem;
+    margin: 1rem 0;
   }
   .banner-logos h4{
-    margin: 1rem;
+    margin: -1rem 1rem 2rem 1rem;
+    font-weight: 250;
   }
   .banner-logos ul{
     margin: 0rem;
+    font-weight: 150;
   }
   .banner-main{
     text-align: center;
+  }
+  .display-badge-steps-parent{
+    display: flex;
+    align-items:center;
+    margin-left: 2.5rem;
+  }
+  .display-badge-steps-parent svg{
+    height:  11rem;
+    opacity: 0.3;
+  }
+  .display-badge{
+    display:flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin: 1rem 8rem 1rem -10rem;
   }
   .github-badges{
     display: flex;
@@ -302,12 +324,22 @@ export const Main = styled.main`
     text-align: center;
     margin: 0rem auto 0rem auto;
   }
-
+  @media screen and (max-width: 1230px){
+    .display-badge{
+      margin: 0 1rem;
+    }
+  }
   @media screen and (max-width: 768px) {
     figure {
       width: 90%;
     }
     max-width: 85%;
+    .display-badge-steps{
+      margin: 0;
+    }
+    .banner-logos h4{
+      margin: 1rem;
+    }
   }
   @media screen and (max-width: 568px) {
     figure {

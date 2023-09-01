@@ -12,16 +12,16 @@ import recognitionBanner from "../assets/images/recognition-banner.png";
 import githubGopi from "../assets/images/github-badges.png";
 import githubKaran from "../assets/images/github-badges-karan.png";
 import '../fonts.css'
+import GithubLogo from './githubLogo';
 const App = () => {
 
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [showSignUpButton, setShowSignUpButton] = useState(true);
-
+  const fillColor = theme === 'light' ? '#24292F' : '#ffffff';
   // const handleSignUpFormSubmit = () => {
   //   setShowSignUpButton(false);
   // };
-
   return (
     <>
       <title>Layer5 Recognition Program</title>
@@ -54,13 +54,20 @@ const App = () => {
             </section>
             <div className="banner-logos">
               <h3> Wear your badge pride proudly. Embed your Layer5 badges in your GitHub profile</h3>
+            <div className='display-badge-steps-parent'>
+              <div className='display-badge'>
               <h4>Follow these steps to display your badge:</h4>
-              <ol>
+              <div className='display-badge-steps'>
+              <ul>
                 <li>Visit your <a href="https://meshery.layer5.io">Layer5 Cloud</a> Profile to see the badges</li>
                 <li>Click on the badge, which you wanted to display</li>
                 <li>Copy the markdown code by clicking the Embed Code icon</li>
                 <li>Paste the code in your GitHub profile README.</li>
-              </ol>
+              </ul>
+              </div>
+              </div>
+             <GithubLogo fillColor ={fillColor}/>
+            </div>
               <div className="github-badges">
                 <img src={githubGopi} alt="Recognition Program Banner"/>
                 <img src={githubKaran} alt="Recognition Program Banner"/>
