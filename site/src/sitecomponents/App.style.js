@@ -302,7 +302,6 @@ export const Main = styled.main`
   }
   .display-badge-steps-parent svg{
     height:  11rem;
-    opacity: 0.3;
   }
   .display-badge{
     display:flex;
