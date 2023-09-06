@@ -300,9 +300,6 @@ export const Main = styled.main`
     align-items:center;
     margin-left: 2.5rem;
   }
-  .display-badge-steps-parent svg{
-    height:  11rem;
-  }
   .display-badge{
     display:flex;
     flex-direction: column;

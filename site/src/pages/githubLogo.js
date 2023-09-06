@@ -1,6 +1,6 @@
 import React from "react";
 
-const GithubLogo = ({fillColor}) => { 
+const GithubLogo = ({fillColor , width , height}) => { 
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     id="Layer_1"
@@ -9,6 +9,8 @@ const GithubLogo = ({fillColor}) => {
     version="1.1"
     viewBox="0 0 274.1 267.3"
     xmlSpace="preserve"
+    width={width}
+    height={height}
     style={{ enableBackground: "new 0 0 274.1 267.3" }}
   >
     <path

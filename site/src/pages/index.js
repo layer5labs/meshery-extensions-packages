@@ -66,14 +66,14 @@ const App = () => {
               </ul>
               </div>
               </div>
-             <GithubLogo fillColor ={fillColor}/>
+             <GithubLogo fillColor ={fillColor} width="12rem" height="11rem" />
             </div>
               <div className="github-badges">
                 <img src={githubGopi} alt="Recognition Program Banner"/>
                 <img src={githubKaran} alt="Recognition Program Banner"/>
               </div>
             </div>
-            {/* <ReactPlayer
+            {/* <ReactPlayer  
               url="https://youtu.be/Do7htKrRzDA"
               playing
               controls
