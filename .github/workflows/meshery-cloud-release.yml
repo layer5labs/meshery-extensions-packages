@@ -87,19 +87,45 @@ jobs:
       run:  |
         npm i -g @redocly/cli@latest
         make docs-build
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1.6.0
+    - name: Docker Meta
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+          images: layer5/meshery-cloud
+          flavor: |
+            latest=true
+          tags: |
+            type=raw,value=${{inputs.release-environment}}-{{sha}}
+            type=raw,value=${{inputs.release-environment}}-{{tag}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=raw,value=${{inputs.release-environment}}-latest
+            type=raw,value=${{inputs.release-environment}}-${{env.GIT_VERSION}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}        
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Docker staging build & tag
-      if: success()
-      run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:staging-latest --build-arg GIT_VERSION="staging-latest" --build-arg ENVIRONMENT="stg" .
-    - name: Docker staging push
-      if: success()
-      run: |
-        docker push layer5/meshery-cloud:staging-latest
+    - name: Build and Push
+      uses: docker/build-push-action@v4
+      with:        
+        push: true
+        build-args: |
+          ENVIRONMENT="stg"
+          GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
+          RELEASE_CHANNEL=${{inputs.release-environment}}
+        tags: ${{ steps.meta.outputs.tags }}
+        platforms: linux/amd64,linux/arm64
+    # - name: Docker staging build & tag
+    #   if: success()
+    #   run: |
+    #     DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:staging-latest --build-arg GIT_VERSION="staging-latest" --build-arg ENVIRONMENT="stg" .
+    # - name: Docker staging push
+    #   if: success()
+    #   run: |
+    #     docker push layer5/meshery-cloud:staging-latest
     - name: Deploy staging
       if: success()
       uses: appleboy/ssh-action@master
@@ -131,19 +157,50 @@ jobs:
       run:  |
         npm i -g @redocly/cli@latest
         make docs-build
-    - name: Login to Docker Hub
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1.6.0
+    - name: Docker Meta
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+          images: layer5/meshery-cloud
+          flavor: |
+            latest=true
+          tags: |
+            type=raw,value=${{inputs.release-environment}}-{{sha}}
+            type=raw,value=${{inputs.release-environment}}-{{tag}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=raw,value=${{inputs.release-environment}}-latest
+            type=raw,value=${{inputs.release-environment}}-${{env.GIT_VERSION}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}        
+    - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }} 
-    - name: Docker production build & tag
-      run: |
-        DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} --build-arg ENVIRONMENT="prod" .
-        docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${{env.GIT_VERSION}}
-    - name: Docker production push
-      run: |
-        docker push layer5/meshery-cloud:production-latest
-        docker push layer5/meshery-cloud:production-${{env.GIT_VERSION}}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and Push
+      uses: docker/build-push-action@v4
+      with:        
+        push: true
+        build-args: |
+          ENVIRONMENT="stg"
+          GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
+          RELEASE_CHANNEL=${{inputs.release-environment}}
+        tags: ${{ steps.meta.outputs.tags }}
+        platforms: linux/amd64,linux/arm64
+    # - name: Login to Docker Hub
+    #   uses: docker/login-action@v2
+    #   with:
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }} 
+    # - name: Docker production build & tag
+    #   run: |
+    #     DOCKER_BUILDKIT=1 docker build --no-cache -t layer5/meshery-cloud:production-latest --build-arg GIT_VERSION=${{env.GIT_VERSION}} --build-arg ENVIRONMENT="prod" .
+    #     docker tag layer5/meshery-cloud:production-latest layer5/meshery-cloud:production-${{env.GIT_VERSION}}
+    # - name: Docker production push
+    #   run: |
+    #     docker push layer5/meshery-cloud:production-latest
+    #     docker push layer5/meshery-cloud:production-${{env.GIT_VERSION}}
     - name: Deploy production
       uses: appleboy/ssh-action@master
       with:
