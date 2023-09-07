@@ -180,7 +180,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and Push
       uses: docker/build-push-action@v4
-      with:        
+      with:
+        context: "{{defaultContext}}:meshery-cloud"
         push: true
         build-args: |
           ENVIRONMENT="stg"
