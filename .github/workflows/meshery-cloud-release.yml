@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery Cloud code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Meshery Cloud code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: layer5io/meshery-cloud
         fetch-depth: 1
@@ -120,7 +120,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Meshery Cloud code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: layer5io/meshery-cloud
         #path: ./meshery-cloud
