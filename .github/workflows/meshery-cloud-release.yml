@@ -130,7 +130,7 @@ jobs:
         context: meshery-cloud
         push: true
         build-args: |
-          ENVIRONMENT="stg"
+          ENVIRONMENT=stg
           GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
           RELEASE_CHANNEL=${{inputs.release-environment}}
         tags: ${{ steps.meta.outputs.tags }}
