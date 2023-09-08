@@ -86,6 +86,7 @@ jobs:
         token: ${{ secrets.GH_ACCESS_TOKEN }}
     - name: Build Docs
       run:  |
+        cd meshery-cloud
         npm i -g @redocly/cli@latest
         make docs-build
     - name: Set up QEMU
