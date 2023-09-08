@@ -115,6 +115,13 @@ jobs:
           cd ..
           pwd
           ls -al
+          cd ..
+          pwd
+          ls -al
+          cd ..
+          pwd
+          ls -al
+          tree
     - name: Build and Push
       uses: docker/build-push-action@v4
       with:
