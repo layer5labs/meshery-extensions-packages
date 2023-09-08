@@ -198,7 +198,7 @@ jobs:
     - name: Build and Push
       uses: docker/build-push-action@v4
       with:
-        context: "{{defaultContext}}:$GITHUB_WORKSPACE/meshery-cloud"
+        context: meshery-cloud
         push: true
         build-args: |
           ENVIRONMENT=prod
