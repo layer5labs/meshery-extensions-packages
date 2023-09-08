@@ -111,7 +111,7 @@ jobs:
     - name: Build and Push
       uses: docker/build-push-action@v4
       with:
-        context: ${{ env.GITHUB_WORKSPACE }}/meshery-cloud/Dockerfile
+        context: ../meshery-cloud/Dockerfile
         push: true
         build-args: |
           ENVIRONMENT="stg"
