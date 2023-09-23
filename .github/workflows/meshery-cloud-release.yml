@@ -79,6 +79,7 @@ jobs:
       - name: Checkout Meshery Cloud code
         uses: actions/checkout@v4
         with:
+          path: meshery-cloud
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
