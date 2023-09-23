@@ -70,7 +70,32 @@ jobs:
           message: Updated meshery-cloud version to ${{inputs.release-version}}
           commitUserName: l5io
           commitUserEmail: l5io@layer5.io
-        
+      
+  lint-fix:
+    name: Lint UI and Backend
+    if: inputs.release-environment == 'staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Meshery Cloud code
+        uses: actions/checkout@v4
+        with:
+          repository: layer5io/meshery-cloud
+          fetch-depth: 1
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Lint UI and Backend
+        run: |
+          cd meshery-cloud
+          make ui-lint-fix
+          make cloud-lint-fix
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: l5io
+          commit_user_email: l5io@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit_options: '--signoff'
+          commit_message: '[CI] Lint fix backend and ui'
+
   staging:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'staging' 
