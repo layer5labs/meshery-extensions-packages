@@ -115,6 +115,12 @@
             "imageSource": "assets/badges/meshery-docs/meshery-docs.png",
             "title": "Meshery Docs",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://docs.meshery.io'>Meshery Docs</a> in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "continuous-contributor",
+            "imageSource": "assets/badges/continuous-contributor/continuous-contributor.png",
+            "title": "Continuous Contributor",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions for a long period of time in Layer5 projects in recognition and appreciation of their efforts."
         }
     ]
 }
