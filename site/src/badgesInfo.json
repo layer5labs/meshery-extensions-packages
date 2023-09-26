@@ -47,6 +47,12 @@
             "location": "assets/badges/gitops-connected/gitops-connected.png",
             "title": "GitOps Connected",
             "description": "This badge is awarded to users upon establishment of a connection with Meshery GitHub App."
+        },
+        {
+            "slug": "meshmap-snapshot",
+            "location": "assets/badges/meshmap-snapshot/meshmap-snapshot.png",
+            "title": "MeshMap Snapshot",
+            "description": "This badge is awarded to users upon creation of their first infrastructure screenshot directly in their pull request."
         }
     ],
     "projectBadges": [
