@@ -26,3 +26,4 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Service Mesh Performance
 - UI/UX
 - Writer's Program
+- Continuous Contribution

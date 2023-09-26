@@ -23,3 +23,4 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Patterns
 - Service Mesh Performance
 - UI/UX
+- Continuous Contribution
