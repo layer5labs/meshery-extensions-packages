@@ -4,6 +4,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 ### Badges included in this folder are:
 - Bring a buddy
 - Community
+- Continuous Contributor
 - Docker Extension
 - First Application
 - First Collaborator
@@ -12,15 +13,17 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - First Interactive Terminal Session
 - First Log Streaming Session
 - First Share
+- GitOps Connected
 - Landscape
 - Meshery Catalog
 - Meshery Docs
 - Meshery Operator
 - Meshery
 - MeshMap
+- Meshmap Snapshot
 - Need for Speed
 - Nighthawk
 - Patterns
 - Service Mesh Performance
 - UI/UX
-- Continuous Contribution
+- Writer's Program
