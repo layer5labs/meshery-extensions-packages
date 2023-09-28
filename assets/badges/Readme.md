@@ -14,6 +14,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - First Log Streaming Session
 - First Share
 - GitOps Connected
+- Hacktoberfest Contributor
 - Landscape
 - Meshery Catalog
 - Meshery Docs
