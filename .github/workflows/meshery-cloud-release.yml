@@ -83,6 +83,10 @@ jobs:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Install prettier and eslint
+        run: |
+           npm i -g prettier;
+           npm i -g eslint;
       - name: Lint UI and Backend
         run: |
           cd meshery-cloud
