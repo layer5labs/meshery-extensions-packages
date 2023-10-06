@@ -83,6 +83,9 @@ jobs:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.21.0'
       - name: Install prettier and eslint
         run: |
            npm i -g prettier;
@@ -99,7 +102,8 @@ jobs:
           commit_user_email: l5io@layer5.io
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit_options: '--signoff'
-          commit_message: '[CI] Lint fix backend and ui'
+          commit_message: '[CI] Lint fix backend/ui'
+          repository: meshery-cloud
 
   staging:
     needs: update-doc-release-version
