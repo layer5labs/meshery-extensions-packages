@@ -73,6 +73,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
         ? `
       background-color: #ccc;
       opacity: 0.6;
+      cursor: not-allowed;
     `
         : `
       background-color: #00B39F;
@@ -98,6 +99,38 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     );
   };
 
+  const PaginationContainer = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+
+    .main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .page-section {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      margin-left: 20px;
+    }
+    input {
+      border: 1px solid gray;
+      padding: 4px;
+      border-radius: 2px;
+      width: 64px;
+    }
+    select {
+      border: 1px solid gray;
+      padding: 4px;
+      border-radius: 2px;
+      width: 64px;
+    }
+  `;
   return (
     <>
       <div className="grid grid-cols-2 justify-between mt-4 mx-4">
@@ -126,10 +159,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
           <StyledTable>
             <TableHeader>
               {table?.getHeaderGroups().map(headerGroup => (
-                <tr
-                  key={headerGroup.id}
-                  className="w-full border-y border-light text-white bg-primary"
-                >
+                <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map(header => {
                     return (
                       <TH key={header.id} colSpan={header.colSpan}>
@@ -155,7 +185,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                       </TH>
                     );
                   })}
-                </tr>
+                </TableRow>
               ))}
             </TableHeader>
             <TableBody>
@@ -196,8 +226,8 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       </StyledTableContainer>
       <div className="h-2" />
       {!loading && data?.length > 0 && (
-        <section className="flex items-center justify-center text-sx text-gray-600">
-          <div className="flex items-center gap-2">
+        <PaginationContainer>
+          <div className="main">
             <PaginationButton
               className=""
               onClick={() => table?.setPageIndex(0)}
@@ -207,7 +237,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               {'<<'}
             </PaginationButton>
             <PaginationButton
-              className=""
               onClick={() => table?.previousPage()}
               disabled={!table?.getCanPreviousPage()}
               loading={false}
@@ -215,16 +244,13 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               &larr; Prev
             </PaginationButton>
             <PaginationButton
-              className=""
               onClick={() => table?.nextPage()}
               disabled={!table?.getCanNextPage()}
               loading={false}
             >
               Next &rarr;
             </PaginationButton>
-
             <PaginationButton
-              className=""
               onClick={() => table?.setPageIndex(table?.getPageCount() - 1)}
               disabled={!table?.getCanNextPage()}
               loading={false}
@@ -232,14 +258,14 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               {'>>'}
             </PaginationButton>
 
-            <span className="flex items-center gap-1 text-xs">
+            <span className="page-section">
               <div>Page</div>
               <strong>
                 {table?.getState().pagination.pageIndex + 1} of{' '}
                 {table?.getPageCount()}
               </strong>
-            </span>
-            <span className="flex items-center gap-1 text-xs">
+              {/* </span>
+            <span className="page-section"> */}
               | Go to page:
               <input
                 type="number"
@@ -248,7 +274,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                   const page = e.target.value ? Number(e.target.value) - 1 : 0;
                   table.setPageIndex(page);
                 }}
-                className="border p-1 rounded w-16"
+                // className=""
               />
             </span>
             <select
@@ -264,7 +290,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               ))}
             </select>
           </div>
-        </section>
+        </PaginationContainer>
       )}
     </>
   );
