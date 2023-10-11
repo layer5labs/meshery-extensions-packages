@@ -30,4 +30,32 @@ export const TableRow = styled.tr`
   background-color: ${props => (Number(props.id) % 2 ? '#E6FBF7' : 'inherit')};
 `;
 
-export const TH = styled.th``;
+export const TH = styled.th`
+  text-align: left;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 5px;
+`;
+
+export const StyledTableContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d1d5db;
+`;
+
+export const StyledTableWrapper = styled.div`
+  overflow-x: auto;
+  margin: 0 -1rem;
+`;
+
+export const StyledTable = styled.table`
+  width: 100%;
+  background-color: #fff;
+  margin: 0 auto;
+  height: auto;
+  overflow-y: scroll;
+  position: relative;
+`;

@@ -7,7 +7,15 @@ import {
   getPaginationRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { TD, TableBody, TableHeader, TableRow } from '../../reusecore/Table';
+import {
+  StyledTable,
+  StyledTableContainer,
+  StyledTableWrapper,
+  TD,
+  TableBody,
+  TableHeader,
+  TableRow,
+} from '../../reusecore/Table';
 
 const TableComponent = ({
   data,
@@ -125,10 +133,10 @@ function Table({ data, columns, loading, noData, setOption, option }) {
           /> */}
         </div>
       </div>
-      <article className="flex flex-col border border-light-grey">
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <StyledTableContainer>
+        <StyledTableWrapper className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className=" inline-block min-w-full sm:px-6 lg:px-8">
-            <table className="min-w-full bg-white sm:px-6 lg:px-8 h-auto overflow-y-scroll relative">
+            <StyledTable className="min-w-full bg-white sm:px-6 lg:px-8 h-auto overflow-y-scroll relative">
               <TableHeader className="bg-light-grey-100">
                 {table?.getHeaderGroups().map(headerGroup => (
                   <tr
@@ -195,7 +203,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                     );
                   })}
               </TableBody>
-            </table>
+            </StyledTable>
             {loading && (
               <section className="h-64 w-full flex items-center justify-center">
                 <section>
@@ -212,8 +220,8 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               </section>
             )}
           </div>
-        </div>
-      </article>
+        </StyledTableWrapper>
+      </StyledTableContainer>
       <div className="h-2" />
       {!loading && data?.length > 0 && (
         <section className="flex items-center justify-center text-sx text-gray-600">

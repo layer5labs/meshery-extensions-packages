@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { client } from './client';
 import { totalPoints } from '../../utils/helpers';
 import { bronze, gold, silver } from '../assets/images/medals';
+import Avatar from '../reusecore/Avatar';
 
 export const useFetchLeaderBoard = () => {
   const fetchLeaderBoard = async period => {
@@ -51,10 +52,9 @@ export const useFetchLeaderBoard = () => {
           return (
             <div className="flex items-center">
               <div className="w-12 h-12">
-                <img
+                <Avatar
                   src={`https://discuss.layer5.io/${avatarUrl}`}
                   alt={user?.name}
-                  className="w-full h-full rounded-full"
                 />
               </div>
               <div className="ml-4 flex-1">
