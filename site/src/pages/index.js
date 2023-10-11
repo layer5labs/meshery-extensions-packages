@@ -18,12 +18,17 @@ import githubKaran from '../assets/images/github-badges-karan.png';
 import '../fonts.css';
 import GithubLogo from './githubLogo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import layer5Logo from '../assets/images/layer5/layer5-badges.png';
+import layer5LogoLight from '../assets/images/layer5/layer5-badges-white.png';
+
 const App = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [showSignUpButton, setShowSignUpButton] = useState(true);
   const fillColor = theme === 'light' ? '#24292F' : '#ffffff';
   const queryClient = new QueryClient();
+
+  const Logo = theme === 'light' ? layer5Logo : layer5LogoLight;
   // const handleSignUpFormSubmit = () => {
   //   setShowSignUpButton(false);
   // };
@@ -41,6 +46,7 @@ const App = () => {
             theme={theme}
             toggleTheme={toggleTheme}
             showSignUpButton={showSignUpButton}
+            logo={Logo}
           />
           <Main>
             <section className="hero">
