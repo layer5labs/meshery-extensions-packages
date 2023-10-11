@@ -264,8 +264,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                 {table?.getState().pagination.pageIndex + 1} of{' '}
                 {table?.getPageCount()}
               </strong>
-              {/* </span>
-            <span className="page-section"> */}
+         
               | Go to page:
               <input
                 type="number"
@@ -274,7 +273,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                   const page = e.target.value ? Number(e.target.value) - 1 : 0;
                   table.setPageIndex(page);
                 }}
-                // className=""
               />
             </span>
             <select

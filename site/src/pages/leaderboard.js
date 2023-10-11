@@ -3,6 +3,8 @@ import TableComponent from '../sitecomponents/Leaderboard/Table';
 import { useFetchLeaderBoard } from '../api/leaderboard.api.client';
 import { useDarkMode } from '../sitecomponents/useDarkMode';
 import { ThemeProvider } from 'styled-components';
+import layer5LeaderboardLightMode from '../assets/images/layer5/Layer5_Learderboard_light.png';
+import layer5LeaderboardDarkMode from '../assets/images/layer5/Layer5_Learderboard_darkmode.png';
 import {
   GlobalStyle,
   darkTheme,
@@ -25,6 +27,8 @@ const LeaderBoard = () => {
     [leaderBoard]
   );
 
+  const Logo =
+    theme === 'light' ? layer5LeaderboardLightMode : layer5LeaderboardDarkMode;
   return (
     <>
       <title>Layer5 LeaderBoard</title>
@@ -38,6 +42,7 @@ const LeaderBoard = () => {
           theme={theme}
           toggleTheme={toggleTheme}
           showSignUpButton={showSignUpButton}
+          logo={Logo}
         />
         <TableComponent
           data={_leaderboard}
