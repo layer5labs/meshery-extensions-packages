@@ -9,9 +9,14 @@ export const TD = styled.td`
   padding: 14px 5px;
 `;
 
-export const TableBody = styled.tbody``;
+export const TableBody = styled.tbody`
+  background-color: #fff;
+`;
 
-export const TableHeader = styled.thead``;
+export const TableHeader = styled.thead`
+  background-color: #00b39f;
+  color: white;
+`;
 
 export const TableRow = styled.tr`
   position: relative;
