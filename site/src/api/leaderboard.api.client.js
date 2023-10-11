@@ -5,8 +5,25 @@ import { client } from './client';
 import { totalPoints } from '../../utils/helpers';
 import { bronze, gold, silver } from '../assets/images/medals';
 import Avatar from '../reusecore/Avatar';
+import styled from 'styled-components';
 
 export const useFetchLeaderBoard = () => {
+  const MemberContainer = styled.div`
+    display: flex;
+    align-items: center;
+    color: black;
+    .avatar {
+      height: 48px;
+      width: 48px;
+    }
+    .username {
+      margin-left: 16px;
+      flex: 1;
+      p {
+        flex: 1;
+      }
+    }
+  `;
   const fetchLeaderBoard = async period => {
     try {
       const response = await client.get(
@@ -50,17 +67,17 @@ export const useFetchLeaderBoard = () => {
             .replace('{size}', '50')
             .replace('{username}', user.username);
           return (
-            <div className="flex items-center">
-              <div className="w-12 h-12">
+            <MemberContainer className="flex items-center">
+              <div className="avatar">
                 <Avatar
                   src={`https://discuss.layer5.io/${avatarUrl}`}
                   alt={user?.name}
                 />
               </div>
-              <div className="ml-4 flex-1">
-                <p className="flex-1">{user?.name}</p>
+              <div className="username">
+                <p>{user?.name}</p>
               </div>
-            </div>
+            </MemberContainer>
           );
         },
       },

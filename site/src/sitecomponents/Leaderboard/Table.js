@@ -158,7 +158,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                 </tr>
               ))}
             </TableHeader>
-            <TableBody className="bg-white">
+            <TableBody>
               {!loading &&
                 table?.getRowModel()?.rows.map(row => {
                   return (
@@ -182,10 +182,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
           </StyledTable>
           {loading && (
             <section className="h-64 w-full flex items-center justify-center">
-              <section>
-                Loading...
-                {/* <BtnLoader /> */}
-              </section>
+              <section>Loading...</section>
             </section>
           )}
           {!loading && data?.length === 0 && (
