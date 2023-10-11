@@ -7,6 +7,11 @@ export const TD = styled.td`
   text-transform: capitalize;
   white-space: nowrap;
   padding: 14px 5px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const TableBody = styled.tbody`

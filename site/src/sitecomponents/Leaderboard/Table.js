@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import styled from 'styled-components';
 import {
   useReactTable,
   getCoreRowModel,
@@ -7,6 +7,7 @@ import {
   getPaginationRowModel,
   flexRender,
 } from '@tanstack/react-table';
+import { TD, TableBody, TableHeader, TableRow } from '../../reusecore/Table';
 
 const TableComponent = ({
   data,
@@ -50,6 +51,44 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     debugTable: true,
   });
 
+  const StyledButton = styled.button`
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 1rem;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    ${props =>
+      props.disabled
+        ? `
+      background-color: #ccc;
+      opacity: 0.6;
+    `
+        : `
+      background-color: #007bff;
+      color: #fff;
+    `}
+  `;
+
+  const PaginationButton = ({
+    loading,
+    children,
+    disabled,
+    className,
+    onClick,
+  }) => {
+    return (
+      <StyledButton
+        className={className}
+        disabled={disabled || loading}
+        onClick={onClick}
+      >
+        {children}
+      </StyledButton>
+    );
+  };
+
   const Button = ({ loading, children, disabled, className, onClick }) => {
     return (
       <button
@@ -90,7 +129,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className=" inline-block min-w-full sm:px-6 lg:px-8">
             <table className="min-w-full bg-white sm:px-6 lg:px-8 h-auto overflow-y-scroll relative">
-              <thead className="bg-light-grey-100">
+              <TableHeader className="bg-light-grey-100">
                 {table?.getHeaderGroups().map(headerGroup => (
                   <tr
                     key={headerGroup.id}
@@ -128,36 +167,34 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                     })}
                   </tr>
                 ))}
-              </thead>
-              <tbody className="bg-white">
+              </TableHeader>
+              <TableBody className="bg-white">
                 {!loading &&
                   table?.getRowModel()?.rows.map(row => {
                     return (
-                      <tr
+                      <TableRow
                         key={row.id}
-                        className={`relative border-y border-light text-dark ${
-                          Number(row?.id) % 2 ? 'bg-primary-100' : ''
-                        }`}
+                        id={row?.id}
+                        // className={`relative border-y border-light text-dark ${
+                        //   Number(row?.id) % 2 ? 'bg-primary-100' : ''
+                        // }`}
                       >
                         {row?.getVisibleCells().map(cell => {
                           return (
-                            <td
-                              key={cell.id}
-                              className="text-sm font-normal capitalize whitespace-nowrap py-[14px] px-5"
-                            >
-                              <div className="flex items-center">
+                            <TD key={cell.id}>
+                              <div>
                                 {flexRender(
                                   cell?.column.columnDef.cell,
                                   cell?.getContext()
                                 )}
                               </div>
-                            </td>
+                            </TD>
                           );
                         })}
-                      </tr>
+                      </TableRow>
                     );
                   })}
-              </tbody>
+              </TableBody>
             </table>
             {loading && (
               <section className="h-64 w-full flex items-center justify-center">
@@ -181,39 +218,39 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       {!loading && data?.length > 0 && (
         <section className="flex items-center justify-center text-sx text-gray-600">
           <div className="flex items-center gap-2">
-            <Button
+            <PaginationButton
               className=""
               onClick={() => table?.setPageIndex(0)}
               disabled={!table?.getCanPreviousPage()}
               loading={false}
             >
               {'<<'}
-            </Button>
-            <Button
+            </PaginationButton>
+            <PaginationButton
               className=""
               onClick={() => table?.previousPage()}
               disabled={!table?.getCanPreviousPage()}
               loading={false}
             >
               &larr; Prev
-            </Button>
-            <Button
+            </PaginationButton>
+            <PaginationButton
               className=""
               onClick={() => table?.nextPage()}
               disabled={!table?.getCanNextPage()}
               loading={false}
             >
               Next &rarr;
-            </Button>
+            </PaginationButton>
 
-            <Button
+            <PaginationButton
               className=""
               onClick={() => table?.setPageIndex(table?.getPageCount() - 1)}
               disabled={!table?.getCanNextPage()}
               loading={false}
             >
               {'>>'}
-            </Button>
+            </PaginationButton>
 
             <span className="flex items-center gap-1 text-xs">
               <div>Page</div>
