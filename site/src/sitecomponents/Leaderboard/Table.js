@@ -98,21 +98,8 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     );
   };
 
-  const Button = ({ loading, children, disabled, className, onClick }) => {
-    return (
-      <button
-        className={`${className} border rounded p-1 text-xs ${
-          disabled ? 'bg-primary-100 opacity-60' : 'bg-primary text-white'
-        }`}
-        disabled={disabled || loading}
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    );
-  };
   return (
-    <section>
+    <>
       <div className="grid grid-cols-2 justify-between mt-4 mx-4">
         <div>
           {/* <TextField
@@ -136,81 +123,78 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       </div>
       <StyledTableContainer>
         <StyledTableWrapper>
-          <div className=" inline-block min-w-full sm:px-6 lg:px-8">
-            <StyledTable>
-              <TableHeader className="bg-light-grey-100">
-                {table?.getHeaderGroups().map(headerGroup => (
-                  <tr
-                    key={headerGroup.id}
-                    className="w-full border-y border-light text-white bg-primary"
-                  >
-                    {headerGroup.headers.map(header => {
-                      return (
-                        <TH key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder ? null : (
-                            <div
-                              {...{
-                                className: header.column.getCanSort()
-                                  ? 'cursor-pointer select-none'
-                                  : '',
-                                onClick:
-                                  header.column.getToggleSortingHandler(),
-                              }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: ' 🔼',
-                                desc: ' 🔽',
-                              }[header.column.getIsSorted()] ?? null}
-                            </div>
-                          )}
-                        </TH>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </TableHeader>
-              <TableBody className="bg-white">
-                {!loading &&
-                  table?.getRowModel()?.rows.map(row => {
+          <StyledTable>
+            <TableHeader>
+              {table?.getHeaderGroups().map(headerGroup => (
+                <tr
+                  key={headerGroup.id}
+                  className="w-full border-y border-light text-white bg-primary"
+                >
+                  {headerGroup.headers.map(header => {
                     return (
-                      <TableRow key={row.id} id={row?.id}>
-                        {row?.getVisibleCells().map(cell => {
-                          return (
-                            <TD key={cell.id}>
-                              <div>
-                                {flexRender(
-                                  cell?.column.columnDef.cell,
-                                  cell?.getContext()
-                                )}
-                              </div>
-                            </TD>
-                          );
-                        })}
-                      </TableRow>
+                      <TH key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder ? null : (
+                          <div
+                            {...{
+                              className: header.column.getCanSort()
+                                ? 'cursor-pointer select-none'
+                                : '',
+                              onClick: header.column.getToggleSortingHandler(),
+                            }}
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {{
+                              asc: ' 🔼',
+                              desc: ' 🔽',
+                            }[header.column.getIsSorted()] ?? null}
+                          </div>
+                        )}
+                      </TH>
                     );
                   })}
-              </TableBody>
-            </StyledTable>
-            {loading && (
-              <section className="h-64 w-full flex items-center justify-center">
-                <section>
-                  Loading...
-                  {/* <BtnLoader /> */}
-                </section>
+                </tr>
+              ))}
+            </TableHeader>
+            <TableBody className="bg-white">
+              {!loading &&
+                table?.getRowModel()?.rows.map(row => {
+                  return (
+                    <TableRow key={row.id} id={row?.id}>
+                      {row?.getVisibleCells().map(cell => {
+                        return (
+                          <TD key={cell.id}>
+                            <div>
+                              {flexRender(
+                                cell?.column.columnDef.cell,
+                                cell?.getContext()
+                              )}
+                            </div>
+                          </TD>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </StyledTable>
+          {loading && (
+            <section className="h-64 w-full flex items-center justify-center">
+              <section>
+                Loading...
+                {/* <BtnLoader /> */}
               </section>
-            )}
-            {!loading && data?.length === 0 && (
-              <section className="h-64 w-full flex items-center justify-center">
-                <p className="text-gray-400">
-                  {noData || 'Oops! No Data to Display'}
-                </p>
-              </section>
-            )}
-          </div>
+            </section>
+          )}
+          {!loading && data?.length === 0 && (
+            <section className="h-64 w-full flex items-center justify-center">
+              <p className="text-gray-400">
+                {noData || 'Oops! No Data to Display'}
+              </p>
+            </section>
+          )}
         </StyledTableWrapper>
       </StyledTableContainer>
       <div className="h-2" />
@@ -285,7 +269,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
           </div>
         </section>
       )}
-    </section>
+    </>
   );
 }
 

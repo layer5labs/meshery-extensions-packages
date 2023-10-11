@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import TableComponent from '../sitecomponents/Leaderboard/Table';
 import { useFetchLeaderBoard } from '../api/leaderboard.api.client';
-import Header from '../sitecomponents/Leaderboard/Header';
 import { useDarkMode } from '../sitecomponents/useDarkMode';
 import { ThemeProvider } from 'styled-components';
 import {
@@ -40,15 +39,13 @@ const LeaderBoard = () => {
           toggleTheme={toggleTheme}
           showSignUpButton={showSignUpButton}
         />
-        <section>
-          <TableComponent
-            data={_leaderboard}
-            columns={leadColumns}
-            loading={loadingLeaderBoard}
-            option={period}
-            setOption={setPeriod}
-          />
-        </section>
+        <TableComponent
+          data={_leaderboard}
+          columns={leadColumns}
+          loading={loadingLeaderBoard}
+          option={period}
+          setOption={setPeriod}
+        />
       </ThemeProvider>
     </>
   );

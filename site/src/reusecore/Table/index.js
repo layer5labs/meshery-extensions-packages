@@ -41,21 +41,24 @@ export const TH = styled.th`
 `;
 
 export const StyledTableContainer = styled.article`
-  display: flex;
-  flex-direction: column;
-  /* border: 1px solid #d1d5db; */
+  width: 1250px;
+  max-width: 100%;
+  margin: auto;
 `;
 
 export const StyledTableWrapper = styled.div`
   overflow-x: auto;
-  margin: 0 -1rem;
+  margin: auto;
+  width: 100%;
 `;
 
 export const StyledTable = styled.table`
   width: 100%;
   background-color: #fff;
-  margin: 0 auto;
+  margin: auto;
   height: auto;
   overflow-y: scroll;
   position: relative;
+  border: none;
+  border-collapse: collapse;
 `;
