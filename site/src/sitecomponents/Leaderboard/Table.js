@@ -12,6 +12,7 @@ import {
   StyledTableContainer,
   StyledTableWrapper,
   TD,
+  TH,
   TableBody,
   TableHeader,
   TableRow,
@@ -61,10 +62,10 @@ function Table({ data, columns, loading, noData, setOption, option }) {
 
   const StyledButton = styled.button`
     border: 1px solid;
-    border-radius: 4px;
-    padding: 1rem;
+    border-radius: 2px;
+    padding: 4px;
     font-size: 12px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 
     ${props =>
@@ -74,7 +75,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       opacity: 0.6;
     `
         : `
-      background-color: #007bff;
+      background-color: #00B39F;
       color: #fff;
     `}
   `;
@@ -134,9 +135,9 @@ function Table({ data, columns, loading, noData, setOption, option }) {
         </div>
       </div>
       <StyledTableContainer>
-        <StyledTableWrapper className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <StyledTableWrapper>
           <div className=" inline-block min-w-full sm:px-6 lg:px-8">
-            <StyledTable className="min-w-full bg-white sm:px-6 lg:px-8 h-auto overflow-y-scroll relative">
+            <StyledTable>
               <TableHeader className="bg-light-grey-100">
                 {table?.getHeaderGroups().map(headerGroup => (
                   <tr
@@ -145,11 +146,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                   >
                     {headerGroup.headers.map(header => {
                       return (
-                        <th
-                          key={header.id}
-                          colSpan={header.colSpan}
-                          className="text-left text-xs text-white font-semibold uppercase whitespace-nowrap py-5 px-5"
-                        >
+                        <TH key={header.id} colSpan={header.colSpan}>
                           {header.isPlaceholder ? null : (
                             <div
                               {...{
@@ -170,7 +167,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                               }[header.column.getIsSorted()] ?? null}
                             </div>
                           )}
-                        </th>
+                        </TH>
                       );
                     })}
                   </tr>
@@ -180,13 +177,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                 {!loading &&
                   table?.getRowModel()?.rows.map(row => {
                     return (
-                      <TableRow
-                        key={row.id}
-                        id={row?.id}
-                        // className={`relative border-y border-light text-dark ${
-                        //   Number(row?.id) % 2 ? 'bg-primary-100' : ''
-                        // }`}
-                      >
+                      <TableRow key={row.id} id={row?.id}>
                         {row?.getVisibleCells().map(cell => {
                           return (
                             <TD key={cell.id}>

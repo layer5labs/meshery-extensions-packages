@@ -1,11 +1,38 @@
 import React from 'react';
+import styled from 'styled-components';
 
+const StyledHeader = styled.header`
+  background-color: #00b39f;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  color: #fff;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    padding: 8px;
+    color: #fff;
+  }
+  p {
+    font-size: 24px;
+  }
+  section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px;
+  }
+`;
 const Header = () => {
   return (
-    <section className="bg-primary h-[250px] flex items-center justify-center text-white flex-col relative">
-      <h1 className="text-50 font-bold p-2 font-heading">Hello. 👋</h1>
-      <p className="text-2xl">Welcome to Layer 5 leaderboard.</p>
-      <section className="absolute top-0 right-0 p-2">
+    <StyledHeader className="bg-primary h-[250px] flex items-center justify-center text-white flex-col relative">
+      <h1>Hello. 👋</h1>
+      <p>Welcome to Layer 5 leaderboard.</p>
+      <section>
         <a
           className="p-1 hover:bg-dark"
           href="https://discuss.layer5.io"
@@ -15,7 +42,7 @@ const Header = () => {
           Discussion Forum
         </a>
       </section>
-    </section>
+    </StyledHeader>
   );
 };
 

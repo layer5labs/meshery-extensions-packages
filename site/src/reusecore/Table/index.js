@@ -37,13 +37,13 @@ export const TH = styled.th`
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
-  padding: 5px;
+  padding: 20px 10px;
 `;
 
 export const StyledTableContainer = styled.article`
   display: flex;
   flex-direction: column;
-  border: 1px solid #d1d5db;
+  /* border: 1px solid #d1d5db; */
 `;
 
 export const StyledTableWrapper = styled.div`
