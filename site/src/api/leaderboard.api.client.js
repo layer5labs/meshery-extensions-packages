@@ -1,10 +1,9 @@
-import { bronze, gold, silver } from '@assets/icons';
-import Image from '@components/elements/Image';
 import { useQuery } from '@tanstack/react-query';
-import { totalPoints } from '@utils/helpers';
 
 import React, { useState } from 'react';
 import { client } from './client';
+import { totalPoints } from '../../utils/helpers';
+import { bronze, gold, silver } from '../assets/images/medals';
 
 export const useFetchLeaderBoard = () => {
   const fetchLeaderBoard = async period => {
@@ -32,7 +31,7 @@ export const useFetchLeaderBoard = () => {
           return (
             <span>
               {[1, 2, 3].includes(value) ? (
-                <Image src={rank[value]} alt={'Rank'} />
+                <img src={rank[value]} alt={'Rank'} />
               ) : (
                 <p className="ml-4">{value}</p>
               )}
