@@ -11,7 +11,7 @@ export const useFetchLeaderBoard = () => {
   const MemberContainer = styled.div`
     display: flex;
     align-items: center;
-    color: black;
+    color: #333;
     .avatar {
       height: 48px;
       width: 48px;
@@ -21,7 +21,15 @@ export const useFetchLeaderBoard = () => {
       flex: 1;
       p {
         flex: 1;
+        color: #333;
       }
+    }
+  `;
+
+  const RankContainer = styled.span`
+    p {
+      margin-left: 16px;
+      color: black;
     }
   `;
   const fetchLeaderBoard = async period => {
@@ -47,13 +55,13 @@ export const useFetchLeaderBoard = () => {
           const value = info?.row?.index + 1;
           const rank = ['', gold, silver, bronze];
           return (
-            <span>
+            <RankContainer>
               {[1, 2, 3].includes(value) ? (
                 <img src={rank[value]} alt={'Rank'} />
               ) : (
-                <p className="ml-4">{value}</p>
+                <p>{value}</p>
               )}
-            </span>
+            </RankContainer>
           );
         },
       },
