@@ -105,6 +105,7 @@ export const lightTheme = {
   background: '#363537',
   btn: '#FFF',
 }
+
 export const darkTheme = {
   body: 'rgb(18, 18, 18)',
   text: '#FAFAFA',
