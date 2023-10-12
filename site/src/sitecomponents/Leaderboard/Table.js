@@ -135,23 +135,10 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     <>
       <div className="grid grid-cols-2 justify-between mt-4 mx-4">
         <div>
-          {/* <TextField
-            value={globalFilter ?? ''}
-            onChange={event => setGlobalFilter(event.target.value)}
-            className="p-2 font-lg border border-block"
-            placeholder="Search Member"
-            leftIcon={<Image src={search} alt={'Search'} />}
-          /> */}
+         
         </div>
         <div className="ml-4">
-          {/* <SelectDropdown
-            options={options}
-            defaultValue={option}
-            placeholder="Toggle By"
-            onChange={({ value }) => {
-              setOption(value);
-            }}
-          /> */}
+         
         </div>
       </div>
       <StyledTableContainer>
@@ -264,7 +251,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                 {table?.getState().pagination.pageIndex + 1} of{' '}
                 {table?.getPageCount()}
               </strong>
-         
               | Go to page:
               <input
                 type="number"

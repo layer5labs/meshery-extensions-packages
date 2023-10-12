@@ -13,8 +13,6 @@ import React, { useState } from 'react';
 import BadgeGrid from '../sitecomponents/BadgeGrid/index';
 import recognitionLogo from '../assets/images/recognition-program.png';
 import recognitionBanner from '../assets/images/recognition-banner.png';
-import githubGopi from '../assets/images/github-badges.png';
-import githubKaran from '../assets/images/github-badges-karan.png';
 import '../fonts.css';
 import GithubLogo from './githubLogo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -95,9 +93,8 @@ const App = () => {
               </section>
               <div className="banner-logos">
                 <h3>
-                  {' '}
-                  Wear your badge pride proudly. Embed your Layer5 badges in
-                  your GitHub profile
+                  Wear your badge proudly. Embed your Layer5 badges in your
+                  GitHub profile
                 </h3>
                 <div className="display-badge-steps-parent">
                   <div className="display-badge">
@@ -123,10 +120,10 @@ const App = () => {
                     height="11rem"
                   />
                 </div>
-                <div className="github-badges">
+                {/* <div className="github-badges">
                   <img src={githubGopi} alt="Recognition Program Banner" />
                   <img src={githubKaran} alt="Recognition Program Banner" />
-                </div>
+                </div> */}
               </div>
               {/* <ReactPlayer  
               url="https://youtu.be/Do7htKrRzDA"
