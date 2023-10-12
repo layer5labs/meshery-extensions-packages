@@ -120,10 +120,6 @@ const App = () => {
                     height="11rem"
                   />
                 </div>
-                {/* <div className="github-badges">
-                  <img src={githubGopi} alt="Recognition Program Banner" />
-                  <img src={githubKaran} alt="Recognition Program Banner" />
-                </div> */}
               </div>
               {/* <ReactPlayer  
               url="https://youtu.be/Do7htKrRzDA"
