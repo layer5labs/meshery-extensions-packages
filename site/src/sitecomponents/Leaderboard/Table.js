@@ -110,6 +110,13 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .page-btn-container {
+        margin-bottom: 0;
+      }
+      .page-selector {
+        display: flex;
+        align-items: center;
+      }
     }
     .page-section {
       display: flex;
@@ -130,16 +137,21 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       border-radius: 2px;
       width: 64px;
     }
+
+    @media only screen and (max-width: 768px) {
+      .main {
+        flex-direction: column;
+        .page-btn-container {
+          margin-bottom: 12px;
+        }
+      }
+    }
   `;
   return (
     <>
       <div className="grid grid-cols-2 justify-between mt-4 mx-4">
-        <div>
-         
-        </div>
-        <div className="ml-4">
-         
-        </div>
+        <div></div>
+        <div className="ml-4"></div>
       </div>
       <StyledTableContainer>
         <StyledTableWrapper>
@@ -215,64 +227,69 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       {!loading && data?.length > 0 && (
         <PaginationContainer>
           <div className="main">
-            <PaginationButton
-              className=""
-              onClick={() => table?.setPageIndex(0)}
-              disabled={!table?.getCanPreviousPage()}
-              loading={false}
-            >
-              {'<<'}
-            </PaginationButton>
-            <PaginationButton
-              onClick={() => table?.previousPage()}
-              disabled={!table?.getCanPreviousPage()}
-              loading={false}
-            >
-              &larr; Prev
-            </PaginationButton>
-            <PaginationButton
-              onClick={() => table?.nextPage()}
-              disabled={!table?.getCanNextPage()}
-              loading={false}
-            >
-              Next &rarr;
-            </PaginationButton>
-            <PaginationButton
-              onClick={() => table?.setPageIndex(table?.getPageCount() - 1)}
-              disabled={!table?.getCanNextPage()}
-              loading={false}
-            >
-              {'>>'}
-            </PaginationButton>
-
-            <span className="page-section">
-              <div>Page</div>
-              <strong>
-                {table?.getState().pagination.pageIndex + 1} of{' '}
-                {table?.getPageCount()}
-              </strong>
-              | Go to page:
-              <input
-                type="number"
-                defaultValue={table?.getState().pagination.pageIndex + 1}
+            <div className="page-btn-container">
+              <PaginationButton
+                className=""
+                onClick={() => table?.setPageIndex(0)}
+                disabled={!table?.getCanPreviousPage()}
+                loading={false}
+              >
+                {'<<'}
+              </PaginationButton>
+              <PaginationButton
+                onClick={() => table?.previousPage()}
+                disabled={!table?.getCanPreviousPage()}
+                loading={false}
+              >
+                &larr; Prev
+              </PaginationButton>
+              <PaginationButton
+                onClick={() => table?.nextPage()}
+                disabled={!table?.getCanNextPage()}
+                loading={false}
+              >
+                Next &rarr;
+              </PaginationButton>
+              <PaginationButton
+                onClick={() => table?.setPageIndex(table?.getPageCount() - 1)}
+                disabled={!table?.getCanNextPage()}
+                loading={false}
+              >
+                {'>>'}
+              </PaginationButton>
+            </div>
+            <div className="page-selector">
+              <span className="page-section">
+                <div>Page</div>
+                <strong>
+                  {table?.getState().pagination.pageIndex + 1} of{' '}
+                  {table?.getPageCount()}
+                </strong>
+                | Go to page:
+                <input
+                  type="number"
+                  defaultValue={table?.getState().pagination.pageIndex + 1}
+                  onChange={e => {
+                    const page = e.target.value
+                      ? Number(e.target.value) - 1
+                      : 0;
+                    table.setPageIndex(page);
+                  }}
+                />
+              </span>
+              <select
+                value={table?.getState().pagination.pageSize}
                 onChange={e => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                  table.setPageIndex(page);
+                  table?.setPageSize(Number(e.target.value));
                 }}
-              />
-            </span>
-            <select
-              value={table?.getState().pagination.pageSize}
-              onChange={e => {
-                table?.setPageSize(Number(e.target.value));
-              }}
-            >
-              {[10, 20, 30, 40, 50].map(pageSize => (
-                <option className="text-xs" key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
+              >
+                {[10, 20, 30, 40, 50].map(pageSize => (
+                  <option className="text-xs" key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </PaginationContainer>
       )}
