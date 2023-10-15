@@ -127,6 +127,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       gap: 4px;
       font-size: 12px;
       margin-left: 20px;
+      color: ${({ theme }) => theme.text};
     }
     input {
       border: 1px solid gray;
