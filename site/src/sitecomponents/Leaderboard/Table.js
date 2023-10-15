@@ -151,6 +151,13 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     }
   `;
 
+  const responsive_items = [
+    'likes_received',
+    'post_count',
+    'days_visited',
+    'solutions',
+  ];
+
   return (
     <>
       <StyledTableContainer>
@@ -191,7 +198,15 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map(header => {
                     return (
-                      <TH key={header.id} colSpan={header.colSpan}>
+                      <TH
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        className={
+                          responsive_items.includes(header?.id)
+                            ? 'mobile-hidden'
+                            : ''
+                        }
+                      >
                         {header.isPlaceholder ? null : (
                           <div
                             {...{
@@ -223,8 +238,16 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                   return (
                     <TableRow key={row.id} id={row?.id}>
                       {row?.getVisibleCells().map(cell => {
+                        console.log(cell?.column?.id);
                         return (
-                          <TD key={cell.id}>
+                          <TD
+                            key={cell.id}
+                            className={
+                              responsive_items.includes(cell?.column?.id)
+                                ? 'mobile-hidden'
+                                : ''
+                            }
+                          >
                             <div>
                               {flexRender(
                                 cell?.column.columnDef.cell,

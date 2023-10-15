@@ -12,6 +12,10 @@ export const TD = styled.td`
     display: flex;
     align-items: center;
   }
+
+  @media only screen and (max-width: 768px) {
+    display: ${props => (props?.className === 'mobile-hidden' ? 'none' : null)};
+  }
 `;
 
 export const TableBody = styled.tbody`
@@ -38,6 +42,10 @@ export const TH = styled.th`
   text-transform: uppercase;
   white-space: nowrap;
   padding: 20px 10px;
+
+  @media only screen and (max-width: 768px) {
+    display: ${props => (props?.className === 'mobile-hidden' ? 'none' : null)};
+  }
 `;
 
 export const StyledTableContainer = styled.article`
@@ -45,12 +53,11 @@ export const StyledTableContainer = styled.article`
   max-width: 100%;
   margin: auto;
   margin-top: 20px;
+
   span {
     font-size: 14px;
   }
-  .toggle-container {
-    margin-bottom: 10px;
-  }
+
   .toggle-period {
     border: 1px solid gray;
     padding: 4px;
@@ -63,6 +70,7 @@ export const StyledTableContainer = styled.article`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
   }
 `;
 

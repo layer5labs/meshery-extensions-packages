@@ -18,16 +18,19 @@ export const useFetchLeaderBoard = () => {
     }
     .username {
       margin-left: 16px;
-      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       p {
-        flex: 1;
         color: #333;
+        margin-bottom: 0px !important;
       }
     }
   `;
 
   const RankContainer = styled.span`
     p {
+      margin: auto;
       margin-left: 10px;
       color: black;
     }
@@ -75,7 +78,7 @@ export const useFetchLeaderBoard = () => {
             .replace('{size}', '50')
             .replace('{username}', user.username);
           return (
-            <MemberContainer className="flex items-center">
+            <MemberContainer>
               <div className="avatar">
                 <Avatar
                   src={`https://discuss.layer5.io/${avatarUrl}`}
@@ -127,7 +130,7 @@ export const useFetchLeaderBoard = () => {
     queryKey: ['leader-board', period],
     queryFn: () => fetchLeaderBoard(period),
     onError: () => {
-      //  TODO: implement alerts for erros
+      //  TODO: implement alerts for errors
     },
   });
   return { leaderBoard, loadingLeaderBoard, leadColumns, period, setPeriod };
