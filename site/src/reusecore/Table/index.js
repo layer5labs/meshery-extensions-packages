@@ -44,6 +44,20 @@ export const StyledTableContainer = styled.article`
   width: 1250px;
   max-width: 100%;
   margin: auto;
+  margin-top: 20px;
+  span {
+    font-size: 14px;
+  }
+  .toggle-container {
+    margin-bottom: 10px;
+  }
+  .toggle-period {
+    border: 1px solid gray;
+    padding: 4px;
+    border-radius: 2px;
+    width: 64px;
+    margin-left: 12px;
+  }
 `;
 
 export const StyledTableWrapper = styled.div`

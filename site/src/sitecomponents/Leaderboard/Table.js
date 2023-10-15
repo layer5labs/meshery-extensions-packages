@@ -40,9 +40,14 @@ const TableComponent = ({
 function Table({ data, columns, loading, noData, setOption, option }) {
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState([]);
+
   const options = [
-    { label: 'Monthly', value: 'monthly' },
     { label: 'Daily', value: 'daily' },
+    { label: 'Weekly', value: 'weekly' },
+    { label: 'Monthly', value: 'monthly' },
+    { label: 'Quaterly', value: 'quarterly' },
+    { label: 'Yearly', value: 'yearly' },
+    { label: 'All time', value: 'all' },
   ];
 
   const table = useReactTable({
@@ -67,7 +72,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     font-size: 12px;
     text-transform: capitalize;
     cursor: pointer;
-
     ${props =>
       props.disabled
         ? `
@@ -105,7 +109,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     justify-content: center;
     width: 100%;
     margin: 20px 0;
-
     .main {
       display: flex;
       align-items: center;
@@ -147,13 +150,33 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       }
     }
   `;
+
   return (
     <>
-      <div className="grid grid-cols-2 justify-between mt-4 mx-4">
-        <div></div>
-        <div className="ml-4"></div>
-      </div>
       <StyledTableContainer>
+        <div>
+          <div className="toggle-container">
+            <span>Select Period</span>
+            <select
+              className="toggle-period"
+              value={option}
+              onChange={e => {
+                setOption(e.target?.value);
+              }}
+            >
+              {options?.map(metric => (
+                <option
+                  className="text-xs"
+                  key={metric?.label}
+                  value={metric?.value}
+                >
+                  {metric?.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="ml-4"></div>
+        </div>
         <StyledTableWrapper>
           <StyledTable>
             <TableHeader>

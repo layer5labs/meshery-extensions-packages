@@ -11,6 +11,7 @@ import {
   lightTheme,
 } from '../sitecomponents/index.style';
 import Navigation from '../sitecomponents/Navigation';
+import Header from '../sitecomponents/Leaderboard/Header';
 
 const LeaderBoard = () => {
   const [theme, toggleTheme] = useDarkMode();
@@ -44,6 +45,7 @@ const LeaderBoard = () => {
           showSignUpButton={showSignUpButton}
           logo={Logo}
         />
+        <Header />
         <TableComponent
           data={_leaderboard}
           columns={leadColumns}

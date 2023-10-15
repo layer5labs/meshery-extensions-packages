@@ -29,7 +29,7 @@ const StyledHeader = styled.header`
 `;
 const Header = () => {
   return (
-    <StyledHeader className="bg-primary h-[250px] flex items-center justify-center text-white flex-col relative">
+    <StyledHeader>
       <h1>Hello. 👋</h1>
       <p>Welcome to Layer 5 leaderboard.</p>
       <section>
