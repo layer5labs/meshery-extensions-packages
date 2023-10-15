@@ -28,7 +28,7 @@ export const useFetchLeaderBoard = () => {
 
   const RankContainer = styled.span`
     p {
-      margin-left: 16px;
+      margin-left: 10px;
       color: black;
     }
   `;

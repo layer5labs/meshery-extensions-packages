@@ -57,6 +57,12 @@ export const StyledTableContainer = styled.article`
     border-radius: 2px;
     width: 64px;
     margin-left: 12px;
+    outline: none;
+  }
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 

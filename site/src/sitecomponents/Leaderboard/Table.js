@@ -154,9 +154,9 @@ function Table({ data, columns, loading, noData, setOption, option }) {
   return (
     <>
       <StyledTableContainer>
-        <div>
+        <div className="filters">
           <div className="toggle-container">
-            <span>Select Period</span>
+            <span>Filter By</span>
             <select
               className="toggle-period"
               value={option}
@@ -175,7 +175,14 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               ))}
             </select>
           </div>
-          <div className="ml-4"></div>
+          <div className="input-container">
+            <input
+              type="search"
+              placeholder="Search..."
+              value={globalFilter ?? ''}
+              onChange={event => setGlobalFilter(event.target.value)}
+            />
+          </div>
         </div>
         <StyledTableWrapper>
           <StyledTable>
