@@ -56,6 +56,13 @@ export const StyledTableContainer = styled.article`
 
   span {
     font-size: 14px;
+    color: ${props => (props.theme.DarkTheme ? '#fff' : '#333')};
+  }
+
+  .toggle-container {
+    span {
+      color: ${props => (props.theme.DarkTheme ? '#fff' : '#333')};
+    }
   }
 
   .toggle-period {

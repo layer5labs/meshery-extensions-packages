@@ -66,8 +66,8 @@ function Table({ data, columns, loading, noData, setOption, option }) {
   });
 
   const StyledButton = styled.button`
-    border: 1px solid;
     border-radius: 2px;
+    border: none;
     padding: 4px;
     font-size: 12px;
     text-transform: capitalize;
@@ -330,7 +330,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                   }}
                 />
               </span>
-              <select
+              {/* <select
                 value={table?.getState().pagination.pageSize}
                 onChange={e => {
                   table?.setPageSize(Number(e.target.value));
@@ -341,7 +341,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                     Show {pageSize}
                   </option>
                 ))}
-              </select>
+              </select> */}
             </div>
           </div>
         </PaginationContainer>
