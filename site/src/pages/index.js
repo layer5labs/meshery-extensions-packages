@@ -57,7 +57,6 @@ const App = () => {
                 Showcasing Your Achievements as a User and a Contributor
               </h3>
               <h1>Layer5 Recognition Program</h1>
-
               <p className="desc-text">
                 Layer5 badges are one of the many ways that we recognize the
                 efforts of our contributors and uplift our users. Layer5 badges
@@ -142,9 +141,21 @@ const App = () => {
               <div>
                 <h1>Join the community!</h1>
                 <p>Engage in the Layer5 community by joining us on Slack</p>
-                <a href="https://slack.layer5.io/">
-                  Join Our Open Source Community
-                </a>
+                <div className="btn-container">
+                  <div>
+                    <a href="https://slack.layer5.io/">
+                      Join Our Open Source Community
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      href="https://slack.layer5.io/"
+                      className="btn-secondary"
+                    >
+                      View Leaderboard
+                    </a>
+                  </div>
+                </div>
               </div>
             </section>
           </Main>

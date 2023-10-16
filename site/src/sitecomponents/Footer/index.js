@@ -1,29 +1,26 @@
 import React from 'react';
-import SlackIcon from "../../assets/images/social-icons/slack.svg";
-import DockerIcon from "../../assets/images/social-icons/docker.svg";
-import YoutubeIcon from "../../assets/images/social-icons/youtube.svg";
-import TwitterIcon from "../../assets/images/social-icons/twitter.svg";
-import GithubIcon from "../../assets/images/social-icons/github.svg";
-import CalendarIcon from "../../assets/images/social-icons/calendar.png";
-import LinkedinIcon from "../../assets/images/social-icons/linkedin.png";
+import SlackIcon from '../../assets/images/social-icons/slack.svg';
+import DockerIcon from '../../assets/images/social-icons/docker.svg';
+import YoutubeIcon from '../../assets/images/social-icons/youtube.svg';
+import TwitterIcon from '../../assets/images/social-icons/twitter.svg';
+import GithubIcon from '../../assets/images/social-icons/github.svg';
+import CalendarIcon from '../../assets/images/social-icons/calendar.png';
+import LinkedinIcon from '../../assets/images/social-icons/linkedin.png';
 import FooterWrapper from './Footer.styles';
 
 const Footer = () => {
   return (
-    <FooterWrapper> 
+    <FooterWrapper>
       <div className="container">
-      <div className='footer-links resources'> 
+        <div className="footer-links resources">
           <h3 className="section-title">
-            <a className="title-link" href='https://layer5.io/community'>
+            <a className="title-link" href="https://layer5.io/community">
               Project
             </a>
           </h3>
           <ul className="section-categories">
             <li>
-              <a
-                className="category-link"
-                href="https://layer5.io/calendar"
-              >
+              <a className="category-link" href="https://layer5.io/calendar">
                 <img src={CalendarIcon} alt="Calendar Icon" />
                 Calendar
               </a>
@@ -37,47 +34,36 @@ const Footer = () => {
                 <img src={DockerIcon} alt="Docker Icon" />
                 Docker Hub
               </a>
-            </li>                  
+            </li>
             <li>
-              <a
-                className="category-link"
-                href="https://slack.layer5.io/"
-              >
+              <a className="category-link" href="https://slack.layer5.io/">
                 <img src={SlackIcon} alt="Slack Icon" />
                 Slack
               </a>
             </li>
             <li>
-              <a
-                className="category-link"
-                href="https://github.com/layer5io/"
-              >
+              <a className="category-link" href="https://github.com/layer5io/">
                 <img src={GithubIcon} alt="GitHub Icon" />
                 Github
               </a>
             </li>
           </ul>
         </div>
-        <div className='footer-links getting-started'> 
+        <div className="footer-links getting-started">
           <h3 className="section-title">
             <a className="title-link" href="https://layer5.io/community">
               Getting Started
             </a>
           </h3>
           <ul className="section-categories">
-          <li>
-              <a
-                className="category-link"
-                href="https://docs.meshery.io/"
-              >
+            <li>
+              <a className="category-link" href="https://docs.meshery.io/">
                 Docs
               </a>
             </li>
             <li>
-              <a
-                className="category-link"
-                href="https://meshery.io/features"
-              >Features
+              <a className="category-link" href="https://meshery.io/features">
+                Features
               </a>
             </li>
             <li>
@@ -106,18 +92,15 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className='footer-links community'> 
+        <div className="footer-links community">
           <h3 className="section-title">
-            <a className="title-link" href='https://meshery.io/community'>
+            <a className="title-link" href="https://meshery.io/community">
               Community
             </a>
           </h3>
           <ul className="section-categories">
             <li>
-              <a
-                className="category-link"
-                href="https://discuss.layer5.io/"
-              >
+              <a className="category-link" href="https://discuss.layer5.io/">
                 Discussion Forum
               </a>
             </li>
@@ -129,10 +112,7 @@ const Footer = () => {
               </a>
             </li> */}
             <li>
-              <a
-                className="category-link"
-                href="https://meshery.layer5.io"
-              >
+              <a className="category-link" href="https://meshery.layer5.io">
                 Layer5 Cloud
               </a>
             </li>
@@ -147,42 +127,45 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
+                href="/leaderboard"
+              >
+                Community Leaderboard
+              </a>
+            </li>
+            <li>
+              <a
+                className="category-link"
                 href="https://layer5.io/community/events/"
               >
                 Community Events
               </a>
-            </li>      
+            </li>
             <li>
-              <a
-                className="category-link"
-                href="https://layer5.io/subscribe"
-              >
+              <a className="category-link" href="https://layer5.io/subscribe">
                 Mailing Lists
               </a>
-            </li>    
+            </li>
 
             <li>
               <a
                 className="category-link"
                 href="https://layer5.io/service-mesh-landscape"
-              >Service Mesh Comparison
+              >
+                Service Mesh Comparison
               </a>
             </li>
           </ul>
         </div>
-        <div className='footer-links resources'> 
+        <div className="footer-links resources">
           <h3 className="section-title">
-            <a className="title-link" href='https://layer5.io/resources'>
+            <a className="title-link" href="https://layer5.io/resources">
               Social
             </a>
           </h3>
           <ul className="section-categories">
-          <li>
-              <a
-                className="category-link"
-                href="https://twitter.com/layer5"
-              >
-                <img src={TwitterIcon} alt="Twitter Icon"/>
+            <li>
+              <a className="category-link" href="https://twitter.com/layer5">
+                <img src={TwitterIcon} alt="Twitter Icon" />
                 Twitter
               </a>
             </li>
@@ -208,12 +191,16 @@ const Footer = () => {
         </div>
       </div>
       <div className="container flex copyright">
-        <div className="text">&copy; {new Date().getFullYear()}- The Layer5 Authors</div>
+        <div className="text">
+          &copy; {new Date().getFullYear()}- The Layer5 Authors
+        </div>
         <div className="text">Empowering engineers all around the world</div>
-        <div className="text"><a href="https://layer5.io/about">About</a></div>
+        <div className="text">
+          <a href="https://layer5.io/about">About</a>
+        </div>
       </div>
-    </FooterWrapper> 
-  )
-}
+    </FooterWrapper>
+  );
+};
 
-export default Footer; 
+export default Footer;

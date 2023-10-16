@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Header = styled.header`
-
   position: sticky;
   top: 0;
-  background: #FFF;
+  background: #fff;
   z-index: 1;
 
   nav {
@@ -19,7 +18,7 @@ export const Header = styled.header`
     position: relative;
   }
 
-  .scrolled { 
+  .scrolled {
     box-shadow: rgba(0, 179, 159, 0.2) 0px 10px 25px;
   }
 
@@ -29,8 +28,8 @@ export const Header = styled.header`
     height: auto;
   }
   .themeToggle {
-    margin: auto .5rem;
-    padding: auto .5rem;
+    margin: auto 0.5rem;
+    padding: auto 0.5rem;
     svg {
       width: 40px;
       height: 40px;
@@ -41,15 +40,16 @@ export const Header = styled.header`
     align-items: center;
     justify-content: space-between;
   }
-  .signup-btn, .login-btn {
+  .signup-btn,
+  .login-btn {
     font-size: calc(16px + 6 * ((50vw - 320px) / 680));
     transition: 0.2s ease-in-out;
-    margin: auto .5rem;
+    margin: auto 0.5rem;
   }
   .signup-btn {
     padding: 1rem 1.5rem;
     text-align: center;
-    color: #FFF;
+    color: #fff;
     background: rgba(235, 192, 23, 1);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -61,14 +61,14 @@ export const Header = styled.header`
   .signup-btn:hover {
     background-color: rgba(255, 208, 25, 1);
     box-shadow: 0px 0px 15px rgba(235, 192, 23, 1);
-    color: #FFF;
+    color: #fff;
   }
 
   .login-btn {
     margin: 0 0 0 1rem;
     padding: 1rem 1.5rem;
     text-align: center;
-    color: #FFF;
+    color: #fff;
     white-space: nowrap;
     background: rgba(0, 179, 159, 1);
     border-radius: 16px;
@@ -79,9 +79,9 @@ export const Header = styled.header`
   }
 
   .login-btn:hover {
-    background-color: #00D3A9;
+    background-color: #00d3a9;
     box-shadow: 0px 0px 15px rgba(0, 179, 159, 1);
-    color: #FFF;
+    color: #fff;
   }
   @media screen and (max-width: 1400px) {
     img.logo {
@@ -111,15 +111,15 @@ export const Header = styled.header`
 
   @media screen and (max-width: 768px) {
     img.logo {
-      max-width: 250px;        
+      max-width: 250px;
     }
     .signup-btn {
-      padding: 0.70rem 1rem;
-      margin: auto .35rem;
+      padding: 0.7rem 1rem;
+      margin: auto 0.35rem;
     }
     .login-btn {
-      padding: 0.70rem 1rem;
-      margin: auto .35rem;
+      padding: 0.7rem 1rem;
+      margin: auto 0.35rem;
     }
     .themeToggle > svg {
       width: 28px;
@@ -131,14 +131,14 @@ export const Header = styled.header`
     nav {
       padding: 1.5rem;
     }
- 
+
     img.logo {
-      max-width: 200px;        
+      max-width: 200px;
     }
   }
   @media screen and (max-width: 500px) {
     img.logo {
-      max-width: 180px;        
+      max-width: 180px;
     }
     nav {
       padding: 1.5625rem 0.625rem;
@@ -146,7 +146,8 @@ export const Header = styled.header`
     .themeToggle {
       position: static;
     }
-    .signup-btn, .login-btn {
+    .signup-btn,
+    .login-btn {
       padding: 5px 7px;
     }
     .themeToggle > svg {
@@ -154,16 +155,15 @@ export const Header = styled.header`
       height: 20px;
     }
   }
-`
+`;
 
 export const Main = styled.main`
-
   max-width: 75%;
   margin: 5rem auto;
 
   p {
-			font-size: 1.05rem;
-      text-align: center;
+    font-size: 1.05rem;
+    text-align: center;
   }
 
   h1 {
@@ -216,7 +216,7 @@ export const Main = styled.main`
     &:hover {
       box-shadow: 0px 3px 20px 4px rgba(0, 179, 159, 0.75);
       .react-player__play-icon {
-        border-color: transparent transparent transparent #EBC017 !important;
+        border-color: transparent transparent transparent #ebc017 !important;
       }
     }
   }
@@ -241,32 +241,51 @@ export const Main = styled.main`
 
   .join-community {
     text-align: center;
+    width: 100%;
+
+    .btn-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
     a {
       display: block;
-      background: #EBC017;
-      color:  ${({ theme }) => theme.btn};
-      width: 14rem;
+      background: #ebc017;
+      color: ${({ theme }) => theme.btn};
+      width: auto;
       padding: 1rem;
       margin: auto;
       border-radius: 0.5rem;
       transition: 0.2s ease-in-out;
-      &:hover{
+      &:hover {
         background-color: rgba(255, 208, 25, 1);
-        box-shadow: 0px 0px 12px #EBC017;
-        color: #FFF;
+        box-shadow: 0px 0px 12px #ebc017;
+        color: #fff;
       }
     }
 
+    .btn-secondary {
+      background-color: #00b39f;
+      margin-left: 1rem;
+
+      &:hover {
+        background-color: #00b39f;
+        box-shadow: 0px 0px 12px #00b39f;
+        color: #fff;
+      }
+    }
   }
 
-  .program-logo{
+  .program-logo {
     float: left;
     margin: 1rem;
     max-width: 225px;
-    width:calc(30% - 30px);
+    width: calc(30% - 30px);
   }
 
-  .banner-logos{
+  .banner-logos {
     color: ${({ theme }) => theme.text};
     display: flex;
     flex-wrap: wrap;
@@ -275,44 +294,44 @@ export const Main = styled.main`
     align-items: center;
     width: 100%;
   }
-  .banner-logos img{
+  .banner-logos img {
     max-width: 472px;
     margin: 1.5rem 0;
   }
-  .banner-logos h3{
+  .banner-logos h3 {
     font-weight: 380;
     font-size: 1.67rem;
     margin: 1rem 0;
   }
-  .banner-logos h4{
+  .banner-logos h4 {
     margin: -1rem 1rem 2rem 1rem;
     font-weight: 250;
   }
-  .banner-logos ul{
+  .banner-logos ul {
     margin: 0rem;
     font-weight: 150;
   }
-  .banner-main{
+  .banner-main {
     text-align: center;
   }
-  .display-badge-steps-parent{
+  .display-badge-steps-parent {
     display: flex;
-    align-items:center;
+    align-items: center;
     margin-left: 2.5rem;
   }
-  .display-badge{
-    display:flex;
+  .display-badge {
+    display: flex;
     flex-direction: column;
     align-items: baseline;
     margin: 1rem 8rem 1rem -10rem;
   }
-  .github-badges{
+  .github-badges {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
   }
-  .github-badges img{
+  .github-badges img {
     height: 290px;
     margin: 1rem;
   }
@@ -320,8 +339,8 @@ export const Main = styled.main`
     text-align: center;
     margin: 0rem auto 0rem auto;
   }
-  @media screen and (max-width: 1230px){
-    .display-badge{
+  @media screen and (max-width: 1230px) {
+    .display-badge {
       margin: 0 1rem;
     }
   }
@@ -330,10 +349,10 @@ export const Main = styled.main`
       width: 90%;
     }
     max-width: 85%;
-    .display-badge-steps{
+    .display-badge-steps {
       margin: 0;
     }
-    .banner-logos h4{
+    .banner-logos h4 {
       margin: 1rem;
     }
   }
@@ -342,16 +361,16 @@ export const Main = styled.main`
       width: 100%;
     }
     max-width: 90%;
-    .banner-logos img{
+    .banner-logos img {
       max-width: 350px;
     }
-    .github-badges img{
+    .github-badges img {
       height: auto;
       width: 90%;
     }
   }
 
-  @media screen and (max-width: 344px){
+  @media screen and (max-width: 344px) {
     .join-community {
       a {
         width: 12rem;
@@ -359,6 +378,4 @@ export const Main = styled.main`
     }
     max-width: 95%;
   }
-
-
-`
+`;
