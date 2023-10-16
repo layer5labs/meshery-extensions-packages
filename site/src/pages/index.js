@@ -148,10 +148,7 @@ const App = () => {
                     </a>
                   </div>
                   <div>
-                    <a
-                      href="https://slack.layer5.io/"
-                      className="btn-secondary"
-                    >
+                    <a href="/leaderboard" className="btn-secondary">
                       View Leaderboard
                     </a>
                   </div>
