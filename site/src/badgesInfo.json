@@ -7,6 +7,12 @@
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest."
         },
         {
+            "slug": "review-rockstar",
+            "location": "assets/badges/review-rockstar/review-rockstar.png",
+            "title": "Review Rockstar",
+            "description": "This badge is awarded to individuals who provide thorough and valuable code reviews."
+        },
+        {
             "slug": "bring-a-buddy",
             "location": "assets/badges/bring-a-buddy/bring-a-buddy.png",
             "title": "Bring a Buddy",
