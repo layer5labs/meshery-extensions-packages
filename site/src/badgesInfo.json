@@ -1,6 +1,18 @@
 {
     "achievementBadges": [
         {
+            "slug": "hacktoberfest-contributor",
+            "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
+            "title": "Hacktoberfest Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest."
+        },
+        {
+            "slug": "review-rockstar",
+            "location": "assets/badges/review-rockstar/review-rockstar.png",
+            "title": "Review Rockstar",
+            "description": "This badge is awarded to individuals who provide thorough and valuable code reviews."
+        },
+        {
             "slug": "bring-a-buddy",
             "location": "assets/badges/bring-a-buddy/bring-a-buddy.png",
             "title": "Bring a Buddy",
@@ -47,6 +59,18 @@
             "location": "assets/badges/gitops-connected/gitops-connected.png",
             "title": "GitOps Connected",
             "description": "This badge is awarded to users upon establishment of a connection with Meshery GitHub App."
+        },
+        {
+            "slug": "meshmap-snapshot",
+            "location": "assets/badges/meshmap-snapshot/meshmap-snapshot.png",
+            "title": "MeshMap Snapshot",
+            "description": "This badge is awarded to users upon creation of their first infrastructure screenshot directly in their pull request."
+        },
+        {
+            "slug": "continuous-contributor",
+            "location": "assets/badges/continuous-contributor/continuous-contributor.png",
+            "title": "Continuous Contributor",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions for a long period of time in Layer5 projects in recognition and appreciation of their efforts."
         }
     ],
     "projectBadges": [
@@ -115,6 +139,12 @@
             "imageSource": "assets/badges/meshery-docs/meshery-docs.png",
             "title": "Meshery Docs",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://docs.meshery.io'>Meshery Docs</a> in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "meshsync",
+            "imageSource": "assets/badges/meshsync/meshsync.png",
+            "title": "MeshSync",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to MeshSync</a> in recognition and appreciation of their efforts."
         }
     ]
 }
