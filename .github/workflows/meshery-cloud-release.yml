@@ -137,7 +137,7 @@ jobs:
         repository: layer5io/meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-    - name: Download artificats (Built API docs)
+    - name: Download artifacts (Built API docs)
       uses: actions/download-artifact@v3 
       with:
         name: API-docs
@@ -200,7 +200,7 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-    - name: Download artificats (Built API docs)
+    - name: Download artifacts (Built API docs)
       uses: actions/download-artifact@v3 
       with:
         name: API-docs
