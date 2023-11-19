@@ -31,7 +31,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <h1>Hello. 👋</h1>
-      <p>Welcome to Layer 5 leaderboard.</p>
+      <p>Welcome to Layer5 leaderboard.</p>
       <section>
         <a
           className="p-1 hover:bg-dark"

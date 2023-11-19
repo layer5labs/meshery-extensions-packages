@@ -18,7 +18,7 @@ const AvatarContainer = styled.div`
 `;
 
 const AvatarText = styled.span`
-  color: ${props => props.textColor || '#fff'};
+  color: ${({ theme }) => theme.text};
   font-size: 16px;
   font-weight: bold;
 `;

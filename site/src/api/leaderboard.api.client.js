@@ -6,35 +6,9 @@ import { totalPoints } from '../../utils/helpers';
 import { bronze, gold, silver } from '../assets/images/medals';
 import Avatar from '../reusecore/Avatar';
 import styled from 'styled-components';
+import { MemberContainer, RankContainer } from '../reusecore/Table';
 
 export const useFetchLeaderBoard = () => {
-  const MemberContainer = styled.div`
-    display: flex;
-    align-items: center;
-    color: #333;
-    .avatar {
-      height: 48px;
-      width: 48px;
-    }
-    .username {
-      margin-left: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      p {
-        color: #333;
-        margin-bottom: 0px !important;
-      }
-    }
-  `;
-
-  const RankContainer = styled.span`
-    p {
-      margin: auto;
-      margin-left: 10px;
-      color: black;
-    }
-  `;
   const fetchLeaderBoard = async period => {
     try {
       const response = await client.get(
