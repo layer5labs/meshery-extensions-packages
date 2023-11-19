@@ -42,7 +42,6 @@ export const TableHead = styled.tr`
   background-color: ${props => (Number(props.id) % 2 ? '#E6FBF7' : 'inherit')};
 `;
 
-//
 export const Th = styled.th`
   text-align: left;
   font-size: 12px;
@@ -162,6 +161,7 @@ export const StyledButton = styled.button`
   padding: 4px;
   font-size: 12px;
   text-transform: capitalize;
+  margin: 2px;
   cursor: pointer;
   ${props =>
     props.disabled

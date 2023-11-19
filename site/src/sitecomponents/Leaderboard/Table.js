@@ -168,7 +168,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                   return (
                     <TableRow key={row.id} id={row?.id}>
                       {row?.getVisibleCells().map(cell => {
-                        console.log(cell?.column?.id);
                         return (
                           <Td
                             key={cell.id}
