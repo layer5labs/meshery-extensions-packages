@@ -30,7 +30,7 @@ const StyledHeader = styled.header`
 const Header = () => {
   return (
     <StyledHeader>
-      <h1>Hello. 👋</h1>
+      <h1>Hello 👋</h1>
       <p>Welcome to Layer5 leaderboard.</p>
       <section>
         <a
