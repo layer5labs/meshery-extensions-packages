@@ -21,6 +21,13 @@ const StyledHeader = styled.header`
     font-size: 24px;
     color: #f5f5f5;
   }
+  a {
+    font-size: 16px;
+    color: #f4f4f4;
+  }
+  a:hover {
+    color: #fff;
+  }
 `;
 const Header = () => {
   return (
@@ -29,12 +36,12 @@ const Header = () => {
       <p>Welcome to Layer5 leaderboard.</p>
       <section>
         <a
-          className="p-1 hover:bg-dark"
+          className="p-1"
           href="https://discuss.layer5.io"
           target="_blank"
           rel="noreferrer"
         >
-          Discussion Forum
+          Discussion Forum &#8599;
         </a>
       </section>
     </StyledHeader>
