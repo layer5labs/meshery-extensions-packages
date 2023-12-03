@@ -17,8 +17,14 @@ const LeaderBoard = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [showSignUpButton, setShowSignUpButton] = useState(true);
-  const { leaderBoard, leadColumns, loadingLeaderBoard, period, setPeriod } =
-    useFetchLeaderBoard();
+  const {
+    leaderBoard,
+    leadColumns,
+    loadingLeaderBoard,
+    period,
+    setPeriod,
+    setName,
+  } = useFetchLeaderBoard();
 
   const _leaderboard = React.useMemo(
     () =>
@@ -52,6 +58,7 @@ const LeaderBoard = () => {
           loading={loadingLeaderBoard}
           option={period}
           setOption={setPeriod}
+          setName={setName}
         />
       </ThemeProvider>
     </>
