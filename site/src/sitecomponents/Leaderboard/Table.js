@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import {
   useReactTable,
   getCoreRowModel,
@@ -7,17 +8,14 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import {
-  PaginationContainer,
-  StyledButton,
   StyledTable,
   StyledTableContainer,
   StyledTableWrapper,
-  Td,
-  Th,
+  TD,
+  TH,
   TableBody,
   TableHeader,
   TableRow,
-  TableHead,
 } from '../../reusecore/Table';
 
 const TableComponent = ({
@@ -67,6 +65,26 @@ function Table({ data, columns, loading, noData, setOption, option }) {
     debugTable: true,
   });
 
+  const StyledButton = styled.button`
+    border-radius: 2px;
+    border: none;
+    padding: 4px;
+    font-size: 12px;
+    text-transform: capitalize;
+    cursor: pointer;
+    ${props =>
+      props.disabled
+        ? `
+      background-color: #ccc;
+      opacity: 0.6;
+      cursor: not-allowed;
+    `
+        : `
+      background-color: #00B39F;
+      color: #fff;
+    `}
+  `;
+
   const PaginationButton = ({
     loading,
     children,
@@ -84,6 +102,55 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       </StyledButton>
     );
   };
+
+  const PaginationContainer = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+    .main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .page-btn-container {
+        margin-bottom: 0;
+      }
+      .page-selector {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .page-section {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      margin-left: 20px;
+      color: ${({ theme }) => theme.text};
+    }
+    input {
+      border: 1px solid gray;
+      padding: 4px;
+      border-radius: 2px;
+      width: 64px;
+    }
+    select {
+      border: 1px solid gray;
+      padding: 4px;
+      border-radius: 2px;
+      width: 64px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .main {
+        flex-direction: column;
+        .page-btn-container {
+          margin-bottom: 12px;
+        }
+      }
+    }
+  `;
 
   const responsive_items = [
     'likes_received',
@@ -129,10 +196,10 @@ function Table({ data, columns, loading, noData, setOption, option }) {
           <StyledTable>
             <TableHeader>
               {table?.getHeaderGroups().map(headerGroup => (
-                <TableHead key={headerGroup.id} type="header">
+                <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map(header => {
                     return (
-                      <Th
+                      <TH
                         key={header.id}
                         colSpan={header.colSpan}
                         className={
@@ -154,12 +221,16 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                               header.column.columnDef.header,
                               header.getContext()
                             )}
+                            {{
+                              asc: ' 🔼',
+                              desc: ' 🔽',
+                            }[header.column.getIsSorted()] ?? null}
                           </div>
                         )}
-                      </Th>
+                      </TH>
                     );
                   })}
-                </TableHead>
+                </TableRow>
               ))}
             </TableHeader>
             <TableBody>
@@ -169,7 +240,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                     <TableRow key={row.id} id={row?.id}>
                       {row?.getVisibleCells().map(cell => {
                         return (
-                          <Td
+                          <TD
                             key={cell.id}
                             className={
                               responsive_items.includes(cell?.column?.id)
@@ -183,7 +254,7 @@ function Table({ data, columns, loading, noData, setOption, option }) {
                                 cell?.getContext()
                               )}
                             </div>
-                          </Td>
+                          </TD>
                         );
                       })}
                     </TableRow>

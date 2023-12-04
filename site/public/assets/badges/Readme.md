@@ -27,7 +27,6 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Need for Speed
 - Nighthawk
 - Patterns
-- Review Rockstar
 - Service Mesh Performance
 - UI/UX
 - Writer's Program
