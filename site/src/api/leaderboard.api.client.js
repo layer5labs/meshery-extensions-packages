@@ -9,12 +9,11 @@ import { MemberContainer, RankContainer } from '../reusecore/Table';
 
 export const useFetchLeaderBoard = () => {
   const fetchLeaderBoard = async (period, name) => {
-    const _name = name !== '' ? `&name=${name}` : null;
     try {
       const response = await client.get(
-        `directory_items.json/?order=likes_received&period=${
+        `directory_items.json/?order=likes_received&name=${name}period=${
           period || 'monthly'
-        }&${_name}`
+        }`
       );
       return response?.data;
     } catch (error) {
@@ -102,7 +101,7 @@ export const useFetchLeaderBoard = () => {
   );
 
   const { data: leaderBoard, isFetching: loadingLeaderBoard } = useQuery({
-    queryKey: ['leader-board', period, name],
+    queryKey: ['leader-board', period],
     queryFn: () => fetchLeaderBoard(period, name),
     onError: () => {
       //  TODO: implement alerts for errors
