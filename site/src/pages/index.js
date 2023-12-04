@@ -148,9 +148,9 @@ const App = () => {
                     </a>
                   </div>
                   <div>
-                    <a href="/leaderboard" className="btn-secondary">
+                    {/* <a href="/leaderboard" className="btn-secondary">
                       View Leaderboard
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
