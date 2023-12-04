@@ -19,7 +19,12 @@ const StyledHeader = styled.header`
   }
   p {
     font-size: 24px;
-    color: #f5f5f5;
+  }
+  section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px;
   }
 `;
 const Header = () => {
