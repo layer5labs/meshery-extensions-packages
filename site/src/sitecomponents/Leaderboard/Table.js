@@ -113,13 +113,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      .page-btn-container {
-        margin-bottom: 0;
-      }
-      .page-selector {
-        display: flex;
-        align-items: center;
-      }
     }
     .page-section {
       display: flex;
@@ -140,15 +133,6 @@ function Table({ data, columns, loading, noData, setOption, option }) {
       padding: 4px;
       border-radius: 2px;
       width: 64px;
-    }
-
-    @media only screen and (max-width: 768px) {
-      .main {
-        flex-direction: column;
-        .page-btn-container {
-          margin-bottom: 12px;
-        }
-      }
     }
   `;
 
@@ -333,7 +317,8 @@ function Table({ data, columns, loading, noData, setOption, option }) {
               {/* <select
                 value={table?.getState().pagination.pageSize}
                 onChange={e => {
-                  table?.setPageSize(Number(e.target.value));
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                  table.setPageIndex(page);
                 }}
               >
                 {[10, 20, 30, 40, 50].map(pageSize => (
