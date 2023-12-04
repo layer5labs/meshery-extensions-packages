@@ -27,7 +27,6 @@ const TableComponent = ({
   noData,
   setOption,
   option,
-  setName
 }) => {
   return (
     <Table
@@ -120,12 +119,9 @@ function Table({ data, columns, loading, noData, setOption, option }) {
           <div className="input-container">
             <input
               type="search"
-              placeholder="Search by name..."
+              placeholder="Search..."
               value={globalFilter ?? ''}
-              onChange={event => {
-                setGlobalFilter(event.target.value);
-                setName(event.target.value);
-              }}
+              onChange={event => setGlobalFilter(event.target.value)}
             />
           </div>
         </div>

@@ -5,13 +5,14 @@ import { client } from './client';
 import { totalPoints } from '../../utils/helpers';
 import { bronze, gold, silver } from '../assets/images/medals';
 import Avatar from '../reusecore/Avatar';
+import styled from 'styled-components';
 import { MemberContainer, RankContainer } from '../reusecore/Table';
 
 export const useFetchLeaderBoard = () => {
-  const fetchLeaderBoard = async (period, name) => {
+  const fetchLeaderBoard = async period => {
     try {
       const response = await client.get(
-        `directory_items.json/?order=likes_received&name=${name}period=${
+        `directory_items.json/?order=likes_received&period=${
           period || 'monthly'
         }`
       );
@@ -22,7 +23,6 @@ export const useFetchLeaderBoard = () => {
   };
 
   const [period, setPeriod] = useState('monthly');
-  const [name, setName] = useState('');
   const leadColumns = React.useMemo(
     () => [
       {
@@ -102,17 +102,10 @@ export const useFetchLeaderBoard = () => {
 
   const { data: leaderBoard, isFetching: loadingLeaderBoard } = useQuery({
     queryKey: ['leader-board', period],
-    queryFn: () => fetchLeaderBoard(period, name),
+    queryFn: () => fetchLeaderBoard(period),
     onError: () => {
       //  TODO: implement alerts for errors
     },
   });
-  return {
-    leaderBoard,
-    loadingLeaderBoard,
-    leadColumns,
-    period,
-    setPeriod,
-    setName,
-  };
+  return { leaderBoard, loadingLeaderBoard, leadColumns, period, setPeriod };
 };
