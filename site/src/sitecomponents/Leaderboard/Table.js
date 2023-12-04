@@ -27,7 +27,7 @@ const TableComponent = ({
   noData,
   setOption,
   option,
-  setName
+  setName,
 }) => {
   return (
     <Table
@@ -36,11 +36,12 @@ const TableComponent = ({
       noData={noData}
       setOption={setOption}
       option={option}
+      setName={setName}
     />
   );
 };
 
-function Table({ data, columns, loading, noData, setOption, option }) {
+function Table({ data, columns, loading, noData, setOption, option, setName }) {
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState([]);
 
