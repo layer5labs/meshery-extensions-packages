@@ -164,6 +164,7 @@ jobs:
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
         script: |
+          docker system prune -f
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:staging-latest
@@ -226,6 +227,7 @@ jobs:
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
         script: |
+          docker system prune -f
           cd meshery-cloud
           sudo git pull
           sudo docker pull layer5/meshery-cloud:production-latest
