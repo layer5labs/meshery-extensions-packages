@@ -1,0 +1,10 @@
+{
+  "name": "design-embed",
+  "version": "0.0.0",
+  "description": "react component to embed meshery designs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "Apache-2.0"
+}
