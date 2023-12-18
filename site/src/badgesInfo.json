@@ -1,6 +1,12 @@
 {
     "achievementBadges": [
         {
+            "slug": "longevity-legend",
+            "location": "assets/badges/longevity-legend/longevity-legend.png",
+            "title": "Longevity Legend",
+            "description": "This badge is awarded for long-term, sustained contributions to the project over the years."
+        },
+        {
             "slug": "hacktoberfest-contributor",
             "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
             "title": "Hacktoberfest Contributor",
