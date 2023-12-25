@@ -34,8 +34,7 @@ site:
 clean: 
 	cd site; gatsby clean; cd ..; make site
 
-build-and-release-meshery-design-embed-component : 
-	cd meshery-design-embed ; npm run release ; cd ..
+
 #-----------------------------------------------------------------------------
 # Docker-based Builds
 #-----------------------------------------------------------------------------

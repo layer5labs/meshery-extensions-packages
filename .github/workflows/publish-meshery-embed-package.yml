@@ -13,10 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{secrets.GH_TOKEN}}
-
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -24,6 +20,19 @@ jobs:
           cd meshery-design-embed  && 
           npm install && 
           npm run build
+
+      - name: Generate new version
+        run: cd meshery-design-embed && npm version ${{ github.event.inputs.version }}
+
+  tag-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Generate new version
+        run: cd meshery-design-embed && npm version ${{ github.event.inputs.version }}
 
   publish-gpr:
     needs: build
@@ -42,9 +51,7 @@ jobs:
           scope: "@layer5"
 
       - name: Run npm release
-        run: make build-and-release-meshery-design-embed-component ${{ github.event.inputs.release-version || github.event.release.tag_name }}
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'release'
-
+        run: cd meshery-design-embed && npm publish --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -55,4 +62,4 @@ jobs:
           commit_user_email: ci@layer5.io
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit_options: "--signoff"
-          commit_message: "[Release]: Bump version to ${{ github.event.inputs.release-version || github.event.release.tag_name }}"
+          commit_message: "[Release Meshery Embed ]: release version  ${{ github.event.inputs.release-version }} "
