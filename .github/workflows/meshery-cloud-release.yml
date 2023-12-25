@@ -43,34 +43,53 @@ env:
   GIT_VERSION: ${{inputs.release-version}}
 
 jobs:
-  update-doc-release-version:
-    name: API Docs
-    if: inputs.release-environment == 'production'
+  # update-doc-release-version:
+  #   name: API Docs
+  #   if: inputs.release-environment == 'production'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Meshery Cloud code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: layer5io/meshery-cloud
+  #         fetch-depth: 1
+  #         token: ${{ secrets.GH_ACCESS_TOKEN }}
+  #     - name: API Docs - Install Redocly
+  #       uses: actions/setup-node@v3
+  #     - run: npm i -g @redocly/cli@latest
+  #     - name: API Docs - Update schema.yml
+  #       uses: fjogeleit/yaml-update-action@main
+  #       with:
+  #         repository: l5io/meshery-cloud
+  #         branch: master
+  #         token: ${{ secrets.GH_ACCESS_TOKEN }}
+  #         valueFile: 'models/openapi-schema/schema.yml'
+  #         commitChange: true
+  #         propertyPath: 'info.version'
+  #         value: ${{inputs.release-version}}
+  #         message: Updated meshery-cloud version to ${{inputs.release-version}}
+  #         commitUserName: l5io
+  #         commitUserEmail: l5io@layer5.io
+  build-docs:
+    name: Build Meshery Cloud API docs
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Meshery Cloud code
-        uses: actions/checkout@v4
-        with:
-          repository: layer5io/meshery-cloud
-          fetch-depth: 1
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - name: API Docs - Install Redocly
-        uses: actions/setup-node@v3
-      - run: npm i -g @redocly/cli@latest
-      - name: API Docs - Update schema.yml
-        uses: fjogeleit/yaml-update-action@main
-        with:
-          repository: l5io/meshery-cloud
-          branch: master
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-          valueFile: 'models/openapi-schema/schema.yml'
-          commitChange: true
-          propertyPath: 'info.version'
-          value: ${{inputs.release-version}}
-          message: Updated meshery-cloud version to ${{inputs.release-version}}
-          commitUserName: l5io
-          commitUserEmail: l5io@layer5.io
-      
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        repository: meshery/schemas
+        fetch-depth: 1
+    - name: Build docs
+      run: |
+        npm i -g @redocly/cli@latest
+        make docs-build
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: API-docs
+        path: openapi/index.html
+    - name: Remove artificats
+      run: rm openapi/index.html
   lint-fix:
     name: Lint UI and Backend
     if: inputs.release-environment == 'staging'
@@ -106,7 +125,7 @@ jobs:
           repository: meshery-cloud
 
   staging:
-    needs: update-doc-release-version
+    needs: [build-docs, lint-fix]
     if: always() && inputs.release-environment == 'staging' 
     name: Staging - Docker build and push
     runs-on: ubuntu-latest
@@ -118,11 +137,11 @@ jobs:
         repository: layer5io/meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-    - name: Build Docs
-      run:  |
-        cd meshery-cloud
-        npm i -g @redocly/cli@latest
-        make docs-build
+    - name: Download artifacts (Built API docs)
+      uses: actions/download-artifact@v3 
+      with:
+        name: API-docs
+        path: ui/docs/
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     - name: Set up Docker Buildx
@@ -169,7 +188,7 @@ jobs:
           sudo docker pull layer5/meshery-cloud:staging-latest
           sudo make stg-deploy
   prod:
-    needs: update-doc-release-version
+    needs: [build-docs, lint-fix]
     if: always() && inputs.release-environment == 'production'
     name: Production - Docker build and push
     runs-on: ubuntu-latest
@@ -181,11 +200,11 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-    - name: Build Docs
-      run:  |
-        cd meshery-cloud
-        npm i -g @redocly/cli@latest
-        make docs-build
+    - name: Download artifacts (Built API docs)
+      uses: actions/download-artifact@v3 
+      with:
+        name: API-docs
+        path: ui/docs/
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     - name: Set up Docker Buildx
