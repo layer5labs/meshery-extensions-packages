@@ -1,7 +1,7 @@
 {
     "name": "meshery-design-embed",
     "private": false,
-    "version": "0.0.0",
+    "version": "0.0.1",
     "type": "module",
     "files": [
         "dist"
@@ -14,11 +14,15 @@
             "require": "./dist/meshery-design-embed.umd.cjs"
         }
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "dev": "vite",
         "build": "vite build",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "release": "node ./release.js"
     },
     "peerDependencies": {
         "react": "^17.0.2",
