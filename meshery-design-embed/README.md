@@ -28,5 +28,4 @@ function Design() {
 
 ```
 
-Learn more about meshery design embeddings [here](https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding)
-
+Learn more about [embedding Meshery Designs](https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding).
