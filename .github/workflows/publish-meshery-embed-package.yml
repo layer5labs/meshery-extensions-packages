@@ -26,7 +26,7 @@ jobs:
           scope: "@layer5"
 
       - name: Install Dependencies and Build Package
-      - run: |
+        run: |
           cd meshery-design-embed &&
           npm install && 
           npm run build
