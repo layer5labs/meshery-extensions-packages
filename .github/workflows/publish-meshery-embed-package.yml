@@ -11,9 +11,6 @@ on:
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./meshery-design-embed
     permissions:
       contents: read
       packages: write
@@ -30,15 +27,15 @@ jobs:
 
       - name: Install Dependencies and Build Package
       - run: |
-          ls &&
+          cd meshery-design-embed &&
           npm install && 
           npm run build
 
       - name: Generate new version
-        run: npm version ${{ github.event.inputs.release-version }}
+        run: cd meshery-design-embed &&  npm version ${{ github.event.inputs.release-version }}
 
       - name: Run npm release
-        run: npm publish --verbose
+        run: cd meshery-design-embed && npm publish --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
