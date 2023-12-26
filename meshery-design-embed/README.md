@@ -1,4 +1,4 @@
-# Meshery design embed
+# Meshery Design Embed Package
 
 Meshery Design Embedding allows you to export a design in a format that can be integrated into websites, blogs, or platforms supporting HTML, CSS, and JavaScript. This embedded version offers an interactive representation of the design, simplifying sharing with infrastructure stakeholders.
 
@@ -28,4 +28,4 @@ function Design() {
 
 ```
 
-Learn more about meshery design embeddings (here)[https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding]
+Learn more about [embedding Meshery Designs)[https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding]
