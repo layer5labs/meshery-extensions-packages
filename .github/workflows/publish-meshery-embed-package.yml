@@ -9,38 +9,11 @@ on:
         required: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: |
-          ls &&
-          cd meshery-design-embed  && 
-          npm install && 
-          npm run build
-
-  tag-version:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Generate new version
-        run: cd meshery-design-embed && npm version ${{ github.event.inputs.release-version }}
-
   publish-gpr:
-    needs: tag-version
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./meshery-design-embed
     permissions:
       contents: read
       packages: write
@@ -48,14 +21,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: "https://registry.npmjs.org"
           scope: "@layer5"
 
+      - name: Install Dependencies and Build Package
+      - run: |
+          ls &&
+          npm install && 
+          npm run build
+
+      - name: Generate new version
+        run: npm version ${{ github.event.inputs.release-version }}
+
       - name: Run npm release
-        run: cd meshery-design-embed && npm publish --verbose
+        run: npm publish --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -67,4 +50,3 @@ jobs:
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit_options: "--signoff"
           commit_message: "[Release Meshery Embed ]: release version  ${{ github.event.inputs.release-version }}"
-          repo: meshery-extensions-packages
