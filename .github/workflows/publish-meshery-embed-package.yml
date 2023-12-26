@@ -1,7 +1,6 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Publish Node.js Package
+name: Publish Meshery Design Embed React Package
 
 on:
   workflow_dispatch:
@@ -13,29 +12,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: |
+          ls &&
           cd meshery-design-embed  && 
           npm install && 
           npm run build
 
-      - name: Generate new version
-        run: cd meshery-design-embed && npm version ${{ github.event.inputs.version }}
-
   tag-version:
+    needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16
 
       - name: Generate new version
-        run: cd meshery-design-embed && npm version ${{ github.event.inputs.version }}
+        run: cd meshery-design-embed && npm version ${{ github.event.inputs.release-version }}
 
   publish-gpr:
-    needs: build
+    needs: tag-version
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{secrets.GH_TOKEN}}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -59,7 +63,8 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_user_name: l5io
-          commit_user_email: ci@layer5.io
+          commit_user_email: l5io@layer5.io
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit_options: "--signoff"
-          commit_message: "[Release Meshery Embed ]: release version  ${{ github.event.inputs.release-version }} "
+          commit_message: "[Release Meshery Embed ]: release version  ${{ github.event.inputs.release-version }}"
+          repo: meshery-extensions-packages
