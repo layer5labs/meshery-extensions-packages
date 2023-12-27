@@ -1,5 +1,5 @@
 {
-    "name": "meshery-design-embed",
+    "name": "@layer5/meshery-design-embed",
     "private": false,
     "version": "0.1.2",
     "type": "module",
