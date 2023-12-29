@@ -4,9 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { client } from './client';
 import { totalPoints } from '../../utils/helpers';
-import { bronze, gold, silver } from '../assets/images/medals';
-import Avatar from '../reusecore/Avatar';
-import { MemberContainer, RankContainer } from '../reusecore/Table';
+import { bronze, gold, silver } from '../../public/static/medals';
 
 export const useFetchLeaderBoard = () => {
   const fetchLeaderBoard = async (period, name) => {
