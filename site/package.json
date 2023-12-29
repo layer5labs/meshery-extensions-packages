@@ -30,5 +30,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
-  "proxy": "https://discuss.layer5.io/"
+  "proxy": "https://discuss.layer5.io/",
+  "devDependencies": {
+    "file-loader": "^6.2.0"
+  }
 }
