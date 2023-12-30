@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { client } from './client';
 import { totalPoints } from '../../utils/helpers';
-import { bronze, gold, silver } from '../../public/static/medals';
+import { gold, silver, bronze } from '../../static/assets/medals';
 
 export const useFetchLeaderBoard = () => {
   const fetchLeaderBoard = async (period, name) => {
@@ -32,15 +32,13 @@ export const useFetchLeaderBoard = () => {
           const value = info?.row?.index + 1;
           const rank = ['', gold, silver, bronze];
           return (
-            // <RankContainer>
-            //   {[1, 2, 3].includes(value) ? (
-            //     <img src={rank[value]} alt={'Rank'} />
-            //   ) : (
-            //     <p>{value}</p>
-            //   )}
-            // </RankContainer>
-
-            <div>Hello</div>
+            <RankContainer>
+              {[1, 2, 3].includes(value) ? (
+                <img src={rank[value]} alt={'Rank'} />
+              ) : (
+                <p>{value}</p>
+              )}
+            </RankContainer>
           );
         },
       },
@@ -54,19 +52,17 @@ export const useFetchLeaderBoard = () => {
             .replace('{size}', '50')
             .replace('{username}', user.username);
           return (
-            // <MemberContainer>
-            //   <div className="avatar">
-            //     <Avatar
-            //       src={`https://discuss.layer5.io/${avatarUrl}`}
-            //       alt={user?.name}
-            //     />
-            //   </div>
-            //   <div className="username">
-            //     <p>{user?.name}</p>
-            //   </div>
-            // </MemberContainer>
-
-            <div>Hello</div>
+            <MemberContainer>
+              <div className="avatar">
+                <Avatar
+                  src={`https://discuss.layer5.io/${avatarUrl}`}
+                  alt={user?.name}
+                />
+              </div>
+              <div className="username">
+                <p>{user?.name}</p>
+              </div>
+            </MemberContainer>
           );
         },
       },
