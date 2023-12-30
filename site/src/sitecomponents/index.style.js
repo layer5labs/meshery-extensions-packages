@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -97,14 +97,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 export const lightTheme = {
   body: '#FFF',
   text: '#363537',
   toggleBorder: '#FFF',
   background: '#363537',
   btn: '#FFF',
-}
+  tableBgPrimary: '#E6FBF7',
+  tableBgLight: '#fff',
+};
 
 export const darkTheme = {
   body: 'rgb(18, 18, 18)',
@@ -112,4 +113,6 @@ export const darkTheme = {
   toggleBorder: '#6B8096',
   background: '#999',
   btn: '#1E2117',
-}
+  tableBgPrimary: '#014034',
+  tableBgLight: '#016956',
+};

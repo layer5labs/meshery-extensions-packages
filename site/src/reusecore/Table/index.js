@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const TD = styled.td`
+export const Td = styled.td`
   font-size: 14px;
   font-weight: normal;
   text-transform: capitalize;
   white-space: nowrap;
   padding: 14px 5px;
+  color: ${({ theme }) => theme.text};
 
   div {
     display: flex;
@@ -31,13 +32,20 @@ export const TableRow = styled.tr`
   position: relative;
   border-bottom: 1px solid lightgray;
   color: dark;
+  background-color: ${({ theme, id }) =>
+    Number(id) % 2 ? theme.tableBgPrimary : theme.tableBgLight};
+`;
+export const TableHead = styled.tr`
+  position: relative;
+  border-bottom: 1px solid lightgray;
+  color: dark;
   background-color: ${props => (Number(props.id) % 2 ? '#E6FBF7' : 'inherit')};
 `;
 
 export const Th = styled.th`
   text-align: left;
   font-size: 12px;
-  color: white;
+  color: '#fafafa';
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
