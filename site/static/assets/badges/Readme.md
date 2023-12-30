@@ -17,6 +17,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - GitOps Connected
 - Hacktoberfest Contributor
 - Landscape
+- Longevity Legend
 - Meshery
 - Meshery Catalog
 - Meshery Docs
