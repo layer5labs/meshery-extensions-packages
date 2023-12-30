@@ -4,7 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { client } from './client';
 import { totalPoints } from '../../utils/helpers';
-import { gold, silver, bronze } from '../../static/assets/medals';
+import { MemberContainer, RankContainer } from '../reusecore/Table';
+import Avatar from '../reusecore/Avatar';
 
 export const useFetchLeaderBoard = () => {
   const fetchLeaderBoard = async (period, name) => {
@@ -30,14 +31,17 @@ export const useFetchLeaderBoard = () => {
         accessorKey: '',
         cell: info => {
           const value = info?.row?.index + 1;
-          const rank = ['', gold, silver, bronze];
+          // const rank = ['', Gold, Silver, Bronze];
+          // const Img = rank[value];
           return (
             <RankContainer>
-              {[1, 2, 3].includes(value) ? (
-                <img src={rank[value]} alt={'Rank'} />
+              {/* {[1, 2, 3].includes(value) ? (
+                // <img src={rank[value]} alt={'Rank'} />
+                // <Img />
               ) : (
                 <p>{value}</p>
-              )}
+              )} */}
+              <p>{value}</p>
             </RankContainer>
           );
         },

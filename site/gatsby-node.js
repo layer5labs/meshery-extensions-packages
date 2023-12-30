@@ -124,31 +124,3 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `);
 };
-
-// gatsby-node.js
-exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
-  const config = getConfig();
-
-  // Add a custom loader for SVG files using svgr
-  config.module.rules.push({
-    test: /\.svg$/,
-    use: ['@svgr/webpack'],
-  });
-
-  // Add url-loader configuration for other image types
-  config.module.rules.push({
-    test: /\.(png|jpg|gif)$/,
-    use: [
-      {
-        loader: 'url-loader',
-        options: {
-          limit: 8192, // Convert images smaller than 8kb to base64 strings
-          name: 'images/[name].[hash].[ext]',
-        },
-      },
-    ],
-  });
-
-  // Apply the changes to the webpack config
-  actions.replaceWebpackConfig(config);
-};

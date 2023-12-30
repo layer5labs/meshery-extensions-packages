@@ -7,6 +7,13 @@
 /**
  * @type {import('gatsby').GatsbySSR['onRenderBody']}
  */
-exports.onRenderBody = ({ setHtmlAttributes }) => {
-  setHtmlAttributes({ lang: `en` })
-}
+// exports.onRenderBody = ({ setHtmlAttributes }) => {
+//   setHtmlAttributes({ lang: `en` })
+// }
+
+import React from 'react';
+import RootElement from './src/pages/root';
+
+export const wrapRootElement = ({ element }) => {
+  return <RootElement>{element}</RootElement>;
+};

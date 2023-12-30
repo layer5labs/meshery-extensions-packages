@@ -1,5 +1,5 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
+import RootElement from './src/pages/root';
 
 export const onInitialClientRender = () => {
   setTimeout(function () {
@@ -10,7 +10,6 @@ export const onInitialClientRender = () => {
   }, 1000);
 };
 
-const queryClient = new QueryClient();
-export const wrapRootElement = ({ element }) => (
-  <QueryClientProvider client={queryClient}>{element}</QueryClientProvider>
-);
+export const wrapRootElement = ({ element }) => {
+  return <RootElement>{element}</RootElement>;
+};
