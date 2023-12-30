@@ -136,7 +136,6 @@ export const Header = styled.header`
       max-width: 200px;
     }
   }
-  
   @media screen and (max-width: 500px) {
     img.logo {
       max-width: 180px;
