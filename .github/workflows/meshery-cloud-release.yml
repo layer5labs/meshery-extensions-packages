@@ -55,7 +55,7 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: API Docs - Install Redocly
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - run: npm i -g @redocly/cli@latest
       - name: API Docs - Update schema.yml
         uses: fjogeleit/yaml-update-action@main
