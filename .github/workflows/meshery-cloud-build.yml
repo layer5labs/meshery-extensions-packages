@@ -27,7 +27,7 @@ on:
         required: true
         default: "staging"
       release-version: 
-        description: "e.g. v0.6.26"
+        description: "e.g. v0.7.26"
         required: true
         default: "latest"
 
@@ -61,7 +61,7 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: API Docs - Install Redocly
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - run: npm i -g @redocly/cli@latest
       - name: API Docs - Update schema.yml
         uses: fjogeleit/yaml-update-action@main
@@ -117,12 +117,12 @@ jobs:
         shell: bash
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1.6.0
+        uses: docker/setup-buildx-action@v3
       - name: Docker Meta
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: layer5/meshery-cloud
           flavor: |
@@ -139,7 +139,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and Push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
         #   context: "{{defaultContext}}:install/docker-extension"
           push: true
