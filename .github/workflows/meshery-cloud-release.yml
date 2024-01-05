@@ -166,7 +166,7 @@ jobs:
         script: |
           cd meshery-cloud
           sudo su
-          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com
+          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
           docker pull layer5/meshery-cloud:staging-latest
           make stg-deploy
   prod:
@@ -229,7 +229,7 @@ jobs:
         script: |
           cd meshery-cloud
           sudo su
-          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com
+          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
           docker pull layer5/meshery-cloud:production-latest
           make prod-deploy
           
