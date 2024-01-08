@@ -3,6 +3,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 
 ### Badges included in this folder are:
 - Bring a buddy
+- Code Cleanup Crew
 - Community
 - Continuous Contributor
 - Docker Extension
@@ -27,6 +28,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Nighthawk
 - Patterns
 - Review Rockstar
+- Security Sentinel
 - Service Mesh Performance
 - UI/UX
 - Writer's Program
