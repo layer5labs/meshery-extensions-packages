@@ -127,7 +127,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="/leaderboard"
+                href="https://discuss.layer5.io/u?order=likes_received"
               >
                 Community Leaderboard
               </a>
