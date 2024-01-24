@@ -221,14 +221,15 @@ jobs:
         platforms: linux/amd64
     - name: Deploy production
       uses: appleboy/ssh-action@master
+      env:
+          GIT_VERSION: ${{inputs.release-version}}
+          GIT_COMMITSHA: ${{ github.sha }}
       with:
         host: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
         username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
-        env:
-          GIT_VERSION: ${{inputs.release-version}}
-          GIT_COMMITSHA: ${{ github.sha }}
+        envs: GIT_VERSION,GIT_COMMITSHA
         script: |
           cd meshery-cloud
           sudo su
