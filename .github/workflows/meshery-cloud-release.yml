@@ -226,10 +226,14 @@ jobs:
         username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
+        env:
+          GIT_VERSION: ${{inputs.release-version}}
+          GIT_COMMITSHA: ${{ github.sha }}
         script: |
           cd meshery-cloud
           sudo su
           git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
+          ./install/scripts/git-pull.sh
           docker pull layer5/meshery-cloud:production-latest
           make prod-deploy
           
