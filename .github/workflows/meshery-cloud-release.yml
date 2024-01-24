@@ -58,7 +58,7 @@ jobs:
         uses: actions/setup-node@v4
       - run: npm i -g @redocly/cli@latest
       - name: API Docs - Update schema.yml
-        uses: fjogeleit/yaml-update-action@main
+        uses: fjogeleit/yaml-update-action@v0.13.2
         with:
           repository: l5io/meshery-cloud
           branch: master
