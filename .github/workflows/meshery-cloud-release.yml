@@ -158,11 +158,15 @@ jobs:
     - name: Deploy staging
       if: success()
       uses: appleboy/ssh-action@master
+      env:
+          GIT_VERSION: ${{inputs.release-version}}
+          GIT_COMMITSHA: ${{ github.sha }}
       with:
         host: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
         username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
+        envs: GIT_VERSION,GIT_COMMITSHA
         script: |
           cd meshery-cloud
           sudo su
