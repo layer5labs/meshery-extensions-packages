@@ -63,8 +63,8 @@ const App = () => {
                 represent milestones that you achieve both in using and in
                 contributing to Layer5-supported open source projects. As a
                 contributor, this is how you demonstrate your ownership,
-                dedication, skills and loyalty to Layer5. As a user, this is how
-                you demonstrate your prowess.
+                dedication, skills and commitment. As a user, this is how
+                you demonstrate your prowess, milestones, and meaningful engagement.
               </p>
               <div className="banner-main">
                 <img src={recognitionBanner} alt="Recognition Program Banner" />
