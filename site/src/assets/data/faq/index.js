@@ -34,9 +34,9 @@ const data = {
             question: "How do I earn badges?",
             category: "Layer5 Badges",
             answer: [
-                "Layer5 badges are divided into two categories, namely 'Achievement Badges' and 'Project and Contribution' Badges",
-                "Project and Contribution Badges are assigned by community managers to a user when they contributes to a particular project.",
-                "Achievements Badges are the badges that are assigned automatically when a user completes a task like sharing a design, creating a design for the first time, and so on."
+                "Layer5 badges are divided into two categories, namely 'Achievement Badges' and 'Project and Contribution' badges.",
+                "Project and Contribution badges are assigned by community managers when you contribute to a particular project.",
+                "Achievements badges are assigned automatically when you complete a task like sharing a design, using the interactive terminal, creating a design for the first time, and so on."
             ],
         },
         {
