@@ -144,11 +144,11 @@ const App = () => {
                     Join Our Open Source Community
                   </a>
                 </div>
-                <div>
+                {/* <div>
                   <a href="/leaderboard" className="btn-secondary">
                     View Leaderboard
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </section>
