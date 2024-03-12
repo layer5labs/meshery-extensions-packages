@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 export const BASE_URL =
   process.env.LEADERBOARD_BASE_URL ||
-  'https://corsproxy.io/?https://discuss.layer5.io';
+  'https://discuss.layer5.io';
 export const client = Axios.create({
   baseURL: BASE_URL,
   headers: {
