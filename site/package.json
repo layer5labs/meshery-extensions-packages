@@ -13,7 +13,11 @@
     "gatsby-plugin-google-tagmanager": "^5.12.0",
     "gatsby-plugin-image": "^3.11.0",
     "gatsby-plugin-manifest": "^5.11.0",
+    "gatsby-plugin-react-svg": "^3.3.0",
+    "gatsby-plugin-sharp": "^5.13.0",
+    "gatsby-plugin-svgr-loader": "^0.1.0",
     "gatsby-source-filesystem": "^5.11.0",
+    "gatsby-transformer-sharp": "^5.13.0",
     "react": "^18.1.0",
     "react-accessible-accordion": "^5.0.0",
     "react-dom": "^18.1.0",
@@ -30,5 +34,10 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
-  "proxy": "https://discuss.layer5.io/"
+  "proxy": "https://discuss.layer5.io/",
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "file-loader": "^6.2.0",
+    "url-loader": "^4.1.1"
+  }
 }
