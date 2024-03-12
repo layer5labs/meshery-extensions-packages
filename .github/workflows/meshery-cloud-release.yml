@@ -55,10 +55,10 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: API Docs - Install Redocly
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - run: npm i -g @redocly/cli@latest
       - name: API Docs - Update schema.yml
-        uses: fjogeleit/yaml-update-action@main
+        uses: fjogeleit/yaml-update-action@v0.13.2
         with:
           repository: l5io/meshery-cloud
           branch: master
@@ -158,16 +158,21 @@ jobs:
     - name: Deploy staging
       if: success()
       uses: appleboy/ssh-action@master
+      env:
+          GIT_VERSION: ${{inputs.release-version}}
+          GIT_COMMITSHA: ${{ github.sha }}
       with:
         host: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
         username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
+        envs: GIT_VERSION,GIT_COMMITSHA
         script: |
           cd meshery-cloud
-          sudo git pull
-          sudo docker pull layer5/meshery-cloud:staging-latest
-          sudo make stg-deploy
+          sudo su
+          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
+          docker pull layer5/meshery-cloud:staging-latest
+          make stg-deploy
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -220,14 +225,20 @@ jobs:
         platforms: linux/amd64
     - name: Deploy production
       uses: appleboy/ssh-action@master
+      env:
+          GIT_VERSION: ${{inputs.release-version}}
+          GIT_COMMITSHA: ${{ github.sha }}
       with:
         host: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
         username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
         key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
         port: 22
+        envs: GIT_VERSION,GIT_COMMITSHA
         script: |
           cd meshery-cloud
-          sudo git pull
-          sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make prod-deploy
+          sudo su
+          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
+          ./install/scripts/git-pull.sh
+          docker pull layer5/meshery-cloud:production-latest
+          make prod-deploy
           

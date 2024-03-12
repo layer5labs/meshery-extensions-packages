@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
@@ -69,11 +69,11 @@ jobs:
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Setup go
-        uses: actions/setup-go@v3.0.0
+        uses: actions/setup-go@v4
         with:
           go-version: "1.19"
       - name:  setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
       - name: Build Meshery Extension UI
@@ -86,7 +86,7 @@ jobs:
       - name: Show runner tree
         run: tree /home/runner/ -L 3
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: meshery-extension-ui
           path: /home/runner/provider
@@ -125,28 +125,28 @@ jobs:
           message: ':heavy_check_mark: Setting up test environment...'
           append: true
       - name: Check out Meshery code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: meshery/meshery
           fetch-depth: 1
           path: .
       - name: Check out meshery-consul code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           repository: layer5io/meshery-consul
           path: ./meshery-consul
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: meshery
           path: server/cmd/
       - name: Setup go
-        uses: actions/setup-go@v3.0.0
+        uses: actions/setup-go@v4
         with:
           go-version: ${{ secrets.GO_VERSION }}
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
       - name: Create k8s Kind Cluster
@@ -157,7 +157,7 @@ jobs:
         run: |
           mkdir -p ui/out
       - name: Download Meshery-ui artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
           path: ui/out/
@@ -190,7 +190,7 @@ jobs:
           chmod +x ./main
           BUILD=${{env.tag}} ./main &
       - name: Download Meshery-extension-ui artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: meshery-extension-ui
           path: provider
@@ -200,7 +200,7 @@ jobs:
       - name: show runner tree
         run: tree /home/runner/.meshery
       - name: checkout cypress code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           path: ./cypress
@@ -285,7 +285,7 @@ jobs:
           append: true
       - name: Checkout cypress action PR
         if: always()
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: layer5labs/cypress-test-summary
           fetch-depth: 1
@@ -312,12 +312,12 @@ jobs:
           append: true
       - name: Upload artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-ss
           path: ui/cypress/screenshots
       - name: Upload Videos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-ss

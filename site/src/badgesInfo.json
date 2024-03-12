@@ -1,6 +1,18 @@
 {
     "achievementBadges": [
         {
+            "slug": "code-cleanup-crew",
+            "location": "assets/badges/code-cleanup-crew/code-cleanup-crew.png",
+            "title": "Code Cleanup Crew",
+            "description": "This badge is awarded to contributors who help maintain code quality and cleanliness."
+        },
+        {
+            "slug": "security-sentinel",
+            "location": "assets/badges/security-sentinel/security-sentinel.png",
+            "title": "Security Sentinel",
+            "description": "This badge is awarded to individuals who contribute to identifying and fixing security vulnerabilities."
+        },
+        {
             "slug": "longevity-legend",
             "location": "assets/badges/longevity-legend/longevity-legend.png",
             "title": "Longevity Legend",
@@ -90,7 +102,7 @@
             "slug": "meshmap",
             "imageSource": "assets/badges/meshmap/meshmap.png",
             "title": "MeshMap",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/meshmap'>MeshMap</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer"
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/meshmap'>MeshMap</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "service-mesh-performance",
@@ -108,7 +120,7 @@
             "slug": "meshery",
             "imageSource": "assets/badges/meshery/meshery.png",
             "title": "Meshery",
-            "description": "This badge isawarded to the community members who make consistent and impactful contributions to the Meshery project. Community members who earn this badge occasionally become a project maintainer."
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Meshery project. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "patterns",
