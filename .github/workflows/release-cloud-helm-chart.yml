@@ -33,6 +33,7 @@ jobs:
         with:
           path: action
           repository: layer5io/meshery-cloud
+          ref: master
       - uses: azure/setup-helm@v4
         # with:
         #  version: 'v3.6.0' # default is latest stable
