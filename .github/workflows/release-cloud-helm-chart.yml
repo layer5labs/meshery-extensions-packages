@@ -40,7 +40,7 @@ jobs:
         #  version: 'v3.6.0' # default is latest stable
         id: install
       - name: validate cloud chart
-        run: helm lint cloud/install/kubernetes
+        run: helm lint cloud/install/kubernetes --with-subcharts
   release-chart:
     runs-on: ubuntu-22.04
     # if: ${{ github.event_name != 'pull_request' }} && ${{ github.ref == 'refs/heads/master' }}
@@ -81,7 +81,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: install/kubernetes/helm
+          charts_dir: cloud/install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
@@ -96,7 +96,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: install/kubernetes
+          charts_dir: cloud/install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
