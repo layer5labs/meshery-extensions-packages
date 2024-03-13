@@ -34,6 +34,7 @@ jobs:
           path: action
           repository: layer5io/meshery-cloud
           ref: master
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
       - uses: azure/setup-helm@v4
         # with:
         #  version: 'v3.6.0' # default is latest stable
