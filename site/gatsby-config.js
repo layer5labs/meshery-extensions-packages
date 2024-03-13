@@ -8,6 +8,7 @@ module.exports = {
     siteUrl: `https://badges.layer5.io`,
   },
   plugins: [
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -17,21 +18,21 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-manifest',
+      resolve: "gatsby-plugin-manifest",
       options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
-        start_url: '/',
-        background_color: '#3c494f',
-        theme_color: '#00b39f',
-        display: 'minimal-ui',
-        icon: 'src/assets/images/recognition-program.png', // This path is relative to the root of the site.
+        name: "gatsby-starter-default",
+        short_name: "starter",
+        start_url: "/",
+        background_color: "#3c494f",
+        theme_color: "#00b39f",
+        display: "minimal-ui",
+        icon: "src/assets/images/recognition-program.png", // This path is relative to the root of the site.
       },
     },
     {
-      resolve: 'gatsby-plugin-google-tagmanager',
+      resolve: "gatsby-plugin-google-tagmanager",
       options: {
-        id: 'GTM-PDTVCLXM',
+        id: "GTM-PDTVCLXM",
 
         // // Include GTM in development.
         // //
