@@ -1609,11 +1609,11 @@ const addStyles = () => {
 
     #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 {
       /* Dark theme */
-      --dark-background: #1A1A1A;;
+      --dark-background: #1A1A1A;
       --dark-foregeound: #fff;
       /* Light theme */
       --light-background: #fff;
-      --light-foregeound: #1A1A1A;;
+      --light-foregeound: #1A1A1A;
       /* Defaults */
       --current-background: var(--light-background);
       --current-foreground: var(--light-foregeound);
