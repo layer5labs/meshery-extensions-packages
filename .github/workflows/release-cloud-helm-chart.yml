@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4 
         with:
-          path: action
+          path: cloud
           repository: layer5io/meshery-cloud
           ref: master
           token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -40,7 +40,7 @@ jobs:
         #  version: 'v3.6.0' # default is latest stable
         id: install
       - name: validate cloud chart
-        run: helm lint install/kubernetes
+        run: helm lint cloud/install/kubernetes
   release-chart:
     runs-on: ubuntu-22.04
     # if: ${{ github.event_name != 'pull_request' }} && ${{ github.ref == 'refs/heads/master' }}
