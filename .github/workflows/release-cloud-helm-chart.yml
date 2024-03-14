@@ -30,12 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: ${{ github.workspace }}/docs
-          repository: layer5io/docs
-          ref: master
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - uses: actions/checkout@v4
-        with:
           path: ${{ github.workspace }}/cloud
           repository: layer5io/meshery-cloud
           ref: master
