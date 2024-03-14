@@ -39,10 +39,13 @@ jobs:
           path: ${{ github.workspace }}/cloud
           repository: layer5io/meshery-cloud
           ref: master
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-
-      - name: Publish Helm chart for release version
-        if: github.event_name == 'workflow_call'
+          token: ${{ secrets.GH_ACCESS_TOKEN }}          
+      - name: Debug commands
+        run: |
+          ls;
+          pwd;
+      - name: Publish Helm chart for release version 
+        if:  github.event_name == 'workflow_call'
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
