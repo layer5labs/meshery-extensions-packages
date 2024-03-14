@@ -1,22 +1,21 @@
 name: Release Chart
 on:
-  workflow_call:      
+  workflow_call:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'
+        description: "Log level"
         required: true
-        default: 'warning'
+        default: "warning"
       release-ver:
-          description: 'Release Version'     
-          required: false
-          default: 'v'
+        description: "Release Version"
+        required: false
+        default: "v"
 jobs:
   validate:
     runs-on: ubuntu-22.04
-    # if: ${{github.event_name == 'pull_request'}}
     steps:
-      - uses: actions/checkout@v4 
+      - uses: actions/checkout@v4
         with:
           path: cloud
           repository: layer5io/meshery-cloud
@@ -29,13 +28,13 @@ jobs:
   release-chart:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4 
+      - uses: actions/checkout@v4
         with:
           path: ${{ github.workspace }}/docs
           repository: layer5io/docs
           ref: master
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - uses: actions/checkout@v4 
+      - uses: actions/checkout@v4
         with:
           path: ${{ github.workspace }}/cloud
           repository: layer5io/meshery-cloud
@@ -50,7 +49,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: ${{ github.workspace }}/cloud/install/kubernetes
+          charts_dir: meshery-cloud/install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
@@ -59,13 +58,13 @@ jobs:
           commit_email: l5io@layer5.io
           chart_version: ${{ steps.vars.outputs.tag }}
           app_version: ${{ steps.vars.outputs.tag }}
-  
+
       - name: Manually publish Helm chart with release version
-        if:  github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch'
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: ${{ github.workspace }}/cloud/install/kubernetes
+          charts_dir: meshery-cloud/install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
