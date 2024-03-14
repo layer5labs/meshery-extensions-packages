@@ -44,12 +44,13 @@ jobs:
         run: |
           ls;
           pwd;
+          cd cloud;
       - name: Publish Helm chart for release version 
         if:  github.event_name == 'workflow_call'
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: cloud/install/kubernetes
+          charts_dir: install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
@@ -64,7 +65,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: cloud/install/kubernetes
+          charts_dir: install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
