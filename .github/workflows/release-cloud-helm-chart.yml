@@ -46,7 +46,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: install/kubernetes
+          charts_dir: meshery-cloud/install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
@@ -61,7 +61,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          charts_dir: install/kubernetes
+          charts_dir: meshery-cloud/install/kubernetes
           owner: layer5io
           repository: docs
           branch: master
