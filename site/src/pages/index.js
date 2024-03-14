@@ -149,7 +149,7 @@ const App = () => {
                   </div>
                   <div>
                     <a
-                      href="https://discuss.layer5.io/u?order=likes_received"
+                      href="/leaderboard"
                       className="btn-secondary"
                     >
                       View Leaderboard
