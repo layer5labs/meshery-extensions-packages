@@ -16,7 +16,9 @@ export const useFetchLeaderBoard = () => {
           period || 'monthly'
         }&${_name}`
       );
-      return response?.data;
+      const filteredItems = response?.data.directory_items.filter(item => item.likes_received > 0);
+      const filteredResponse = { ...response, data: { ...response.data, directory_items: filteredItems } };
+      return filteredResponse?.data;
     } catch (error) {
       throw error;
     }
