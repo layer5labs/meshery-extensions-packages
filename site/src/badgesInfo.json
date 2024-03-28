@@ -1,6 +1,18 @@
 {
     "achievementBadges": [
         {
+            "slug": "docker-captain",
+            "location": "assets/badges/docker-captain/docker-captain.png",
+            "title": "Docker Captain",
+            "description": "This is a special edition badge and it is awarded to Docker Captains." 
+        },
+        {
+            "slug": "cncf-ambassador",
+            "location": "assets/badges/cncf-ambassador/cncf-ambassador.png",
+            "title": "CNCF Ambassador",
+            "description": "This is a special edition badge and it is awarded to CNCF Ambassadors." 
+        },
+        {
             "slug": "code-cleanup-crew",
             "location": "assets/badges/code-cleanup-crew/code-cleanup-crew.png",
             "title": "Code Cleanup Crew",
