@@ -8,6 +8,19 @@ const jsonData = require('../../badgesInfo.json');
 const Footer = () => {
   return (
     <BadgesWrapper>
+      <h2>Special Edition Badges</h2>
+      <div className="badge-grid">
+        {jsonData.specialEditionBadges.map((badge) => {
+          return (
+            <div key={badge.slug}>
+              <img src={badge.location} alt="Layer5 badges" />
+              <span>{badge.title}</span>
+              <p>{badge.description}</p>
+            </div>
+          );
+        })}
+      </div>
+
       <h2>Achievement Badges</h2>
       <div className="badge-grid">
         {jsonData.achievementBadges.map((badge) => {

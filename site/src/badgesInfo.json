@@ -1,10 +1,10 @@
 {
-    "achievementBadges": [
+    "specialEditionBadges": [
         {
             "slug": "docker-captain",
             "location": "assets/badges/docker-captain/docker-captain.png",
             "title": "Docker Captain",
-            "description": "This is a special edition badge and it is awarded to Docker Captains." 
+            "description": "This is a special sedition badge and it is awarded to Docker Captains." 
         },
         {
             "slug": "cncf-ambassador",
@@ -12,6 +12,14 @@
             "title": "CNCF Ambassador",
             "description": "This is a special edition badge and it is awarded to CNCF Ambassadors." 
         },
+        {
+            "slug": "hacktoberfest-contributor",
+            "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
+            "title": "Hacktoberfest Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest."
+        }
+    ],
+    "achievementBadges": [
         {
             "slug": "code-cleanup-crew",
             "location": "assets/badges/code-cleanup-crew/code-cleanup-crew.png",
@@ -29,12 +37,6 @@
             "location": "assets/badges/longevity-legend/longevity-legend.png",
             "title": "Longevity Legend",
             "description": "This badge is awarded for long-term, sustained contributions to the project over the years."
-        },
-        {
-            "slug": "hacktoberfest-contributor",
-            "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
-            "title": "Hacktoberfest Contributor",
-            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest."
         },
         {
             "slug": "review-rockstar",
