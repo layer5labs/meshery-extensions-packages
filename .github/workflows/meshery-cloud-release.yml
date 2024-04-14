@@ -172,7 +172,9 @@ jobs:
           sudo su
           git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
           docker pull layer5/meshery-cloud:staging-latest
-          make stg-deploy
+          make stg-deploy;
+          docker builder prune -f;
+          docker system prune -f;
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -241,4 +243,6 @@ jobs:
           ./install/scripts/git-pull.sh
           docker pull layer5/meshery-cloud:production-latest
           make prod-deploy
+          docker builder prune -f;
+          docker system prune -f;
           
