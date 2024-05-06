@@ -118,6 +118,7 @@ jobs:
         repository: layer5io/meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
+        ref: 'clone-test'
     - name: Build Docs
       run:  |
         cd meshery-cloud
