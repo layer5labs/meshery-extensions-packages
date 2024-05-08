@@ -16,6 +16,8 @@ jobs:
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       LAYER5_CLOUD_USERNAME: ${{ secrets.LAYER5_CLOUD_USERNAME }}
       LAYER5_CLOUD_PASSWORD: ${{ secrets.LAYER5_CLOUD_PASSWORD }}
+      LAYER5_CLOUD_TESTING_BOT_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
+      LAYER5_CLOUD_TESTING_BOT_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
 
   meshery-cloud-deploy:
     if: github.event.action == 'meshery-cloud-deploy'

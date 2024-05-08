@@ -29,6 +29,10 @@ on:
         required: true
       LAYER5_CLOUD_PASSWORD:
         required: true
+      LAYER5_CLOUD_TESTING_BOT_EMAIL:
+        required: true
+      LAYER5_CLOUD_TESTING_BOT_PASSWORD:
+        required: true
 
 jobs:
   comment-starting-point:
@@ -242,8 +246,8 @@ jobs:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
           REMOTE_PROVIDER_URL: "https://meshery.layer5.io"
-          REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_USERNAME }}
-          REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_PASSWORD }}
+          REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
+          REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
 
       - name: comment the summary
         uses: hasura/comment-progress@v2.1.0
