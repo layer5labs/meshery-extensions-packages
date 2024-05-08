@@ -146,7 +146,7 @@ jobs:
         with:
           repository: meshery/meshery
           fetch-depth: 1
-          path: ./meshery
+          path: .
       - name: Check out meshery-consul code
         uses: actions/checkout@v4
         with:
@@ -172,13 +172,12 @@ jobs:
           cluster_name: "kind-cluster"
       - name: Create a out/ folder in meshery ui
         run: |
-          mkdir -p ./meshery/ui/out
+          mkdir -p ui/out
       - name: Download Meshery-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
-          path: meshery/ui/out/
-
+          path: ui/out/
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
       - name: Run meshery-consul
@@ -199,7 +198,6 @@ jobs:
           echo ${{env}}
           mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
       - name: Run backend
-        working-directory: ./meshery
         env:
           PROVIDER_BASE_URLS: https://meshery.layer5.io
           PORT: 9081
@@ -208,15 +206,14 @@ jobs:
           cd server/cmd
           chmod +x ./main
           BUILD=${{env.tag}} ./main &
-
       - name: Download Meshery-extension-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-extension-ui
-          path: meshery/provider
+          path: provider
       - name: Move provider files
         run: |
-          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/meshery/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
+          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
       - name: show runner tree
         run: tree /home/runner/.meshery
       # - name: checkout cypress code
@@ -272,12 +269,12 @@ jobs:
           id: extension-test
           append: true
 
-      # - uses: actions/upload-artifact@v4
-      #   if: ${{ !cancelled() }}
-      #   with:
-      #     name: playwright-report
-      #     path: playwright-report/
-      #     retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       - name: Comment Success Status
         if: ${{ success() || steps.run_tests.outcome == 'success' }}
