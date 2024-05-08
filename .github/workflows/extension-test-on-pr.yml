@@ -123,15 +123,6 @@ jobs:
     name: UI end-to-end tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v4
-        with:
-          repository: layer5labs/meshery-extensions
-          path: ./meshery-extensions
-          fetch-depth: 1
-          ref: ${{ inputs.branch_name }}
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
         with:
@@ -146,7 +137,7 @@ jobs:
         with:
           repository: meshery/meshery
           fetch-depth: 1
-          path: ./meshery
+          path: .
       - name: Check out meshery-consul code
         uses: actions/checkout@v4
         with:
@@ -172,13 +163,12 @@ jobs:
           cluster_name: "kind-cluster"
       - name: Create a out/ folder in meshery ui
         run: |
-          mkdir -p ./meshery/ui/out
+          mkdir -p ui/out
       - name: Download Meshery-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
-          path: meshery/ui/out/
-
+          path: ui/out/
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
       - name: Run meshery-consul
@@ -199,7 +189,6 @@ jobs:
           echo ${{env}}
           mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
       - name: Run backend
-        working-directory: ./meshery
         env:
           PROVIDER_BASE_URLS: https://meshery.layer5.io
           PORT: 9081
@@ -208,15 +197,14 @@ jobs:
           cd server/cmd
           chmod +x ./main
           BUILD=${{env.tag}} ./main &
-
       - name: Download Meshery-extension-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-extension-ui
-          path: meshery/provider
+          path: provider
       - name: Move provider files
         run: |
-          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/meshery/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
+          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
       - name: show runner tree
         run: tree /home/runner/.meshery
       # - name: checkout cypress code
@@ -231,6 +219,14 @@ jobs:
       #     rm -r cypress/cypress/e2e/e2e/plugin_test
       #     mv cypress/cypress ui/
       #     mv cypress/cypress.config.js ui/cypress.config.js
+      - name: Checkout Meshery-extensions code
+        uses: actions/checkout@v4
+        with:
+          repository: layer5labs/meshery-extensions
+          path: ./meshery-extensions
+          fetch-depth: 1
+          ref: ${{ inputs.branch_name }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
