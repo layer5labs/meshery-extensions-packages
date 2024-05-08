@@ -123,6 +123,15 @@ jobs:
     name: UI end-to-end tests
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Meshery-extensions code
+        uses: actions/checkout@v4
+        with:
+          repository: layer5labs/meshery-extensions
+          path: ./meshery-extensions
+          fetch-depth: 1
+          ref: ${{ inputs.branch_name }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
         with:
