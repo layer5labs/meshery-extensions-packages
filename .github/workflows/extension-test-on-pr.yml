@@ -123,15 +123,6 @@ jobs:
     name: UI end-to-end tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v4
-        with:
-          repository: layer5labs/meshery-extensions
-          path: ./meshery-extensions
-          fetch-depth: 1
-          ref: ${{ inputs.branch_name }}
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
         with:
@@ -228,6 +219,14 @@ jobs:
       #     rm -r cypress/cypress/e2e/e2e/plugin_test
       #     mv cypress/cypress ui/
       #     mv cypress/cypress.config.js ui/cypress.config.js
+      - name: Checkout Meshery-extensions code
+        uses: actions/checkout@v4
+        with:
+          repository: layer5labs/meshery-extensions
+          path: ./meshery-extensions
+          fetch-depth: 1
+          ref: ${{ inputs.branch_name }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -269,12 +268,12 @@ jobs:
           id: extension-test
           append: true
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+      # - uses: actions/upload-artifact@v4
+      #   if: ${{ !cancelled() }}
+      #   with:
+      #     name: playwright-report
+      #     path: playwright-report/
+      #     retention-days: 30
 
       - name: Comment Success Status
         if: ${{ success() || steps.run_tests.outcome == 'success' }}
