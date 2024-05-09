@@ -205,8 +205,7 @@ jobs:
       - name: Move provider files
         run: |
           mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
-      - name: show runner tree
-        run: tree /home/runner/.meshery
+  
       # - name: checkout cypress code
       #   uses: actions/checkout@v4
       #   with:
@@ -227,6 +226,9 @@ jobs:
           fetch-depth: 1
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+      - name: show tree
+        run: tree  -L 2
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
