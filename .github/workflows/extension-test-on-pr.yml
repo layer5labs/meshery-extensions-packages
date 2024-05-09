@@ -233,7 +233,7 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        working-directory: ./meshery-extensions
+        working-directory: meshery-extensions
         run: make setup-test
 
       - name: comment progress start
@@ -248,7 +248,7 @@ jobs:
 
       - name: Run  Tests
         id: run_tests
-        working-directory: ./meshery-extensions
+        working-directory: meshery-extensions
         run: make test
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
