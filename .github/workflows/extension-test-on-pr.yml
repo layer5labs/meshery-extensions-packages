@@ -227,16 +227,17 @@ jobs:
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
-      - name: show tree
-        run: tree  -L 2
+   
 
-      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18 
+
+      - name: show tree
+        run: tree  -L 2
+          
       - name: Install dependencies
-        working-directory: meshery-extensions
-        run: make setup-test
+        run: ls && cd meshery-extensions && make setup-test
 
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
