@@ -137,7 +137,7 @@ jobs:
         with:
           repository: meshery/meshery
           fetch-depth: 1
-          path: .
+          path: meshery
       - name: Check out meshery-consul code
         uses: actions/checkout@v4
         with:
@@ -148,7 +148,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: meshery
-          path: server/cmd/
+          path: meshery/server/cmd/
       - name: Setup go
         uses: actions/setup-go@v4
         with:
@@ -163,12 +163,14 @@ jobs:
           cluster_name: "kind-cluster"
       - name: Create a out/ folder in meshery ui
         run: |
-          mkdir -p ui/out
+          mkdir -p meshery/ui/out
+          
       - name: Download Meshery-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
-          path: ui/out/
+          path: meshery/ui/out/
+          
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
       - name: Run meshery-consul
@@ -189,6 +191,7 @@ jobs:
           echo ${{env}}
           mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
       - name: Run backend
+        working-directory: meshery
         env:
           PROVIDER_BASE_URLS: https://meshery.layer5.io
           PORT: 9081
