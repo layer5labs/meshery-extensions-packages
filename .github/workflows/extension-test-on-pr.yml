@@ -166,12 +166,19 @@ jobs:
       - name: Create a out/ folder in meshery ui
         run: |
           mkdir -p meshery/ui/out
+          mkdir -p meshery/provider-ui/out/
           
       - name: Download Meshery-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
           path: meshery/ui/out/
+          
+      - name: Download Meshery-provider-ui artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: meshery-provider-ui build
+          path: meshery/provider-ui/out/
           
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
