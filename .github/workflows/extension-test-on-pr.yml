@@ -255,7 +255,7 @@ jobs:
       - name: Run  Tests
         id: run_tests
         working-directory: meshery-extensions
-        run: make test
+        run: make test >> $GITHUB_OUTPUT 
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
@@ -267,19 +267,19 @@ jobs:
         uses: hasura/comment-progress@v2.1.0
         if: always()
         with:
-          message: ${{ steps.run_tests.outputs.message }}
+          message: ${{ ${{join(steps.run_tests.outputs.*, '\n')}}
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
           append: true
 
-      # - uses: actions/upload-artifact@v4
-      #   if: ${{ !cancelled() }}
-      #   with:
-      #     name: playwright-report
-      #     path: playwright-report/
-      #     retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+           name: playwright-report
+           path: meshery-extensions/meshmap/playwright-report/
+           retention-days: 30
 
       - name: Comment Success Status
         if: ${{ success() || steps.run_tests.outcome == 'success' }}
