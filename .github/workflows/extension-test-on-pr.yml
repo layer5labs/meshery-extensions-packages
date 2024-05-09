@@ -122,6 +122,8 @@ jobs:
     needs: [build-ui-and-server, build-meshery-extension]
     name: UI end-to-end tests
     runs-on: ubuntu-latest
+    outputs:
+      test-results: ${{ steps.run_tests.outputs.test-results }}
     steps:
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
@@ -255,7 +257,10 @@ jobs:
       - name: Run  Tests
         id: run_tests
         working-directory: meshery-extensions
-        run: make test >> $GITHUB_OUTPUT 
+        run: |
+         echo 'test-results<<EOF' >> $GITHUB_OUTPUT
+         make test >> $GITHUB_OUTPUT
+         echo 'EOF' >> $GITHUB_OUTPUT
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
