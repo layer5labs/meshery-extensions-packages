@@ -267,7 +267,7 @@ jobs:
         uses: hasura/comment-progress@v2.1.0
         if: always()
         with:
-          message: ${{ ${{join(steps.run_tests.outputs.*, '\n')}}
+          message:  ${{join(steps.run_tests.outputs.*, '\n')}}
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
