@@ -237,7 +237,7 @@ jobs:
         run: tree  -L 2
           
       - name: Install dependencies
-        run: ls && cd meshery-extensions && make setup-test
+        run: ls && cd meshery-extensions && make test-setup
 
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
