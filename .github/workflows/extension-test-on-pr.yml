@@ -77,10 +77,10 @@ jobs:
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Setup go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.19"
-      - name: setup node
+          go-version: ${{ secrets.GO_VERSION }}
+      - name:  setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
@@ -141,18 +141,18 @@ jobs:
           fetch-depth: 1
           path: meshery
       - name: Check out meshery-consul code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v
         with:
           fetch-depth: 1
           repository: layer5io/meshery-consul
           path: ./meshery-consul
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v
         with:
           name: meshery
           path: meshery/server/cmd/
       - name: Setup go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ secrets.GO_VERSION }}
       - name: Setup node
