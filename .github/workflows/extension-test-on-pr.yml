@@ -3,41 +3,49 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'
+        description: "Log level"
         required: true
-        default: 'warning'
+        default: "warning"
   workflow_call:
     inputs:
       branch_name:
         required: true
         type: string
-      pr_number: 
-        required: false 
+      pr_number:
+        required: false
         type: string
     secrets:
-      PROVIDER_TOKEN: 
+      PROVIDER_TOKEN:
         required: true
-      NODE_VERSION: 
+      NODE_VERSION:
         required: true
-      GO_VERSION: 
+      GO_VERSION:
         required: true
-      GH_ACCESS_TOKEN: 
+      GH_ACCESS_TOKEN:
         required: true
       CYPRESS_RECORD_KEY:
         required: true
+      LAYER5_CLOUD_USERNAME:
+        required: true
+      LAYER5_CLOUD_PASSWORD:
+        required: true
+      LAYER5_CLOUD_TESTING_BOT_EMAIL:
+        required: true
+      LAYER5_CLOUD_TESTING_BOT_PASSWORD:
+        required: true
 
 jobs:
-  comment-starting-point: 
+  comment-starting-point:
     runs-on: ubuntu-latest
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: 'Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})...'
+          message: "Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
@@ -52,12 +60,12 @@ jobs:
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':heavy_check_mark: Meshery UI and Meshery Server builds complete.'
+          message: ":heavy_check_mark: Meshery UI and Meshery Server builds complete."
           append: true
-  build-meshery-extension: 
+  build-meshery-extension:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery-extensions code
@@ -95,41 +103,43 @@ jobs:
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':heavy_check_mark: Meshery Extensions build complete.'
+          message: ":heavy_check_mark: Meshery Extensions build complete."
           append: true
       - name: comment Failure
         if: failure()
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':x: Meshery Extensions build Failed.'
+          message: ":x: Meshery Extensions build Failed."
           append: true
   tests-ui-e2e:
     needs: [build-ui-and-server, build-meshery-extension]
     name: UI end-to-end tests
     runs-on: ubuntu-latest
+    outputs:
+      test-results: ${{ steps.run_tests.outputs.test-results }}
     steps:
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':heavy_check_mark: Setting up test environment...'
+          message: ":heavy_check_mark: Setting up test environment..."
           append: true
       - name: Check out Meshery code
         uses: actions/checkout@v4
         with:
           repository: meshery/meshery
           fetch-depth: 1
-          path: .
+          path: meshery
       - name: Check out meshery-consul code
         uses: actions/checkout@v
         with:
@@ -140,7 +150,7 @@ jobs:
         uses: actions/download-artifact@v
         with:
           name: meshery
-          path: server/cmd/
+          path: meshery/server/cmd/
       - name: Setup go
         uses: actions/setup-go@v5
         with:
@@ -155,12 +165,21 @@ jobs:
           cluster_name: "kind-cluster"
       - name: Create a out/ folder in meshery ui
         run: |
-          mkdir -p ui/out
+          mkdir -p meshery/ui/out
+          mkdir -p meshery/provider-ui/out/
+          
       - name: Download Meshery-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
-          path: ui/out/
+          path: meshery/ui/out/
+          
+      - name: Download Meshery-provider-ui artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: meshery-provider-ui build
+          path: meshery/provider-ui/out/
+          
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
       - name: Run meshery-consul
@@ -181,6 +200,7 @@ jobs:
           echo ${{env}}
           mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
       - name: Run backend
+        working-directory: meshery
         env:
           PROVIDER_BASE_URLS: https://meshery.layer5.io
           PORT: 9081
@@ -197,148 +217,211 @@ jobs:
       - name: Move provider files
         run: |
           mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
-      - name: show runner tree
-        run: tree /home/runner/.meshery
-      - name: checkout cypress code
+  
+      # - name: checkout cypress code
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 1
+      #     path: ./cypress
+      # - name: Move cypress tests
+      #   run: |
+      #     rm -rf ui/cypress
+      #     rm ui/cypress.config.js
+      #     rm -r cypress/cypress/e2e/e2e/plugin_test
+      #     mv cypress/cypress ui/
+      #     mv cypress/cypress.config.js ui/cypress.config.js
+      - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4
         with:
+          repository: layer5labs/meshery-extensions
+          path: ./meshery-extensions
           fetch-depth: 1
-          path: ./cypress
-      - name: Move cypress tests
-        run: |
-          rm -rf ui/cypress
-          rm ui/cypress.config.js
-          rm -r cypress/cypress/e2e/e2e/plugin_test
-          mv cypress/cypress ui/
-          mv cypress/cypress.config.js ui/cypress.config.js
+          ref: ${{ inputs.branch_name }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+   
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18 
+
+      - name: show tree
+        run: tree  -L 2
+          
+      - name: Install dependencies
+        run: ls && cd meshery-extensions && make test-setup
+
       - name: comment progress start
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':heavy_check_mark: Test environment ready. Starting tests...'
+          message: ":heavy_check_mark: Test environment ready. Starting tests..."
           append: true
-      - name: Cypress run
-        id: runTest
-        uses: cypress-io/github-action@v4
-        with:
-          working-directory: ui
-          spec: cypress/e2e/e2e/**/*
-          browser: chrome 
-          record: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-          CYPRESS_releasetag: ${{env.tag}}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      - name: remove output folder in case of failure to retry
-        if: failure()
-        run: rm -rf ui/cypress/results
-      - name: retry Cypress
-        if: failure()
-        id: retryTest
-        uses: cypress-io/github-action@v4
-        with:
-          working-directory: ui
-          spec: cypress/e2e/e2e/**/*
-          browser: chrome 
-          record: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-          CYPRESS_releasetag: ${{env.tag}}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      - name: remove output folder in case of failure to retry
-        if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
-        run: rm -rf ui/cypress/results
-      - name: retry Cypress 2nd Time
-        if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
-        id: retryTest2
-        uses: cypress-io/github-action@v4
-        with:
-          working-directory: ui
-          spec: cypress/e2e/e2e/**/*
-          browser: chrome 
-          record: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-          CYPRESS_releasetag: ${{env.tag}}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      - name: Mochawesome merge
-        if: always()
-        run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
-      - name: show tree 
-        if: always()
-        run: tree ui/cypress/results
-      - name: Comment Success Status
-        if: ${{ success() || steps.runTest.outcome == 'success' || steps.retryTest.outcome == 'success' || steps.retryTest2.outcome == 'success' }}
-        uses: hasura/comment-progress@v2.1.0
-        with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ':white_check_mark: All tests passed!'
-          append: true
-      - name: Checkout cypress action PR
-        if: always()
-        uses: actions/checkout@v4
-        with:
-          repository: layer5labs/cypress-test-summary
-          fetch-depth: 1
-          path: ./cypress-action
-      - name: mv output.json to __tests__
-        if: always()
+
+      - name: Run  Tests
+        id: run_tests
+        working-directory: meshery-extensions
         run: |
-          mv ui/cypress/results/output.json cypress-action/__tests__/output.json
-      - name: run cypresss-summary
-        if: always()
-        uses: ./cypress-action/
-        id: cypress_summary
-        with:
-          jsonArtifact: "cypress-summary/__tests__/ouput.json"
+         echo 'test-results<<EOF' >> $GITHUB_OUTPUT
+         make test >> $GITHUB_OUTPUT
+         echo 'EOF' >> $GITHUB_OUTPUT
+        env:
+          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
+          MESHERY_SERVER_URL: "http://localhost:9081"
+          REMOTE_PROVIDER_URL: "https://meshery.layer5.io"
+          REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
+          REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
+
       - name: comment the summary
         uses: hasura/comment-progress@v2.1.0
         if: always()
-        with: 
-          message:  ${{join(steps.cypress_summary.outputs.*, '\n')}}
+        with:
+          message: |
+            ```
+            ${{join(steps.run_tests.outputs.*, '\n')}}
+            ```
+            
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
           append: true
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          name: cypress-ss
-          path: ui/cypress/screenshots
-      - name: Upload Videos
-        uses: actions/upload-artifact@v4
-        if: always()
+           name: playwright-report
+           path: meshery-extensions/meshmap/playwright-report/
+           retention-days: 30
+
+      - name: Comment Success Status
+        if: ${{ success() || steps.run_tests.outcome == 'success' }}
+        uses: hasura/comment-progress@v2.1.0
         with:
-          name: cypress-ss
-          path: ui/cypress/videos
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5labs/meshery-extensions"
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: ":white_check_mark: All tests passed!"
+          append: true
+
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
-        if: ${{ failure() && steps.retryTest2.outcome == 'failure' }}
+        if: ${{ failure()  }}
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':x: One or more tests have failed.'
+          message: ":x: One or more tests have failed."
           append: true
+
       - name: Comment Final Status
         if: always()
         uses: hasura/comment-progress@v2.1.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: 'layer5labs/meshery-extensions'
+          repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ':heavy_check_mark: Extension [test results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}).'
+          message: ":heavy_check_mark: Extension [test results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})."
           append: true
+
+      # - name: Cypress run
+      #   id: runTest
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     working-directory: ui
+      #     spec: cypress/e2e/e2e/**/*
+      #     browser: chrome
+      #     record: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
+      #     CYPRESS_releasetag: ${{env.tag}}
+      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      # - name: remove output folder in case of failure to retry
+      #   if: failure()
+      #   run: rm -rf ui/cypress/results
+      # - name: retry Cypress
+      #   if: failure()
+      #   id: retryTest
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     working-directory: ui
+      #     spec: cypress/e2e/e2e/**/*
+      #     browser: chrome
+      #     record: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
+      #     CYPRESS_releasetag: ${{env.tag}}
+      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      # - name: remove output folder in case of failure to retry
+      #   if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
+      #   run: rm -rf ui/cypress/results
+      # - name: retry Cypress 2nd Time
+      #   if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
+      #   id: retryTest2
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     working-directory: ui
+      #     spec: cypress/e2e/e2e/**/*
+      #     browser: chrome
+      #     record: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
+      #     CYPRESS_releasetag: ${{env.tag}}
+      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      # - name: Mochawesome merge
+      #   if: always()
+      #   run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
+      # - name: show tree
+      #   if: always()
+      #   run: tree ui/cypress/results
+
+      # - name: Comment Success Status
+      #   if: ${{ success() || steps.runTest.outcome == 'success' }}
+      #   uses: hasura/comment-progress@v2.1.0
+      #   with:
+      #     github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+      #     repository: "layer5labs/meshery-extensions"
+      #     number: ${{ inputs.pr_number }}
+      #     id: extension-test
+      #     message: ":white_check_mark: All tests passed!"
+      #     append: true
+      # - name: Checkout cypress action PR
+      #   if: always()
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: layer5labs/cypress-test-summary
+      #     fetch-depth: 1
+      #     path: ./cypress-action
+      # - name: mv output.json to __tests__
+      #   if: always()
+      #   run: |
+      #     mv ui/cypress/results/output.json cypress-action/__tests__/output.json
+      # - name: run cypresss-summary
+      #   if: always()
+      #   uses: ./cypress-action/
+      #   id: cypress_summary
+      #   with:
+      #     jsonArtifact: "cypress-summary/__tests__/ouput.json"
+
+      # - name: Upload artifacts
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cypress-ss
+      #     path: ui/cypress/screenshots
+      # - name: Upload Videos
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: cypress-ss
+      #     path: ui/cypress/videos
