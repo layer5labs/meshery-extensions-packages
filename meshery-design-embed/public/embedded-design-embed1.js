@@ -1,8 +1,4 @@
-console.log("embedded-design-embed1.js");
-
 import cytoscape from "https://cdn.jsdelivr.net/npm/cytoscape@3.27.0/+esm";
-
-console.log("cytoscape", cytoscape);
 const data = {
   elements: {
     nodes: [
@@ -1622,7 +1618,7 @@ const addStyles = () => {
    #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 .water-mark{
         background: "transparent";
         padding: 0.5rem;
-        color : var(--current-foreground) !important;
+        color : inherit;
         font-size: 1.5rem !important;
         border: none;
         cursor: pointer;
@@ -1639,7 +1635,7 @@ const addStyles = () => {
         pointer-events: auto ;
         padding: 0.5rem;
         cursor: pointer;
-        color : var(--current-foreground);
+        color : inherit;
         display: flex;
         gap: 0.5rem;
         justify-content: space-between;
@@ -1648,8 +1644,7 @@ const addStyles = () => {
    }
     @media (prefers-color-scheme: dark) {
        #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 {
-        --current-background: var(--dark-background);
-        --current-foreground: var(--dark-foregeound);
+        background-color: inherit
       }
     }
      `,
@@ -1675,7 +1670,6 @@ const CreateToolBar = () => {
   toolbar.innerHTML = `
     <div class="toolbar ">
         <a class="water-mark" href="https://meshery.io" target="_blank">
-          <span> Powered By </span>
           <span> 
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="1.9rem" viewBox="0 0 97 17" fill="none">
   <path d="M8.62109 4.55884V8.26808L11.9 6.40375L8.62109 4.55884Z" fill="#00D3A9"/>
@@ -1722,7 +1716,6 @@ const CreateToolBar = () => {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOMContentLoaded");
   const embedContainer = document.getElementById(
     "embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644"
   );
