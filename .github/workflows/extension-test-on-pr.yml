@@ -147,7 +147,7 @@ jobs:
           repository: layer5io/meshery-consul
           path: ./meshery-consul
       - name: Download artifacts
-        uses: actions/download-artifact@v
+        uses: actions/download-artifact@v5
         with:
           name: meshery
           path: meshery/server/cmd/
