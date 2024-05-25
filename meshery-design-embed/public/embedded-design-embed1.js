@@ -1600,8 +1600,8 @@ const addStyles = () => {
     #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 .embed-canvas-container {
         height: 100%;
         width: 100%;
-        background-color: inherit
-        color: inherit
+        background-color: inherit;
+        color: inherit;
     }
    #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 .water-mark{
         background: "transparent";
