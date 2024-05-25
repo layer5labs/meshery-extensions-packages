@@ -1600,20 +1600,8 @@ const addStyles = () => {
     #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 .embed-canvas-container {
         height: 100%;
         width: 100%;
-    }
-
-
-    #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 {
-      /* Dark theme */
-      --dark-background: #1A1A1A;
-      --dark-foregeound: #fff;
-      /* Light theme */
-      --light-background: #fff;
-      --light-foregeound: #1A1A1A;
-      /* Defaults */
-      --current-background: var(--light-background);
-      --current-foreground: var(--light-foregeound);
-      background: var(--current-background);
+        background-color: inherit
+        color: inherit
     }
    #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 .water-mark{
         background: "transparent";
@@ -1642,11 +1630,6 @@ const addStyles = () => {
         align-items: center;
         font-size: 1.25rem;
    }
-    @media (prefers-color-scheme: dark) {
-       #embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644 {
-        background-color: inherit
-      }
-    }
      `,
     head = document.head || document.getElementsByTagName("head")[0],
     style = document.createElement("style");
