@@ -297,17 +297,6 @@ jobs:
            path: meshery-extensions/meshmap/playwright-report/
            retention-days: 30
 
-      - name: Comment Success Status
-        if: ${{ success() || steps.run_tests.outcome == 'success' }}
-        uses: hasura/comment-progress@v2.1.0
-        with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":white_check_mark: All tests passed!"
-          append: true
-
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
         if: ${{ failure()  }}
