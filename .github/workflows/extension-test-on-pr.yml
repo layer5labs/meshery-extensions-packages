@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: comment starting point
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -57,7 +57,7 @@ jobs:
     needs: [build-ui-and-server]
     steps:
       - name: comment progress
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -112,7 +112,7 @@ jobs:
           path: /home/runner/provider
           if-no-files-found: error
       - name: comment progress
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -122,7 +122,7 @@ jobs:
           append: true
       - name: comment Failure
         if: failure()
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -138,7 +138,7 @@ jobs:
       test-results: ${{ steps.run_tests.outputs.test-results }}
     steps:
       - name: comment progress start
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -250,7 +250,7 @@ jobs:
         run: ls && cd meshery-extensions && make test-setup
 
       - name: comment progress start
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -274,7 +274,7 @@ jobs:
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
 
       - name: comment the summary
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         if: always()
         with:
           message: |
@@ -294,7 +294,7 @@ jobs:
           retention-days: 30
 
       - name: Comment Test failure
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         if: ${{ failure()  }}
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -306,7 +306,7 @@ jobs:
 
       - name: Comment Final Status
         if: always()
-        uses: hasura/comment-progress@v2.1.0
+        uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
