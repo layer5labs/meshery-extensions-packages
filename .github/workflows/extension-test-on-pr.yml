@@ -76,11 +76,20 @@ jobs:
           fetch-depth: 1
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+      - name: Checkout Meshery code
+        uses: actions/checkout@v4
+        with:
+          repository: meshery/meshery
+          path: ./meshery
+          fetch-depth: 1
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+
       - name: Setup go
         uses: actions/setup-go@v5
         with:
           go-version: ${{ secrets.GO_VERSION }}
-      - name:  setup node
+      - name: setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
@@ -89,7 +98,7 @@ jobs:
         run: make meshmap # gql build is not done for now
       - name: Build Graphql Plugin
         working-directory: ./meshery-extensions
-        run: make graphql 
+        run: make graphql
       - name: Show runner tree
         run: tree /home/runner/.meshery
       - name: relocate meshery-extension-ui
@@ -170,19 +179,19 @@ jobs:
         run: |
           mkdir -p meshery/ui/out
           mkdir -p meshery/provider-ui/out/
-          
+
       - name: Download Meshery-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-ui-build
           path: meshery/ui/out/
-          
+
       - name: Download Meshery-provider-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-provider-ui build
           path: meshery/provider-ui/out/
-          
+
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
       - name: Run meshery-consul
@@ -220,8 +229,7 @@ jobs:
       - name: Move provider files
         run: |
           mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
-  
-    
+
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4
         with:
@@ -231,15 +239,13 @@ jobs:
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
-   
-
       - uses: actions/setup-node@v4
         with:
-          node-version: 18 
+          node-version: 18
 
       - name: show tree
         run: tree  -L 2
-          
+
       - name: Install dependencies
         run: ls && cd meshery-extensions && make test-setup
 
@@ -257,9 +263,9 @@ jobs:
         id: run_tests
         working-directory: meshery-extensions
         run: |
-         echo 'test-results<<EOF' >> $GITHUB_OUTPUT
-         make test >> $GITHUB_OUTPUT
-         echo 'EOF' >> $GITHUB_OUTPUT
+          echo 'test-results<<EOF' >> $GITHUB_OUTPUT
+          make test >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
@@ -275,7 +281,7 @@ jobs:
             ```
             ${{join(steps.run_tests.outputs.*, '\n')}}
             ```
-            
+
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
@@ -285,9 +291,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-           name: playwright-report
-           path: meshery-extensions/meshmap/playwright-report/
-           retention-days: 30
+          name: playwright-report
+          path: meshery-extensions/meshmap/playwright-report/
+          retention-days: 30
 
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.1.0
@@ -310,5 +316,3 @@ jobs:
           id: extension-test
           message: ":heavy_check_mark: Extension [test results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})."
           append: true
-
-     
