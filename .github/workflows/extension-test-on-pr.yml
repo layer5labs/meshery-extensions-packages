@@ -87,6 +87,9 @@ jobs:
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
         run: make meshmap # gql build is not done for now
+      - name: Build Graphql Plugin
+        working-directory: ./meshery-extensions
+        run: make graphql 
       - name: Show runner tree
         run: tree /home/runner/.meshery
       - name: relocate meshery-extension-ui
@@ -218,18 +221,7 @@ jobs:
         run: |
           mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
   
-      # - name: checkout cypress code
-      #   uses: actions/checkout@v4
-      #   with:
-      #     fetch-depth: 1
-      #     path: ./cypress
-      # - name: Move cypress tests
-      #   run: |
-      #     rm -rf ui/cypress
-      #     rm ui/cypress.config.js
-      #     rm -r cypress/cypress/e2e/e2e/plugin_test
-      #     mv cypress/cypress ui/
-      #     mv cypress/cypress.config.js ui/cypress.config.js
+    
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4
         with:
@@ -319,98 +311,4 @@ jobs:
           message: ":heavy_check_mark: Extension [test results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})."
           append: true
 
-      # - name: Cypress run
-      #   id: runTest
-      #   uses: cypress-io/github-action@v4
-      #   with:
-      #     working-directory: ui
-      #     spec: cypress/e2e/e2e/**/*
-      #     browser: chrome
-      #     record: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-      #     CYPRESS_releasetag: ${{env.tag}}
-      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      # - name: remove output folder in case of failure to retry
-      #   if: failure()
-      #   run: rm -rf ui/cypress/results
-      # - name: retry Cypress
-      #   if: failure()
-      #   id: retryTest
-      #   uses: cypress-io/github-action@v4
-      #   with:
-      #     working-directory: ui
-      #     spec: cypress/e2e/e2e/**/*
-      #     browser: chrome
-      #     record: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-      #     CYPRESS_releasetag: ${{env.tag}}
-      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      # - name: remove output folder in case of failure to retry
-      #   if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
-      #   run: rm -rf ui/cypress/results
-      # - name: retry Cypress 2nd Time
-      #   if: ${{ failure() && steps.retryTest.outcome == 'failure'}}
-      #   id: retryTest2
-      #   uses: cypress-io/github-action@v4
-      #   with:
-      #     working-directory: ui
-      #     spec: cypress/e2e/e2e/**/*
-      #     browser: chrome
-      #     record: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-      #     CYPRESS_releasetag: ${{env.tag}}
-      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-      # - name: Mochawesome merge
-      #   if: always()
-      #   run: npx mochawesome-merge ui/cypress/results/*.json > ui/cypress/results/output.json
-      # - name: show tree
-      #   if: always()
-      #   run: tree ui/cypress/results
-
-      # - name: Comment Success Status
-      #   if: ${{ success() || steps.runTest.outcome == 'success' }}
-      #   uses: hasura/comment-progress@v2.1.0
-      #   with:
-      #     github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-      #     repository: "layer5labs/meshery-extensions"
-      #     number: ${{ inputs.pr_number }}
-      #     id: extension-test
-      #     message: ":white_check_mark: All tests passed!"
-      #     append: true
-      # - name: Checkout cypress action PR
-      #   if: always()
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: layer5labs/cypress-test-summary
-      #     fetch-depth: 1
-      #     path: ./cypress-action
-      # - name: mv output.json to __tests__
-      #   if: always()
-      #   run: |
-      #     mv ui/cypress/results/output.json cypress-action/__tests__/output.json
-      # - name: run cypresss-summary
-      #   if: always()
-      #   uses: ./cypress-action/
-      #   id: cypress_summary
-      #   with:
-      #     jsonArtifact: "cypress-summary/__tests__/ouput.json"
-
-      # - name: Upload artifacts
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: cypress-ss
-      #     path: ui/cypress/screenshots
-      # - name: Upload Videos
-      #   uses: actions/upload-artifact@v4
-      #   if: always()
-      #   with:
-      #     name: cypress-ss
-      #     path: ui/cypress/videos
+     
