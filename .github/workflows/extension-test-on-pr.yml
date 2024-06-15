@@ -290,7 +290,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: meshery-extensions/meshmap/playwright-report/
+          path: meshery-extensions/meshmap/test-results/
           retention-days: 30
 
       - name: Comment Test failure
