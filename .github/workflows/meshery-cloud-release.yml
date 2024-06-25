@@ -168,11 +168,12 @@ jobs:
         port: 22
         envs: GIT_VERSION,GIT_COMMITSHA
         script: |
+          sudo su
           cd meshery-cloud
-          sudo git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
-          sudo docker pull layer5/meshery-cloud:staging-latest
-          sudo make stg-deploy;
-          sudo docker system prune -f;
+          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
+          docker pull layer5/meshery-cloud:staging-latest
+          make stg-deploy;
+          docker system prune -f;
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -235,10 +236,11 @@ jobs:
         port: 22
         envs: GIT_VERSION,GIT_COMMITSHA
         script: |
+          sudo su
           cd meshery-cloud
-          sudo git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
-          sudo ./install/scripts/git-pull.sh
-          sudo docker pull layer5/meshery-cloud:production-latest
-          sudo make prod-deploy
-          sudo docker system prune -f;
+          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
+          ./install/scripts/git-pull.sh
+          docker pull layer5/meshery-cloud:production-latest
+          make prod-deploy
+          docker system prune -f;
           
