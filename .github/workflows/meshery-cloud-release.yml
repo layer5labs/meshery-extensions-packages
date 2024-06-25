@@ -173,8 +173,8 @@ jobs:
           cd meshery-cloud
           sudo su - -c "git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud"
           docker pull layer5/meshery-cloud:staging-$GIT_VERSION
-          whoami
-          make stg-deploy;
+          sudo su - -c "whoami"
+          make stg-deploy GIT_VERSION=$GIT_VERSION
           docker system prune -f;
   prod:
     needs: update-doc-release-version
@@ -240,12 +240,12 @@ jobs:
         envs: GIT_VERSION,GIT_COMMITSHA
         script: |
           sudo su
-          whoami
+          sudo su - -c "whoami"
           echo $GIT_VERSION
           cd meshery-cloud
           sudo su - -c "git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud"
           sudo ./install/scripts/git-pull.sh
           docker pull layer5/meshery-cloud:production-$GIT_VERSION
-          make prod-deploy
+          make prod-deploy GIT_VERSION=$GIT_VERSION
           docker system prune -f;
           
