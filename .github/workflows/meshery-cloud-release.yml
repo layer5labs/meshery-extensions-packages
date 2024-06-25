@@ -236,10 +236,9 @@ jobs:
         envs: GIT_VERSION,GIT_COMMITSHA
         script: |
           cd meshery-cloud
-          sudo su
-          git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
-          ./install/scripts/git-pull.sh
-          docker pull layer5/meshery-cloud:production-latest
-          make prod-deploy
-          docker system prune -f;
+          sudo git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud
+          sudo ./install/scripts/git-pull.sh
+          sudo docker pull layer5/meshery-cloud:production-latest
+          sudo make prod-deploy
+          sudo docker system prune -f;
           
