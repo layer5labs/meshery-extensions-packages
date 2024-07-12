@@ -41,5 +41,7 @@ Certain aspects of Meshery Designs and their visualization are not currently sup
 1. Component: Textboxes
 1. Function: Error badges based on validation checks
 1. Function: Component Locking (pinning a component in-place moving with edges; Automove)
+1. Function: Viewing component configuration
+1. Function: Viewing comments 
 
 Learn more about [embedding Meshery Designs](https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding).
