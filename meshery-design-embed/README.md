@@ -32,4 +32,14 @@ Props:
  - embedId: "Emebedded design id"
  - style: "Custom styles to the embeded design E.g. backgroundColor, textColor, etc"
 
+### Limitations
+
+Certain aspects of Meshery Designs and their visualization are not currently supported in embed mode (when a design is embedded into a webpage).
+
+1. Relationship: Singular Node inventory wallet (badge)
+1. Relationship: TagSets (BubbleSets)
+1. Component: Textboxes
+1. Function: Error badges based on validation checks
+1. Function: Component Locking (pinning a component in-place moving with edges; Automove)
+
 Learn more about [embedding Meshery Designs](https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding).
