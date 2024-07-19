@@ -22,7 +22,7 @@
     "achievementBadges": [
         {
             "slug": "design-pioneer",
-            "location": "assets/badges/design-pioneer/design-pioneer.png",
+            "location": "assets/badges/first-design/first-design.png",
             "title": "Design Pioneer",
             "description": "This badge is awarded upon creating your first design."
         },
