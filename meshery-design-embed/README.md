@@ -44,4 +44,4 @@ Certain aspects of Meshery Designs and their visualization are not currently sup
 1. Function: Viewing component configuration
 1. Function: Viewing comments 
 
-Learn more about [embedding Meshery Designs](https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-embedding).
+Learn more about [embedding Meshery Designs](https://docs.layer5.io/meshmap/designer/embedding-designs/).
