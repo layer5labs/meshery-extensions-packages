@@ -93,7 +93,7 @@ jobs:
             npm i -g @redocly/cli@latest
             make docs-build
   docker-extension:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️ repo
         uses: actions/checkout@master
