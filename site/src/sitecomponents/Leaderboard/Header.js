@@ -33,7 +33,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <h1>Hello 👋</h1>
-      <p>Welcome to Layer5 leaderboard.</p>
+      <p>Welcome to Layer5 Discussion Forum Leaderboard</p>
       <section>
         <a
           className="p-1"
