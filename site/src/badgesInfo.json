@@ -21,6 +21,12 @@
     ],
     "achievementBadges": [
         {
+            "slug": "design-pioneer",
+            "location": "assets/badges/first-design/first-design.png",
+            "title": "Design Pioneer",
+            "description": "This badge is awarded upon creating your first design."
+        },
+        {
             "slug": "code-cleanup-crew",
             "location": "assets/badges/code-cleanup-crew/code-cleanup-crew.png",
             "title": "Code Cleanup Crew",
