@@ -149,10 +149,10 @@ const App = () => {
                   </div>
                   <div>
                     <a
-                      href="/leaderboard"
+                      href="/discussion-leaderboard"
                       className="btn-secondary"
                     >
-                      View Leaderboard
+                      Discussion Forum Leaderboard
                     </a>
                   </div>
                 </div>
