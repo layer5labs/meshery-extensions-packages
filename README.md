@@ -49,7 +49,7 @@ Layer5's cloud native application and infrastructure management software enables
       a. Light: `action-assets/2024@7/<design-id>-light.png` 
       b. Dark version: `action-assets/2024@7/<design-id>-dark.png` 
  
-      2. `design-assets`: Stores the snapshots taken for catalog items. Every time a catalog item is updated the corresponding snapshot for that catalog also gets updated. We refer the catalog snaphosts from different locations and hence require a permanenet link.
+      2. `design-assets`: Stores the snapshots taken for catalog items. Every time a catalog item is updated, the corresponding snapshot for that catalog item is also updated. Catalog snapshots are referenced rom different systems, which need unauthenticated, public access to static resources, and therefore, require a permanent link.
       Each catalog item has two versions of the snapshot stored at
       a. Light: `actions-assets/design-assets/<design-id-light>.png`
       b. Dark: `actions-assets/design-assets/<design-id-dark>.png`
