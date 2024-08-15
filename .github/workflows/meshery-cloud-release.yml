@@ -12,6 +12,10 @@ on:
         required: true
         default: "latest"
         type: string
+      branch:
+        description: "Branch to deploy in the staging environment. If not provided, master branch of the repository will be used."
+        default: "master"
+        type: string
     secrets:
       GH_ACCESS_TOKEN: 
         required: true
@@ -118,6 +122,7 @@ jobs:
         repository: layer5io/meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
+        ref: ${{ input.branch }}
     - name: Build Docs
       run:  |
         cd meshery-cloud
