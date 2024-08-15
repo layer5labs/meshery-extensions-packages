@@ -91,6 +91,7 @@ jobs:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+          ref: ${{ inputs.branch }}
       - uses: actions/setup-go@v5
         with:
           go-version: '1.21.0'
@@ -126,7 +127,7 @@ jobs:
         repository: layer5io/meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-        ref: ${{ input.branch }}
+        ref: ${{ inputs.branch }}
     - name: Build Docs
       run:  |
         cd meshery-cloud
