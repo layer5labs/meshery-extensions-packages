@@ -42,6 +42,10 @@ on:
         description: "e.g. v0.6.26"
         required: true
         default: "latest"
+      branch:
+        description: "Branch to deploy in the staging environment. If not provided, master branch of the repository will be used."
+        default: "master"
+        type: string
 
 env:
   GIT_VERSION: ${{inputs.release-version}}
