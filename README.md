@@ -45,7 +45,7 @@ Layer5's cloud native application and infrastructure management software enables
 
 ### Directory structure
 1. `action-assets`: 
-      1.   Store the snapshots taken as part of pull requests. Each snapshot have 2 versions and are namespaced based on the year and month they were taken, for eg: snapshot against a particular PR created on 10th July 2024 will be stored at
+      1.   Stores the snapshots taken as part of pull requests. Each snapshot have 2 versions and are namespaced based on the year and month they were taken, for eg: snapshot against a particular PR created on 10th July 2024 will be stored at
       a. Light: `action-assets/2024@7/<design-id>-light.png` 
       b. Dark version: `action-assets/2024@7/<design-id>-dark.png` 
  
