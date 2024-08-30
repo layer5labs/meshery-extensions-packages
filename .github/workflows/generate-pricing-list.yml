@@ -17,7 +17,7 @@ on:
 jobs:
   fetch-pricing-list:
     name: Fetch Pricing List
-    if: github.repository == 'layer5io/docs'
+    if: github.repository == 'SAHU-01/meshery-extensions-packages'
     runs-on: ubuntu-22.04
     steps:
       - name: Check out code
