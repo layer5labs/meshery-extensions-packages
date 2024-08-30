@@ -25,11 +25,11 @@ func main() {
   if err != nil {
     panic(err)
   }
-  req.Header.Add("Authorization", "Bearer "+os.Getenv("INPUT_SPREADSHEET_KEY"))
-  resp, err := client.Do(req)
-  if err != nil {
-    panic(err)
-  }
+#   req.Header.Add("Authorization", "Bearer "+os.Getenv("INPUT_SPREADSHEET_KEY"))
+#   resp, err := client.Do(req)
+#   if err != nil {
+#     panic(err)
+#   }
   defer resp.Body.Close()
 
   body, err := ioutil.ReadAll(resp.Body)
@@ -45,7 +45,7 @@ func main() {
   var filteredSubscriptions []Subscription
   for _, sub := range subscriptions {
     published := strings.ToLower(sub.Published)
-    if published == "true" || published == "x" {
+    if published == "true" || published == "x" || published == "True" || published == "X" {
       filteredSubscriptions = append(filteredSubscriptions, sub)
     }
   }

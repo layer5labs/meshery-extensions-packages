@@ -7,10 +7,10 @@ on:
         description: Link of the spreadsheet containing subscription details.
         type: string
         required: true
-      spreadsheet_key:
-        description: Key/permission to access the spreadsheet
-        type: string
-        required: true
+      # spreadsheet_key:
+      #   description: Key/permission to access the spreadsheet
+      #   type: string
+      #   required: true
   schedule:
     - cron: "0 0 * * *"
 
@@ -29,8 +29,8 @@ jobs:
       - name: Fetch and process pricing list
         uses: ./.github/actions/pricing-list-action
         with:
-          spreadsheet_uri: https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0'
-          spreadsheet_key: ${{ secrets.SPREADSHEET_KEY }}
+          spreadsheet_uri: ${{ github.event.inputs.spreadsheet_uri || 'https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0' }}
+          # spreadsheet_key: ${{ secrets.SPREADSHEET_KEY }}
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
