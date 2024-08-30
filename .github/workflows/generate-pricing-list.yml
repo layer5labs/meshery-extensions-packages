@@ -26,82 +26,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
 
-      - name: Setup go
-        uses: actions/setup-go@v4
-        with:
-          go-version: ${{ secrets.GO_VERSION }}
-
-      - name: Install dependencies
-        run: |
-          go get -u github.com/gocarina/gocsv
-          go get -u github.com/tidwall/gjson
-
       - name: Fetch and process pricing list
-        env:
-          SPREADSHEET_URI: https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0
-          SPREADSHEET_KEY: ${{ secrets.SPREADSHEET_KEY }}
-        run: |
-          go run <<EOF
-          package main
-
-          import (
-            "encoding/json"
-            "fmt"
-            "io/ioutil"
-            "net/http"
-            "os"
-            "strings"
-
-            "github.com/gocarina/gocsv"
-          )
-
-          type Subscription struct {
-            Published string `csv:"Published"`
-          }
-
-          func main() {
-            client := &http.Client{}
-            req, err := http.NewRequest("GET", os.Getenv("SPREADSHEET_URI"), nil)
-            if err != nil {
-              panic(err)
-            }
-            req.Header.Add("Authorization", "Bearer "+os.Getenv("SPREADSHEET_KEY"))
-            resp, err := client.Do(req)
-            if err != nil {
-              panic(err)
-            }
-            defer resp.Body.Close()
-
-            body, err := ioutil.ReadAll(resp.Body)
-            if err != nil {
-              panic(err)
-            }
-
-            var subscriptions []Subscription
-            if err := gocsv.UnmarshalBytes(body, &subscriptions); err != nil {
-              panic(err)
-            }
-
-            var filteredSubscriptions []Subscription
-            for _, sub := range subscriptions {
-              published := strings.ToLower(sub.Published)
-              if published == "true" || published == "x" {
-                filteredSubscriptions = append(filteredSubscriptions, sub)
-              }
-            }
-
-            jsonData, err := json.MarshalIndent(filteredSubscriptions, "", "  ")
-            if err != nil {
-              panic(err)
-            }
-
-            if err := ioutil.WriteFile("pricing_data.json", jsonData, 0644); err != nil {
-              panic(err)
-            }
-
-            fmt.Println("Pricing data updated successfully")
-          }
-          EOF
+        uses: ./.github/actions/pricing-list-action
+        with:
+          spreadsheet_uri: https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0'
+          spreadsheet_key: ${{ secrets.SPREADSHEET_KEY }}
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5

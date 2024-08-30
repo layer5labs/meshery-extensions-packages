@@ -1,0 +1,15 @@
+FROM golang:1.21
+
+WORKDIR /go/src/app
+
+COPY . .
+
+RUN go mod download
+
+RUN go get -u github.com/gocarina/gocsv
+RUN go get -u github.com/tidwall/gjson
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
