@@ -1,0 +1,115 @@
+name: Pricing List
+
+on:
+  workflow_dispatch:
+    inputs:
+      spreadsheet_uri:
+        description: Link of the spreadsheet containing subscription details.
+        type: string
+        required: true
+      spreadsheet_key:
+        description: Key/permission to access the spreadsheet
+        type: string
+        required: true
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  fetch-pricing-list:
+    name: Fetch Pricing List
+    if: github.repository == 'layer5io/docs'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ secrets.GO_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          go get -u github.com/gocarina/gocsv
+          go get -u github.com/tidwall/gjson
+
+      - name: Fetch and process pricing list
+        env:
+          SPREADSHEET_URI: https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0
+          SPREADSHEET_KEY: ${{ secrets.SPREADSHEET_KEY }}
+        run: |
+          go run <<EOF
+          package main
+
+          import (
+            "encoding/json"
+            "fmt"
+            "io/ioutil"
+            "net/http"
+            "os"
+            "strings"
+
+            "github.com/gocarina/gocsv"
+          )
+
+          type Subscription struct {
+            Published string `csv:"Published"`
+          }
+
+          func main() {
+            client := &http.Client{}
+            req, err := http.NewRequest("GET", os.Getenv("SPREADSHEET_URI"), nil)
+            if err != nil {
+              panic(err)
+            }
+            req.Header.Add("Authorization", "Bearer "+os.Getenv("SPREADSHEET_KEY"))
+            resp, err := client.Do(req)
+            if err != nil {
+              panic(err)
+            }
+            defer resp.Body.Close()
+
+            body, err := ioutil.ReadAll(resp.Body)
+            if err != nil {
+              panic(err)
+            }
+
+            var subscriptions []Subscription
+            if err := gocsv.UnmarshalBytes(body, &subscriptions); err != nil {
+              panic(err)
+            }
+
+            var filteredSubscriptions []Subscription
+            for _, sub := range subscriptions {
+              published := strings.ToLower(sub.Published)
+              if published == "true" || published == "x" {
+                filteredSubscriptions = append(filteredSubscriptions, sub)
+              }
+            }
+
+            jsonData, err := json.MarshalIndent(filteredSubscriptions, "", "  ")
+            if err != nil {
+              panic(err)
+            }
+
+            if err := ioutil.WriteFile("pricing_data.json", jsonData, 0644); err != nil {
+              panic(err)
+            }
+
+            fmt.Println("Pricing data updated successfully")
+          }
+          EOF
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Updated pricing data
+          branch: ${{ github.head_ref || github.ref_name }}
+          commit_options: "--signoff"
+          file_pattern: 'pricing_data.json'
+          commit_user_name: l5io
+          commit_user_email: ci@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
