@@ -4,9 +4,9 @@ inputs:
   spreadsheet_uri:
     description: 'URI of the Google Spreadsheet'
     required: true
-  spreadsheet_key:
-    description: 'Key/permission to access the spreadsheet'
-    required: true
+  # spreadsheet_key:
+  #   description: 'Key/permission to access the spreadsheet'
+  #   required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
