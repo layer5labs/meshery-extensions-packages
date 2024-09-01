@@ -25,9 +25,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
-
-      - name: Increase Git buffer size
-        run: git config --global http.postBuffer 1048576000 
+          path: .
 
       - name: Fetch and process pricing list
         uses: SAHU-01/meshery-extensions-packages/.github/actions/pricing-list-action@master
