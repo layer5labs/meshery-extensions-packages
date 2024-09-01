@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 1
 
       - name: Increase Git buffer size
-        run: git config --global http.postBuffer 524288000 
+        run: git config --global http.postBuffer 1048576000 
 
       - name: Fetch and process pricing list
         uses: SAHU-01/meshery-extensions-packages/.github/actions/pricing-list-action@master
