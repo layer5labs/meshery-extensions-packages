@@ -25,12 +25,17 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
+          lfs: true  # Enable Git LFS
+
+      - name: Install Git LFS
+        run: git lfs install
+
+      - name: Pull LFS files
+        run: git lfs pull
 
       - name: Fetch and process pricing list
         uses: layer5labs/meshery-extensions-packages/.github/actions/pricing-list-action/action.yml@master
         with:
-          branch_name: ${{ github.event.client_payload.branch_name }}
-          pr_number: ${{ github.event.client_payload.pr_number }}
           spreadsheet_uri: ${{ github.event.inputs.spreadsheet_uri || 'https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0' }}
           # spreadsheet_key: ${{ secrets.SPREADSHEET_KEY }}
 
