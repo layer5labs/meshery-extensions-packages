@@ -26,14 +26,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
 
-      - name: Increase Timeout
-        run: |
-            git config --global http.postBuffer 524288000  
-            git config --global http.lowSpeedLimit 0
-            git config --global http.lowSpeedTime 999999
-            
-      - name: Increase Git HTTP post buffer size
-        run: git config --global http.postBuffer 524288000
+      - name: Increase Git buffer size
+        run: git config --global http.postBuffer 524288000 
 
       - name: Fetch and process pricing list
         uses: SAHU-01/meshery-extensions-packages/.github/actions/pricing-list-action@master
