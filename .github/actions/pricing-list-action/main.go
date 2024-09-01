@@ -1,14 +1,12 @@
 package main
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
-
-	"github.com/gocarina/gocsv"
 )
 
 type Subscription struct {
@@ -23,37 +21,46 @@ func main() {
 	}
 
 	// req.Header.Add("Authorization", "Bearer "+os.Getenv("INPUT_SPREADSHEET_KEY"))
-
+	
 	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	reader := csv.NewReader(resp.Body)
+	headers, err := reader.Read()
 	if err != nil {
 		panic(err)
 	}
 
 	var subscriptions []Subscription
-	if err := gocsv.UnmarshalBytes(body, &subscriptions); err != nil {
-		panic(err)
-	}
+	for {
+		record, err := reader.Read()
+		if err != nil {
+			break
+		}
 
-	var filteredSubscriptions []Subscription
-	for _, sub := range subscriptions {
+		sub := Subscription{}
+		for i, header := range headers {
+			switch strings.ToLower(header) {
+			case "published":
+				sub.Published = record[i]
+			}
+		}
+
 		published := strings.ToLower(sub.Published)
-		if published == "true" || published == "x" || published == "true" || published == "x" {
-			filteredSubscriptions = append(filteredSubscriptions, sub)
+		if published == "true" || published == "x" {
+			subscriptions = append(subscriptions, sub)
 		}
 	}
 
-	jsonData, err := json.MarshalIndent(filteredSubscriptions, "", "  ")
+	jsonData, err := json.MarshalIndent(subscriptions, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 
-	if err := ioutil.WriteFile("pricing_data.json", jsonData, 0644); err != nil {
+	if err := os.WriteFile("pricing_data.json", jsonData, 0644); err != nil {
 		panic(err)
 	}
 
