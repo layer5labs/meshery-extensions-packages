@@ -25,12 +25,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
-          sparse-checkout: |
-            .github/actions/pricing-list-action
-            .github/workflows
 
       - name: Fetch and process pricing list
-        uses: SAHU-01/meshery-extensions-packages/.github/actions/pricing-list-action@master
+        uses: ./.github/actions/pricing-list-action@master
         with:
           spreadsheet_uri: ${{ github.event.inputs.spreadsheet_uri || 'https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0' }}
           # spreadsheet_key: ${{ secrets.SPREADSHEET_KEY }}
