@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Increase Git buffer size
-        run: git config --global http.postBuffer 524288000 
+        run: git config --global http.postBuffer 2147483647 
 
       - name: Check out code
         uses: actions/checkout@v4
