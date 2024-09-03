@@ -1,6 +1,23 @@
 #!/bin/bash
-
+rm -rf "$TEMP_DIR"
+ENV_FILE_PATH="$HELM_PLUGIN_DIR/.env"
 set -euo pipefail  # Ensure the script exits on errors, unset variables, or pipeline failures
+
+# Function to load environment variables from .env file
+load_env() {
+  if [ -f $ENV_FILE_PATH ]; then
+    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+      # For Windows (Git Bash or Cygwin)
+      export $(grep -v '^#' .env | sed 's/^/set /' | sed 's/"/\\"/g' | xargs)
+    else
+      # For Unix-based systems
+      source $ENV_FILE_PATH
+    fi
+  else
+    echo ".env file not found!"
+    exit 1
+  fi
+}
 
 # Function to print usage instructions
 print_usage() {
@@ -12,10 +29,6 @@ Usage: helm snapshot -f <URI to Helm tar.gz file> [-n <name>] [-e <email>]
 EOF
 }
 
-# Function to log messages with a timestamp
-log() {
-  echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
-}
 
 # Function to extract the default name from the URI if not provided
 extract_name_from_uri() {
@@ -24,13 +37,25 @@ extract_name_from_uri() {
   echo "${filename%%.*}"  # Extract filename without extension
 }
 
+# Load environment variables
+load_env
+
+# Read credentials from environment variables
+GITHUB_TOKEN="${GITHUB_TOKEN:?Environment variable GITHUB_TOKEN not set}"
+MESHERY_TOKEN="${MESHERY_TOKEN:?Environment variable MESHERY_TOKEN not set}"
+COOKIE="${COOKIE:?Environment variable COOKIE not set}"
+
 # Initialize variables
 CHART_URI=""
 NAME=""
 EMAIL=""
 SOURCE_TYPE="Helm Chart"
 PATTERN_URL="https://playground.meshery.io/api/pattern/$(echo $SOURCE_TYPE | sed 's/ /%20/g')"  # Encode spaces in the URL
-COOKIE=""
+WORKFLOW_URL="https://playground.meshery.io/api/integrations/trigger/workflow"
+OWNER="Aijeyomah"
+REPO="Ng-depl"
+WORKFLOW="10674160331"
+BRANCH="main"
 
 # Parse arguments
 while getopts ":f:n:e:" opt; do
@@ -49,16 +74,27 @@ if [ -z "$CHART_URI" ]; then
   exit 1
 fi
 
+
+# Temporary directory and log file
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+  TEMP_DIR=$(mktemp -d -t tmp)
+else
+  TEMP_DIR=$(mktemp -d) || { echo "Failed to create temporary directory"; exit 1; }
+fi
+
+
+LOG_FILE="$TEMP_DIR/snapshot.log"
+
+# Function to log messages with a timestamp
+log() {
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
 # Use the extracted name from URI if not provided
 if [ -z "$NAME" ]; then
   NAME=$(extract_name_from_uri "$CHART_URI")
   log "No name provided. Using extracted name: $NAME"
 fi
-
-# Temporary directory and log file
-TEMP_DIR=$(mktemp -d)
-CHART_PATH="$TEMP_DIR/chart.tgz"
-LOG_FILE="$TEMP_DIR/snapshot.log"
 
 log "Starting Helm chart conversion to Meshery Design..."
 
@@ -73,18 +109,35 @@ RESPONSE=$(curl -s -X POST "$PATTERN_URL" \
   -H "Accept-Language: en-GB,en-US;q=0.9,en;q=0.8" \
   -d "$REQUEST_PAYLOAD")
 
-# Extract Snapshot ID from response
-SNAPSHOT_ID=$(echo "$RESPONSE" | awk -F'"id":"' '{print $2}' | awk -F'"' '{print $1}')
+DESIGN_ID=$(echo "$RESPONSE" | awk -F'"id":"' '{print $2}' | awk -F'"' '{print $1}')
 
-if [ -z "$SNAPSHOT_ID" ]; then
-  log "Error: Failed to create Meshery Snapshot. Response: $RESPONSE"
+if [ -z "$DESIGN_ID" ]; then
+  log "Error: Failed to import pattern. Response: $RESPONSE"
   exit 1
 fi
 
-log "Meshery Snapshot created successfully. Snapshot ID: $SNAPSHOT_ID"
+log "import pattern successfully. Design ID: $DESIGN_ID"
+
+# Generate the snapshot using the provided API
+SNAPSHOT_PAYLOAD=$(printf '{"Owner": "%s", "Repo": "%s", "Workflow": "%s", "Branch": "%s", "GithubToken": "%s", "Payload": {"designId": "%s", "filePath": "%s", "githubToken": "%s", "mesheryToken": "%s"}}' "$OWNER" "$REPO" "$WORKFLOW" "$BRANCH" "$GITHUB_TOKEN" "$DESIGN_ID" "$CHART_URI" "$GITHUB_TOKEN" "$MESHERY_TOKEN")
+
+SNAPSHOT_RESPONSE=$(curl -s -X POST "$WORKFLOW_URL" \
+  -H "Content-Type: application/json" \
+  -d "$SNAPSHOT_PAYLOAD")
+
+echo vb bnhf
+echo $SNAPSHOT_RESPONSE
+
+# Check if the snapshot was created successfully
+if [[ "$SNAPSHOT_RESPONSE" == *"error"* ]]; then
+  log "Error: Failed to generate the snapshot. Response: $SNAPSHOT_RESPONSE"
+  exit 1
+fi
+
+log "Snapshot generated successfully. Response: $SNAPSHOT_RESPONSE"
 
 # Clean up temporary files
 log "Cleaning up temporary files..."
 rm -rf "$TEMP_DIR"
 
-log "Operation completed successfully. Snapshot ID: $SNAPSHOT_ID"
+log "Operation completed successfully. Snapshot ID: $DESIGN_ID"

@@ -46,5 +46,6 @@ site/yarn-error.log*
 
 .DS_Store
 .github/.DS_Store
-
+.env
+/helm-plugins/snapshot/.env
 node_modules

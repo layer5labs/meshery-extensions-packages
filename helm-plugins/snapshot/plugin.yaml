@@ -3,17 +3,24 @@ version: "0.1.0"
 usage: "Create a visual snapshot of your packaged Helm chart as a Meshery Snapshot"
 description: "A Helm plugin to generate Meshery Snapshots from Helm charts"
 command: "$HELM_PLUGIN_DIR/snapshot.sh"
+
 hooks:
   install: |
     echo 'Installing Meshery Snapshot Plugin...'
-    echo 'Setting up plugin directories and permissions...'
-    # Ensure the script is executable
-    chmod +x "$HELM_PLUGIN_DIR/snapshot.sh"
+    if [ -n "$OS" ] && [ "$OS" = "Windows_NT" ]; then
+      echo 'Setting up plugin directories and permissions on Windows...'
+      icacls "$HELM_PLUGIN_DIR\snapshot.sh" /grant Everyone:F
+    else
+      echo 'Setting up plugin directories and permissions on Linux...'
+      chmod +x "$HELM_PLUGIN_DIR/snapshot.sh"
+    fi
     echo 'Meshery Snapshot Plugin installed successfully.'
   uninstall: |
     echo 'Uninstalling Meshery Snapshot Plugin...'
     echo 'Removing plugin files and cleaning up...'
-    # Remove plugin files
-    rm -f "$HELM_PLUGIN_DIR/snapshot.sh"
+    if [ -n "$OS" ] && [ "$OS" = "Windows_NT" ]; then
+      del /Q "$HELM_PLUGIN_DIR\snapshot.sh"
+    else
+      rm -f "$HELM_PLUGIN_DIR/snapshot.sh"
+    fi
     echo 'Meshery Snapshot Plugin uninstalled successfully.'
-
