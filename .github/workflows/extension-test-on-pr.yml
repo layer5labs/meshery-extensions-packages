@@ -102,7 +102,7 @@ jobs:
       - name: Show runner tree
         run: tree /home/runner/.meshery
       - name: relocate meshery-extension-ui
-        run: mv /home/runner/.meshery/provider/Meshery/*/provider /home/runner/provider
+        run: mv /home/runner/.meshery/provider/Meshery/provider /home/runner/provider
       - name: Show runner tree
         run: tree /home/runner/ -L 3
       - name: Upload artifacts
