@@ -6,7 +6,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -19,11 +19,16 @@ import (
 
 // Config holds the environment variables and other configurations
 type Config struct {
-	GithubToken   string
-	MesheryToken  string
-	Cookie        string
-	LogFilePath   string
-	HelmPluginDir string
+	GithubToken         string
+	MesheryToken        string
+	Cookie              string
+	LogFilePath         string
+	HelmPluginDir       string
+	Owner               string
+	Repo                string
+	Workflow            string
+	Branch              string
+	MesheryCloudBaseUrl string
 }
 
 // MesheryDesignPayload represents the payload for creating a Meshery snapshot
@@ -69,7 +74,7 @@ func CreateLogFile(logFilePath string) error {
 func Log(message, logFilePath string) error {
 	logMessage := fmt.Sprintf("%s - %s\n", time.Now().Format("2006-01-02 15:04:05"), message)
 	fmt.Println(logMessage)
-	return ioutil.WriteFile(logFilePath, []byte(logMessage), os.ModeAppend)
+	return os.WriteFile(logFilePath, []byte(logMessage), os.ModeAppend)
 }
 
 // ExtractNameFromURI extracts the name from the URI
@@ -91,8 +96,8 @@ func CreateMesheryDesign(config *Config, uri, name, email string) (string, error
 	if err != nil {
 		return "", err
 	}
-
-	req, err := http.NewRequest("POST", fmt.Sprintf("https://playground.meshery.io/api/pattern/Helm Chart"), bytes.NewBuffer(payloadBytes))
+	sourceType := "Helm Chart"
+	req, err := http.NewRequest("POST", fmt.Sprintf("https://playground.meshery.io/api/pattern/%s", sourceType), bytes.NewBuffer(payloadBytes))
 	if err != nil {
 		return "", err
 	}
@@ -110,7 +115,7 @@ func CreateMesheryDesign(config *Config, uri, name, email string) (string, error
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		body, _ := ioutil.ReadAll(resp.Body)
+		body, _ := io.ReadAll(resp.Body)
 		return "", fmt.Errorf("failed to create meshery design. response: %s", string(body))
 	}
 
@@ -130,34 +135,43 @@ func CreateMesheryDesign(config *Config, uri, name, email string) (string, error
 	return "", errors.New("invalid response from meshery api")
 }
 
-// GenerateSnapshot triggers the snapshot workflow
-func GenerateSnapshot(config *Config, designID, chartURI string) error {
-	payload := WorkflowPayload{
-		Owner:       "",
-		Repo:        "",
-		Workflow:    "",
-		Branch:      "",
-		GithubToken: config.GithubToken,
-		Payload: map[string]string{
-			"designId":     designID,
-			"filePath":     chartURI,
-			"githubToken":  config.GithubToken,
-			"mesheryToken": config.MesheryToken,
+func GenerateSnapshot(config *Config, designID, chartURI, assetLocation, email string) error {
+
+	payload := map[string]interface{}{
+		"Owner":       config.Owner,
+		"Repo":        config.Repo,
+		"Workflow":    config.Repo,
+		"Branch":      config.Branch,
+		"GithubToken": config.GithubToken,
+		"email":       config.GithubToken,
+		"Payload": map[string]string{
+			"application_type": "Helm Chart",
+			"designID":         designID,
+			"assetLocation":    assetLocation,
 		},
 	}
 
+	// Marshal the payload into JSON
 	payloadBytes, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", "http://localhost:9876/api/api/integrations/trigger/workflow", bytes.NewBuffer(payloadBytes))
+	// Create the POST request
+	req, err := http.NewRequest(
+		"POST",
+		fmt.Sprintf("%s/api/integrations/trigger/workflow", config.MesheryCloudBaseUrl),
+		bytes.NewBuffer(payloadBytes),
+	)
 	if err != nil {
 		return err
 	}
 
+	req.Header.Set("Cookie", config.Cookie)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+config.GithubToken) // Use the GitHub token for authentication
 
+	// Send the request
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -165,9 +179,10 @@ func GenerateSnapshot(config *Config, designID, chartURI string) error {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		body, _ := ioutil.ReadAll(resp.Body)
-		return fmt.Errorf("Failed to generate snapshot. Response: %s", string(body))
+	// Check the response status
+	if resp.StatusCode != http.StatusNoContent {
+		body, _ := io.ReadAll(resp.Body)
+		return fmt.Errorf("failed to dispatch workflow. response: %s", string(body))
 	}
 
 	return nil
@@ -176,14 +191,13 @@ func GenerateSnapshot(config *Config, designID, chartURI string) error {
 func main() {
 	chartURI := flag.String("f", "", "URI to Helm chart")
 	name := flag.String("n", "", "Optional name for the Meshery design")
-	email := flag.String("e", "", "Optional email to associate with the Meshery design")
+	email := flag.String("e", "", "Optional email to associate with the Meshery design") // Added email flag
 	flag.Parse()
 
 	if *chartURI == "" {
 		log.Fatal("Error: URI to Helm chart is required.")
 	}
 
-	// Load environment variables from the .env file
 	envPath := filepath.Join(os.Getenv("HELM_PLUGIN_DIR"), ".env")
 	err := LoadEnv(envPath)
 	if err != nil {
@@ -191,11 +205,16 @@ func main() {
 	}
 
 	config := &Config{
-		GithubToken:   os.Getenv("GITHUB_TOKEN"),
-		MesheryToken:  os.Getenv("MESHERY_TOKEN"),
-		Cookie:        os.Getenv("COOKIE"),
-		LogFilePath:   filepath.Join(os.Getenv("HELM_PLUGIN_DIR"), "snapshot.log"),
-		HelmPluginDir: os.Getenv("HELM_PLUGIN_DIR"),
+		GithubToken:         os.Getenv("GITHUB_TOKEN"),
+		MesheryToken:        os.Getenv("MESHERY_TOKEN"),
+		Cookie:              os.Getenv("COOKIE"),
+		LogFilePath:         filepath.Join(os.Getenv("HELM_PLUGIN_DIR"), "snapshot.log"),
+		HelmPluginDir:       os.Getenv("HELM_PLUGIN_DIR"),
+		Owner:               os.Getenv("OWNER"),
+		Repo:                os.Getenv("REPO"),
+		Workflow:            os.Getenv("WORKFLOW"),
+		Branch:              os.Getenv("BRANCH"),
+		MesheryCloudBaseUrl: os.Getenv("MESHERY_CLOUD_BASE_URL"),
 	}
 
 	err = CreateLogFile(config.LogFilePath)
@@ -212,22 +231,21 @@ func main() {
 	Log("Starting Helm chart conversion to Meshery Design...", config.LogFilePath)
 
 	// Create Meshery Snapshot
-	designID, err := CreateMesheryDesign(config, *chartURI, *name, *email)
+	designID, err := CreateMesheryDesign(config, *chartURI, *name, *email) // Pass email here
 	if err != nil {
 		Log(fmt.Sprintf("Error: %s", err), config.LogFilePath)
 		os.Exit(1)
 	}
 
 	Log(fmt.Sprintf("Meshery design created successfully. design ID: %s", designID), config.LogFilePath)
+	assetLocation := fmt.Sprintf("https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/action-assets/helm-plugin-assets/%s.png", designID)
 
-	// Generate the snapshot using the provided API
-	err = GenerateSnapshot(config, designID, *chartURI)
+	err = GenerateSnapshot(config, designID, *chartURI, assetLocation, *email)
 	if err != nil {
 		Log(fmt.Sprintf("Error: %s", err), config.LogFilePath)
 		os.Exit(1)
 	}
-
-	Log("Snapshot generated successfully.", config.LogFilePath)
+	Log(fmt.Sprintf("Snapshot generated successfully. Snapshot URL: %s", assetLocation), config.LogFilePath)
 
 	// Clean up log file
 	Log("Cleaning up log file...", config.LogFilePath)
