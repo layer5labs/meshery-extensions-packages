@@ -1,0 +1,25 @@
+name: Deploy Kanvas
+on:
+  workflow_call:
+    inputs:
+      image:
+        type: string
+        default: playground-latest
+  workflow_dispatch:
+    inputs:
+      image:
+        type: string
+        default: playground-latest
+jobs:
+  kanvas-rollout:
+      name: Update Kanvas deployment 
+      if: github.repository == 'layer5labs/meshery-extensions-packages'
+      runs-on: ubuntu-latest 
+      steps:
+        - uses: azure/setup-kubectl@v3
+        - name: Extract kubeconfig
+          run: mkdir ~/.kube; touch ~/.kube/config ;echo "${{ secrets.METAL3 }}" | base64 --decode > ~/.kube/config
+        - name: Rollout Meshery to run latest Meshery image
+          run: |
+          kubectl set image deployment/meshery meshery=${{ inputs.image }} -n meshery-extensions
+
