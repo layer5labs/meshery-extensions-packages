@@ -264,7 +264,9 @@ jobs:
         working-directory: meshery-extensions
         run: |
           make test;
+          echo 'EOF' >> $GITHUB_OUTPUT
           cat meshmap/test-report.md >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
