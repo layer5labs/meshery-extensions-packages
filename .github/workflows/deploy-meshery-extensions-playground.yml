@@ -12,8 +12,8 @@ on:
         default: playground-latest
 jobs:
   kanvas-rollout:
-      name: Update Kanvas deployment 
-      if: github.repository == 'layer5labs/meshery-extensions-packages'
+      name: Deploy CNCF Extensions Playground
+      if: github.repository == 'layer5labs/meshery-extensions-packages' || github.repository == 'meshery/meshery'
       runs-on: ubuntu-latest 
       steps:
         # - uses: azure/setup-kubectl@v4
