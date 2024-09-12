@@ -12,14 +12,24 @@ on:
         default: playground-latest
 jobs:
   kanvas-rollout:
-      name: Update Kanvas deployment 
-      if: github.repository == 'layer5labs/meshery-extensions-packages'
+      name: Deploy CNCF Extensions Playground
+      if: github.repository == 'layer5labs/meshery-extensions-packages' || github.repository == 'meshery/meshery'
       runs-on: ubuntu-latest 
       steps:
-        - uses: azure/setup-kubectl@v3
-        - name: Extract kubeconfig
-          run: mkdir ~/.kube; touch ~/.kube/config ;echo "${{ secrets.METAL3 }}" | base64 --decode > ~/.kube/config
-        - name: Rollout Meshery to run latest Meshery image
-          run: |
-            kubectl set image deployment/meshery meshery=${{ inputs.image }} -n meshery-extensions
-
+        # - uses: azure/setup-kubectl@v4
+        #   with:
+        #     version: 'latest'
+        # - name: Extract kubeconfig
+        #   run: mkdir ~/.kube; touch ~/.kube/config ;echo "${{ secrets.METAL3 }}" | base64 --decode > ~/.kube/config
+        # - name: Rollout Meshery to run latest Meshery image
+        #   run: |
+        #     kubectl set image deployment/meshery meshery=${{ inputs.image }} -n meshery-extensions
+        - name: Update Kanvas deployment
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.METAL03_HOST }}
+            username: ${{ secrets.METAL03_USERNAME }}
+            key: ${{ secrets.METAL03_KEY }}
+            port: 22
+            script: |
+              kubectl set image deployment/meshery meshery=${{ inputs.image }} -n meshery-extensions
