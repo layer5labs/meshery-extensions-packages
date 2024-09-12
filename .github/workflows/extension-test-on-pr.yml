@@ -263,23 +263,29 @@ jobs:
         id: run_tests
         working-directory: meshery-extensions
         run: |
-          echo 'test-results<<EOF' >> $GITHUB_OUTPUT
-          make test >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+          make test
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
           REMOTE_PROVIDER_URL: "https://meshery.layer5.io"
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
-
+      - name: Test reporter
+        uses: actions/github-script@v7
+        id: test-reports
+        with:
+          script: |
+              const fs = require('fs')
+              const E2ETestReporter = String(fs.readFileSync('./meshmap/test-report.md'))
+  
+              return E2ETestReporter
+          result-encoding: string
       - name: comment the summary
         uses: hasura/comment-progress@v2.3.0
         if: always()
         with:
           message: |
-            ${{join(steps.run_tests.outputs.*, '\n')}}
-
+            ${{steps.test-reports.outputs.result}}
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
