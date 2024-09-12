@@ -276,7 +276,7 @@ jobs:
         with:
           script: |
               const fs = require('fs')
-              const E2ETestReporter = String(fs.readFileSync('./meshmap/test-report.md'))
+              const E2ETestReporter = String(fs.readFileSync('./meshery-extensions/meshmap/test-report.md'))
   
               return E2ETestReporter
           result-encoding: string
