@@ -4,12 +4,12 @@ on:
     inputs:
       image:
         type: string
-        default: layer5/meshery:playground-latest
+        default: layer5/meshery:kanvas-latest
   workflow_dispatch:
     inputs:
       image:
         type: string
-        default: layer5/meshery:playground-latest
+        default: layer5/meshery:kanvas-latest
 jobs:
   kanvas-rollout:
       name: Deploy CNCF Extensions Playground
