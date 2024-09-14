@@ -25,6 +25,7 @@ jobs:
     with:
       release-environment: ${{ github.event.client_payload.release_environment }}
       release-version: ${{ github.event.client_payload.release_version}}
+      branch: ${{ github.event.client_payload.branch || 'master' }}
     secrets:
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       MESHERY_CLOUD_AWS_PROD_HOST: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
