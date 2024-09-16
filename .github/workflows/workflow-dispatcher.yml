@@ -18,7 +18,6 @@ jobs:
       LAYER5_CLOUD_PASSWORD: ${{ secrets.LAYER5_CLOUD_PASSWORD }}
       LAYER5_CLOUD_TESTING_BOT_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
       LAYER5_CLOUD_TESTING_BOT_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
-      GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
   meshery-cloud-deploy:
     if: github.event.action == 'meshery-cloud-deploy'
     uses: layer5labs/meshery-extensions-packages/.github/workflows/meshery-cloud-release.yml@master
