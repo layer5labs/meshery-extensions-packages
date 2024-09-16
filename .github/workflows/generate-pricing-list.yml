@@ -12,8 +12,7 @@ on:
 
 jobs:
   fetch-pricing-list:
-    name: Fetch Pricing List
-    if: github.repository == 'SAHU-01/meshery-extensions-packages' || github.repository == 'SAHU-01/meshery-extensions-packages'
+    name: Fetch Pricing Lis
     runs-on: ubuntu-latest
     steps:
 
