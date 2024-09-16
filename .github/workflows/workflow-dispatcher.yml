@@ -18,7 +18,7 @@ jobs:
       LAYER5_CLOUD_PASSWORD: ${{ secrets.LAYER5_CLOUD_PASSWORD }}
       LAYER5_CLOUD_TESTING_BOT_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
       LAYER5_CLOUD_TESTING_BOT_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
-
+      GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
   meshery-cloud-deploy:
     if: github.event.action == 'meshery-cloud-deploy'
     uses: layer5labs/meshery-extensions-packages/.github/workflows/meshery-cloud-release.yml@master
@@ -34,3 +34,4 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       MESHERY_CLOUD_AWS_STG_HOST: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
+      GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
