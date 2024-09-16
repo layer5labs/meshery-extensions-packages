@@ -186,7 +186,7 @@ jobs:
           sudo su - -c "whoami"
           make stg-deploy GIT_VERSION=$GIT_VERSION
           docker system prune -f
-          docker image prune -a
+          docker image prune -a -f
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -259,5 +259,5 @@ jobs:
           docker pull layer5/meshery-cloud:production-$GIT_VERSION
           make prod-deploy GIT_VERSION=$GIT_VERSION
           docker system prune -f
-          docker image prune -a
+          docker image prune -a -f
           
