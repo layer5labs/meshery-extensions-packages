@@ -31,6 +31,14 @@ func main() {
 	reader := csv.NewReader(resp.Body)
 	reader.FieldsPerRecord = -1 
 	reader.LazyQuotes = true  
+
+	// Skip the first row (row one)
+	_, err = reader.Read() // This skips the first header
+	if err != nil {
+		panic(err)
+	}
+
+	// Read the second row (actual column headers)
 	headers, err := reader.Read()
 	if err != nil {
 		panic(err)
