@@ -16,9 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Check out code
-        uses: actions/checkout@v4
-
       - name: Fetch and process pricing list
         uses: ./github/actions/pricing-list-action
         with:
