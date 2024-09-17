@@ -1,4 +1,4 @@
-name: Rollout Kanvas
+name: Build and Rollout Kanvas
 on:
   workflow_call:
     inputs:
