@@ -36,11 +36,15 @@ jobs:
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: layer5labs/meshery-extensions
+          path: "meshery-extensions"
           fetch-depth: 1
           sparse-checkout: |
             build/get-meshery-version
           sparse-checkout-cone-mode: false
-      
+      - name: File system view
+        run: |
+          pwd;
+          ls; 
       - name: Fetch Meshery version
         run: |
           chmod +x ./meshery-extensions/build/get-meshery-version
