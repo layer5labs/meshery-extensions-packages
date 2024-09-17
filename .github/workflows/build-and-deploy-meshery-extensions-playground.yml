@@ -12,6 +12,11 @@ on:
         description: Repository branch to build.
         type: string
         default: master
+      # The trigger-remote-provider-actions sends these inputs hence they need to be mentioned.
+      version:
+        type: string
+      revision:
+        type: string
 jobs:
   build-and-release:
       name: Build and Rollout Kanvas
