@@ -47,6 +47,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Configure Meshery UI
+        working-directory: './meshery'
         run: |
           cat << EOF > ui/ui.config.js
           module.exports = {
@@ -57,6 +58,7 @@ jobs:
           EOF
           
       - name: Docker build & tag
+        working-directory: './meshery'
         run: |
           DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
