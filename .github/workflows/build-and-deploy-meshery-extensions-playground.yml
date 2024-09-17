@@ -35,6 +35,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5labs/meshery-extensions
+          fetch-depth: 1
           sparse-checkout: |
             build/get-meshery-version
           sparse-checkout-cone-mode: false
