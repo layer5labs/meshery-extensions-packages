@@ -34,7 +34,6 @@ jobs:
       # Step 4: Fetch and process the pricing list by directly running the Go file
       - name: Fetch and process pricing list
         run: |
-          go mod download  
           go run ./.github/actions/pricing-list-action/main.go
 
       - name: Commit changes
