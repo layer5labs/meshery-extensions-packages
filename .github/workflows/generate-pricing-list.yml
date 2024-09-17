@@ -12,15 +12,21 @@ on:
 
 jobs:
   fetch-pricing-list:
-    name: Fetch Pricing Lis
+    name: Fetch Pricing List
     runs-on: ubuntu-latest
     steps:
 
+      # Step to check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step to fetch and process the pricing list
       - name: Fetch and process pricing list
         uses: ./.github/actions/pricing-list-action
         with:
           spreadsheet_uri: ${{ github.event.inputs.spreadsheet_uri || 'https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0' }}
 
+      # Step to commit changes
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
