@@ -23,6 +23,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
 
+      - name: List directories
+        run: ls -a
+        
       - name: Fetch and process pricing list
         uses: ./github/actions/pricing-list-action/
         with:
