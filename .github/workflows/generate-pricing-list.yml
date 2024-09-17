@@ -22,7 +22,7 @@ jobs:
 
       # Step to fetch and process the pricing list
       - name: Fetch and process pricing list
-        uses: ./github/actions/pricing-list-action
+        uses: .github/actions/pricing-list-action
         with:
           spreadsheet_uri: ${{ github.event.inputs.spreadsheet_uri || 'https://docs.google.com/spreadsheets/d/1Ck_5q7U_vLSIDTtplugG3pCVC5zugXgTHtO7T7-yL8g/export?format=csv&gid=0' }}
 
