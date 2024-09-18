@@ -40,7 +40,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Updated pricing data"
-          branch: ${{ github.head_ref || github.ref_name }}
+          branch: master
           commit_options: "--signoff"
           file_pattern: 'pricing_data.json'
           commit_user_name: l5io
