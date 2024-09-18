@@ -10,7 +10,8 @@ import (
 )
 
 type Subscription struct {
-	Published string `csv:"Published"`
+	PricingPage   string `json:"pricing_page,omitempty"`
+	Documentation string `json:"documentation,omitempty"`
 }
 
 func main() {
@@ -20,8 +21,6 @@ func main() {
 		panic(err)
 	}
 
-	// req.Header.Add("Authorization", "Bearer "+os.Getenv("INPUT_SPREADSHEET_KEY"))
-	
 	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
@@ -29,11 +28,11 @@ func main() {
 	defer resp.Body.Close()
 
 	reader := csv.NewReader(resp.Body)
-	reader.FieldsPerRecord = -1 
-	reader.LazyQuotes = true  
+	reader.FieldsPerRecord = -1
+	reader.LazyQuotes = true
 
 	// Skip the first row (row one)
-	_, err = reader.Read() // This skips the first header
+	_, err = reader.Read()
 	if err != nil {
 		panic(err)
 	}
@@ -52,15 +51,26 @@ func main() {
 		}
 
 		sub := Subscription{}
+		includeSub := false
+
 		for i, header := range headers {
 			switch strings.ToLower(header) {
-			case "published":
-				sub.Published = record[i]
+			case "**pricing page?":
+				value := strings.ToLower(record[i])
+				if value == "x" || value == "true" {
+					sub.PricingPage = "true"
+					includeSub = true
+				}
+			case "documented?":
+				value := record[i]
+				if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
+					sub.Documentation = value
+					includeSub = true
+				}
 			}
 		}
 
-		published := strings.ToLower(sub.Published)
-		if published == "true" || published == "x" {
+		if includeSub {
 			subscriptions = append(subscriptions, sub)
 		}
 	}
