@@ -43,6 +43,9 @@ func main() {
 		panic(err)
 	}
 
+	// Debugging: Print the headers to verify their format
+	fmt.Println("Headers:", headers)
+
 	var subscriptions []Subscription
 	for {
 		record, err := reader.Read()
@@ -50,18 +53,21 @@ func main() {
 			break
 		}
 
+		// Debugging: Print the record to verify what is being read
+		fmt.Println("Record:", record)
+
 		sub := Subscription{}
 		includeSub := false
 
 		for i, header := range headers {
-			switch strings.ToLower(header) {
-			case "**pricing page?":
+			switch strings.ToLower(strings.TrimSpace(header)) {  // Fix for trimming spaces
+			case "pricing page":  // Match exact column name from CSV
 				value := strings.ToLower(record[i])
 				if value == "x" || value == "true" {
 					sub.PricingPage = "true"
 					includeSub = true
 				}
-			case "documented?":
+			case "documented?":  // Match exact column name from CSV
 				value := record[i]
 				if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
 					sub.Documentation = value
