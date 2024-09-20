@@ -29,6 +29,8 @@ jobs:
       # Step 3: Set environment variable for spreadsheet URL
       - name: Set spreadsheet URI
         run: |
+          echo "INPUT_SPREADSHEET_URI=https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=829069645&single=true&output=csv" >> $GITHUB_ENV
+        if: inputs.INPUT_SPREADSHEET_URI != ''
           echo "INPUT_SPREADSHEET_URI=${{ github.event.inputs.spreadsheet_uri }}" >> $GITHUB_ENV
 
       # Step 4: Fetch and process the pricing list by directly running the Go file

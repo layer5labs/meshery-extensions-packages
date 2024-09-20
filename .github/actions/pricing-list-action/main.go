@@ -21,6 +21,10 @@ func main() {
 		panic(err)
 	}
 
+	fmt.Println("Response Status:", resp.Status)
+	body, _ := io.ReadAll(resp.Body)
+	fmt.Println("Response Body:", string(body))
+
 	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
