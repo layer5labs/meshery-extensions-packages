@@ -11,9 +11,9 @@ import (
 )
 
 type Subscription struct {
-	PricingPage   string   `json:"pricing_page,omitempty"`
-	Documentation string   `json:"documentation,omitempty"`
-	EntireRow     []string `json:"entire_row,omitempty"` // New field to store the entire row
+	PricingPage   string                 `json:"pricing_page,omitempty"`
+	Documentation string                 `json:"documentation,omitempty"`
+	EntireRow     map[string]string      `json:"entire_row,omitempty"` // Changed to map headers to values
 }
 
 func main() {
@@ -71,10 +71,16 @@ func main() {
 		// Debugging: Print the record to verify what is being read
 		fmt.Println("Record:", record)
 
-		sub := Subscription{}
+		sub := Subscription{
+			EntireRow: make(map[string]string), // Initialize the map for the row
+		}
 		includeSub := false
 
 		for i, header := range headers {
+			// Store the header-value pairs in the EntireRow map
+			sub.EntireRow[strings.TrimSpace(header)] = strings.TrimSpace(record[i])
+
+			// Check the pricing page and documented fields
 			switch strings.ToLower(strings.TrimSpace(header)) {
 			case "pricing page":
 				value := strings.ToLower(record[i])
@@ -91,9 +97,8 @@ func main() {
 			}
 		}
 
-		// If a match is found, add the entire row to the subscription
+		// If a match is found, include this row in the JSON output
 		if includeSub {
-			sub.EntireRow = record // Store the entire row
 			subscriptions = append(subscriptions, sub)
 		}
 	}
