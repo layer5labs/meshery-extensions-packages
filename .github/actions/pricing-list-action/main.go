@@ -11,8 +11,9 @@ import (
 )
 
 type Subscription struct {
-	PricingPage   string `json:"pricing_page,omitempty"`
-	Documentation string `json:"documentation,omitempty"`
+	PricingPage   string   `json:"pricing_page,omitempty"`
+	Documentation string   `json:"documentation,omitempty"`
+	EntireRow     []string `json:"entire_row,omitempty"` // New field to store the entire row
 }
 
 func main() {
@@ -90,16 +91,20 @@ func main() {
 			}
 		}
 
+		// If a match is found, add the entire row to the subscription
 		if includeSub {
+			sub.EntireRow = record // Store the entire row
 			subscriptions = append(subscriptions, sub)
 		}
 	}
 
+	// Marshal the subscriptions to JSON
 	jsonData, err := json.MarshalIndent(subscriptions, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 
+	// Write the JSON data to a file
 	if err := os.WriteFile("pricing_data.json", jsonData, 0644); err != nil {
 		panic(err)
 	}
