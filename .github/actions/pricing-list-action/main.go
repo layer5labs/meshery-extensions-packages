@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -29,15 +30,17 @@ func main() {
 
 	fmt.Println("Response Status:", resp.Status)
 
+	// Read the response body
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("Response Body:", string(body))
 
+	// Reset the response body for CSV reading
 	resp.Body = io.NopCloser(strings.NewReader(string(body)))
 
-
+	// Create a CSV reader from the response body
 	reader := csv.NewReader(resp.Body)
 	reader.FieldsPerRecord = -1
 	reader.LazyQuotes = true
@@ -71,14 +74,14 @@ func main() {
 		includeSub := false
 
 		for i, header := range headers {
-			switch strings.ToLower(strings.TrimSpace(header)) {  // Fix for trimming spaces
-			case "pricing page":  // Match exact column name from CSV
+			switch strings.ToLower(strings.TrimSpace(header)) {
+			case "pricing page":
 				value := strings.ToLower(record[i])
 				if value == "x" || value == "true" {
 					sub.PricingPage = "true"
 					includeSub = true
 				}
-			case "documented?":  // Match exact column name from CSV
+			case "documented?":
 				value := record[i]
 				if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
 					sub.Documentation = value
