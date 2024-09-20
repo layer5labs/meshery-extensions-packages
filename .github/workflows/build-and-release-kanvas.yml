@@ -1,4 +1,4 @@
-name: Build and Publish (V2)
+name: Build and Rollout Kanvas
 on:
   workflow_dispatch:
     inputs:
@@ -6,7 +6,7 @@ on:
         description: "Version of Meshery (e.g. v0.0.0)"
         required: false
       revision:
-        description: "Extension Sub Version (e.g. 1)"
+        description: "Revision of Extension (e.g. 1)"
         required: false
       branch:
         description: Branch of `meshery-extensions` repository to deploy.
@@ -15,10 +15,10 @@ on:
 
 jobs:
   release-kanvas:
-    name: Build and Release Kanvas
+    name: Build and Rollout Kanvas
     runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout Meshery
+      - name: Checkout meshery/meshery
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
@@ -106,22 +106,26 @@ jobs:
           omitNameDuringUpdate: true
           replacesArtifacts: true          
       #  TEMPORARILY DISABLING UNTIL THIS WORKFLOW WORKS
-      # - name: Send Email on Extensions Release Failure
-      #   if: ${{ failure() }}
-      #   uses: dawidd6/action-send-mail@v3.7.1
-      #   env:
-      #     msg: ${{ env.reason != '' && env.reason || 'Internal build failure.' }}
-      #   with:
-      #     server_address: smtp.gmail.com
-      #     server_port: 465
-      #     username: ${{ secrets.MAIL_USERNAME }}
-      #     password: ${{ secrets.MAIL_PASSWORD }}
-      #     subject: GitHub Actions - Extensions Release Failure
-      #     from: |
-      #       "Meshery Extensions" <no-reply@meshery.io>
-      #     to: |
-      #       "Layer5 Support" <support@layer5.io>
-      #     body: |
-      #       The Meshery extensions release workflow in ${{ github.repository }} has failed, reason: ${{ env.msg }}.
-      #       You can find more details in the GitHub Actions log ${{ github.workflow }}.
+      - name: Send Email on Extensions Release Failure
+        if: ${{ failure() }}
+        uses: dawidd6/action-send-mail@v3.7.1
+        env:
+          msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
+        message: 
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: GitHub Actions - Extensions Release Failure
+          from: |
+            "Meshery Extensions" <no-reply@meshery.io>
+          to: |
+            "Layer5 Support" <support@layer5.io>
+          html_body: |
+            REPO: <b>${{ github.repository }}</b><br />  
+            WORKFLOW: <b>${{ github.workflow }}</b><br />
+            JOB: <b>${{ github.job }}"</b><br />
+            REASON: <b>${{ env.msg }}</b><br />
+            DETAILS: <b><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}</a></b><br />
 
