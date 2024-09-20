@@ -82,7 +82,7 @@ func main() {
 
 			// Check the pricing page and documented fields
 			switch strings.ToLower(strings.TrimSpace(header)) {
-			case "pricing page":
+			case "pricing page?":
 				value := strings.ToLower(record[i])
 				if value == "x" || value == "true" {
 					sub.PricingPage = "true"
