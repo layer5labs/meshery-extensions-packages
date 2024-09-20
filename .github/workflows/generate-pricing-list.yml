@@ -7,18 +7,6 @@ on:
         description: 'Link of the spreadsheet containing subscription details.'
         type: string
         required: true
-  workflow_call:
-    inputs:
-      spreadsheet_uri:
-        description: 'Link of the spreadsheet containing subscription details.'
-        type: string
-        required: true
-    secrets:
-      GITHUB_TOKEN:
-        required: true
-      GO_VERSION:
-        required: true
-
 
 jobs:
   fetch-pricing-list:
