@@ -29,14 +29,11 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("Response Status:", resp.Status)
-
 	// Read the response body
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Response Body:", string(body))
 
 	// Reset the response body for CSV reading
 	resp.Body = io.NopCloser(strings.NewReader(string(body)))
@@ -58,18 +55,12 @@ func main() {
 		panic(err)
 	}
 
-	// Debugging: Print the headers to verify their format
-	fmt.Println("Headers:", headers)
-
 	var subscriptions []Subscription
 	for {
 		record, err := reader.Read()
 		if err != nil {
 			break
 		}
-
-		// Debugging: Print the record to verify what is being read
-		fmt.Println("Record:", record)
 
 		sub := Subscription{
 			EntireRow: make(map[string]string), // Initialize the map for the row

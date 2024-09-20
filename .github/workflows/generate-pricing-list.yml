@@ -7,8 +7,18 @@ on:
         description: 'Link of the spreadsheet containing subscription details.'
         type: string
         required: true
-  schedule:
-    - cron: "0 0 * * *"  # Runs daily at midnight
+  workflow_call:
+    inputs:
+      spreadsheet_uri:
+        description: 'Link of the spreadsheet containing subscription details.'
+        type: string
+        required: true
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+      GO_VERSION:
+        required: true
+
 
 jobs:
   fetch-pricing-list:
@@ -29,9 +39,11 @@ jobs:
       # Step 3: Set environment variable for spreadsheet URL
       - name: Set spreadsheet URI
         run: |
-          echo "INPUT_SPREADSHEET_URI=https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=829069645&single=true&output=csv" >> $GITHUB_ENV
-        if: inputs.INPUT_SPREADSHEET_URI != ''
-          echo "INPUT_SPREADSHEET_URI=${{ github.event.inputs.spreadsheet_uri }}" >> $GITHUB_ENV
+          if [ -n "${{ inputs.spreadsheet_uri }}" ]; then
+            echo "INPUT_SPREADSHEET_URI=${{ inputs.spreadsheet_uri }}" >> $GITHUB_ENV
+          else
+            echo "INPUT_SPREADSHEET_URI=https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=829069645&single=true&output=csv" >> $GITHUB_ENV
+          fi
 
       # Step 4: Fetch and process the pricing list by directly running the Go file
       - name: Fetch and process pricing list
