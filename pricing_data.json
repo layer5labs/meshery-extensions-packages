@@ -1,1 +1,56 @@
-null
+[
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/creating-a-meshery-design"
+  },
+  {
+    "documentation": "https://docs.meshery.io/extensions/importing-a-design"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/importing-designs#import-designs-using-meshery-cli"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/importing-designs#import-designs-using-meshery-cli"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/importing-designs#import-designs-using-meshery-cli"
+  },
+  {
+    "documentation": "https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-a-design-file"
+  },
+  {
+    "documentation": "https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-an-oci-image"
+  },
+  {
+    "documentation": "https://docs.layer5.io/meshmap/designer/export-designs/#exporting-as-an-oci-image"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management"
+  },
+  {
+    "documentation": "https://docs.layer5.io/meshmap/designer/comments/"
+  }
+]
