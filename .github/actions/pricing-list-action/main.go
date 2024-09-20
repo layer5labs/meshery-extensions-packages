@@ -21,15 +21,22 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("Response Status:", resp.Status)
-	body, _ := io.ReadAll(resp.Body)
-	fmt.Println("Response Body:", string(body))
-
 	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
 	}
 	defer resp.Body.Close()
+
+	fmt.Println("Response Status:", resp.Status)
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Response Body:", string(body))
+
+	resp.Body = io.NopCloser(strings.NewReader(string(body)))
+
 
 	reader := csv.NewReader(resp.Body)
 	reader.FieldsPerRecord = -1
