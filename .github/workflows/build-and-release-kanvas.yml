@@ -1,4 +1,4 @@
-name: Build and Rollout Kanvas
+name: Build and Release Kanvas
 on:
   workflow_dispatch:
     inputs:
