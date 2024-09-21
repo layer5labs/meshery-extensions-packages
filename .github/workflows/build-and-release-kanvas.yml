@@ -79,9 +79,9 @@ jobs:
         run: |
           export PROVIDER_PATH="provider/navigator";
           make kanvas-prod;
-          
-          tar -zcf provider-meshery.tar.gz .meshery/provider;
-          tree .meshery/provider;
+
+          tar -zcf provider-meshery.tar.gz /home/runner/.meshery/provider;
+          tree /home/runner/.meshery/provider;
       
       - name: publish stable release on meshery-extensions-packages from tag
         uses: ncipollo/release-action@v1
