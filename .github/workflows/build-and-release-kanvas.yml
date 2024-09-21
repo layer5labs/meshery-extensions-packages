@@ -18,6 +18,7 @@ jobs:
     name: Build and Rollout Kanvas
     runs-on: "ubuntu-latest"
     steps:
+
       - name: Checkout meshery/meshery
         uses: actions/checkout@v4
         with:
@@ -74,6 +75,7 @@ jobs:
           node-version: '16'
 
       - name: Build extension
+        working-directory: ./meshery-extensions
         run: |
           export PROVIDER_PATH="provider/navigator";
           make kanvas-prod;
@@ -93,6 +95,7 @@ jobs:
           artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
           replacesArtifacts: true
+
       - name: publish stable release on meshery-extensions from tag
         uses: ncipollo/release-action@v1
         with:
@@ -105,7 +108,7 @@ jobs:
           artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
           replacesArtifacts: true          
-      #  TEMPORARILY DISABLING UNTIL THIS WORKFLOW WORKS
+
       - name: Send Email on Extensions Release Failure
         if: ${{ failure() }}
         uses: dawidd6/action-send-mail@v3.7.1
@@ -122,9 +125,9 @@ jobs:
           to: |
             "Layer5 Support" <support@layer5.io>
           html_body: |
-            REPO: <b>${{ github.repository }}</b><br />  
-            WORKFLOW: <b>${{ github.workflow }}</b><br />
-            JOB: <b>${{ github.job }}"</b><br />
-            REASON: <b>${{ env.msg }}</b><br />
-            DETAILS: <b><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}</a></b><br />
+            <b>REPO:</b> ${{ github.repository }}<br />  
+            <b>WORKFLOW:</b> ${{ github.workflow }}<br />
+            <b>JOB:</b> ${{ github.job }}<br />
+            <b>REASON:</b> ${{ env.msg }}<br />
+            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
 
