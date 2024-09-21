@@ -111,7 +111,6 @@ jobs:
         uses: dawidd6/action-send-mail@v3.7.1
         env:
           msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
-        message: 
         with:
           server_address: smtp.gmail.com
           server_port: 465
