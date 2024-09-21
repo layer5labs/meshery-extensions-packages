@@ -10,7 +10,7 @@ on:
         required: false
       branch:
         description: Branch of `meshery-extensions` repository to deploy.
-        required: true
+        required: false
         default: master
 
 jobs:
@@ -45,24 +45,35 @@ jobs:
           fetch-depth: 1
           ref: master
 
-      - name: Get latest version for meshery and meshery-extensions
+      - name: Get latest version for meshery and revision for meshery-extensions
         working-directory: "meshery-extensions"
-        run:
+        id: latest_version
+        run: |
           export $(make -f Makefile meshery_version)
           export $(make -f Makefile extension_version)
-          export $(make -f Makefile extension_revision)
-
+          LATEST_RELEASE=$EXTENSION_VERSION
+          echo "MESHERY_VERSION=$MESHERY_VERSION"
+          echo "LATEST_RELEASE=$LATEST_RELEASE"
+          
+          BASE_LATEST_RELEASE=$(echo $LATEST_RELEASE | sed -E 's/-([0-9]+)$//')
+          EXTENSION_VERSION=$(echo $LATEST_RELEASE | sed -E 's/^.*-([0-9]+)$/\1/')
+          
+          if [[ $MESHERY_VERSION == $BASE_LATEST_RELEASE ]]; then
+            EXTENSION_VERSION=$((EXTENSION_VERSION+1))
+          else
+            EXTENSION_VERSION="1"
+          fi
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
-          echo "EXTENSION_REVISION=$EXTENSION_REVISION" >> $GITHUB_ENV
-          echo "LATEST_EXTENSION_VERSION=$MESHERY_VERSION-$EXTENSION_REVISION" >> $GITHUB_ENV
-
+          echo "EXTENSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
+          echo "VERSION=$MESHERY_VERSION-$EXTENSION_VERSION" >> $GITHUB_ENV
+          
       - name: Override version and revision, if provided
         if:  ${{ inputs.version }} 
         run: |
           echo Using manually dispatch values of ${{ inputs.version }} and ${{ inputs.revision }}
           echo "MESHERY_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
-          echo "EXTENSION_REVISION=${{ inputs.revision }}" >> $GITHUB_ENV
-          echo "LATEST_EXTENSION_VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION=${{ inputs.revision }}" >> $GITHUB_ENV
+          echo "VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
         
       - name: Setup Go 1.21
         uses: actions/setup-go@v5
@@ -88,7 +99,7 @@ jobs:
         with:
           repo: meshery-extensions-packages
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
-          tag: ${{ env.LATEST_EXTENSION_VERSION }}
+          tag: ${{ env.EXTENSION_VERSION }}
           name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
           allowUpdates: true
           artifactErrorsFailBuild: true
