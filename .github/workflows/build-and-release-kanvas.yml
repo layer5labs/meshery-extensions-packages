@@ -112,8 +112,8 @@ jobs:
         with:
           repo: meshery-extensions
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
-          tag: ${{ env.LATEST_EXTENSION_VERSION }}
-          name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
+          tag: ${{ env.VERSION }}
+          name: Meshery Extensions ${{ env.VERSION }}
           allowUpdates: true
           artifactErrorsFailBuild: true
           artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
