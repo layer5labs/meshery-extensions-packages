@@ -80,8 +80,8 @@ jobs:
           export PROVIDER_PATH="provider/navigator";
           make kanvas-prod;
           
-          tar -zcf provider-meshery.tar.gz ${HOME}/.meshery/provider;
-          tree ${HOME}/.meshery/provider;
+          tar -zcf provider-meshery.tar.gz .meshery/provider;
+          tree .meshery/provider;
       
       - name: publish stable release on meshery-extensions-packages from tag
         uses: ncipollo/release-action@v1
