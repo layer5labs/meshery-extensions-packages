@@ -80,10 +80,10 @@ jobs:
           export PROVIDER_PATH="provider/navigator";
           make prod;
       - name: Generate Artifact
-        working-directory: /home/runner
+        working-directory: /home/runner/.meshery/provider/Meshery/${{ env.LATEST_EXTENSION_VERSION }}
         run: |
           pwd;
-          tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz .meshery/provider;
+          tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz ./provider;
           ls;
           tree ${{ github.workspace }}/meshery-extensions;
       - name: debug
