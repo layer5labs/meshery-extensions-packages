@@ -47,7 +47,7 @@ jobs:
 
       - name: Get latest version for meshery and meshery-extensions
         working-directory: "meshery-extensions"
-        run:
+        run: |
           export $(make -f Makefile meshery_version)
           export $(make -f Makefile extension_version)
           export $(make -f Makefile extension_revision)
