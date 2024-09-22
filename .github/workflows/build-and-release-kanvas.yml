@@ -53,6 +53,7 @@ jobs:
           export $(make -f Makefile extension_revision)
 
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
           echo "EXTENSION_REVISION=$EXTENSION_REVISION" >> $GITHUB_ENV
           echo "LATEST_EXTENSION_VERSION=$MESHERY_VERSION-$EXTENSION_REVISION" >> $GITHUB_ENV
 
@@ -61,6 +62,7 @@ jobs:
         run: |
           echo Using manually dispatch values of ${{ inputs.version }} and ${{ inputs.revision }}
           echo "MESHERY_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
           echo "EXTENSION_REVISION=${{ inputs.revision }}" >> $GITHUB_ENV
           echo "LATEST_EXTENSION_VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
         
@@ -83,8 +85,8 @@ jobs:
         working-directory: /home/runner/.meshery/provider/Meshery/${{ env.EXTENSION_VERSION }}
         run: |
           pwd;
-          tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz ./provider;
           ls;
+          tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz ./provider;
           tree ${{ github.workspace }}/meshery-extensions;
       - name: debug
         working-directory: ./meshery-extensions
