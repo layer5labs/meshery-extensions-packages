@@ -11,9 +11,9 @@ import (
 )
 
 type Subscription struct {
-	PricingPage   string                 `json:"pricing_page,omitempty"`
-	Documentation string                 `json:"documentation,omitempty"`
-	EntireRow     map[string]string      `json:"entire_row,omitempty"` // Changed to map headers to values
+	PricingPage   string            `json:"pricing_page,omitempty"`
+	Documentation string            `json:"documentation,omitempty"`
+	EntireRow     map[string]string `json:"entire_row,omitempty"`
 }
 
 func main() {
@@ -68,13 +68,19 @@ func main() {
 		includeSub := false
 
 		for i, header := range headers {
-			// Store the header-value pairs in the EntireRow map
-			sub.EntireRow[strings.TrimSpace(header)] = strings.TrimSpace(record[i])
+			trimmedHeader := strings.TrimSpace(header)
+			lowercaseHeader := strings.ToLower(trimmedHeader)
+
+			// Only include specified headers in the EntireRow map
+			switch lowercaseHeader {
+			case "category", "function", "feature", "subscription tier", "tech", "pricing page?", "documented?":
+				sub.EntireRow[trimmedHeader] = strings.TrimSpace(record[i])
+			}
 
 			// Check the pricing page and documented fields
-			switch strings.ToLower(strings.TrimSpace(header)) {
+			switch lowercaseHeader {
 			case "pricing page?":
-				value := strings.ToLower(record[i])
+				value := strings.ToLower(strings.TrimSpace(record[i]))
 				if value == "x" || value == "true" {
 					sub.PricingPage = "true"
 					includeSub = true

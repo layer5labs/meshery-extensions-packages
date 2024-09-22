@@ -1,9 +1,0 @@
-FROM golang:1.21
-
-WORKDIR /go/src/app
-
-COPY . .
-
-RUN go mod download
-
-CMD ["go", "run", "/go/src/app/main.go"]
