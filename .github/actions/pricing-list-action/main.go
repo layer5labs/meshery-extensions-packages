@@ -67,27 +67,6 @@ func main() {
         }
         includeSub := false
 
-        // for i, header := range headers {
-        //     // Store the header-value pairs in the EntireRow map
-        //     sub.EntireRow[strings.TrimSpace(header)] = strings.TrimSpace(record[i])
-
-        //     // Check the pricing page and documented fields
-        //     switch strings.ToLower(strings.TrimSpace(header)) {
-        //     case "pricing page?":
-        //         value := strings.ToLower(record[i])
-        //         if value == "x" || value == "true" {
-        //             sub.PricingPage = "true"
-        //             includeSub = true
-        //         }
-        //     case "documented?":
-        //         value := record[i]
-        //         if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
-        //             sub.Documentation = value
-        //             includeSub = true
-        //         }
-        //     }
-        // }
-
 		for i, header := range headers {
 			trimmedHeader := strings.TrimSpace(header)
 			lowercaseHeader := strings.ToLower(trimmedHeader)
