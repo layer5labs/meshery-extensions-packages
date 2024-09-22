@@ -11,9 +11,9 @@ import (
 )
 
 type Subscription struct {
-	PricingPage   string            `json:"pricing_page,omitempty"`
-	Documentation string            `json:"documentation,omitempty"`
-	EntireRow     map[string]string `json:"entire_row,omitempty"`
+	PricingPage   string                 `json:"pricing_page,omitempty"`
+	Documentation string                 `json:"documentation,omitempty"`
+	EntireRow     map[string]string      `json:"entire_row,omitempty"`
 }
 
 func main() {
@@ -55,18 +55,7 @@ func main() {
 		panic(err)
 	}
 
-	// Log all headers found
 	fmt.Println("Headers found in CSV:", headers)
-
-	expectedHeaders := map[string]bool{
-		"category":          true,
-		"function":          true,
-		"feature":           true,
-		"subscription tier": true,
-		"tech":              true,
-		"pricing page?":     true,
-		"documented?":       true,
-	}
 
 	var subscriptions []Subscription
 	for {
@@ -81,25 +70,13 @@ func main() {
 		includeSub := false
 
 		for i, header := range headers {
-			trimmedHeader := strings.TrimSpace(header)
-			lowercaseHeader := strings.ToLower(trimmedHeader)
-
-			// Log each header as it is being processed
-			fmt.Printf("Processing Header: '%s'\n", trimmedHeader)
-
-			if expectedHeaders[lowercaseHeader] {
-				// Log if the header is found in the expected list
-				fmt.Printf("Header '%s' matches expected list\n", trimmedHeader)
-				sub.EntireRow[trimmedHeader] = strings.TrimSpace(record[i])
-			} else {
-				// Log if the header is not in the expected list
-				fmt.Printf("Header '%s' is not in the expected list\n", trimmedHeader)
-			}
+			// Store the header-value pairs in the EntireRow map
+			sub.EntireRow[strings.TrimSpace(header)] = strings.TrimSpace(record[i])
 
 			// Check the pricing page and documented fields
-			switch lowercaseHeader {
+			switch strings.ToLower(strings.TrimSpace(header)) {
 			case "pricing page?":
-				value := strings.ToLower(strings.TrimSpace(record[i]))
+				value := strings.ToLower(record[i])
 				if value == "x" || value == "true" {
 					sub.PricingPage = "true"
 					includeSub = true
