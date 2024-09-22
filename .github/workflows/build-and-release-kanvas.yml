@@ -80,7 +80,7 @@ jobs:
           export PROVIDER_PATH="provider/navigator";
           make prod;
       - name: Generate Artifact
-        working-directory: /home/runner/.meshery/provider/Meshery/${{ env.EXTENSION_REVISION }}
+        working-directory: /home/runner/.meshery/provider/Meshery/${{ env.EXTENSION_VERSION }}
         run: |
           pwd;
           tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz ./provider;
