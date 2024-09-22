@@ -12,7 +12,6 @@ type Subscription struct {
 	PricingPage   string                 `json:"pricing_page,omitempty"`
 	Documentation string                 `json:"documentation,omitempty"`
 	EntireRow     map[string]string      `json:"entire_row,omitempty"` 
-}
 func main() {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", os.Getenv("INPUT_SPREADSHEET_URI"), nil)
@@ -67,6 +66,7 @@ func main() {
 
 			// Check the pricing page and documented fields
 			switch strings.ToLower(strings.TrimSpace(header)) {
+			case "pricing page":
 			case "pricing page?":
 				value := strings.ToLower(record[i])
 				if value == "x" || value == "true" {
