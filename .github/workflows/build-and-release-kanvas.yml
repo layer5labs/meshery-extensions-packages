@@ -79,9 +79,9 @@ jobs:
         run: |
           export PROVIDER_PATH="provider/navigator";
           make prod;
-          cd /home/runner;
-          tar -zcf ${{ github.workspace }}/meshery/extensions/provider-meshery.tar.gz /home/runner/.meshery/provider;
-          tree /home/runner/.meshery/provider;
+          cd ${{ github.workspace }};
+          tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz ${{ github.workspace }}/.meshery/provider;
+          tree /home/runner/${{ github.workspace }}/.meshery/provider;
       - name: debug
         working-directory: ./meshery-extensions
         run: |
