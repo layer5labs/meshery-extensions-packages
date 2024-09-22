@@ -82,10 +82,13 @@ jobs:
 
           tar -zcf provider-meshery.tar.gz /home/runner/.meshery/provider;
           tree /home/runner/.meshery/provider;
-      
+      - name: debug
+        run: |
+          ls;
+          pwd;
+          echo "${{ github.workspace }}"
       - name: publish stable release on meshery-extensions-packages from tag
         uses: ncipollo/release-action@v1
-        working-directory: ./meshery-extensions
         with:
           repo: meshery-extensions-packages
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
@@ -93,7 +96,7 @@ jobs:
           name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: "provider-meshery.tar.gz"
+          artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
           replacesArtifacts: true
 
@@ -106,7 +109,7 @@ jobs:
           name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: "provider-meshery.tar.gz"
+          artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
           replacesArtifacts: true          
 
