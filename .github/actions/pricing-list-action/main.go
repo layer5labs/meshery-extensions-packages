@@ -11,9 +11,9 @@ import (
 )
 
 type Subscription struct {
-    PricingPage   string                 json:"pricing_page,omitempty"
-    Documentation string                 json:"documentation,omitempty"
-    EntireRow     map[string]string      json:"entire_row,omitempty"
+    PricingPage   string                 `json:"pricing_page,omitempty"`
+    Documentation string                 `json:"documentation,omitempty"`
+    EntireRow     map[string]string      `json:"entire_row,omitempty"`
 }
 
 func main() {
