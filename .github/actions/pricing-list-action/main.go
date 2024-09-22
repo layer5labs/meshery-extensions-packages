@@ -67,26 +67,53 @@ func main() {
         }
         includeSub := false
 
-        for i, header := range headers {
-            // Store the header-value pairs in the EntireRow map
-            sub.EntireRow[strings.TrimSpace(header)] = strings.TrimSpace(record[i])
+        // for i, header := range headers {
+        //     // Store the header-value pairs in the EntireRow map
+        //     sub.EntireRow[strings.TrimSpace(header)] = strings.TrimSpace(record[i])
 
-            // Check the pricing page and documented fields
-            switch strings.ToLower(strings.TrimSpace(header)) {
-            case "pricing page?":
-                value := strings.ToLower(record[i])
-                if value == "x" || value == "true" {
-                    sub.PricingPage = "true"
-                    includeSub = true
-                }
-            case "documented?":
-                value := record[i]
-                if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
-                    sub.Documentation = value
-                    includeSub = true
-                }
-            }
-        }
+        //     // Check the pricing page and documented fields
+        //     switch strings.ToLower(strings.TrimSpace(header)) {
+        //     case "pricing page?":
+        //         value := strings.ToLower(record[i])
+        //         if value == "x" || value == "true" {
+        //             sub.PricingPage = "true"
+        //             includeSub = true
+        //         }
+        //     case "documented?":
+        //         value := record[i]
+        //         if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
+        //             sub.Documentation = value
+        //             includeSub = true
+        //         }
+        //     }
+        // }
+
+		for i, header := range headers {
+			trimmedHeader := strings.TrimSpace(header)
+			lowercaseHeader := strings.ToLower(trimmedHeader)
+
+			// Only include specified headers in the EntireRow map
+			switch lowercaseHeader {
+			case "category", "function", "feature", "subscription tier", "tech", "pricing page?", "documented?":
+				sub.EntireRow[trimmedHeader] = strings.TrimSpace(record[i])
+			}
+
+			// Check the pricing page and documented fields
+			switch lowercaseHeader {
+			case "pricing page?":
+				value := strings.ToLower(strings.TrimSpace(record[i]))
+				if value == "x" || value == "true" {
+					sub.PricingPage = "true"
+					includeSub = true
+				}
+			case "documented?":
+				value := record[i]
+				if strings.HasPrefix(value, "https://docs.meshery.io/") || strings.HasPrefix(value, "https://docs.layer5.io/") {
+					sub.Documentation = value
+					includeSub = true
+				}
+			}
+		}
 
         // If a match is found, include this row in the JSON output
         if includeSub {
