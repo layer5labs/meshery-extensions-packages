@@ -83,35 +83,37 @@ jobs:
           tar -zcf provider-meshery.tar.gz /home/runner/.meshery/provider;
           tree /home/runner/.meshery/provider;
       - name: debug
+        working-directory: ./meshery-extensions
         run: |
           ls;
           pwd;
           echo "${{ github.workspace }}"
-      - name: publish stable release on meshery-extensions-packages from tag
-        uses: ncipollo/release-action@v1
-        with:
-          repo: meshery-extensions-packages
-          token: ${{ secrets.RELEASEDRAFTER_PAT }}
-          tag: ${{ env.LATEST_EXTENSION_VERSION }}
-          name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
-          allowUpdates: true
-          artifactErrorsFailBuild: true
-          artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
-          omitNameDuringUpdate: true
-          replacesArtifacts: true
+          ls .
+      # - name: publish stable release on meshery-extensions-packages from tag
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     repo: meshery-extensions-packages
+      #     token: ${{ secrets.RELEASEDRAFTER_PAT }}
+      #     tag: ${{ env.LATEST_EXTENSION_VERSION }}
+      #     name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
+      #     allowUpdates: true
+      #     artifactErrorsFailBuild: true
+      #     artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
+      #     omitNameDuringUpdate: true
+      #     replacesArtifacts: true
 
-      - name: publish stable release on meshery-extensions from tag
-        uses: ncipollo/release-action@v1
-        with:
-          repo: meshery-extensions
-          token: ${{ secrets.RELEASEDRAFTER_PAT }}
-          tag: ${{ env.LATEST_EXTENSION_VERSION }}
-          name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
-          allowUpdates: true
-          artifactErrorsFailBuild: true
-          artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
-          omitNameDuringUpdate: true
-          replacesArtifacts: true          
+      # - name: publish stable release on meshery-extensions from tag
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     repo: meshery-extensions
+      #     token: ${{ secrets.RELEASEDRAFTER_PAT }}
+      #     tag: ${{ env.LATEST_EXTENSION_VERSION }}
+      #     name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
+      #     allowUpdates: true
+      #     artifactErrorsFailBuild: true
+      #     artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
+      #     omitNameDuringUpdate: true
+      #     replacesArtifacts: true          
 
       # - name: Send Email on Extensions Release Failure
       #   if: ${{ failure() }}
