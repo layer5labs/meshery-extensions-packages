@@ -55,6 +55,19 @@ func main() {
 		panic(err)
 	}
 
+	// Log all headers found
+	fmt.Println("Headers found in CSV:", headers)
+
+	expectedHeaders := map[string]bool{
+		"category":          true,
+		"function":          true,
+		"feature":           true,
+		"subscription tier": true,
+		"tech":              true,
+		"pricing page?":     true,
+		"documented?":       true,
+	}
+
 	var subscriptions []Subscription
 	for {
 		record, err := reader.Read()
@@ -71,10 +84,16 @@ func main() {
 			trimmedHeader := strings.TrimSpace(header)
 			lowercaseHeader := strings.ToLower(trimmedHeader)
 
-			// Only include specified headers in the EntireRow map
-			switch lowercaseHeader {
-			case "category", "function", "feature", "subscription tier", "tech", "pricing page?", "documented?":
+			// Log each header as it is being processed
+			fmt.Printf("Processing Header: '%s'\n", trimmedHeader)
+
+			if expectedHeaders[lowercaseHeader] {
+				// Log if the header is found in the expected list
+				fmt.Printf("Header '%s' matches expected list\n", trimmedHeader)
 				sub.EntireRow[trimmedHeader] = strings.TrimSpace(record[i])
+			} else {
+				// Log if the header is not in the expected list
+				fmt.Printf("Header '%s' is not in the expected list\n", trimmedHeader)
 			}
 
 			// Check the pricing page and documented fields
