@@ -133,6 +133,18 @@
     }
   },
   {
+    "documentation": "https://docs.meshery.io/extensions/publishing-a-design",
+    "entire_row": {
+      "Category": "Designs",
+      "Documented?": "https://docs.meshery.io/extensions/publishing-a-design",
+      "Feature": "Publish a design",
+      "Function": "Publish Design",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": "Meshery"
+    }
+  },
+  {
     "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management",
     "entire_row": {
       "Category": "Filters",
@@ -230,10 +242,9 @@
   },
   {
     "pricing_page": "true",
-    "documentation": "https://docs.meshery.io/guides/configuration-management/filter-management",
     "entire_row": {
       "Category": "Filters",
-      "Documented?": "https://docs.meshery.io/guides/configuration-management/filter-management",
+      "Documented?": "",
       "Feature": "Import, Unpublish, Publish, Download, Edit, Clone, Delete, Details of WASM Filter",
       "Function": "WASM Filter and filter",
       "Pricing page?": "X",
