@@ -1,0 +1,102 @@
+name: Generate permissions constants
+on:
+  workflow_dispatch:
+    inputs:
+      spreadsheet_uri:
+        description: Link of the spreadsheet containing keys.
+        type: string
+        default: https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=64355745&single=true&output=csv
+jobs:
+  fetch-keys:
+    name: Fetch Keys
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          fetch-depth: 1
+
+      - name: Check out Meshery repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: meshery/meshery
+          path: meshery
+
+      - name: Check out Cloud repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          path: meshery-cloud
+
+      - name: Check out Cloud repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5labs/meshery-extensions
+          path: meshery-extensions
+
+      - name: Set spreadsheet_uri as environment variable
+        run: echo "spreadsheet_uri=https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=64355745&single=true&output=csv" >> $GITHUB_ENV
+        if: inputs.spreadsheet_uri != ''
+          echo "spreadsheet_uri=${{ inputs.spreadsheet_uri }}" >> $GITHUB_ENV
+
+      - name: Dump keys from the spreadsheet
+        run: |
+          curl -L "${{ env.spreadsheet_uri }}" -o "./keys.csv";
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+
+      - name: Run Go program to generate permissions_constants.js
+        run: |
+          go run .github/actions/permission-constants-updater/main.go keys.csv
+
+      - name: Copy to Meshery
+        run: |
+          cp permission_constants.js meshery/ui/utils/permission_constants.js
+
+      - name: Commit changes to Meshery
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Updated permissions constants.
+          repository: ./meshery
+          branch: master
+          commit_options: "--signoff"
+          commit_user_name: l5io
+          commit_user_email: ci@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>author of the commit that triggered the run
+
+      - name: Copy to Meshery Cloud
+        run: |
+          cp permission_constants.js meshery-cloud/ui/utility/permission_constants.js
+
+      - name: Commit changes to Meshery-Cloud repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Updated permissions constants
+          repository: ./meshery-cloud
+          branch: master
+          commit_options: "--signoff"
+          commit_user_name: l5io
+          commit_user_email: ci@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>author of the commit that triggered the run
+
+      - name: Copy to Meshery Extensions
+        run: |
+          cp permission_constants.js meshery-extensions/meshmap/src/utils/permission_constants.js
+
+      - name: Commit changes to Meshery Extensions repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Updated permissions constants
+          repository: ./meshery-extensions
+          branch: master
+          commit_options: "--signoff"
+          commit_user_name: l5io
+          commit_user_email: ci@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>author of the commit that triggered the run
