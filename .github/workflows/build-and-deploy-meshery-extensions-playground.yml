@@ -2,28 +2,27 @@ name: Build and Rollout Kanvas
 on:
   workflow_call:
     inputs:
-      branch: 
+      branch:
         description: Repository branch to build.
         type: string
         default: master
   workflow_dispatch:
     inputs:
-      branch: 
+      branch:
         description: Repository branch to build.
         type: string
         default: master
-      # The trigger-remote-provider-actions sends these inputs hence they need to be mentioned.
       version:
         type: string
       revision:
         type: string
 jobs:
   build-and-release:
-      name: Build and Rollout Kanvas
-      env:
-        RELEASE_CHANNEL: "kanvas"
-      runs-on: ubuntu-latest 
-      steps:
+    name: Build and Rollout Kanvas
+    env:
+      RELEASE_CHANNEL: "kanvas"
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -31,8 +30,8 @@ jobs:
           path: "meshery"
           repository: meshery/meshery
           ref: ${{ inputs.branch }}
-      
-      - name: Fetch `get-meshery-version` script from meshery-extensions.  
+
+      - name: Fetch `get-meshery-version` script from meshery-extensions.
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -45,13 +44,13 @@ jobs:
       - name: File system view
         run: |
           pwd;
-          ls; 
+          ls;
       - name: Fetch Meshery version
         run: |
           chmod +x ./meshery-extensions/build/get-meshery-version
           MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-version)
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
-      
+
       - name: Docker login
         uses: azure/docker-login@v1
         with:
@@ -59,7 +58,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Configure Meshery UI
-        working-directory: './meshery'
+        working-directory: "./meshery"
         run: |
           cat << EOF > ui/ui.config.js
           module.exports = {
@@ -68,22 +67,22 @@ jobs:
             },
           };
           EOF
-          
+
       - name: Docker build & tag
-        working-directory: './meshery'
+        working-directory: "./meshery"
         run: |
           DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
-     
+
       - name: Docker push
         run: |
           docker push layer5/meshery:kanvas-latest
-          
+
           docker push layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker push layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
-      
+
       - name: Rollout Kanvas
         uses: appleboy/ssh-action@master
         with:
