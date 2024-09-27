@@ -13,9 +13,13 @@ on:
         type: string
         default: master
       version:
+        description: "Version of Meshery (e.g. v0.0.0)"
         type: string
+        required: false
       revision:
+        description: "Revision of Extension (e.g. 1)"
         type: string
+        required: false
 jobs:
   build-and-release:
     name: Build and Rollout Kanvas
@@ -23,7 +27,7 @@ jobs:
       RELEASE_CHANNEL: "kanvas"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout meshery/meshery
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
@@ -40,16 +44,23 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             build/get-meshery-version
+            build/get-meshery-extension-version
           sparse-checkout-cone-mode: false
+    
       - name: File system view
         run: |
           pwd;
           ls;
-      - name: Fetch Meshery version
+      
+      - name: Fetch Meshery and Extensions version
         run: |
           chmod +x ./meshery-extensions/build/get-meshery-version
           MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-version)
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
+
+          chmod +x ./meshery-extensions/build/get-meshery-extensions-version
+          MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-extensions-version)
+          echo "MESHERY_EXTENSION_VERSION=$MESHERY_EXTENSION_VERSION" >> $GITHUB_ENV
 
       - name: Docker login
         uses: azure/docker-login@v1
@@ -68,16 +79,35 @@ jobs:
           };
           EOF
 
-      - name: Docker build & tag
+      - name: Docker build
         working-directory: "./meshery"
         run: |
           DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
+      - name: Bundle kanvas extension with the image
+        working-directory: 'meshery-extensions-packages'
+        run: |
+          wget https://github.com/layer5labs/meshery-extensions-packages/releases/download/${{ env.MESHERY_EXTENSION_VERSION }}/provider-meshery.tar.gz
+
+          mkdir extensions-package
+          tar xzf provider-meshery.tar.gz -C extensions-package 
+          mkdir -p provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
+          mv extensions-package provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
+          
+          ls;
+
+          docker run -d --name meshery-tmp layer5/meshery:kanvas-latest
+
+          docker cp ./Meshery meshery-tmp:/home/appuser/.meshery/provider/Meshery
+
+          docker container commit meshery-tmp layer5/meshery:kanvas-latest
+      
+      - name: Docker tag & push
+        run: |
+
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
 
-      - name: Docker push
-        run: |
           docker push layer5/meshery:kanvas-latest
 
           docker push layer5/meshery:kanvas-${GITHUB_SHA::8}

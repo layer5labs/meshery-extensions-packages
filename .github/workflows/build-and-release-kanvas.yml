@@ -15,7 +15,7 @@ on:
 
 jobs:
   release-kanvas:
-    name: Build and Rollout Kanvas
+    name: Build and Release Kanvas
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout meshery/meshery
