@@ -95,7 +95,7 @@ jobs:
           node-version: ${{ secrets.NODE_VERSION }}
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
-        run: make kanvas-prod # gql build is not done for now
+        run: make prod # gql build is not done for now
       - name: Build Graphql Plugin
         working-directory: ./meshery-extensions
         run: make graphql
