@@ -13,7 +13,7 @@
             "description": "This is a special edition badge and it is awarded to CNCF Ambassadors." 
         },
         {
-            "slug": "hacktoberfest-contributor",
+            "slug": "hacktoberfest-24-contributor",
             "location": "assets/badges/hacktoberfest-contributor-2024/layer5-hacktoberfest-badge-2024.png",
             "title": "Hacktoberfest'24 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
