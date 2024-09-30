@@ -46,12 +46,12 @@ jobs:
             build/get-meshery-version
             build/get-meshery-extension-version
           sparse-checkout-cone-mode: false
-    
+
       - name: File system view
         run: |
           pwd;
           ls;
-      
+
       - name: Fetch Meshery and Extensions version
         run: |
           chmod +x ./meshery-extensions/build/get-meshery-version
@@ -78,14 +78,31 @@ jobs:
             },
           };
           EOF
-
-      - name: Docker build
-        working-directory: "./meshery"
-        run: |
-          DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
+      
+      - name: Docker Meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: layer5/meshery
+          tags: |
+            type=raw,value=${{env.RELEASE_CHANNEL}}-{{sha}}
+            type=semver,pattern={{version}},value=${{env.MESHERY_VERSION}}
+            type=raw,value=${{env.RELEASE_CHANNEL}}-{{tag}}
+    
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: install/docker/.
+          build-args: |
+            TOKEN=${{ secrets.GLOBAL_TOKEN }}
+            GIT_COMMITSHA=${GITHUB_SHA::8}
+            GIT_VERSION=${{ env.MESHERY_VERSION }}
+            RELEASE_CHANNEL=${env.RELEASE_CHANNEL}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/amd64,linux/arm64
 
       - name: Bundle kanvas extension with the image
-        working-directory: 'meshery-extensions-packages'
+        working-directory: "meshery-extensions-packages"
         run: |
           wget https://github.com/layer5labs/meshery-extensions-packages/releases/download/${{ env.MESHERY_EXTENSION_VERSION }}/provider-meshery.tar.gz
 
@@ -93,7 +110,7 @@ jobs:
           tar xzf provider-meshery.tar.gz -C extensions-package 
           mkdir -p provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
           mv extensions-package provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
-          
+
           ls;
 
           docker run -d --name meshery-tmp layer5/meshery:kanvas-latest
@@ -101,7 +118,7 @@ jobs:
           docker cp ./Meshery meshery-tmp:/home/appuser/.meshery/provider/Meshery
 
           docker container commit meshery-tmp layer5/meshery:kanvas-latest
-      
+
       - name: Docker tag & push
         run: |
 
