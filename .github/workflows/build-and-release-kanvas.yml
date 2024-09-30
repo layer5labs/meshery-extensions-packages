@@ -15,10 +15,9 @@ on:
 
 jobs:
   release-kanvas:
-    name: Build and Rollout Kanvas
+    name: Build and Release Kanvas
     runs-on: "ubuntu-latest"
     steps:
-
       - name: Checkout meshery/meshery
         uses: actions/checkout@v4
         with:
@@ -26,8 +25,8 @@ jobs:
           path: "meshery"
           repository: meshery/meshery
           ref: master
-          
-      - name: Checkout meshery-extensions 
+
+      - name: Checkout meshery-extensions
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -35,8 +34,8 @@ jobs:
           path: "meshery-extensions"
           fetch-depth: 1
           ref: ${{ inputs.branch }}
-      
-      - name: Checkout meshery-cloud 
+
+      - name: Checkout meshery-cloud
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -58,14 +57,14 @@ jobs:
           echo "LATEST_EXTENSION_VERSION=$MESHERY_VERSION-$EXTENSION_REVISION" >> $GITHUB_ENV
 
       - name: Override version and revision, if provided
-        if:  ${{ inputs.version }} 
+        if: ${{ inputs.version }}
         run: |
           echo Using manually dispatch values of ${{ inputs.version }} and ${{ inputs.revision }}
           echo "MESHERY_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
           echo "EXTENSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
           echo "EXTENSION_REVISION=${{ inputs.revision }}" >> $GITHUB_ENV
           echo "LATEST_EXTENSION_VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
-        
+
       - name: Setup Go 1.21
         uses: actions/setup-go@v5
         with:
@@ -85,7 +84,7 @@ jobs:
       - name: Setup Node 16
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: Build extension
         working-directory: ./meshery-extensions
@@ -130,7 +129,7 @@ jobs:
           artifactErrorsFailBuild: true
           artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
-          replacesArtifacts: true          
+          replacesArtifacts: true
 
       - name: Send Email on Extensions Release Failure
         if: ${{ failure() }}
@@ -153,4 +152,6 @@ jobs:
             <b>JOB:</b> ${{ github.job }}<br />
             <b>REASON:</b> ${{ env.msg }}<br />
             <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
-
+      
+      - name: Rollout Kanvas
+        uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
