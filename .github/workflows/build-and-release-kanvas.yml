@@ -70,7 +70,18 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.21"
-
+      
+      - name: Verify go.mod compatibility
+        working-directory: ./meshery-extensions
+        run: |
+          echo "reason='go.mod for Meshery ${{env.MESHERY_VERSION }} and extension ${{ env.EXTENSION_VERSION }} has diverged'" >> $GITHUB_ENV;
+          make graphql-sync-err
+          if [ $? -ne 0 ]; then
+            exit 1;
+          fi
+          # reset the reason otherwise
+          echo "reason=" >> $GITHUB_ENV;
+          
       - name: Setup Node 16
         uses: actions/setup-node@v4
         with:
