@@ -94,6 +94,7 @@ jobs:
         with:
           node-version: ${{ secrets.NODE_VERSION }}
           cache: "npm"
+          cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
         run: make meshmap-prod # gql build is not done for now
@@ -172,7 +173,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
-          cache: "npm"
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.10.0
         with:
