@@ -13,10 +13,10 @@
             "description": "This is a special edition badge and it is awarded to CNCF Ambassadors." 
         },
         {
-            "slug": "hacktoberfest-contributor",
-            "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
-            "title": "Hacktoberfest Contributor",
-            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest."
+            "slug": "hacktoberfest-24-contributor",
+            "location": "assets/badges/hacktoberfest-contributor-2024/layer5-hacktoberfest-badge-2024.png",
+            "title": "Hacktoberfest'24 Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
         }
     ],
     "achievementBadges": [
@@ -109,6 +109,12 @@
             "location": "assets/badges/continuous-contributor/continuous-contributor.png",
             "title": "Continuous Contributor",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions for a long period of time in Layer5 projects in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "hacktoberfest-contributor",
+            "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
+            "title": "Hacktoberfest'23 Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2023."
         }
     ],
     "projectBadges": [

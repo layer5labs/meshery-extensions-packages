@@ -1,0 +1,166 @@
+name: Build and Release Kanvas
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version of Meshery (e.g. v0.0.0)"
+        required: false
+      revision:
+        description: "Revision of Extension (e.g. 1)"
+        required: false
+      branch:
+        description: Branch of `meshery-extensions` repository to deploy.
+        required: false
+        default: master
+
+jobs:
+  release-kanvas:
+    name: Build and Release Kanvas
+    runs-on: "ubuntu-latest"
+    outputs:
+      revision: ${{ steps.fetch-versions.outputs.REVISION }}
+    steps:
+      - name: Checkout meshery/meshery
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          path: "meshery"
+          repository: meshery/meshery
+          ref: master
+
+      - name: Checkout meshery-extensions
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5labs/meshery-extensions
+          path: "meshery-extensions"
+          fetch-depth: 1
+          ref: ${{ inputs.branch }}
+
+      - name: Checkout meshery-cloud
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          path: "meshery-cloud"
+          fetch-depth: 1
+          ref: master
+
+      - name: Get latest version for meshery and meshery-extensions
+        id: fetch-versions
+        working-directory: "meshery-extensions"
+        run: |
+          export $(make -f Makefile meshery_version)
+          export $(make -f Makefile extension_version)
+          export $(make -f Makefile extension_revision)
+
+          echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
+          echo "EXTENSION_REVISION=$EXTENSION_REVISION" >> $GITHUB_ENV
+          echo "LATEST_EXTENSION_VERSION=$MESHERY_VERSION-$EXTENSION_REVISION" >> $GITHUB_ENV
+
+          echo "REVISION=$EXTENSION_REVISION" >> $GITHUB_OUTPUT
+      - name: Override version and revision, if provided
+        if: ${{ inputs.version }}
+        run: |
+          echo Using manually dispatch values of ${{ inputs.version }} and ${{ inputs.revision }}
+          echo "MESHERY_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
+          echo "EXTENSION_REVISION=${{ inputs.revision }}" >> $GITHUB_ENV
+          echo "LATEST_EXTENSION_VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
+
+      - name: Setup Go 1.21
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+      
+      - name: Verify go.mod compatibility
+        working-directory: ./meshery-extensions
+        run: |
+          echo "reason='go.mod for Meshery ${{env.MESHERY_VERSION }} and extension ${{ env.EXTENSION_VERSION }} has diverged'" >> $GITHUB_ENV;
+          make graphql-sync-err
+          if [ $? -ne 0 ]; then
+            exit 1;
+          fi
+          # reset the reason otherwise
+          echo "reason=" >> $GITHUB_ENV;
+          
+      - name: Setup Node 16
+        uses: actions/setup-node@v4
+        with:
+          node-version: "16"
+
+      - name: Build extension
+        working-directory: ./meshery-extensions
+        run: |
+          export PROVIDER_PATH="provider/navigator";
+          make prod;
+      - name: Generate Artifact
+        working-directory: /home/runner/.meshery/provider/Meshery/${{ env.EXTENSION_VERSION }}
+        run: |
+          pwd;
+          ls;
+          tar -zcf ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz ./provider;
+          tree ${{ github.workspace }}/meshery-extensions;
+      - name: debug
+        working-directory: ./meshery-extensions
+        run: |
+          ls;
+          pwd;
+          echo "${{ github.workspace }}"
+          ls .
+      - name: publish stable release on meshery-extensions-packages from tag
+        uses: ncipollo/release-action@v1
+        with:
+          repo: meshery-extensions-packages
+          token: ${{ secrets.RELEASEDRAFTER_PAT }}
+          tag: ${{ env.LATEST_EXTENSION_VERSION }}
+          name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
+          omitNameDuringUpdate: true
+          replacesArtifacts: true
+
+      - name: publish stable release on meshery-extensions from tag
+        uses: ncipollo/release-action@v1
+        with:
+          repo: meshery-extensions
+          token: ${{ secrets.RELEASEDRAFTER_PAT }}
+          tag: ${{ env.LATEST_EXTENSION_VERSION }}
+          name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
+          omitNameDuringUpdate: true
+          replacesArtifacts: true
+
+      - name: Send Email on Extensions Release Failure
+        if: ${{ failure() }}
+        uses: dawidd6/action-send-mail@v3.7.1
+        env:
+          msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: GitHub Actions - Extensions Release Failure
+          from: |
+            "Meshery Extensions" <no-reply@meshery.io>
+          to: |
+            "Layer5 Support" <support@layer5.io>
+          html_body: |
+            <b>REPO:</b> ${{ github.repository }}<br />  
+            <b>WORKFLOW:</b> ${{ github.workflow }}<br />
+            <b>JOB:</b> ${{ github.job }}<br />
+            <b>REASON:</b> ${{ env.msg }}<br />
+            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
+  
+  rollout-kanvas:
+    needs: release-kanvas
+    name: Rollout Kanvas
+    # Rebuilding and packaging the extensions in the Meshery Kanvas build, and rolling them out, will have no effect if the extensions are released independently. This is because the Meshery version will remain the same and will not be redeployed. We will need to access "kanvas.new" to ensure the package gets downloaded. Therefore, we should skip the rollout unless this process or flow changes.
+    if: ${{ fromJSON(needs.release-kanvas.outputs.revision) > 1 }}
+    uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
+      

@@ -31,6 +31,8 @@ on:
         required: true
       MESHERY_CLOUD_AWS_PROD_KEY:
         required: true
+      GLOBAL_TOKEN:
+        required: true
 
   workflow_dispatch:
     inputs:
@@ -66,7 +68,7 @@ jobs:
         uses: actions/setup-node@v4
       - run: npm i -g @redocly/cli@latest
       - name: API Docs - Update schema.yml
-        uses: fjogeleit/yaml-update-action@v0.13.2
+        uses: fjogeleit/yaml-update-action@v0.15.0
         with:
           repository: l5io/meshery-cloud
           branch: master
@@ -164,6 +166,7 @@ jobs:
           ENVIRONMENT=stg
           GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
           RELEASE_CHANNEL=${{inputs.release-environment}}
+          TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
     - name: Deploy staging
@@ -186,7 +189,7 @@ jobs:
           sudo su - -c "whoami"
           make stg-deploy GIT_VERSION=$GIT_VERSION
           docker system prune -f
-          docker image prune -a
+          docker image prune -a -f
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -236,6 +239,7 @@ jobs:
           ENVIRONMENT=prod
           GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
           RELEASE_CHANNEL=${{inputs.release-environment}}
+          TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
     - name: Deploy production
@@ -259,5 +263,5 @@ jobs:
           docker pull layer5/meshery-cloud:production-$GIT_VERSION
           make prod-deploy GIT_VERSION=$GIT_VERSION
           docker system prune -f
-          docker image prune -a
+          docker image prune -a -f
           

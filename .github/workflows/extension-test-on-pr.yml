@@ -96,7 +96,7 @@ jobs:
           cache: "npm"
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
-        run: make meshmap-prod # gql build is not done for now
+        run: make kanvas-prod # gql build is not done for now
       - name: Build Graphql Plugin
         working-directory: ./meshery-extensions
         run: make graphql
@@ -279,7 +279,7 @@ jobs:
         with:
           script: |
               const fs = require('fs')
-              const E2ETestReporter = String(fs.readFileSync('./meshmap/test-report.md'))
+              const E2ETestReporter = String(fs.readFileSync('./meshery-extensions/meshmap/test-report.md'))
   
               return E2ETestReporter
           result-encoding: string
