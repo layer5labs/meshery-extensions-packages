@@ -93,6 +93,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
+          cache: "npm"
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
         run: make meshmap-prod # gql build is not done for now
@@ -171,6 +172,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
+          cache: "npm"
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.10.0
         with:
@@ -239,15 +241,16 @@ jobs:
           ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: Install Meshery Extension dependencies
+        working-directory: meshery-extensions
+        run: cd meshmap; npm ci; cd ../
 
       - name: show tree
         run: tree  -L 2
 
-      - name: Install dependencies
-        run: ls && cd meshery-extensions && make test-setup
+      - name: Install Playwright dependencies
+        working-directory: meshery-extensions
+        run: ls && make test-setup
 
       - name: comment progress start
         uses: hasura/comment-progress@v2.3.0
