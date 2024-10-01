@@ -17,6 +17,8 @@ jobs:
   release-kanvas:
     name: Build and Release Kanvas
     runs-on: "ubuntu-latest"
+    outputs:
+      revision: ${{ steps.fetch-versions.outputs.REVISION }}
     steps:
       - name: Checkout meshery/meshery
         uses: actions/checkout@v4
@@ -45,6 +47,7 @@ jobs:
           ref: master
 
       - name: Get latest version for meshery and meshery-extensions
+        id: fetch-versions
         working-directory: "meshery-extensions"
         run: |
           export $(make -f Makefile meshery_version)
@@ -56,6 +59,7 @@ jobs:
           echo "EXTENSION_REVISION=$EXTENSION_REVISION" >> $GITHUB_ENV
           echo "LATEST_EXTENSION_VERSION=$MESHERY_VERSION-$EXTENSION_REVISION" >> $GITHUB_ENV
 
+          echo "REVISION=$EXTENSION_REVISION" >> $GITHUB_OUTPUT
       - name: Override version and revision, if provided
         if: ${{ inputs.version }}
         run: |
@@ -152,6 +156,11 @@ jobs:
             <b>JOB:</b> ${{ github.job }}<br />
             <b>REASON:</b> ${{ env.msg }}<br />
             <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
+  
+  rollout-kanvas:
+    needs: release-kanvas
+    name: Rollout Kanvas
+    # Rebuilding and packaging the extensions in the Meshery Kanvas build, and rolling them out, will have no effect if the extensions are released independently. This is because the Meshery version will remain the same and will not be redeployed. We will need to access "kanvas.new" to ensure the package gets downloaded. Therefore, we should skip the rollout unless this process or flow changes.
+    if: ${{ fromJSON(needs.release-kanvas.outputs.revision) > 1 }}
+    uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
       
-      - name: Rollout Kanvas
-        uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
