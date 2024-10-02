@@ -1,0 +1,21 @@
+name: Release Notes Publisher Meshery Extensions
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update_release_notes_latest:
+    name: Trigger update for latest release version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.RELEASEDRAFTER_PAT }}
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+                owner: 'layer5io',
+                repo: 'docs',
+                workflow_id: 'meshery-extension-release-docs.yml',
+                ref: 'master'
+            })
