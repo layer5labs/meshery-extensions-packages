@@ -79,32 +79,10 @@ jobs:
           };
           EOF
       
-      - name: Docker Meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: layer5/meshery
-          tags: |
-            type=raw,value=${{env.RELEASE_CHANNEL}}-{{sha}}
-            type=semver,pattern={{version}},value=${{env.MESHERY_VERSION}}
-            type=raw,value=${{env.RELEASE_CHANNEL}}-{{tag}}
-      
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        
-      - name: Build and Push
-        uses: docker/build-push-action@v6
-        with:
-          context: ./meshery/install/docker/.
-          build-args: |
-            TOKEN=${{ secrets.GLOBAL_TOKEN }}
-            GIT_COMMITSHA=${GITHUB_SHA::8}
-            GIT_VERSION=${{ env.MESHERY_VERSION }}
-            RELEASE_CHANNEL=${env.RELEASE_CHANNEL}
-          tags: ${{ steps.meta.outputs.tags }}
-          platforms: linux/amd64,linux/arm64
+     - name: Docker build & tag
+        working-directory: './meshery'
+        run: |
+          DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
       - name: Bundle kanvas extension with the image
         working-directory: "meshery-extensions-packages"
