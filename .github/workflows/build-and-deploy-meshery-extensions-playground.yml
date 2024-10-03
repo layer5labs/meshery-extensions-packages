@@ -88,7 +88,12 @@ jobs:
             type=raw,value=${{env.RELEASE_CHANNEL}}-{{sha}}
             type=semver,pattern={{version}},value=${{env.MESHERY_VERSION}}
             type=raw,value=${{env.RELEASE_CHANNEL}}-{{tag}}
-    
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
