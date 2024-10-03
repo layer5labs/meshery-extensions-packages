@@ -59,7 +59,7 @@ jobs:
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
 
           chmod +x ./meshery-extensions/build/get-extension-version
-          MESHERY_VERSION=$(./meshery-extensions/build/get-extension-version)
+          MESHERY_EXTENSION_VERSION=$(./meshery-extensions/build/get-extension-version)
           echo "MESHERY_EXTENSION_VERSION=$MESHERY_EXTENSION_VERSION" >> $GITHUB_ENV
 
       - name: Docker login
