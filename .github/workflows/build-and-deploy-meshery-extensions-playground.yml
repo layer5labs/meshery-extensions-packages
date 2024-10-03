@@ -35,7 +35,7 @@ jobs:
           repository: meshery/meshery
           ref: ${{ inputs.branch }}
 
-      - name: Fetch `get-meshery-version` script from meshery-extensions.
+      - name: Fetch version scripts from meshery-extensions.
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             build/get-meshery-version
-            build/get-meshery-extension-version
+            build/get-extension-version
           sparse-checkout-cone-mode: false
 
       - name: File system view
@@ -58,8 +58,8 @@ jobs:
           MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-version)
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
 
-          chmod +x ./meshery-extensions/build/get-meshery-extensions-version
-          MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-extensions-version)
+          chmod +x ./meshery-extensions/build/get-extension-version
+          MESHERY_VERSION=$(./meshery-extensions/build/get-extension-version)
           echo "MESHERY_EXTENSION_VERSION=$MESHERY_EXTENSION_VERSION" >> $GITHUB_ENV
 
       - name: Docker login
