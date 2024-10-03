@@ -85,7 +85,7 @@ jobs:
           DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
       - name: Bundle kanvas extension with the image
-        working-directory: "meshery-extensions-packages"
+        working-directory: "./meshery-extensions"
         run: |
           wget https://github.com/layer5labs/meshery-extensions-packages/releases/download/${{ env.MESHERY_EXTENSION_VERSION }}/provider-meshery.tar.gz
 
