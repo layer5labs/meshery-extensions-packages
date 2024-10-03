@@ -101,7 +101,7 @@ jobs:
           mkdir extensions-package
           tar xzf provider-meshery.tar.gz -C extensions-package 
           mkdir -p provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
-          mv extensions-package provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
+          mv extensions-package/provider provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
 
           ls;
 
