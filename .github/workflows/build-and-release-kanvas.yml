@@ -162,5 +162,6 @@ jobs:
     name: Build and Rollout Kanvas
     # Rebuilding and packaging the extensions in the Meshery Kanvas build, and rolling them out, will have no effect if the extensions are released independently. This is because the Meshery version will remain the same and will not be redeployed. We will need to access "kanvas.new" to ensure the package gets downloaded. Therefore, we should skip the rollout unless this process or flow changes.
     if: ${{ fromJSON(needs.release-kanvas.outputs.revision) > 1 }}
+    secrets: inherit
     uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
       
