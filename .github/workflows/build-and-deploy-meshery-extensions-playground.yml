@@ -92,7 +92,7 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
-          context: install/docker/.
+          context: ./meshery/install/docker/.
           build-args: |
             TOKEN=${{ secrets.GLOBAL_TOKEN }}
             GIT_COMMITSHA=${GITHUB_SHA::8}
