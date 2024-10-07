@@ -107,7 +107,7 @@ jobs:
 
           docker run -d --name meshery-tmp layer5/meshery:kanvas-latest
 
-          docker cp ./provider/ meshery-tmp:/home/appuser/.meshery/ 
+          docker cp -a ./provider/ meshery-tmp:/home/appuser/.meshery/ 
 
           docker container commit meshery-tmp layer5/meshery:kanvas-latest
 
