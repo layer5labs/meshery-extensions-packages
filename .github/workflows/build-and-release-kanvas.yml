@@ -20,14 +20,7 @@ jobs:
     outputs:
       revision: ${{ steps.fetch-versions.outputs.REVISION }}
     steps:
-      - name: Checkout meshery/meshery
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          path: "meshery"
-          repository: meshery/meshery
-          ref: master
-
+    
       - name: Checkout meshery-extensions
         uses: actions/checkout@v4
         with:
@@ -68,7 +61,15 @@ jobs:
           echo "EXTENSION_VERSION=$EXTENSION_VERSION" >> $GITHUB_ENV
           echo "EXTENSION_REVISION=${{ inputs.revision }}" >> $GITHUB_ENV
           echo "LATEST_EXTENSION_VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
-
+      
+      - name: Checkout meshery/meshery
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          path: "meshery"
+          repository: meshery/meshery
+          ref: ${{ env.MESHERY_VERSION }}
+          
       - name: Setup Go 1.21
         uses: actions/setup-go@v5
         with:
