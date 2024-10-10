@@ -8,7 +8,7 @@ on:
         default: "warning"
   workflow_call:
     inputs:
-      pr_head_sha:
+      branch_name:
         required: true
         type: string
       pr_number:
@@ -74,7 +74,7 @@ jobs:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
           fetch-depth: 1
-          ref: ${{ inputs.pr_head_sha }}
+          ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Checkout Meshery code
@@ -238,7 +238,7 @@ jobs:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
           fetch-depth: 1
-          ref: ${{ inputs.pr_head_sha }}
+          ref: ${{ inputs.branch_name }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Install Meshery Extension dependencies
