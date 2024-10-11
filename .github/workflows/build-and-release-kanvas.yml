@@ -111,7 +111,7 @@ jobs:
           pwd;
           echo "${{ github.workspace }}"
           ls .
-      - name: Get Meshery Extemsions Release draft
+      - name: Get Meshery Extensions Release draft
         id: release-draft
         env:
           ACCESS_TOKEN: ${{ secrets.RELEASEDRAFTER_PAT }}
