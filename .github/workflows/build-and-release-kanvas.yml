@@ -111,6 +111,13 @@ jobs:
           pwd;
           echo "${{ github.workspace }}"
           ls .
+      - name: Get Meshery Extemsions Release draft
+        id: release-draft
+        env:
+          ACCESS_TOKEN: ${{ secrets.RELEASEDRAFTER_PAT }}
+        run: |
+          release_body=$(curl -sL -H "Authorization: token $ACCESS_TOKEN" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/layer5labs/meshery-extensions/releases | jq -r 'map(select(.draft)) | first | .body')
+          echo "release_body=$release_body" >> $GITHUB_OUTPUT
       - name: publish stable release on meshery-extensions-packages from tag
         uses: ncipollo/release-action@v1
         with:
@@ -123,6 +130,7 @@ jobs:
           artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
           replacesArtifacts: true
+          body: ${{ steps.release-draft.outputs.release_body }}
 
       - name: publish stable release on meshery-extensions from tag
         uses: ncipollo/release-action@v1
@@ -136,6 +144,7 @@ jobs:
           artifacts: ${{ github.workspace }}/meshery-extensions/provider-meshery.tar.gz
           omitNameDuringUpdate: true
           replacesArtifacts: true
+          body: ${{ steps.release-draft.outputs.release_body }}
 
       - name: Send Email on Extensions Release Failure
         if: ${{ failure() }}
