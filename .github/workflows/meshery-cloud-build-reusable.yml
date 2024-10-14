@@ -7,7 +7,7 @@ on:
         type: string
       pr_number:
         required: true
-        type: string
+        type: number
     secrets:
       PROVIDER_TOKEN:
         required: true
