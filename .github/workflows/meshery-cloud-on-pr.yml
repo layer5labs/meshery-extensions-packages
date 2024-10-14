@@ -67,10 +67,6 @@ jobs:
           fetch-depth: 1
           ref: ${{ inputs.pr_commit_sha }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - name: Setup go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ secrets.GO_VERSION }}
       - name: Setup node
         uses: actions/setup-node@v4
         with:
