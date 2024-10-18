@@ -6,6 +6,9 @@ on:
         description: Repository branch to build.
         type: string
         default: master
+    secrets:
+      GH_ACCESS_TOKEN:
+        required: true
   workflow_dispatch:
     inputs:
       branch:
