@@ -4,9 +4,9 @@ on: [repository_dispatch]
 jobs:
   build-ui-and-server:
     if: github.event.action == 'dispatch-pr-test'
-    uses: layer5labs/meshery-extensions-packages/.github/workflows/extension-test-on-pr.yml@master
+    uses: layer5labs/meshery-extensions-packages/.github/workflows/extension-test-reusable.yml@master
     with:
-      branch_name: ${{ github.event.client_payload.branch_name }}
+      checkout_ref: ${{ github.event.client_payload.branch_name }}
       pr_number: ${{ github.event.client_payload.pr_number }}
     secrets:
       PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}

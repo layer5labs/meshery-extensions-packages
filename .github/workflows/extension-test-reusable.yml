@@ -2,7 +2,7 @@ name: Meshery Extension Test
 on:
   workflow_call:
     inputs:
-      pr_commit_sha:
+      checkout_ref:
         required: true
         type: string
       pr_number:
@@ -68,7 +68,7 @@ jobs:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
           fetch-depth: 1
-          ref: ${{ inputs.pr_commit_sha }}
+          ref: ${{ inputs.checkout_ref }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Checkout Meshery code
@@ -232,7 +232,7 @@ jobs:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
           fetch-depth: 1
-          ref: ${{ inputs.pr_commit_sha }}
+          ref: ${{ inputs.checkout_ref }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Install Meshery Extension dependencies
