@@ -14,5 +14,5 @@ jobs:
     uses: ./.github/workflows/extension-test-reusable.yml
     secrets: inherit
     with:
-      pr_commit_sha: ${{inputs.pr_commit_sha}}
+      checkout_ref: ${{inputs.pr_commit_sha}}
       pr_number: ${{inputs.pr_number}}
