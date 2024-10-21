@@ -107,9 +107,9 @@ func main() {
     }
 
     // Write the JSON data to a file
-    if err := os.WriteFile("pricing_data.json", jsonData, 0644); err != nil {
+    if err := os.WriteFile("feature_data.json", jsonData, 0644); err != nil {
         panic(err)
     }
 
-    fmt.Println("Pricing data updated successfully")
+    fmt.Println("Feature data updated successfully")
 }
