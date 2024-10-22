@@ -32,7 +32,7 @@ on:
 jobs:
   comment-starting-point:
     runs-on: ubuntu-latest
-    if: "${{ github.event.inputs.pr_number != '' }}"
+    if: ${{ github.event.inputs.pr_number != '' }}
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.3.0
@@ -51,7 +51,7 @@ jobs:
   comment-success:
     runs-on: ubuntu-latest
     needs: [build-ui-and-server]
-    if: "${{ github.event.inputs.pr_number != '' }}"
+    if: ${{ github.event.inputs.pr_number != '' }}
     steps:
       - name: comment progress
         uses: hasura/comment-progress@v2.3.0
@@ -121,7 +121,7 @@ jobs:
           message: ":heavy_check_mark: Meshery Extensions build complete."
           append: true
       - name: comment Failure
-        if: failure() && ${{  github.event.inputs.pr_number != '' }}
+        if: ${{ failure() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -285,7 +285,7 @@ jobs:
           result-encoding: string
       - name: comment the summary
         uses: hasura/comment-progress@v2.3.0
-        if: always() && ${{ github.event.inputs.pr_number != '' }}
+        if: ${{ always() && github.event.inputs.pr_number != '' }}
         with:
           message: |
             ${{steps.test-reports.outputs.result}}
@@ -304,7 +304,7 @@ jobs:
 
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.3.0
-        if: ${{ failure()  }} && ${{ github.event.inputs.pr_number != '' }}
+        if: ${{ failure() && github.event.inputs.pr_number != '' }}
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
@@ -314,7 +314,7 @@ jobs:
           append: true
 
       - name: Comment Final Status
-        if: always() && ${{ github.event.inputs.pr_number != '' }}
+        if: ${{ always() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
