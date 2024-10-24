@@ -34,21 +34,15 @@ jobs:
           node-version: 18
           cache: "npm"
           cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
-      - name: Install Meshery Extension dependencies
-        working-directory: meshery-extensions
-        run: cd meshmap; npm ci; cd ../
-
       - name: show tree
         run: tree  -L 2
-
       - name: Install Playwright dependencies
         working-directory: meshery-extensions
         run: ls && make test-setup
       - name: Run  Tests
         id: run_tests
         working-directory: meshery-extensions
-        run: |
-          cd meshmap; test-smoke-${{github.event.inputs.project}}; cd ../
+        run: make test-smoke-${{github.event.inputs.project}}
         env:
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
