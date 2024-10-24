@@ -21,6 +21,12 @@ jobs:
             fetch-depth: 1
             ref: "master"
             token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
       - name: Install Meshery Extension dependencies
         working-directory: meshery-extensions
         run: cd meshmap; npm ci; cd ../
