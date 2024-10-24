@@ -134,3 +134,10 @@ jobs:
           port: 22
           script: |
             kubectl set image deployment/meshery meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
+
+  kanvas-production-test-rollout:
+    needs: build-and-release
+    uses: ./.github/workflows/production-smoke-test.yml
+    secrets: inherit
+    with:
+      project: kanvas
