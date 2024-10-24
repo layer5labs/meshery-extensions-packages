@@ -1,12 +1,19 @@
-name: Meshery Extension Test
+name: Production Smoke Test
 on:
   workflow_call:
+    inputs:
+      project:
+        type: string
+        required: true
+        default: 'kanvas'
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
+      project:
+        type: choice
+        description: environment to choose
+        options: 
+        - kanvas
+        - playground
 
 jobs:
   smoke-test-kanvas:
@@ -16,11 +23,11 @@ jobs:
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4
         with:
-            repository: layer5labs/meshery-extensions
-            path: ./meshery-extensions
-            fetch-depth: 1
-            ref: "master"
-            token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5labs/meshery-extensions
+          path: ./meshery-extensions
+          fetch-depth: 1
+          ref: "master"
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: setup node
         uses: actions/setup-node@v4
         with:
@@ -41,7 +48,7 @@ jobs:
         id: run_tests
         working-directory: meshery-extensions
         run: |
-          make test-smoke-kanvas
+          cd meshmap; test-smoke-${{github.event.inputs.project}}; cd ../
         env:
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
