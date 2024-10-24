@@ -1,4 +1,4 @@
-name: Meshery Extension Test
+name: Meshery Extension Test on Release
 on:
   release:
     types: [published]
@@ -13,8 +13,14 @@ on:
         default: 'warning'
 
 jobs:
-  tests-ui-e2e:
+  tests-ui-e2e-local:
     uses: ./.github/workflows/extension-test-reusable.yml
     secrets: inherit
     with:
       checkout_ref: "master"
+
+  smoke-tests-production:
+    uses: ./.github/workflows/production-smoke-test.yml
+    secrets: inherit
+    with:
+      project: playground
