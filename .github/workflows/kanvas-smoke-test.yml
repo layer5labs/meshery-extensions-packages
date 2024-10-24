@@ -1,0 +1,41 @@
+name: Meshery Extension Test
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
+jobs:
+  smoke-test-kanvas:
+    name: Kanvas end-to-end tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Meshery-extensions code
+        uses: actions/checkout@v4
+        with:
+            repository: layer5labs/meshery-extensions
+            path: ./meshery-extensions
+            fetch-depth: 1
+            ref: "master"
+            token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Install Meshery Extension dependencies
+        working-directory: meshery-extensions
+        run: cd meshmap; npm ci; cd ../
+
+      - name: show tree
+        run: tree  -L 2
+
+      - name: Install Playwright dependencies
+        working-directory: meshery-extensions
+        run: ls && make test-setup
+      - name: Run  Tests
+        id: run_tests
+        working-directory: meshery-extensions
+        run: |
+          make test-smoke-kanvas
+        env:
+          REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
+          REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
