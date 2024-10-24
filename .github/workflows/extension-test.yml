@@ -23,4 +23,4 @@ jobs:
     uses: ./.github/workflows/production-smoke-test.yml
     secrets: inherit
     with:
-      project: playground
+      project: "playground"
