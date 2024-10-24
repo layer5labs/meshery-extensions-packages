@@ -182,7 +182,7 @@ jobs:
     uses: ./.github/workflows/production-smoke-test.yml
     secrets: inherit
     with:
-      project: kanvas
+      project: "kanvas"
 
   rollout-kanvas:
     needs: release-kanvas
