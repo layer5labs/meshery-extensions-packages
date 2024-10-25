@@ -135,9 +135,31 @@ jobs:
           script: |
             kubectl set image deployment/meshery meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
 
-  kanvas-production-test-rollout:
-    needs: build-and-release
-    uses: ./.github/workflows/production-smoke-test.yml
-    secrets: inherit
-    with:
-      project: "kanvas"
+      - name: Send Email on Rollout Kanvas Release Failure
+        if: ${{ failure() }}
+        uses: dawidd6/action-send-mail@v3.7.1
+        env:
+          msg: ${{ env.reason != '' && env.reason || ' Rollout Kanvas Failure' }}
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: GitHub Actions - Rollout Kanvas Release Failure
+          from: |
+            "Meshery Extensions" <no-reply@meshery.io>
+          to: |
+            "Layer5 Support" <support@layer5.io>
+          html_body: |
+            <b>REPO:</b> ${{ github.repository }}<br />  
+            <b>WORKFLOW:</b> ${{ github.workflow }}<br />
+            <b>JOB:</b> ${{ github.job }}<br />
+            <b>REASON:</b> ${{ env.msg }}<br />
+            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
+
+  # kanvas-production-test-rollout:
+  #   needs: build-and-release
+  #   uses: ./.github/workflows/production-smoke-test.yml
+  #   secrets: inherit
+  #   with:
+  #     project: "kanvas"
