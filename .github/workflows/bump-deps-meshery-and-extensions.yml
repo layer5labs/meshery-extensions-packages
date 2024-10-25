@@ -64,7 +64,7 @@ jobs:
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
           commit-message: Bump ${{github.event.inputs.dependencies}} v${{ github.event.inputs.version }} dependencies
           committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          author: "l5io"
+          author:  ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: true
           branch: bump-${{ github.event.inputs.dependencies }}-v${{ github.event.inputs.version }}-bot
           delete-branch: true
@@ -103,7 +103,7 @@ jobs:
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
           commit-message: Bump ${{github.event.inputs.dependencies}} v${{ github.event.inputs.version }} dependencies
           committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          author: "l5io"
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: true
           branch: bump-${{ github.event.inputs.dependencies }}-v${{ github.event.inputs.version }}-bot
           delete-branch: true
