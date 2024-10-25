@@ -22,8 +22,8 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Meshery Docs
 - Meshery Operator
 - Meshery
-- MeshMap
-- Meshmap Snapshot
+- Kanvas
+- Kanvas Snapshot
 - Need for Speed
 - Nighthawk
 - Patterns

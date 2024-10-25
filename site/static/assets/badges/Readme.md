@@ -23,8 +23,8 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Meshery Catalog
 - Meshery Docs
 - Meshery Operator
-- MeshMap
-- MeshMap Snapshot
+- Kanvas
+- Kanvas Snapshot
 - MeshMaster Certified
 - Need for Speed
 - Nighthawk
