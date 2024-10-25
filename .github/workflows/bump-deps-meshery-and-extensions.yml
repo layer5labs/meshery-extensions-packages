@@ -40,7 +40,7 @@ on:
 
 jobs:
   bump-meshery:
-    if: ${{ (github.event.inputs.dependencies == 'meshery') || (github.event.inputs.dependencies == 'all') }}
+    if: ${{ (github.event.inputs.repository == 'meshery') || (github.event.inputs.repository == 'all') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery code
@@ -79,7 +79,7 @@ jobs:
           assignees: l5io
           draft: false
   bump-meshery-extensions:
-    if: ${{ (github.event.inputs.dependencies == 'meshery-extensions') || (github.event.inputs.dependencies == 'all') }}
+    if: ${{ (github.event.inputs.repository == 'meshery-extensions') || (github.event.inputs.repository == 'all') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Meshery Extensions code
