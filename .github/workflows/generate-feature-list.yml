@@ -52,7 +52,7 @@ jobs:
           commit_message: "Updated feature data"
           branch: master
           commit_options: "--signoff"
-          file_pattern: 'feature.json'
+          file_pattern: 'feature_data.json'
           commit_user_name: l5io
           commit_user_email: ci@layer5.io
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
