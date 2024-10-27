@@ -179,7 +179,7 @@ jobs:
   
   # kanvas-production-test-release:
   #   needs: release-kanvas
-  #   uses: ./.github/workflows/production-smoke-test.yml
+  #   uses: ./.github/workflows/production-smoke-test-reusable.yml
   #   secrets: inherit
   #   with:
   #     project: "kanvas"
