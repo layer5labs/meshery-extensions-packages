@@ -14,4 +14,4 @@ jobs:
     uses: ./.github/workflows/production-smoke-test-reusable.yml
     secrets: inherit
     with:
-      project: ${{ github.event.inputs.project }}
+      project: ${{ inputs.project }}
