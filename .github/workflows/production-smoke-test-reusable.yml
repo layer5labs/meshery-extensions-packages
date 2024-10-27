@@ -1,9 +1,20 @@
-name: Production Smoke Test
+name: Production Smoke Test Reusable
 on:
   workflow_call:
     inputs:
       project:
+        required: true
         type: string
+    secrets:
+      GH_ACCESS_TOKEN:
+        required: true
+      LAYER5_CLOUD_TESTING_BOT_EMAIL:
+        required: true
+      LAYER5_CLOUD_TESTING_BOT_PASSWORD:
+        required: true
+      MAIL_USERNAME:
+        required: true
+      MAIL_PASSWORD:
         required: true
 
 jobs:
@@ -33,7 +44,7 @@ jobs:
       - name: Run  Tests
         id: run_tests
         working-directory: meshery-extensions
-        run: make test-smoke-${{github.event.inputs.project}}
+        run: make test-smoke-${{ inputs.project }}
         env:
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
@@ -41,7 +52,7 @@ jobs:
       #   if: ${{ failure() }}
       #   uses: dawidd6/action-send-mail@v3.7.1
       #   env:
-      #     msg: ${{ github.event.inputs.project }} Production Failure
+      #     msg: ${{ inputs.project }} Production Failure
       #   with:
       #     server_address: smtp.gmail.com
       #     server_port: 465
