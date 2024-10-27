@@ -19,8 +19,8 @@ jobs:
     with:
       checkout_ref: "master"
 
-  # smoke-tests-production:
-  #   uses: ./.github/workflows/production-smoke-test.yml
-  #   secrets: inherit
-  #   with:
-  #     project: "playground"
+  smoke-tests-production:
+    uses: ./.github/workflows/production-smoke-test-reusable.yml
+    secrets: inherit
+    with:
+      project: "playground"
