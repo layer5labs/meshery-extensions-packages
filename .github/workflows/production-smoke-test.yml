@@ -1,0 +1,17 @@
+name: Production Smoke Test
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        type: choice
+        description: environment to choose
+        options: 
+        - kanvas
+        - playground
+
+jobs:
+   smoke-tests-production:
+    uses: ./.github/workflows/production-smoke-test-reusable.yml
+    secrets: inherit
+    with:
+      project: ${{ inputs.project }}

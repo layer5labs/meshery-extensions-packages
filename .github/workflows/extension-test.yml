@@ -1,4 +1,4 @@
-name: Meshery Extension Test
+name: Meshery Extension Test on Release
 on:
   release:
     types: [published]
@@ -13,119 +13,14 @@ on:
         default: 'warning'
 
 jobs:
-  build-ui-and-server:
-    uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
-    secrets:
-      NODE_VERSION: ${{ secrets.NODE_VERSION }}
-      GO_VERSION: ${{ secrets.GO_VERSION }}
-  tests-ui-e2e:
-    needs: [build-ui-and-server]
-    name: UI end-to-end tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Meshery code
-        uses: actions/checkout@v4
-        with:
-          repository: meshery/meshery
-          fetch-depth: 1
-          path: .
-      - name: Check out meshery-consul code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          repository: layer5io/meshery-consul
-          path: ./meshery-consul
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: meshery
-          path: server/cmd/
-      - name: Setup go
-        uses: actions/setup-go@v4
-        with:
-          go-version: ${{ secrets.GO_VERSION }}
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ secrets.NODE_VERSION }}
-      - name: Create k8s Kind Cluster
-        uses: helm/kind-action@v1.1.0
-        with:
-          cluster_name: "kind-cluster"
-      - name: Create a out/ folder in meshery ui
-        run: |
-          mkdir -p ui/out
-      - name: Download Meshery-ui artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: meshery-ui-build
-          path: ui/out/
-      - name: Update /etc/hosts
-        run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
-      - name: Run meshery-consul
-        run: |
-          mkdir -p /home/runner/.meshery/bin
-          cd ./meshery-consul
-          go run main.go &
-          sleep 60
-      - name: Set Release extensions
-        run: |
-          curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> extension_releases.json
-          export TAG=$(jq .[0].tag_name extension_releases.json)
-          echo tag=$TAG >> $GITHUB_ENV
-          echo $TAG
-      - name: make directories
-        run: |
-          echo ${{env.tag}}
-          echo ${{env}}
-          mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/navigator
-      - name: Run backend
-        env:
-          PROVIDER_BASE_URLS: https://meshery.layer5.io
-          PORT: 9081
-          ADAPTER_URLS: "mesherylocal.layer5.io:10000 mesherylocal.layer5.io:10001 mesherylocal.layer5.io:10002 mesherylocal.layer5.io:10003 mesherylocal.layer5.io:10004 mesherylocal.layer5.io:10008 mesherylocal.layer5.io:10009 mesherylocal.layer5.io:10007"
-        run: |
-          cd server/cmd
-          chmod +x ./main
-          BUILD=${{env.tag}} ./main &
-      - name: Download Meshery Extension Package Version ${{env.tag}}
-        run: |
-          wget https://github.com/layer5labs/meshery-extensions-packages/releases/download/${{env.tag}}/provider-meshery.tar.gz 
-          tar -xzf   provider-meshery.tar.gz -C /home/runner/.meshery/provider/Meshery/${{env.tag}}
-      - name: show runner tree
-        run: tree /home/runner/.meshery
-      - name: checkout cypress code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          path: ./cypress
-      - name: Move cypress tests
-        run: |
-          rm -rf ui/cypress
-          rm ui/cypress.config.js
-          mv cypress/cypress ui/
-          mv cypress/cypress.config.js ui/cypress.config.js
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          working-directory: ui
-          spec: cypress/e2e/e2e/**/*
-          browser: chrome 
-          record: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_token: ${{ secrets.PROVIDER_TOKEN }}
-          CYPRESS_releasetag: ${{env.tag}}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-ss
-          path: ui/cypress/screenshots
-      - name: Upload Videos
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-ss
-          path: ui/cypress/videos
+  tests-ui-e2e-local:
+    uses: ./.github/workflows/extension-test-reusable.yml
+    secrets: inherit
+    with:
+      checkout_ref: "master"
+
+  smoke-tests-production:
+    uses: ./.github/workflows/production-smoke-test-reusable.yml
+    secrets: inherit
+    with:
+      project: "playground"

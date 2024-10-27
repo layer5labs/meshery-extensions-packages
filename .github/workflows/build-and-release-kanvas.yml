@@ -177,6 +177,13 @@ jobs:
             <b>REASON:</b> ${{ env.msg }}<br />
             <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
   
+  # kanvas-production-test-release:
+  #   needs: release-kanvas
+  #   uses: ./.github/workflows/production-smoke-test-reusable.yml
+  #   secrets: inherit
+  #   with:
+  #     project: "kanvas"
+
   rollout-kanvas:
     needs: release-kanvas
     name: Build and Rollout Kanvas
@@ -184,4 +191,3 @@ jobs:
     if: ${{ fromJSON(needs.release-kanvas.outputs.revision) < 2 }}
     secrets: inherit
     uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
-      

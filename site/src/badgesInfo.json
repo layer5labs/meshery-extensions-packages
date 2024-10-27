@@ -101,7 +101,7 @@
         {
             "slug": "meshmap-snapshot",
             "location": "assets/badges/meshmap-snapshot/meshmap-snapshot.png",
-            "title": "MeshMap Snapshot",
+            "title": "Kanvas Snapshot",
             "description": "This badge is awarded to users upon creation of their first infrastructure screenshot directly in their pull request."
         },
         {

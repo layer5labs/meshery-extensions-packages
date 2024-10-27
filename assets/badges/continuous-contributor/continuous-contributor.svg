@@ -58,7 +58,6 @@
       <stop offset="1" stop-color="#00b39f"/>
     </linearGradient>
   </defs>
-  <g id="MeshMap_Snapshot" data-name="MeshMap Snapshot">
     <g>
       <path class="cls-11" d="m476.47,602.94v16.86l32.66-16.86h-32.66Z"/>
       <path class="cls-11" d="m110.02,619.8v-16.86h-32.66l32.66,16.86Z"/>
@@ -90,5 +89,4 @@
       <rect class="cls-9" x="239.5" y="164.95" width="31.43" height="31.43" rx="4.71" ry="4.71"/>
       <rect class="cls-1" x="281.92" y="247.45" width="31.43" height="31.43" rx="4.71" ry="4.71"/>
     </g>
-  </g>
 </svg>
