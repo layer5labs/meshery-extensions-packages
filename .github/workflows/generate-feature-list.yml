@@ -8,6 +8,12 @@ on:
         type: string
         required: true
 
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+
+permissions:
+  contents: write
+
 jobs:
   fetch-Feature-list:
     name: Fetch Feature List
@@ -40,6 +46,8 @@ jobs:
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           commit_message: "Updated feature data"
           branch: master
