@@ -157,9 +157,9 @@ jobs:
             <b>REASON:</b> ${{ env.msg }}<br />
             <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
 
-  # kanvas-production-test-rollout:
-  #   needs: build-and-release
-  #   uses: ./.github/workflows/production-smoke-test-reusable.yml
-  #   secrets: inherit
-  #   with:
-  #     project: "kanvas"
+  kanvas-production-test-rollout:
+    needs: build-and-release
+    uses: ./.github/workflows/production-smoke-test-reusable.yml
+    secrets: inherit
+    with:
+      project: "kanvas"
