@@ -337,10 +337,10 @@
   },
   {
     "pricing_page": "true",
-    "documentation": "https://docs.layer5.io/meshmap/designer/comments/",
+    "documentation": "https://docs.layer5.io/kanvas/designer/comments/",
     "entire_row": {
       "Category": "Design Reviews",
-      "Documented?": "https://docs.layer5.io/meshmap/designer/comments/",
+      "Documented?": "https://docs.layer5.io/kanvas/designer/comments/",
       "Feature": "Discuss any design by leaving review comments or notes on a specific design. Control who has access, notify discussion participants with updates, and link from anywhere.",
       "Function": "Discuss any design by leaving review comments",
       "Pricing page?": "X",
@@ -561,7 +561,7 @@
       "Feature": "See all workspaces within an organisation",
       "Function": "View Workspace",
       "Pricing page?": "",
-      "Subscription Tier": "",
+      "Subscription Tier": "Enterprise",
       "Tech": ""
     }
   },
