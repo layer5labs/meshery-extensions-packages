@@ -117,7 +117,7 @@ jobs:
           append: true
       - name: Validate Meshery Cloud API
         working-directory: ./meshery-cloud
-        run: make api-validate
+        run: make api-validate-redocly
       - name: comment success
         if: success()
         uses: hasura/comment-progress@v2.3.0
