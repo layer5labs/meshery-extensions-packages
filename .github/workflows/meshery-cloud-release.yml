@@ -213,9 +213,6 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-    - name: Build RTK Query Codegen
-      working-directory: meshery-cloud
-      run: make ui-api-codegen
     - name: Build Docs
       working-directory: meshery-cloud
       run:  |
