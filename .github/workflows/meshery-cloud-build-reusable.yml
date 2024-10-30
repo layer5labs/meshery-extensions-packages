@@ -69,6 +69,9 @@ jobs:
       - name: Install Cloud UI dependencies
         working-directory: ./meshery-cloud
         run: make ui-setup
+      - name: Install Redocly CLI
+        working-directory: ./meshery-cloud
+        run: npm i -g @redocly/cli@latest
       - name: comment success
         if: success()
         uses: hasura/comment-progress@v2.3.0
@@ -111,4 +114,27 @@ jobs:
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
           message: ":x: Meshery Cloud UI build Failed."
+          append: true
+      - name: Validate Meshery Cloud API
+        working-directory: ./meshery-cloud
+        run: make api-validate
+      - name: comment success
+        if: success()
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5io/meshery-cloud"
+          number: ${{ inputs.pr_number }}
+          id: meshery-cloud
+          message: ":heavy_check_mark: Meshery Cloud API Validation complete."
+          append: true
+      - name: comment Failure
+        if: failure()
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5io/meshery-cloud"
+          number: ${{ inputs.pr_number }}
+          id: meshery-cloud
+          message: ":x: Meshery Cloud API Validation Failed."
           append: true
