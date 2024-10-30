@@ -131,10 +131,20 @@ jobs:
         token: ${{ secrets.GH_ACCESS_TOKEN }}
         ref: ${{ inputs.branch }}
     - name: Build Docs
+      working-directory: meshery-cloud
       run:  |
-        cd meshery-cloud
         npm i -g @redocly/cli@latest
         make docs-build
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    - name: Setup UI Dependencies
+      working-directory: meshery-cloud
+      run: make ui-setup
+    - name: Build RTK Query Codegen
+      working-directory: meshery-cloud
+      run: make ui-api-codegen
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
@@ -203,11 +213,20 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
+    - name: Build RTK Query Codegen
+      working-directory: meshery-cloud
+      run: make ui-api-codegen
     - name: Build Docs
+      working-directory: meshery-cloud
       run:  |
-        cd meshery-cloud
         npm i -g @redocly/cli@latest
         make docs-build
+    - name: Setup UI Dependencies
+      working-directory: meshery-cloud
+      run: make ui-setup
+    - name: Build RTK Query Codegen
+      working-directory: meshery-cloud
+      run: make ui-api-codegen
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx

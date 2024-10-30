@@ -43,15 +43,6 @@ jobs:
   build-meshery-cloud:
     runs-on: ubuntu-latest
     steps:
-      - name: comment progress
-        uses: hasura/comment-progress@v2.3.0
-        with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
-          message: ":heavy_check_mark: Meshery UI and Meshery Server builds complete."
-          append: true
       - name: Checkout Meshery Cloud code
         uses: actions/checkout@v4
         with:
