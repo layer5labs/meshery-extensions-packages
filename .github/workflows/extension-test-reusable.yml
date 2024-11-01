@@ -92,6 +92,29 @@ jobs:
           node-version: ${{ secrets.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
+      - name: Validate MesheryUI Compatibility Package
+        working-directory: meshery-extensions
+        run: kanvas-validate-mesheryui-compatibility
+      - name: comment success
+        if: success()
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5labs/meshery-extensions"
+          number: ${{ inputs.pr_number }}
+          id: meshery-cloud
+          message: ":heavy_check_mark: Meshery Extensions validation compatibility package complete."
+          append: true
+      - name: comment Failure
+        if: failure()
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5labs/meshery-extensions"
+          number: ${{ inputs.pr_number }}
+          id: meshery-cloud
+          message: ":x: Meshery Extensions validation compatibility package Failed."
+          append: true
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
         run: make kanvas-prod # gql build is not done for now
