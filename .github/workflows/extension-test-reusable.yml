@@ -93,8 +93,8 @@ jobs:
           cache: "npm"
           cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
       - name: Validate MesheryUI Compatibility Package
-        working-directory: meshery-extensions
-        run: kanvas-validate-mesheryui-compatibility
+        working-directory: ./meshery-extensions
+        run: make kanvas-validate-mesheryui-compatibility
       - name: comment success
         if: success()
         uses: hasura/comment-progress@v2.3.0
