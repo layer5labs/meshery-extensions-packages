@@ -92,6 +92,16 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Verify extension compatibility with meshery ui
+        if: ${{ !failure() }}
+        working-directory: "meshery-extensions"
+        run: |
+          make kanvas-validate-mesheryui-compatibility || {
+            message="extension ${{ env.EXTENSION_VERSION }} is not compatible with Meshery UI ${{ env.MESHERY_VERSION }}"
+            echo "reason=$message" >> $GITHUB_ENV
+            echo "$message"
+            exit 1
+          }
       - name: Build extension
         working-directory: ./meshery-extensions
         run: |
@@ -190,4 +200,4 @@ jobs:
     # Rebuilding and packaging the extensions in the Meshery Kanvas build, and rolling them out, will have no effect if the extensions are released independently. This is because the Meshery version will remain the same and will not be redeployed. We will need to access "kanvas.new" to ensure the package gets downloaded. Therefore, we should skip the rollout unless this process or flow changes.
     if: ${{ fromJSON(needs.release-kanvas.outputs.revision) < 2 }}
     secrets: inherit
-    uses: layer5labs/meshery-extensions-packages/.github/workflows/build-and-deploy-meshery-extensions-playground.yml@master
+    uses: ./.github/workflows/build-and-deploy-meshery-extensions-playground-reusable.yml
