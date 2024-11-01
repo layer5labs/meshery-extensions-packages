@@ -1,4 +1,4 @@
-name: Pricing List
+name: Feature List
 
 on:
   workflow_dispatch:
@@ -8,9 +8,15 @@ on:
         type: string
         required: true
 
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+
+permissions:
+  contents: write
+
 jobs:
-  fetch-pricing-list:
-    name: Fetch Pricing List
+  fetch-Feature-list:
+    name: Fetch Feature List
     runs-on: ubuntu-latest
     steps:
 
@@ -33,18 +39,20 @@ jobs:
             echo "INPUT_SPREADSHEET_URI=https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=829069645&single=true&output=csv" >> $GITHUB_ENV
           fi
 
-      # Step 4: Fetch and process the pricing list by directly running the Go file
-      - name: Fetch and process pricing list
+      # Step 4: Fetch and process the feature list by directly running the Go file
+      - name: Fetch and process feature list
         run: |
-          go run ./.github/actions/pricing-list-action/main.go
+          go run ./.github/actions/feature-list-action/main.go
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASEDRAFTER_PAT }} 
         with:
-          commit_message: "Updated pricing data"
+          commit_message: "Updated feature data"
           branch: master
           commit_options: "--signoff"
-          file_pattern: 'pricing_data.json'
+          file_pattern: 'feature_data.json'
           commit_user_name: l5io
           commit_user_email: ci@layer5.io
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
