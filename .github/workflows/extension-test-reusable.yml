@@ -96,23 +96,23 @@ jobs:
         working-directory: ./meshery-extensions
         run: make kanvas-validate-mesheryui-compatibility
       - name: comment success
-        if: success()
+        if: ${{ success() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
-          id: meshery-cloud
+          id: extension-test
           message: ":heavy_check_mark: Meshery Extensions validation compatibility package complete."
           append: true
       - name: comment Failure
-        if: failure()
+        if: ${{ failure() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
-          id: meshery-cloud
+          id: extension-test
           message: ":x: Meshery Extensions validation compatibility package Failed."
           append: true
       - name: Build Meshery Extension UI
@@ -134,7 +134,7 @@ jobs:
           path: /home/runner/provider
           if-no-files-found: error
       - name: comment progress
-        if: ${{  github.event.inputs.pr_number != '' }}
+        if: ${{ success() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
