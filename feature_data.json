@@ -12,6 +12,18 @@
     }
   },
   {
+    "documentation": "https://docs.layer5.io/cloud/catalog/",
+    "entire_row": {
+      "Category": "Catalog",
+      "Documented?": "https://docs.layer5.io/cloud/catalog/",
+      "Feature": "Export a copy of a design to your local system.",
+      "Function": "",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": "Server"
+    }
+  },
+  {
     "documentation": "https://docs.layer5.io/kanvas/designer/share-resource/",
     "entire_row": {
       "Category": "Catalog",
@@ -117,6 +129,18 @@
       "Pricing page?": "X",
       "Subscription Tier": "Free",
       "Tech": "Server"
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/getting-started/github-integration/#connect-github-and-import-designs",
+    "entire_row": {
+      "Category": "Designs",
+      "Documented?": "https://docs.layer5.io/cloud/getting-started/github-integration/#connect-github-and-import-designs",
+      "Feature": "Import a design from GitHub",
+      "Function": "Import Design",
+      "Pricing page?": "",
+      "Subscription Tier": "Enterprise",
+      "Tech": "Cloud"
     }
   },
   {
@@ -349,6 +373,30 @@
     }
   },
   {
+    "documentation": "https://docs.layer5.io/cloud/identity/users/user-management/#add-user-remove-user",
+    "entire_row": {
+      "Category": "Users",
+      "Documented?": "https://docs.layer5.io/cloud/identity/users/user-management/#add-user-remove-user",
+      "Feature": "Delete a user account",
+      "Function": "Delete User",
+      "Pricing page?": "",
+      "Subscription Tier": "Team",
+      "Tech": ""
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/identity/users/user-management/#create-user",
+    "entire_row": {
+      "Category": "Users",
+      "Documented?": "https://docs.layer5.io/cloud/identity/users/user-management/#create-user",
+      "Feature": "Create a new user",
+      "Function": "Create User",
+      "Pricing page?": "",
+      "Subscription Tier": "",
+      "Tech": ""
+    }
+  },
+  {
     "documentation": "https://docs.layer5.io/cloud/identity/teams/",
     "entire_row": {
       "Category": "Teams",
@@ -575,6 +623,42 @@
       "Pricing page?": "",
       "Subscription Tier": "Enterprise",
       "Tech": ""
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/getting-started/creating-a-design-from-templete.md/",
+    "entire_row": {
+      "Category": "Catalog",
+      "Documented?": "https://docs.layer5.io/cloud/getting-started/creating-a-design-from-templete.md/",
+      "Feature": "Clone any item from catalog",
+      "Function": "Clone Catalog Item",
+      "Pricing page?": "",
+      "Subscription Tier": "",
+      "Tech": ""
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/getting-started/support/#contacting-support",
+    "entire_row": {
+      "Category": "Community Support",
+      "Documented?": "https://docs.layer5.io/cloud/getting-started/support/#contacting-support",
+      "Feature": "",
+      "Function": "Get help with most of your Meshery questions and issues in our Community Forum.",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": ""
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/identity/users/notification-preferences/",
+    "entire_row": {
+      "Category": "Notification Center",
+      "Documented?": "https://docs.layer5.io/cloud/identity/users/notification-preferences/",
+      "Feature": "",
+      "Function": "Events: Reporting of asynchronous events.",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": "Server"
     }
   },
   {
