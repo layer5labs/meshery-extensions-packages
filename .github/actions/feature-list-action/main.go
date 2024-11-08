@@ -73,7 +73,7 @@ func main() {
 
 			// Only include specified headers in the EntireRow map
 			switch lowercaseHeader {
-			case "category", "function", "feature", "subscription tier", "tech", "pricing page?", "documented?":
+			case "category", "theme (also: keychain name)", "function", "feature", "subscription tier", "tech", "pricing page?", "documented?":
 				sub.EntireRow[trimmedHeader] = strings.TrimSpace(record[i])
 			}
 
