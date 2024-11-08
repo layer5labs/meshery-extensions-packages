@@ -17,7 +17,7 @@ permissions:
 jobs:
   fetch-Feature-list:
     name: Fetch Feature List
-    # if: github.repository == 'layer5labs/meshery-extensions-packages'
+    if: github.repository == 'layer5labs/meshery-extensions-packages'
     runs-on: ubuntu-latest
     steps:
 
