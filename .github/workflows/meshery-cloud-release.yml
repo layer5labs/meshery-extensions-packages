@@ -33,6 +33,12 @@ on:
         required: true
       GLOBAL_TOKEN:
         required: true
+      METAL03_HOST:
+        required: true
+      METAL03_KEY:
+        required: true
+      METAL03_USERNAME:
+        required: true
 
   workflow_dispatch:
     inputs:
