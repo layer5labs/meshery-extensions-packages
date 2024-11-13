@@ -45,6 +45,9 @@ jobs:
         run: |
           go run ./.github/actions/feature-list-action/main.go
 
+      - name: Pull changes from remote
+        run: git pull origin master
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         env:
