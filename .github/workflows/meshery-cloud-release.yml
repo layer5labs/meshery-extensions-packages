@@ -298,3 +298,4 @@ jobs:
         envs: GIT_VERSION
         script: |
           helm upgrade -f ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/values.yaml layer5 ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod-cloud --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+          kubectl apply -f ./aws-m03/ingress.yaml
