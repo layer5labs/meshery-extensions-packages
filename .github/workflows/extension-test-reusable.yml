@@ -262,7 +262,7 @@ jobs:
       - name: Run backend
         working-directory: meshery
         env:
-          PROVIDER_BASE_URLS: https://meshery.layer5.io
+          PROVIDER_BASE_URLS: https://cloud.layer5.io
           PORT: 9081
           ADAPTER_URLS: "mesherylocal.layer5.io:10000 mesherylocal.layer5.io:10001 mesherylocal.layer5.io:10002 mesherylocal.layer5.io:10003 mesherylocal.layer5.io:10004 mesherylocal.layer5.io:10008 mesherylocal.layer5.io:10009 mesherylocal.layer5.io:10007"
         run: |
@@ -317,7 +317,7 @@ jobs:
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           MESHERY_SERVER_URL: "http://localhost:9081"
-          REMOTE_PROVIDER_URL: "https://meshery.layer5.io"
+          REMOTE_PROVIDER_URL: "https://cloud.layer5.io"
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
       - name: Test reporter
