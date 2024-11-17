@@ -343,6 +343,7 @@ jobs:
           append: true
 
       - uses: actions/upload-artifact@v4
+        id: test-results
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
@@ -368,5 +369,5 @@ jobs:
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ":heavy_check_mark: Extension [test results](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})."
+          message: ":heavy_check_mark: Download Extension [test results](${{ steps.test-results.outputs.artifact-url }})."
           append: true
