@@ -72,7 +72,16 @@ jobs:
         # meshery/meshery directory to create a new meshery distro
         run: |
           ls 
+          echo "ls meshery"
+          ls meshery
+          echo "ls kanvas"
+          ls kanvas
+          echo "merge"
           cp -R ./kanvas/kanvas/*  ./meshery/
+          echo "ls meshery"
+          ls meshery 
+          echo "ls meshery/ui"
+          ls meshery/ui
 
       - name: Docker build & tag
         working-directory: "./meshery"
