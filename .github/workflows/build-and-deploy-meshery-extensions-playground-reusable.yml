@@ -25,6 +25,14 @@ jobs:
           repository: meshery/meshery
           ref: ${{ inputs.branch }}
 
+      - name: Checkout kanvas
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            kanvas
+          path: "kanvas"
+          sparse-checkout-cone-mode: false
+
       - name: Fetch version scripts from meshery-extensions.
         uses: actions/checkout@v4
         with:
@@ -41,6 +49,7 @@ jobs:
         run: |
           pwd;
           ls;
+          tree kanvas;
 
       - name: Fetch Meshery and Extensions version
         run: |
@@ -58,28 +67,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Configure Meshery UI
+      - name: Configure kanvas distro
         working-directory: "./meshery"
+        # merges the custom kanvas distro at currentrepo/kanvas with the meshery repo checked out to
+        # meshery/meshery directory to create a new meshery distro
         run: |
-          cat << EOF > ui/ui.config.js
-          const {
-                 AnimatedMesheryDark,
-          } = require('./components/LoadingComponents/Animations/AnimatedMesheryCSS');
-          const {
-             default: AnimatedMeshery,
-          } = require('./components/LoadingComponents/Animations/AnimatedMesheryCSS');
-          
-          module.exports = {
-            components: {
-              navigator: false, // set false to disable the navigator component ( default: true )
-            },
-             AnimatedLogo: AnimatedMeshery,
-             AnimatedLogoDark: AnimatedMesheryDark,
-          };
-          EOF
-      
+          cp -R ../kanvas/* meshery/
+
       - name: Docker build & tag
-        working-directory: './meshery'
+        working-directory: "./meshery"
         run: |
           DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GLOBAL_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
@@ -89,7 +85,7 @@ jobs:
           wget https://github.com/layer5labs/meshery-extensions-packages/releases/download/${{ env.MESHERY_EXTENSION_VERSION }}/provider-meshery.tar.gz
 
           mkdir extensions-package
-          tar xzf provider-meshery.tar.gz -C extensions-package 
+          tar xzf provider-meshery.tar.gz -C extensions-package
           mkdir -p provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
           mv extensions-package/provider provider/Meshery/${{ env.MESHERY_EXTENSION_VERSION }}
 
@@ -97,7 +93,7 @@ jobs:
 
           docker run -d --name meshery-tmp layer5/meshery:kanvas-latest
 
-          docker cp -a ./provider/ meshery-tmp:/home/appuser/.meshery/ 
+          docker cp -a ./provider/ meshery-tmp:/home/appuser/.meshery/
 
           docker container commit meshery-tmp layer5/meshery:kanvas-latest
 
@@ -138,7 +134,7 @@ jobs:
           to: |
             "Layer5 Support" <support@layer5.io>
           html_body: |
-            <b>REPO:</b> ${{ github.repository }}<br />  
+            <b>REPO:</b> ${{ github.repository }}<br />
             <b>WORKFLOW:</b> ${{ github.workflow }}<br />
             <b>JOB:</b> ${{ github.job }}<br />
             <b>REASON:</b> ${{ env.msg }}<br />
