@@ -68,11 +68,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Configure kanvas distro
-        working-directory: "./meshery"
         # merges the custom kanvas distro at currentrepo/kanvas with the meshery repo checked out to
         # meshery/meshery directory to create a new meshery distro
         run: |
-          cp -R ../kanvas/* meshery/
+          ls 
+          cp -R ./kanvas/kanvas/*  ./meshery/
 
       - name: Docker build & tag
         working-directory: "./meshery"
