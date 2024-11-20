@@ -34,7 +34,7 @@ function Navigation({ theme, toggleTheme, showSignUpButton, logo }) {
   }, []);
   useEffect(() => {
     const CLOUD_USER_API =
-      "https://meshery.layer5.io/api/identity/users/profile";
+      "https://cloud.layer5.io/api/identity/users/profile";
     const fetchData = async () => {
       try {
         const token = getCookieValue("provider_token");
@@ -78,7 +78,7 @@ function Navigation({ theme, toggleTheme, showSignUpButton, logo }) {
             <Toggle theme={theme} toggleTheme={toggleTheme} />
             {showSignUpButton && !userData && (
               <a
-                href="https://meshery.layer5.io"
+                href="https://cloud.layer5.io"
                 className="signup-btn"
                 role="button"
               >
@@ -141,7 +141,7 @@ function Navigation({ theme, toggleTheme, showSignUpButton, logo }) {
                   rel="noreferrer"
                   target="_blank"
                   className="drop-item"
-                  href={`https://meshery.layer5.io/user/${userData.id}`}
+                  href={`https://cloud.layer5.io/user/${userData.id}`}
                 >
                   <div className="drop-item-icon">
                     <CloudIcon />
@@ -163,7 +163,7 @@ function Navigation({ theme, toggleTheme, showSignUpButton, logo }) {
                   onClick={() => {
                     removeCookie("provider_token");
                     // Open logout API link in a new tab
-                    window.open("https://meshery.layer5.io/logout", "_blank");
+                    window.open("https://cloud.layer5.io/logout", "_blank");
 
                     // Refresh the current page
                     window.location.reload();
@@ -190,7 +190,7 @@ function Navigation({ theme, toggleTheme, showSignUpButton, logo }) {
         {!userData && (
           <div className="action-btns">
             <a
-              href="https://meshery.layer5.io"
+              href="https://cloud.layer5.io"
               className="signup-btn"
               role="button"
             >

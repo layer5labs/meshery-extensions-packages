@@ -85,7 +85,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://meshery.layer5.io/catalog"
+                href="https://cloud.layer5.io/catalog"
               >
                 Meshery Catalog
               </a>
@@ -112,7 +112,7 @@ const Footer = () => {
               </a>
             </li> */}
             <li>
-              <a className="category-link" href="https://meshery.layer5.io">
+              <a className="category-link" href="https://cloud.layer5.io">
                 Layer5 Cloud
               </a>
             </li>

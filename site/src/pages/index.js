@@ -102,7 +102,7 @@ const App = () => {
                       <ul>
                         <li>
                           Visit your{' '}
-                          <a href="https://meshery.layer5.io">Layer5 Cloud</a>{' '}
+                          <a href="https://cloud.layer5.io">Layer5 Cloud</a>{' '}
                           Profile to see the badges
                         </li>
                         <li>Click on the badge, which you wanted to display</li>
