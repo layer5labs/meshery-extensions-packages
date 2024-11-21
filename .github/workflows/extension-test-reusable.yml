@@ -104,7 +104,7 @@ jobs:
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ":heavy_check_mark: Meshery Extensions GraphQL compatibility package complete."
+          message: ":heavy_check_mark: GraphQL compatibility package check completed."
           append: true
       - name: comment Failure
         if: ${{ failure() && github.event.inputs.pr_number != '' }}
@@ -114,7 +114,7 @@ jobs:
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ":x: Meshery Extensions GraphQL validation compatibility package Failed."
+          message: ":x: GraphQL validation compatibility package check Failed: Upcoming PR dependencies are out of sync with Meshery Server default branch."
           append: true
       - name: Validate MesheryUI Compatibility Package
         working-directory: ./meshery-extensions
@@ -127,7 +127,7 @@ jobs:
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ":heavy_check_mark: Meshery Extensions validation compatibility package complete."
+          message: ":heavy_check_mark: Kanvas compatibility package check completed."
           append: true
       - name: comment Failure
         if: ${{ failure() && github.event.inputs.pr_number != '' }}
@@ -137,7 +137,7 @@ jobs:
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ":x: Meshery Extensions validation compatibility package Failed."
+          message: ":x: Kanvas compatibility package check Failed: Upcoming PR dependencies are out of sync with Meshery UI default branch."
           append: true
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
