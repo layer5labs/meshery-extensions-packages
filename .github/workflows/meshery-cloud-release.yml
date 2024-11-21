@@ -264,28 +264,28 @@ jobs:
           TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
-    - name: Deploy production
-      uses: appleboy/ssh-action@master
-      env:
-          GIT_VERSION: ${{inputs.release-version}}
-          GIT_COMMITSHA: ${{ github.sha }}
-      with:
-        host: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
-        username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
-        key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
-        port: 22
-        envs: GIT_VERSION,GIT_COMMITSHA
-        script: |
-          sudo su
-          sudo su - -c "whoami"
-          echo $GIT_VERSION
-          cd meshery-cloud
-          sudo su - -c "git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud"
-          sudo ./install/scripts/git-pull.sh
-          docker pull layer5/meshery-cloud:production-$GIT_VERSION
-          make prod-deploy GIT_VERSION=$GIT_VERSION
-          docker system prune -f
-          docker image prune -a -f
+    # - name: Deploy production in AWS EC2
+    #   uses: appleboy/ssh-action@master
+    #   env:
+    #       GIT_VERSION: ${{inputs.release-version}}
+    #       GIT_COMMITSHA: ${{ github.sha }}
+    #   with:
+    #     host: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
+    #     username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
+    #     key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
+    #     port: 22
+    #     envs: GIT_VERSION,GIT_COMMITSHA
+    #     script: |
+    #       sudo su
+    #       sudo su - -c "whoami"
+    #       echo $GIT_VERSION
+    #       cd meshery-cloud
+    #       sudo su - -c "git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud"
+    #       sudo ./install/scripts/git-pull.sh
+    #       docker pull layer5/meshery-cloud:production-$GIT_VERSION
+    #       make prod-deploy GIT_VERSION=$GIT_VERSION
+    #       docker system prune -f
+    #       docker image prune -a -f
     - name: Deploy production on metal03
       uses: appleboy/ssh-action@master
       env:
