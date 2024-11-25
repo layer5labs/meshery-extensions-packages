@@ -22,19 +22,6 @@ on:
         required: true
 
 jobs:
-  comment-starting-point:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.pr_number != '' }}
-    steps:
-      - name: comment starting point
-        uses: hasura/comment-progress@v2.3.0
-        with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: "Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
-          recreate: true
   build-meshery-extension:
     runs-on: ubuntu-latest
     steps:
