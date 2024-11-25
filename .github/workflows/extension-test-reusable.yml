@@ -68,6 +68,7 @@ jobs:
           append: true
   build-meshery-extension:
     uses: ./.github/workflows/build-extension-reusable.yml
+    needs: [comment-starting-point]
     secrets: inherit
     with:
       checkout_ref: "master"
