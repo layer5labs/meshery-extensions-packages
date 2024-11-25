@@ -11,8 +11,8 @@ on:
   schedule:
     - cron: '0 0 * * *'  # Runs every day at midnight UTC
 
-permissions:
-  contents: write
+# permissions:
+#   contents: write
 
 jobs:
   fetch-Feature-list:
