@@ -65,9 +65,16 @@ func main() {
         panic(err)
     }
 
+    fmt.Println("Headers:", headers)
+
+
+
     var subscriptions []Subscription
     for {
         record, err := reader.Read()
+
+        fmt.Println("Record:", record)
+        
         if err != nil {
             break
         }
