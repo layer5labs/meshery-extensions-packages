@@ -1,0 +1,16 @@
+name: Extension Test On Relationship
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
+jobs:
+  meshery-extensions-test-relationship:
+    uses: ./.github/workflows/extension-test-reusable.yml
+    secrets: inherit
+    with:
+      checkout_ref: "master"
+      test_command: "make test-relationship"
