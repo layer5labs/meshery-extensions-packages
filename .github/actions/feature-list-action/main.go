@@ -1,13 +1,13 @@
 package main
 
 import (
-    "encoding/csv"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-    "os"
-    "strings"
+	"encoding/csv"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"strings"
 )
 
 type Subscription struct {
@@ -37,6 +37,16 @@ func main() {
 
     // Reset the response body for CSV reading
     resp.Body = io.NopCloser(strings.NewReader(string(body)))
+
+    if (resp.StatusCode == 404) {
+        fmt.Println("google spreadsheets not found, please update the URL")
+        os.Exit(1)
+    }
+
+    if (resp.StatusCode != 200) {
+        fmt.Printf("google spreadsheets not responding with status ok, but got %v \n", resp.StatusCode)
+        os.Exit(1)
+    }
 
     // Create a CSV reader from the response body
     reader := csv.NewReader(resp.Body)
