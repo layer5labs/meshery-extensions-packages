@@ -404,19 +404,6 @@
   },
   {
     "pricing_page": "true",
-    "entire_row": {
-      "Category": "Team Chat",
-      "Documented?": "",
-      "Feature": "Message in real-time, unattached to a specific design. Control who can pariticpate in the discussion.",
-      "Function": "Message in real-time",
-      "Pricing page?": "X",
-      "Subscription Tier": "Enterprise",
-      "Tech": "Kanvas",
-      "Theme (also: Keychain Name)": "Collaboration"
-    }
-  },
-  {
-    "pricing_page": "true",
     "documentation": "https://docs.layer5.io/kanvas/designer/comments/",
     "entire_row": {
       "Category": "Design Reviews",
@@ -855,8 +842,7 @@
       "Function": "View Workspace",
       "Pricing page?": "",
       "Subscription Tier": "Enterprise",
-      "Tech": "",
-      "Theme (also: Keychain Name)": "Workspace Management"
+      "Tech": ""
     }
   },
   {
