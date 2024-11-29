@@ -23,7 +23,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: relationship-playwright-report
-        path: meshery-extensions/relationship.json
+        path: meshery-extensions/meshmap/relationship.json
     - name: Check out Meshery code
       uses: actions/checkout@v4
       with:
