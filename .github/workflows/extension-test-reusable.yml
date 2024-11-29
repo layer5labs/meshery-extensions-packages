@@ -251,7 +251,7 @@ jobs:
         if: ${{ !cancelled() && inputs.test_command == 'make test-relationship' }}
         with:
           name: relationship-playwright-report
-          path: meshery-extensions/relationship.json
+          path: meshery-extensions/meshmap/relationship.json
           retention-days: 30
 
       - name: Comment Test failure
