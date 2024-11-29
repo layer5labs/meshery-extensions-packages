@@ -16,6 +16,7 @@ jobs:
       test_command: "make test-relationship"
   update-meshery-test-relationship-report:
     name: Update meshery test relationship report
+    needs: [meshery-extensions-test-relationship]
     runs-on: ubuntu-latest
     steps:
     - name: Download artifacts
