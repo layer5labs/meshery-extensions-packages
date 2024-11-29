@@ -14,3 +14,38 @@ jobs:
     with:
       checkout_ref: "master"
       test_command: "make test-relationship"
+  update-meshery-test-relationship-report:
+    name: Update meshery test relationship report
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: relationship-playwright-report
+        path: meshery-extensions/relationship.json
+    - name: Check out Meshery code
+      uses: actions/checkout@v4
+      with:
+        repository: meshery/meshery
+        fetch-depth: 1
+        path: meshery
+    - name: Create target directory if not exist
+      run: mkdir -p meshery/docs/_data/relationshiptestresult
+
+    - name: Move relationship.json to docs/_data folder
+      run: mv meshery-extensions/relationship.json meshery/docs/_data/relationshiptestresult
+
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }} 
+      with:
+        commit_message: "Updated relationship test result"
+        branch: master
+        repository: meshery/meshery
+        commit_options: "--signoff"
+        file_pattern: 'meshery/docs/_data/relationshiptestresult/relationship.json'
+        commit_user_name: l5io
+        commit_user_email: ci@layer5.io
+        commit_author: 'l5io <l5io@users.noreply.github.com>'
+      

@@ -246,6 +246,14 @@ jobs:
           path: meshery-extensions/meshmap/test-results/
           retention-days: 30
 
+      - uses: actions/upload-artifact@v4
+        id: test-relationship-results
+        if: ${{ !cancelled() && inputs.test_command == 'make test-relationship' }}
+        with:
+          name: relationship-playwright-report
+          path: meshery-extensions/relationship.json
+          retention-days: 30
+
       - name: Comment Test failure
         uses: hasura/comment-progress@v2.3.0
         if: ${{ failure() && github.event.inputs.pr_number != '' }}
