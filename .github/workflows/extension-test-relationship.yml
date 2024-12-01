@@ -34,7 +34,7 @@ jobs:
       run: mkdir -p meshery/docs/_data/relationshiptestresult
 
     - name: Move relationship.json to docs/_data folder
-      run: mv meshery-extensions/relationship.json meshery/docs/_data/relationshiptestresult
+      run: mv meshery-extensions/meshmap/relationship.json meshery/docs/_data/relationshiptestresult
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v5
