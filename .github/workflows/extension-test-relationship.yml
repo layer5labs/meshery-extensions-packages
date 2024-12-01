@@ -43,7 +43,7 @@ jobs:
       with:
         commit_message: "Updated relationship test result"
         branch: master
-        repository: meshery/meshery
+        repository: meshery
         commit_options: "--signoff"
         file_pattern: 'meshery/docs/_data/relationshiptestresult/relationship.json'
         commit_user_name: l5io
