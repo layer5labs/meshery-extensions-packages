@@ -34,7 +34,7 @@ jobs:
       run: mkdir -p meshery/docs/_data/relationshiptestresult
 
     - name: Move relationship.json to docs/_data folder
-      run: mv meshery-extensions/meshmap/relationship.json meshery/docs/_data/relationshiptestresult
+      run: mv meshery-extensions/meshmap/relationship-*.json meshery/docs/_data/relationshiptestresult
       
     - name: Display structure of downloaded files
       run: ls -R meshery/docs/_data/relationshiptestresult
