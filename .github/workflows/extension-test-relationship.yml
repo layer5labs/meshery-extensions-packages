@@ -23,7 +23,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: relationship-playwright-report
-        path: meshery-extensions/meshmap/relationship.json
+        path: meshery-extensions/meshmap/relationship-*.json
     - name: Check out Meshery code
       uses: actions/checkout@v4
       with:
@@ -34,7 +34,10 @@ jobs:
       run: mkdir -p meshery/docs/_data/relationshiptestresult
 
     - name: Move relationship.json to docs/_data folder
-      run: mv meshery-extensions/meshmap/relationship.json meshery/docs/_data/relationshiptestresult
+      run: mv meshery-extensions/meshmap/relationship-*.json meshery/docs/_data/relationshiptestresult
+      
+    - name: Display structure of downloaded files
+      run: ls -R meshery/docs/_data/relationshiptestresult
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v5
@@ -45,7 +48,7 @@ jobs:
         branch: master
         repository: meshery
         commit_options: "--signoff"
-        file_pattern: 'meshery/docs/_data/relationshiptestresult/relationship.json'
+        file_pattern: 'docs/_data/relationshiptestresult/relationship-*.json'
         commit_user_name: l5io
         commit_user_email: ci@layer5.io
         commit_author: 'l5io <l5io@users.noreply.github.com>'
