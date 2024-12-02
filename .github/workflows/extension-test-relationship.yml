@@ -48,7 +48,7 @@ jobs:
         branch: master
         repository: meshery
         commit_options: "--signoff"
-        file_pattern: 'docs/_data/relationshiptestresult/relationship.json'
+        file_pattern: 'docs/_data/relationshiptestresult/relationship-*.json'
         commit_user_name: l5io
         commit_user_email: ci@layer5.io
         commit_author: 'l5io <l5io@users.noreply.github.com>'
