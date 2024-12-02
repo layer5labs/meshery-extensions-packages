@@ -28,6 +28,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: meshery/meshery
+        token: ${{ secrets.RELEASEDRAFTER_PAT }} 
         fetch-depth: 1
         path: meshery
     - name: Create target directory if not exist
@@ -41,8 +42,6 @@ jobs:
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v5
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }} 
       with:
         commit_message: "Updated relationship test result"
         branch: master
