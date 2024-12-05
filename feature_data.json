@@ -133,8 +133,8 @@
     "entire_row": {
       "Category": "Designs",
       "Documented?": "",
-      "Feature": "Import a design from Kubernetes Manifest, Meshery Design (YAML), Helm Chart, Docker Compose or Meshery Design (OCI Image)",
-      "Function": "Standard Import Design",
+      "Feature": "Import a design from Kubernetes Manifest, Helm Chart, or Docker Compose",
+      "Function": "Standard Import IaC",
       "Pricing page?": "X",
       "Subscription Tier": "Free",
       "Tech": "Server",
@@ -159,8 +159,8 @@
     "entire_row": {
       "Category": "Designs",
       "Documented?": "",
-      "Feature": "Import a design from GitHub, GitLab, BitBucket",
-      "Function": "Premium Design Import Features",
+      "Feature": "Bulk import designs from GitHub",
+      "Function": "Premium Import IaC",
       "Pricing page?": "X",
       "Subscription Tier": "Enterprise",
       "Tech": "Server",
@@ -199,7 +199,7 @@
       "Category": "Designs",
       "Documented?": "",
       "Feature": "Export a latest version of design in Meshery Design (OCI format, YAML format) Export a design in source type format (Kubernetes Manifest, Helm Chart, Docker Compose)",
-      "Function": "Standard Export Design",
+      "Function": "Standard Design Export",
       "Pricing page?": "X",
       "Subscription Tier": "Free",
       "Tech": "Server",
@@ -211,8 +211,8 @@
     "entire_row": {
       "Category": "Designs",
       "Documented?": "",
-      "Feature": "Export a design to GitHub, GitLab, BitBucket",
-      "Function": "Premium Export Design Features",
+      "Feature": "Export a design as a snapshot",
+      "Function": "Premium Design Export",
       "Pricing page?": "X",
       "Subscription Tier": "Enterprise",
       "Tech": "Server",
@@ -240,7 +240,7 @@
       "Feature": "Publish a design",
       "Function": "Publish Design",
       "Pricing page?": "",
-      "Subscription Tier": "Free",
+      "Subscription Tier": "TeamDesigner",
       "Tech": "Server",
       "Theme (also: Keychain Name)": "Catalog Management"
     }
@@ -253,7 +253,7 @@
       "Feature": "Validate a design",
       "Function": "Validate Design",
       "Pricing page?": "",
-      "Subscription Tier": "Free",
+      "Subscription Tier": "TeamDesigner",
       "Tech": "Server",
       "Theme (also: Keychain Name)": "Catalog Management"
     }
@@ -266,7 +266,7 @@
       "Feature": "Deploy a design",
       "Function": "Deploy Design",
       "Pricing page?": "",
-      "Subscription Tier": "Free",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Server",
       "Theme (also: Keychain Name)": "Catalog Management"
     }
@@ -436,9 +436,22 @@
       "Feature": "Manage access to designs on a team-by-team, or individual user, basis.",
       "Function": "Manage access to designs",
       "Pricing page?": "X",
-      "Subscription Tier": "Enterprise",
+      "Subscription Tier": "TeamDesigner",
       "Tech": "Kanvas",
       "Theme (also: Keychain Name)": "Collaboration"
+    }
+  },
+  {
+    "pricing_page": "true",
+    "entire_row": {
+      "Category": "",
+      "Documented?": "",
+      "Feature": "Create and collaborate in online operational topologies in real-time.",
+      "Function": "Manage access to views",
+      "Pricing page?": "X",
+      "Subscription Tier": "TeamOperator",
+      "Tech": "Kanvas",
+      "Theme (also: Keychain Name)": ""
     }
   },
   {
@@ -449,7 +462,7 @@
       "Feature": "Static - out of the box",
       "Function": "Built-in Roles",
       "Pricing page?": "X",
-      "Subscription Tier": "Enterprise",
+      "Subscription Tier": "Free",
       "Tech": "Cloud",
       "Theme (also: Keychain Name)": "Identity \u0026 Access Management"
     }
@@ -625,7 +638,7 @@
       "Feature": "Test and verify configuration changes in a separate environment.",
       "Function": "Dry-run",
       "Pricing page?": "X",
-      "Subscription Tier": "Team",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Server",
       "Theme (also: Keychain Name)": "Lifecycle Management"
     }
@@ -638,18 +651,19 @@
       "Feature": "Ongoing synchronization of Kubernetes configuration, workloads and service mesh changes across any number of Kubernetes clusters.",
       "Function": "Multiple Kubernetes Clusters",
       "Pricing page?": "X",
-      "Subscription Tier": "Free",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Server",
       "Theme (also: Keychain Name)": "Lifecycle Management"
     }
   },
   {
     "pricing_page": "true",
+    "documentation": "https://docs.meshery.io/reference/mesheryctl",
     "entire_row": {
       "Category": "mesheryctl",
-      "Documented?": "",
-      "Feature": "Seamlessly manage your configurations, deployments, and interactions through our intuitive and powerful command-line interface",
-      "Function": "all mesheryctl commands",
+      "Documented?": "https://docs.meshery.io/reference/mesheryctl",
+      "Feature": "Seamlessly manage your configurations, deployments, and interactions through our intuitive and powerful command-line interface: mesheryctl",
+      "Function": "CLI",
       "Pricing page?": "X",
       "Subscription Tier": "Free",
       "Tech": "Golang",
@@ -748,54 +762,93 @@
     }
   },
   {
+    "pricing_page": "true",
+    "entire_row": {
+      "Category": "Design Review",
+      "Documented?": "",
+      "Feature": "In-line commenting. Threaded discussions. Notifications w/user mentions. Silence notifications. Resolve and reopen comments. Comment history.",
+      "Function": "Collaborative Design Review",
+      "Pricing page?": "x",
+      "Subscription Tier": "TeamDesigner",
+      "Tech": "Kanvas",
+      "Theme (also: Keychain Name)": "Kanvas"
+    }
+  },
+  {
     "documentation": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/",
     "entire_row": {
-      "Category": "Visualizer",
+      "Category": "Operator",
       "Documented?": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/",
       "Feature": "See all views withing a workspace",
       "Function": "View Views",
       "Pricing page?": "",
-      "Subscription Tier": "Team",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Server",
-      "Theme (also: Keychain Name)": "MeshMap"
+      "Theme (also: Keychain Name)": "Kanvas"
     }
   },
   {
     "documentation": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/#4-delete-a-view",
     "entire_row": {
-      "Category": "Visualizer",
+      "Category": "Operator",
       "Documented?": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/#4-delete-a-view",
       "Feature": "Dissolve environment and all connection memberships. Leave associated resources intact.",
       "Function": "Delete View",
       "Pricing page?": "",
-      "Subscription Tier": "Team",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Server",
-      "Theme (also: Keychain Name)": "MeshMap"
+      "Theme (also: Keychain Name)": "Kanvas"
     }
   },
   {
     "documentation": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/#5-export-a-view",
     "entire_row": {
-      "Category": "Visualizer",
+      "Category": "Operator",
       "Documented?": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/#5-export-a-view",
       "Feature": "Export views to JSON format",
       "Function": "Export views",
       "Pricing page?": "",
-      "Subscription Tier": "Team",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Server",
-      "Theme (also: Keychain Name)": "MeshMap"
+      "Theme (also: Keychain Name)": "Kanvas"
     }
   },
   {
     "documentation": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/#3-share-a-view",
     "entire_row": {
-      "Category": "Visualizer",
+      "Category": "Operator",
       "Documented?": "https://docs.layer5.io/kanvas/visualizer/visualizer-views/#3-share-a-view",
       "Feature": "Share Views",
       "Function": "Share Views",
       "Pricing page?": "",
-      "Subscription Tier": "Team",
+      "Subscription Tier": "TeamOperator",
       "Tech": "Kanvas",
+      "Theme (also: Keychain Name)": "Kanvas"
+    }
+  },
+  {
+    "pricing_page": "true",
+    "entire_row": {
+      "Category": "Operator",
+      "Documented?": "",
+      "Feature": "Direct terminal access to one ore more pods/containers simultaneously. Integrated experience.",
+      "Function": "Web-based Terminal",
+      "Pricing page?": "X",
+      "Subscription Tier": "TeamOperator",
+      "Tech": "Kanvas",
+      "Theme (also: Keychain Name)": "Kanvas"
+    }
+  },
+  {
+    "pricing_page": "true",
+    "entire_row": {
+      "Category": "Operator",
+      "Documented?": "",
+      "Feature": "Real-time resource metrics.",
+      "Function": "Standard Events and Metrics",
+      "Pricing page?": "X",
+      "Subscription Tier": "TeamOperator",
+      "Tech": "",
       "Theme (also: Keychain Name)": "Kanvas"
     }
   },
@@ -990,7 +1043,7 @@
       "Feature": "Layer5 Support can help you troubleshoot issues you run into while using Meshery. Get support via the web.",
       "Function": "Standard Support",
       "Pricing page?": "X",
-      "Subscription Tier": "Team",
+      "Subscription Tier": "TeamDesigner",
       "Tech": "",
       "Theme (also: Keychain Name)": "Support and Deployment"
     }
@@ -1013,7 +1066,7 @@
     "entire_row": {
       "Category": "Self-hosted Deployment",
       "Documented?": "",
-      "Feature": "Self-hosted Meshery Cloud for on-prem appliances or self-managed cloud tenants.",
+      "Feature": "Self-hosted Layer5 Cloud for on-prem appliances or self-managed cloud tenants. Keep your Kanvas designs internal to your workplace. Get remote support from Layer5 when you need it.",
       "Function": "Self-hosted Deployment",
       "Pricing page?": "X",
       "Subscription Tier": "Enterprise",
@@ -1029,7 +1082,7 @@
       "Feature": "Layer5 Support can help you troubleshoot issues you run into while using Meshery. Get support via phone.",
       "Function": "Phone Support",
       "Pricing page?": "X",
-      "Subscription Tier": "Enterprise",
+      "Subscription Tier": "TeamDesigner",
       "Tech": "",
       "Theme (also: Keychain Name)": "Support and Deployment"
     }
@@ -1037,14 +1090,14 @@
   {
     "pricing_page": "true",
     "entire_row": {
-      "Category": "Serverless Pricing",
+      "Category": "Invoice Billing",
       "Documented?": "",
-      "Feature": "Subscription plan management. Transformation of workflow pricing model.",
-      "Function": "Serverless Pricing",
+      "Feature": "",
+      "Function": "Pay bills via invoice, rather than using your credit card.",
       "Pricing page?": "X",
       "Subscription Tier": "Enterprise",
-      "Tech": "WASM",
-      "Theme (also: Keychain Name)": "Business Performance"
+      "Tech": "",
+      "Theme (also: Keychain Name)": "Support and Deployment"
     }
   },
   {
@@ -1094,7 +1147,7 @@
       "Feature": "Detailed accounting of user activity. Historical record or each action taken.",
       "Function": "Audit Trail",
       "Pricing page?": "X",
-      "Subscription Tier": "Free",
+      "Subscription Tier": "Enterprise",
       "Tech": "",
       "Theme (also: Keychain Name)": "Incident Management"
     }
@@ -1130,7 +1183,7 @@
     "entire_row": {
       "Category": "Traffic Replay",
       "Documented?": "",
-      "Feature": "Visual event replay in MeshMap",
+      "Feature": "Visual event replay in Kanvas",
       "Function": "Traffic Replay",
       "Pricing page?": "X",
       "Subscription Tier": "Enterprise",
@@ -1300,7 +1353,7 @@
     "entire_row": {
       "Category": "Notification Integrations",
       "Documented?": "",
-      "Feature": "Access a variety of third-party applications, right from MeshMap. Send a message to Slack, identify an on-duty team to page, or raise an alarm in Datadog.",
+      "Feature": "Access a variety of third-party applications, right from Kanvas. Send a message to Slack, identify an on-duty team to page, or raise an alarm in Datadog.",
       "Function": "Notification Integrations",
       "Pricing page?": "X",
       "Subscription Tier": "Enterprise",
