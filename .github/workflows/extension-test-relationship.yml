@@ -14,6 +14,7 @@ jobs:
     with:
       checkout_ref: "master"
       test_command: "make test-relationship"
+
   update-meshery-test-relationship-report:
     name: Update meshery test relationship report
     needs: [meshery-extensions-test-relationship]
@@ -24,6 +25,14 @@ jobs:
       with:
         name: relationship-playwright-report
         path: meshery-extensions/meshmap/
+
+    - name: Rename file version with underscore
+      run: |
+        for file in meshery-extensions/meshmap/relationship-*.json; do
+          new_file=$(echo "$file" | sed 's/\./_/g' | sed 's/_json/.json/')
+          mv "$file" "$new_file"
+        done
+
     - name: Check out Meshery code
       uses: actions/checkout@v4
       with:
@@ -31,6 +40,7 @@ jobs:
         token: ${{ secrets.RELEASEDRAFTER_PAT }} 
         fetch-depth: 1
         path: meshery
+
     - name: Create target directory if not exist
       run: mkdir -p meshery/docs/_data/relationshiptestresult
 
@@ -51,4 +61,3 @@ jobs:
         commit_user_name: l5io
         commit_user_email: ci@layer5.io
         commit_author: 'l5io <l5io@users.noreply.github.com>'
-      
