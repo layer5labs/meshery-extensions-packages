@@ -189,6 +189,12 @@
             "imageSource": "assets/badges/meshsync/meshsync.png",
             "title": "MeshSync",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to MeshSync</a> in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "sistent-contributor",
+            "imageSource": "assets/badges/sistent-contributor/sistent-contributor.png",
+            "title": "Sistent Contributor",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Sistent project as a recognition and appreciation of their efforts."
         }
     ]
 }
