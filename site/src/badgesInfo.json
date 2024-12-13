@@ -4,13 +4,13 @@
             "slug": "docker-captain",
             "location": "assets/badges/docker-captain/docker-captain.png",
             "title": "Docker Captain",
-            "description": "This is a special sedition badge and it is awarded to Docker Captains." 
+            "description": "This is a special sedition badge and it is awarded to Docker Captains."
         },
         {
             "slug": "cncf-ambassador",
             "location": "assets/badges/cncf-ambassador/cncf-ambassador.png",
             "title": "CNCF Ambassador",
-            "description": "This is a special edition badge and it is awarded to CNCF Ambassadors." 
+            "description": "This is a special edition badge and it is awarded to CNCF Ambassadors."
         },
         {
             "slug": "hacktoberfest-24-contributor",
@@ -189,6 +189,12 @@
             "imageSource": "assets/badges/meshsync/meshsync.png",
             "title": "MeshSync",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to MeshSync</a> in recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "sistent-contributor",
+            "imageSource": "assets/badges/sistent-contributor/sistent-contributor.png",
+            "title": "Sistent Contributor",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Sistent project as a recognition and appreciation of their efforts."
         }
     ]
 }
