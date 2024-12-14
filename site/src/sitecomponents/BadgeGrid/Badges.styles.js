@@ -5,7 +5,7 @@ export const BadgesWrapper = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-    gap: "1rem";
+    gap: 1rem;
     > div {
       display: flex;
       flex-direction: column;
@@ -22,13 +22,14 @@ export const BadgesWrapper = styled.div`
       }
       > img {
         max-width: 250px;
+        min-height: 360px;
       }
     }
 
   }  
-  @media (max-width: 1200px) {
+  @media (max-width: 1250px) {
     div.badge-grid > div {
-      max-width: 29%;
+      max-width: 25%;
     }
   }
   @media (max-width: 992px) {
