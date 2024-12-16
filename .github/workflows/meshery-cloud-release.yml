@@ -39,6 +39,12 @@ on:
         required: true
       METAL03_USERNAME:
         required: true
+      METAL02_HOST:
+        required: true
+      METAL02_KEY:
+        required: true
+      METAL02_USERNAME:
+        required: true
 
   workflow_dispatch:
     inputs:
@@ -185,27 +191,18 @@ jobs:
           TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
-    - name: Deploy staging
-      if: success()
+    - name: Deploy staging on metal02
       uses: appleboy/ssh-action@master
       env:
           GIT_VERSION: ${{inputs.release-version}}
-          GIT_COMMITSHA: ${{ github.sha }}
       with:
-        host: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
-        username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
-        key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
+        host: ${{ secrets.METAL02_HOST }}
+        username: ${{ secrets.METAL02_USERNAME }}
+        key: ${{ secrets.METAL02_KEY }}
         port: 22
-        envs: GIT_VERSION,GIT_COMMITSHA
+        envs: GIT_VERSION
         script: |
-          sudo su
-          cd meshery-cloud
-          sudo su - -c "git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud"
-          docker pull layer5/meshery-cloud:staging-$GIT_VERSION
-          sudo su - -c "whoami"
-          make stg-deploy GIT_VERSION=$GIT_VERSION
-          docker system prune -f
-          docker image prune -a -f
+          helm upgrade -f ~/staging-fullstack/staging-layer5-values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -264,28 +261,6 @@ jobs:
           TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
-    # - name: Deploy production in AWS EC2
-    #   uses: appleboy/ssh-action@master
-    #   env:
-    #       GIT_VERSION: ${{inputs.release-version}}
-    #       GIT_COMMITSHA: ${{ github.sha }}
-    #   with:
-    #     host: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
-    #     username: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
-    #     key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
-    #     port: 22
-    #     envs: GIT_VERSION,GIT_COMMITSHA
-    #     script: |
-    #       sudo su
-    #       sudo su - -c "whoami"
-    #       echo $GIT_VERSION
-    #       cd meshery-cloud
-    #       sudo su - -c "git pull https://l5io:${{ secrets.GH_ACCESS_TOKEN }}@github.com/layer5io/meshery-cloud"
-    #       sudo ./install/scripts/git-pull.sh
-    #       docker pull layer5/meshery-cloud:production-$GIT_VERSION
-    #       make prod-deploy GIT_VERSION=$GIT_VERSION
-    #       docker system prune -f
-    #       docker image prune -a -f
     - name: Deploy production on metal03
       uses: appleboy/ssh-action@master
       env:
@@ -298,4 +273,3 @@ jobs:
         envs: GIT_VERSION
         script: |
           helm upgrade -f ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/values.yaml layer5 ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod-cloud --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
-          kubectl apply -f ./aws-m03/ingress.yaml
