@@ -16,7 +16,7 @@ on:
 jobs:
   release-kanvas:
     name: Build and Release Kanvas
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-24.04"
     outputs:
       revision: ${{ steps.fetch-versions.outputs.REVISION }}
     steps:
