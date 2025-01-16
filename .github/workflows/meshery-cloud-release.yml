@@ -62,7 +62,7 @@ jobs:
   update-doc-release-version:
     name: API Docs
     if: inputs.release-environment == 'production'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
         uses: actions/checkout@v4
@@ -90,7 +90,7 @@ jobs:
   lint-fix:
     name: Lint UI and Backend
     if: inputs.release-environment == 'staging'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
         uses: actions/checkout@v4
@@ -126,7 +126,7 @@ jobs:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'staging' 
     name: Staging - Docker build and push
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout Meshery Cloud code
       uses: actions/checkout@v4
@@ -210,7 +210,7 @@ jobs:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
     name: Production - Docker build and push
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout Meshery Cloud code
       uses: actions/checkout@v4

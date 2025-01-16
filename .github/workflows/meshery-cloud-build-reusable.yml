@@ -29,7 +29,7 @@ on:
         required: true
 jobs:
   comment-starting-point:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.3.0
@@ -41,7 +41,7 @@ jobs:
           message: "Starting [Meshery Cloud Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
   build-meshery-cloud:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
         uses: actions/checkout@v4

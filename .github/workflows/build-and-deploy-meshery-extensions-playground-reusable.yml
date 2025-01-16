@@ -15,7 +15,7 @@ jobs:
     name: Build and Rollout Kanvas
     env:
       RELEASE_CHANNEL: "kanvas"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout meshery/meshery
         uses: actions/checkout@v4

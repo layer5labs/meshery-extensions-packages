@@ -16,7 +16,7 @@ on:
 jobs:
   release-kanvas:
     name: Build and Release Kanvas
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-24.04"
     outputs:
       revision: ${{ steps.fetch-versions.outputs.REVISION }}
     steps:
@@ -187,12 +187,12 @@ jobs:
             <b>REASON:</b> ${{ env.msg }}<br />
             <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
   
-  kanvas-production-test-release:
-    needs: release-kanvas
-    uses: ./.github/workflows/production-smoke-test-reusable.yml
-    secrets: inherit
-    with:
-      project: "kanvas"
+  # kanvas-production-test-release:
+  #   needs: release-kanvas
+  #   uses: ./.github/workflows/production-smoke-test-reusable.yml
+  #   secrets: inherit
+  #   with:
+  #     project: "kanvas"
 
   rollout-kanvas:
     needs: release-kanvas

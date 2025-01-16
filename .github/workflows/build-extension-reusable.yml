@@ -23,7 +23,7 @@ on:
 
 jobs:
   build-meshery-extension:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4

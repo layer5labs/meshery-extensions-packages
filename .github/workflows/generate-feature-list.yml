@@ -18,7 +18,7 @@ jobs:
   fetch-Feature-list:
     name: Fetch Feature List
     if: github.repository == 'layer5labs/meshery-extensions-packages'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
 
       # Step 1: Check out the repository to access local files

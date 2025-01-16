@@ -18,7 +18,7 @@ jobs:
   update-meshery-test-relationship-report:
     name: Update meshery test relationship report
     needs: [meshery-extensions-test-relationship]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Download artifacts
       uses: actions/download-artifact@v4
