@@ -48,7 +48,7 @@ on:
 jobs:
   bump-meshery:
     if: ${{ (github.event.inputs.repository == 'meshery') || (github.event.inputs.repository == 'all') || (github.event.inputs.repository == 'meshery,meshery-extensions') || (github.event.inputs.repository == 'meshery,meshery-extensions,meshery-cloud') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery code
         uses: actions/checkout@v4
@@ -88,7 +88,7 @@ jobs:
           draft: false
   bump-meshery-extensions:
     if: ${{ (github.event.inputs.repository == 'meshery-extensions') || (github.event.inputs.repository == 'all') || (github.event.inputs.repository == 'meshery,meshery-extensions') || (github.event.inputs.repository == 'meshery,meshery-extensions,meshery-cloud') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Extensions code
         uses: actions/checkout@v4
@@ -128,7 +128,7 @@ jobs:
           draft: false
   bump-meshery-cloud:
     if: ${{ (github.event.inputs.repository == 'meshery-cloud') || (github.event.inputs.repository == 'all') ||  (github.event.inputs.repository == 'meshery,meshery-extensions,meshery-cloud') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Extensions code
         uses: actions/checkout@v4
@@ -168,7 +168,7 @@ jobs:
           draft: false
   bump-sistent:
     if: ${{ (github.event.inputs.repository == 'sistent') || (github.event.inputs.repository == 'all') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Extensions code
         uses: actions/checkout@v4

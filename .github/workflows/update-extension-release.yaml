@@ -5,7 +5,7 @@ on:
 jobs:
   Update:
     name: Release updater
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         # token here with write access to meshery-istio repo

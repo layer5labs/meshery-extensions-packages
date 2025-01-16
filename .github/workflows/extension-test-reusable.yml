@@ -76,7 +76,7 @@ jobs:
   tests-ui-e2e:
     needs: [build-ui-and-server, build-meshery-extension]
     name: UI end-to-end tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       test-results: ${{ steps.run_tests.outputs.test-results }}
     steps:

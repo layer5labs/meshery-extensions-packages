@@ -20,7 +20,7 @@ on:
 jobs:
   smoke-test-production:
     name: Production end-to-end tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4
