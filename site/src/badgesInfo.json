@@ -125,10 +125,10 @@
             "description": "This badge is awarded to the community members who create or improve designs for visual aspects or user flow for any of the websites, flyers, promotions, Meshery UI, and so on in recognition and appreciation of their efforts."
         },
         {
-            "slug": "meshmap",
-            "imageSource": "assets/badges/meshmap/meshmap.png",
-            "title": "MeshMap",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/meshmap'>MeshMap</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
+            "slug": "kanvas",
+            "imageSource": "assets/badges/kanvas/kanvas.png",
+            "title": "Kanvas",
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/kanvas'>Kanvas</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "service-mesh-performance",
