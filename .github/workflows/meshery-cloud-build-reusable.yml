@@ -54,7 +54,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: ${{ secrets.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: 'meshery-cloud/ui/package-lock.json'
       - name: Install Cloud UI dependencies
