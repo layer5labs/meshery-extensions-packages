@@ -50,7 +50,7 @@ jobs:
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
     secrets:
-      NODE_VERSION: ${{ secrets.NODE_VERSION }}
+      NODE_VERSION: "20.x"
       GO_VERSION: ${{ secrets.GO_VERSION }}
   comment-success:
     runs-on: ubuntu-24.04
@@ -114,7 +114,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ secrets.NODE_VERSION }}
+          node-version: "20.x"
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.10.0
         with:
@@ -221,10 +221,10 @@ jobs:
         id: test-reports
         with:
           script: |
-              const fs = require('fs')
-              const E2ETestReporter = String(fs.readFileSync('./meshery-extensions/meshmap/test-report.md'))
-  
-              return E2ETestReporter
+            const fs = require('fs')
+            const E2ETestReporter = String(fs.readFileSync('./meshery-extensions/meshmap/test-report.md'))
+
+            return E2ETestReporter
           result-encoding: string
       - name: comment the summary
         uses: hasura/comment-progress@v2.3.0
