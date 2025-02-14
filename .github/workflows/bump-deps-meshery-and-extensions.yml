@@ -58,7 +58,7 @@ jobs:
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20.x'
           cache: "npm"
           cache-dependency-path: '**/package-lock.json'
       - name: Make changes to pull request
@@ -98,7 +98,7 @@ jobs:
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20.x'
           cache: "npm"
           cache-dependency-path: '**/package-lock.json'
       - name: Make changes to pull request
@@ -138,7 +138,7 @@ jobs:
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20.x'
           cache: "npm"
           cache-dependency-path: '**/package-lock.json'
       - name: Make changes to pull request
@@ -178,7 +178,7 @@ jobs:
           token: ${{ secrets.RELEASEDRAFTER_PAT }}
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20.x'
           cache: "npm"
           cache-dependency-path: 'package-lock.json'
       - name: Make changes to pull request
