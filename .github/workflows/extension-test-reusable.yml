@@ -51,7 +51,7 @@ jobs:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
     secrets:
       NODE_VERSION: "20.x"
-      GO_VERSION: ${{ secrets.GO_VERSION }}
+      GO_VERSION: "1.23.0"
   comment-success:
     runs-on: ubuntu-24.04
     needs: [build-ui-and-server]
@@ -110,7 +110,7 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ secrets.GO_VERSION }}
+          go-version: "1.23.0"
       - name: Setup node
         uses: actions/setup-node@v4
         with:
