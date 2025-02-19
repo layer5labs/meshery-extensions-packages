@@ -11,7 +11,7 @@ jobs:
     secrets:
       PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
       NODE_VERSION: ${{ secrets.NODE_VERSION }}
-      GO_VERSION: "1.23.0"
+      GO_VERSION: "1.23"
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       LAYER5_CLOUD_USERNAME: ${{ secrets.LAYER5_CLOUD_USERNAME }}
