@@ -16,10 +16,6 @@ on:
     secrets:
       PROVIDER_TOKEN:
         required: true
-      NODE_VERSION:
-        required: true
-      GO_VERSION:
-        required: true
       GH_ACCESS_TOKEN:
         required: true
       CYPRESS_RECORD_KEY:
@@ -49,9 +45,7 @@ jobs:
           recreate: true
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
-    secrets:
-      NODE_VERSION: "20"
-      GO_VERSION: "1.23
+
   comment-success:
     runs-on: ubuntu-24.04
     needs: [build-ui-and-server]
