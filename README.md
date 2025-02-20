@@ -41,7 +41,6 @@ See https://badges.layer5.io for the full set and description of the Layer5 Reco
 
 ### Function 2: Layer5 Cloud Remote Provider Packages
 Access Layer5 Cloud at https://cloud.layer5.io 
-[![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/docker-extension/docker-extension.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
 
 ### Function 3: Images taken by Kanvas Snapshots
 Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
