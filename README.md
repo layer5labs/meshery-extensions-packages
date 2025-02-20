@@ -21,7 +21,11 @@
 
 <h5><p align="center"><i>If you’re using Layer5 products or if you like the project, please <a href="https://github.com/layer5io/layer5/stargazers">★</a> this repository to show your support! 🤩</i></p></h5>
 
-# Layer5 Badges
+This repository has multiple functions.
+
+### Function 1: Layer5 Badges
+See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
+
 *Examples*
 
 [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshmap/meshmap.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshery-operator/meshery-operator.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/docker-extension/docker-extension.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
@@ -33,17 +37,16 @@
 [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-application/first-application.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) 
 -->
 
-See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
 
-# Registry for Layer5 Cloud Remote Provider Packages
+
+### Function 2: Layer5 Cloud Remote Provider Packages
 Access Layer5 Cloud at https://cloud.layer5.io 
+[![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/docker-extension/docker-extension.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
 
+### Function 3: Images taken by Kanvas Snapshots
+Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
 
-## About Layer5
-
-Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
-
-### Directory structure
+# Repository Directory Structure
 1. `action-assets`: 
       1.   Stores the snapshots taken as part of pull requests. Each snapshot have 2 versions and are namespaced based on the year and month they were taken, for eg: snapshot against a particular PR created on 10th July 2024 will be stored at
       a. Light: `action-assets/2024@7/<design-id>-light.png` 
@@ -65,3 +68,9 @@ Layer5's cloud native application and infrastructure management software enables
       ```
 
 3. `email`: Contains html emails templates, svgs/png to be used for emails sent for `layer5-cloud` and other newsletter html templates.
+
+
+## About Layer5
+
+Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
+
