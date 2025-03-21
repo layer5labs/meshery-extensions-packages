@@ -23,6 +23,7 @@ export const BadgesWrapper = styled.div`
       > img {
         max-width: 250px;
         min-height: 360px;
+        object-fit: contain;
       }
     }
 
