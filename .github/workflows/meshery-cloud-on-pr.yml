@@ -20,6 +20,9 @@ jobs:
       LAYER5_CLOUD_TESTING_BOT_EMAIL: ${{secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL}}
       LAYER5_CLOUD_TESTING_BOT_PASSWORD: ${{secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD}}
       CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+      NODE_VERSION: ${{secrets.NODE_VERSION}}
+      GH_ACCESS_TOKEN: ${{secrets.GH_ACCESS_TOKEN}}
+      
     with:
       pr_commit_sha: ${{inputs.pr_commit_sha}}
       pr_number: ${{inputs.pr_number}}
