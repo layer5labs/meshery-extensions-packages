@@ -265,7 +265,6 @@ jobs:
       uses: appleboy/ssh-action@master
       env:
           GIT_VERSION: ${{inputs.release-version}}
-          GH_ACCESS_TOKEN: ${{secrets.GH_ACCESS_TOKEN}}
       with:
         host: ${{ secrets.METAL03_HOST }}
         username: ${{ secrets.METAL03_USERNAME }}
@@ -273,7 +272,5 @@ jobs:
         port: 22
         envs: 
             GIT_VERSION
-            GH_ACCESS_TOKEN
         script: |
-          cd ~/aws-m03/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud && cd
-          helm upgrade -f ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/values.yaml layer5 ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod-cloud --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+          helm upgrade -f ~/aws-m03/values.yaml layer5 ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod-cloud --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
