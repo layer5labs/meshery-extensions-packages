@@ -16,7 +16,7 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@master
       - name: Send email
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v4
         with:
           # Required mail server address:
           server_address: smtp.gmail.com

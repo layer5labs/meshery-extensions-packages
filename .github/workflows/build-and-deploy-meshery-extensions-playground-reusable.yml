@@ -129,7 +129,7 @@ jobs:
 
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
-        uses: dawidd6/action-send-mail@v3.7.1
+        uses: dawidd6/action-send-mail@v4
         env:
           msg: ${{ env.reason != '' && env.reason || ' Rollout Kanvas Failure' }}
         with:

@@ -57,7 +57,7 @@ jobs:
           retention-days: 14
       - name: Send Email on Production Release Failure
         if: ${{ failure() }}
-        uses: dawidd6/action-send-mail@v3.7.1
+        uses: dawidd6/action-send-mail@v4
         env:
           msg: ${{ inputs.project }} production smoke test failure
         with:
