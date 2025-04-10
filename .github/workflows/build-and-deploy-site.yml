@@ -6,15 +6,16 @@ on:
     paths:
       - 'site/**'
   workflow_dispatch:
-    
-
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-
+        with:
+          sparse-checkout: 'site'
+          sparse-checkout-cone-mode: false
       - name: Install and Build 🔧 
         run: |
           make setup
