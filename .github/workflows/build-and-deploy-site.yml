@@ -14,8 +14,10 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
         with:
-          sparse-checkout: 'Makefile, install, site'
-            
+          sparse-checkout: |
+            Makefile
+            install
+            site
           sparse-checkout-cone-mode: false
       - name: Install and Build 🔧 
         run: |
