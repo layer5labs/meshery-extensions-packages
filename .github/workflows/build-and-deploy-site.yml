@@ -18,6 +18,7 @@ jobs:
             Makefile
             install
             site
+            github-pages-deploy-action-temp-deployment-folder
           sparse-checkout-cone-mode: false
       - name: Install and Build 🔧 
         run: |
