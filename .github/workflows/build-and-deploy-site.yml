@@ -22,6 +22,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Install and Build 🔧 
         run: |
+          mkdir /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/github-pages-deploy-action-temp-deployment-folder
           make setup
           make build
 
