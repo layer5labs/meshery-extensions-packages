@@ -15,14 +15,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            Makefile
             install
             site
-            github-pages-deploy-action-temp-deployment-folder
-          sparse-checkout-cone-mode: false
       - name: Install and Build 🔧 
+        working-directory: site
         run: |
-          mkdir /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/github-pages-deploy-action-temp-deployment-folder
           make setup
           make build
 
