@@ -51,7 +51,7 @@ jobs:
         run: |
           pwd;
           ls;
-          tree kanvas;
+          tree  meshery-extensions;
 
       - name: Fetch Meshery and Extensions version
         run: |
