@@ -107,7 +107,11 @@ jobs:
           docker cp -a ./provider/ meshery-tmp:/home/appuser/.meshery/
 
           docker container commit meshery-tmp layer5/meshery:kanvas-latest
-
+      - name: Clean up checkout out repos
+        run: |
+          rm -rf ./meshery 
+          rm -rf ./meshery-extensions
+          
       - name: Docker tag & push
         run: |
 
