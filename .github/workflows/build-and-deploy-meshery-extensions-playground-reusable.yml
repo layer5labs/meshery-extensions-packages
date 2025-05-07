@@ -25,14 +25,14 @@ jobs:
           repository: meshery/meshery
           ref: ${{ inputs.branch }}
 
-      - name: Checkout kanvas
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          sparse-checkout: |
-            kanvas
-          path: "kanvas"
-          sparse-checkout-cone-mode: false
+      # - name: Checkout kanvas
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 1
+      #     sparse-checkout: |
+      #       kanvas
+      #     path: "kanvas"
+      #     sparse-checkout-cone-mode: false
 
       - name: Fetch version scripts from meshery-extensions.
         uses: actions/checkout@v4
@@ -42,6 +42,7 @@ jobs:
           path: "meshery-extensions"
           fetch-depth: 1
           sparse-checkout: |
+            kanvas
             build/get-meshery-version
             build/get-extension-version
           sparse-checkout-cone-mode: false
@@ -76,9 +77,9 @@ jobs:
           echo "ls meshery"
           ls meshery
           echo "ls kanvas"
-          ls kanvas
+          ls ./meshery-extensions/kanvas
           echo "merge"
-          cp -R ./kanvas/kanvas/*  ./meshery/
+          cp -R ./meshery-extensions/kanvas/*  ./meshery/
           echo "ls meshery"
           ls meshery 
           echo "ls meshery/ui"
