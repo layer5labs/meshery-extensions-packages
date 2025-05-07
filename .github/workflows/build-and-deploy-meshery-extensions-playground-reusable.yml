@@ -28,6 +28,7 @@ jobs:
       - name: Checkout kanvas
         uses: actions/checkout@v4
         with:
+          fetch-depth: 1
           sparse-checkout: |
             kanvas
           path: "kanvas"
