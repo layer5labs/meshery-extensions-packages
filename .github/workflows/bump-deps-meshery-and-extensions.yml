@@ -20,6 +20,7 @@ on:
         - react
         - "notistack"
         - "@layer5/sistent"
+        - "@layer5/schemas"
         - "@material-ui/core"
         - "@material-ui/icons"
         - "@material-ui/lab"
