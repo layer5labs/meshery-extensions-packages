@@ -21,7 +21,15 @@
 
 <h5><p align="center"><i>If you’re using Layer5 products or if you like the project, please <a href="https://github.com/layer5io/layer5/stargazers">★</a> this repository to show your support! 🤩</i></p></h5>
 
-This repository has multiple functions.
+⚠️ Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
+
+Example of a sparse checkout:
+```
+git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
+git sparse-checkout add assets
+```
+
+ℹ️ This repository has multiple functions.
 
 ### Function 1: Layer5 Badges
 See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
