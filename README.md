@@ -52,34 +52,34 @@ See https://badges.layer5.io for the full set and description of the Layer5 Reco
 -->
 
 **Relevant Directories**
-`assets`: Contains 3 directories
-    1. `badges`: Stores the SVG and PNG representation of badges to be used in emails.
-    2. `meshmap`: Stores the animated gifs, svgs, quicktips etc,
-    3. `organizations`: Stores the custom icons in PNG format namespaced under orgid.
+- `/assets`: Contains 3 directories
+    1. `/assets/badges`: Stores the SVG and PNG representation of badges to be used in emails.
+    1. `/assets/meshmap`: Stores the animated gifs, svgs, quicktips etc,
+    1. `/assets/organizations`: Stores the custom icons in PNG format namespaced under orgid.
     ```
-    organizations/<org-uuid>/mobile.png
-    organizations/<org-uuid>/desktop.png
+    /assets/organizations/<org-uuid>/mobile.png
+    /assets/organizations/<org-uuid>/desktop.png
     ```
 
 ### Function 2: Layer5 Cloud Remote Provider Packages
 Access Layer5 Cloud at https://cloud.layer5.io 
 
 **Relevant Directories**
-- `email`: Contains html emails templates, svgs/png to be used for emails sent for `layer5-cloud` and other newsletter html templates.
+- `/email`: Contains html emails templates, svgs/png to be used for emails sent for `layer5-cloud` and other newsletter html templates.
 - See the aftifacts under each [Release](https://github.com/layer5labs/meshery-extensions-packages/releases).
 
 ### Function 3: Images taken by Kanvas Snapshots
 Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
 
 **Relevant Directories**
-- `action-assets`: 
+- `/action-assets`: 
     - Stores the snapshots taken as part of pull requests. Each snapshot have 2 versions and are namespaced based on the year and month they were taken, for eg: snapshot against a particular PR created on 10th July 2024 will be stored at
-    - Light: `action-assets/2024@7/<design-id>-light.png` 
-    - Dark version: `action-assets/2024@7/<design-id>-dark.png`
+    - Light: `/action-assets/2024@7/<design-id>-light.png` 
+    - Dark version: `/action-assets/2024@7/<design-id>-dark.png`
 
-- `design-assets`: Stores the snapshots taken for catalog items. Every time a catalog item is updated, the corresponding snapshot for that catalog item is also updated. Catalog snapshots are referenced rom different systems, which need unauthenticated, public access to static resources, and therefore, require a permanent link. Each catalog item has two versions of the snapshot stored at:
-    - Light: `actions-assets/design-assets/<design-id-light>.png`
-    - Dark: `actions-assets/design-assets/<design-id-dark>.png`
+- `/design-assets`: Stores the snapshots taken for catalog items. Every time a catalog item is updated, the corresponding snapshot for that catalog item is also updated. Catalog snapshots are referenced rom different systems, which need unauthenticated, public access to static resources, and therefore, require a permanent link. Each catalog item has two versions of the snapshot stored at:
+    - Light: `/actions-assets/design-assets/<design-id-light>.png`
+    - Dark: `/actions-assets/design-assets/<design-id-dark>.png`
 
 
 ## About Layer5
