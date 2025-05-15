@@ -21,6 +21,9 @@
 
 <h5><p align="center"><i>If you’re using Layer5 products or if you like the project, please <a href="https://github.com/layer5io/layer5/stargazers">★</a> this repository to show your support! 🤩</i></p></h5>
 
+<br />
+
+**Contributor Warning**
 ⚠️ Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
 
 Example of a sparse checkout:
@@ -28,6 +31,9 @@ Example of a sparse checkout:
 git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
 git sparse-checkout add assets
 ```
+
+
+## Repo Overview
 
 ℹ️ This repository has multiple functions.
 
