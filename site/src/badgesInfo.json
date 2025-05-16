@@ -4,7 +4,7 @@
             "slug": "docker-captain",
             "location": "assets/badges/docker-captain/docker-captain.png",
             "title": "Docker Captain",
-            "description": "This is a special sedition badge and it is awarded to Docker Captains."
+            "description": "This is a special edition badge and it is awarded to Docker Captains."
         },
         {
             "slug": "cncf-ambassador",
@@ -195,6 +195,12 @@
             "imageSource": "assets/badges/sistent-contributor/sistent-contributor.png",
             "title": "Sistent Contributor",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Sistent project as a recognition and appreciation of their efforts."
+        },
+        {
+            "slug": "meshmate",
+            "location": "assets/badges/meshmate/meshmate.png",
+            "title": "MeshMate",
+            "description": "This badge is awarded to community members who actively support and guide others, embodying the spirit of collaboration and knowledge sharing in the Layer5 community."
         }
     ]
 }
