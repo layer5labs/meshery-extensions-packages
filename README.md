@@ -60,6 +60,10 @@ See https://badges.layer5.io for the full set and description of the Layer5 Reco
     /assets/organizations/<org-uuid>/mobile.png
     /assets/organizations/<org-uuid>/desktop.png
     ```
+    4. `/assets/kanvas`: Stores images used in Kanvas, such as in designs, roadmaps, flow-charts etc.
+
+        `/assets/kanvas/getting-started/`: Stores images used in the Kanvas Getting Started section in webp format.
+    
 
 ### Function 2: Layer5 Cloud Remote Provider Packages
 Access Layer5 Cloud at https://cloud.layer5.io 
