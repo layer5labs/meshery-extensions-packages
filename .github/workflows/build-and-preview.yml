@@ -2,7 +2,7 @@ name: Build and Deploy Site
 
 on:
   pull_request:
-    branches: [master, build-n-prev]
+    branches: [master]
     types: [opened, synchronize, reopened]
   workflow_dispatch:
 permissions:
