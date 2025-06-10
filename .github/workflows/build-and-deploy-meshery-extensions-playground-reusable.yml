@@ -84,6 +84,7 @@ jobs:
           ls meshery 
           echo "ls meshery/ui"
           ls meshery/ui
+          echo $TOKEN
 
       - name: Docker build & tag
         working-directory: "./meshery"
