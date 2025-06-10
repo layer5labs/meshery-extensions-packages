@@ -123,7 +123,7 @@ jobs:
           ls .
       - name: Get Meshery Extensions Release draft
         env:
-          ACCESS_TOKEN: ${{ secrets.RELEASEDRAFTER_PAT }}
+          ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         run: |
           curl -sL -H "Authorization: token $ACCESS_TOKEN" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/layer5labs/meshery-extensions/releases | jq -r 'map(select(.draft)) | first | .body' > releases.md
       - name: Release Draft Notes
@@ -140,7 +140,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           repo: meshery-extensions-packages
-          token: ${{ secrets.RELEASEDRAFTER_PAT }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
           tag: ${{ env.LATEST_EXTENSION_VERSION }}
           name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
           allowUpdates: true
@@ -154,7 +154,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           repo: meshery-extensions
-          token: ${{ secrets.RELEASEDRAFTER_PAT }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
           tag: ${{ env.LATEST_EXTENSION_VERSION }}
           name: Meshery Extensions ${{ env.LATEST_EXTENSION_VERSION }}
           allowUpdates: true
