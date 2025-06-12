@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.RELEASEDRAFTER_PAT }}
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           script: |
             github.rest.actions.createWorkflowDispatch({
                 owner: 'layer5io',

@@ -37,7 +37,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: meshery/meshery
-        token: ${{ secrets.RELEASEDRAFTER_PAT }} 
+        token: ${{ secrets.GH_ACCESS_TOKEN }} 
         fetch-depth: 1
         path: meshery
 
