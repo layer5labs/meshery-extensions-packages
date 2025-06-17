@@ -21,72 +21,105 @@
 
 <h5><p align="center"><i>If you’re using Layer5 products or if you like the project, please <a href="https://github.com/layer5io/layer5/stargazers">★</a> this repository to show your support! 🤩</i></p></h5>
 
+### 🧭 Purpose of the Repository
+
+> **This repository serves as the home for Layer5’s community-driven extensions, recognition badges, visual assets, and remote provider packages used across the Layer5 and Meshery ecosystem.**  
+>  
+> It aims to:
+> - Empower contributors through the Layer5 Recognition Program (with shareable badges).
+> - Host visual assets for emails, Kanvas designs, and MeshMap UI.
+> - Provide reusable components and templates for the Layer5 Cloud remote provider.
+> - Offer public static snapshots used in Meshery GitHub Actions and catalog references.
+
+_If you're contributing to Meshery, Layer5, or looking to integrate with its design/visual ecosystem—this repo is where you’ll find those shared packages._
+
 <br />
 
-**Contributor Warning**
-⚠️ Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
+## ⚠️ Contributor Warning
+
+Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
 
 Example of a sparse checkout:
-```
+
+```bash
 git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
-git sparse-checkout add assets
+git sparse-checkout init --cone
+git sparse-checkout set assets
 ```
 
+---
 
-## Repo Overview
+## 📦 Repo Overview
 
 ℹ️ This repository has multiple functions.
 
 ### Function 1: Layer5 Badges
-See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
+See [badges.layer5.io](https://badges.layer5.io) for the full set and description of the Layer5 Recognition Program.
 
-*Examples*
+**Examples**
 
 [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshmap/meshmap.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshery-operator/meshery-operator.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/docker-extension/docker-extension.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
-<!---
-
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-share/first-share.svg)
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-log-streaming-session/first-log-streaming-session.svg)
- [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/bring-a-buddy/bring-a-buddy.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) 
-[![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-application/first-application.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) 
--->
 
 **Relevant Directories**
-- `/assets`: Contains 3 directories
-    1. `/assets/badges`: Stores the SVG and PNG representation of badges to be used in emails.
-    1. `/assets/meshmap`: Stores the animated gifs, svgs, quicktips etc,
-    1. `/assets/organizations`: Stores the custom icons in PNG format namespaced under orgid.
-    ```
-    /assets/organizations/<org-uuid>/mobile.png
-    /assets/organizations/<org-uuid>/desktop.png
-    ```
-    4. `/assets/kanvas`: Stores images used in Kanvas, such as in designs, roadmaps, flow-charts etc.
-
-        `/assets/kanvas/getting-started/`: Stores images used in the Kanvas Getting Started section in webp format.
-    
+- `/assets`: Contains:
+  - `/assets/badges`: Stores SVG/PNG badge representations.
+  - `/assets/meshmap`: Stores MeshMap assets like animations and SVGs.
+  - `/assets/organizations`: Custom org icons in PNG format.
+  - `/assets/kanvas`: Kanvas images for designs, flowcharts, etc.
 
 ### Function 2: Layer5 Cloud Remote Provider Packages
-Access Layer5 Cloud at https://cloud.layer5.io 
+Access Layer5 Cloud at [cloud.layer5.io](https://cloud.layer5.io)
 
 **Relevant Directories**
-- `/email`: Contains html emails templates, svgs/png to be used for emails sent for `layer5-cloud` and other newsletter html templates.
-- See the aftifacts under each [Release](https://github.com/layer5labs/meshery-extensions-packages/releases).
+- `/email`: Contains HTML email templates, SVGs/PNGs for newsletters and notifications.
 
-### Function 3: Images taken by Kanvas Snapshots
-Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
+### Function 3: Images Taken by Kanvas Snapshots
+Learn more at [Meshery GitHub Action Snapshot](https://meshery.io/extensions/github-action-meshery-snapshot)
 
 **Relevant Directories**
-- `/action-assets`: 
-    - Stores the snapshots taken as part of pull requests. Each snapshot have 2 versions and are namespaced based on the year and month they were taken, for eg: snapshot against a particular PR created on 10th July 2024 will be stored at
-    - Light: `/action-assets/2024@7/<design-id>-light.png` 
-    - Dark version: `/action-assets/2024@7/<design-id>-dark.png`
+- `/action-assets`: Stores PR snapshot images (light/dark mode) in a date-structured directory.
+- `/design-assets`: Public-facing snapshots used for catalog items.
 
-- `/design-assets`: Stores the snapshots taken for catalog items. Every time a catalog item is updated, the corresponding snapshot for that catalog item is also updated. Catalog snapshots are referenced rom different systems, which need unauthenticated, public access to static resources, and therefore, require a permanent link. Each catalog item has two versions of the snapshot stored at:
-    - Light: `/actions-assets/design-assets/<design-id-light>.png`
-    - Dark: `/actions-assets/design-assets/<design-id-dark>.png`
+---
+
+## 🤝 How to Contribute
+
+We welcome all contributors! Whether you're a beginner or an experienced developer, your contributions are valuable.
+
+📘 **Read the contributing guide:** [Layer5 Contributor Guide](https://docs.meshery.io/project/contributing)
+
+🧩 **Explore beginner issues:** [Good First Issues](https://github.com/layer5labs/meshery-extensions-packages/labels/good%20first%20issue)
+
+🛠️ **Set up the project:**
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
+cd meshery-extensions-packages
+git sparse-checkout init --cone
+git sparse-checkout set assets
+```
+
+---
+
+<br /><br />
+
+## 🚀 Get Involved with the Community
+
+✔️ **Join** weekly meetings via the [community calendar](https://meshery.io/calendar)  
+✔️ **Watch** past [recordings](https://www.youtube.com/@mesheryio?sub_confirmation=1)  
+✔️ **Fill out** the [newcomer form](https://meshery.io/newcomers)  
+✔️ **Discuss** in the [forums](https://meshery.io/community#discussion-forums)  
+✔️ **Explore** the [community handbook](https://meshery.io/community#handbook)  
+✔️ **Chat with us** on [Slack](https://slack.meshery.io)  
+✔️ **Ask for help** from MeshMates or request guidance  
+
+> _Not sure where to start? Check out the [help-wanted issues](https://github.com/issues?q=is%3Aopen+is%3Aissue+archived%3Afalse+(org%3Ameshery+OR+org%3Aservice-mesh-performance+OR+org%3Aservice-mesh-patterns+OR+org%3Ameshery-extensions)+label%3A%22help+wanted%22)._ 
 
 
-## About Layer5
+---
 
-Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
+## 🧠 Helpful Resources
 
+- 📘 [Meshery Documentation](https://docs.meshery.io/)
+- 🛠️ [Build & Release Strategy](https://docs.meshery.io/project/releases)
+- 🎨 [Meshery UI Figma Designs](https://www.figma.com/file/ghI1hfYFIVR2EKENKcVLxZ/Meshery-UI-Designs)
