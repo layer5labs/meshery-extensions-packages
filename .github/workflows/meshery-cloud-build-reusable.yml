@@ -37,7 +37,7 @@ jobs:
       - name: Checkout for composite action
         uses: actions/checkout@v4
       - name: comment starting point
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: "Starting [Cloud Server Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
@@ -80,12 +80,12 @@ jobs:
           npm i -g eslint
       - name: comment success
         if: success()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":heavy_check_mark: Cloud UI installing deps complete."
       - name: comment failure
         if: failure()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Cloud UI installing deps failed."
       
@@ -95,12 +95,12 @@ jobs:
         run: make ui-build
       - name: comment success
         if: success()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":heavy_check_mark: Cloud Server UI build complete."
       - name: comment failure
         if: failure()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Cloud Server UI build failed."
       - name: Validate Meshery Cloud API
@@ -108,12 +108,12 @@ jobs:
         run: make api-validate-redocly
       - name: comment success
         if: success()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":heavy_check_mark: Meshery Cloud API validation complete."
       - name: comment Failure
         if: failure()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Meshery Cloud API validation failed."
 
@@ -137,12 +137,12 @@ jobs:
           make server
       - name: comment success
         if: success()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":heavy_check_mark: Cloud Server build complete."
       - name: comment Failure
         if: failure()
-        uses: ./.github/actions/meshery-cloud-comment
+        uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Cloud Server build failed."
 

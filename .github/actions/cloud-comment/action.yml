@@ -1,5 +1,5 @@
-name: 'Meshery Cloud Comment'
-description: 'Posts progress comments to Meshery Cloud PR with predefined token and PR number'
+name: 'Cloud Comment'
+description: 'Posts progress comments to Cloud PR with predefined token and PR number'
 inputs:
   message:
     description: 'Message to post'
