@@ -36,6 +36,11 @@ jobs:
     steps:
       - name: Checkout for composite action
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            .github/actions/cloud-comment
+          sparse-checkout-cone-mode: false
       - name: comment starting point
         uses: ./.github/actions/cloud-comment
         with:
