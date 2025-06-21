@@ -38,7 +38,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: "Starting [Meshery Cloud Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
+          message: "Starting [Cloud Server Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
   build-meshery-cloud:
     runs-on: ubuntu-24.04
@@ -71,7 +71,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: ":heavy_check_mark: Meshery Cloud UI installing deps complete."
+          message: ":heavy_check_mark: Cloud UI installing deps complete."
           append: true
       - name: comment Failure
         if: failure()
@@ -81,7 +81,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: ":x: Meshery Cloud UI installing deps Failed."
+          message: ":x: Cloud UI installing deps failed."
           append: true
       - name: Build Meshery Cloud UI
         working-directory: ./meshery-cloud
@@ -94,7 +94,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: ":heavy_check_mark: Meshery Cloud UI build complete."
+          message: ":heavy_check_mark: Cloud Server UI build complete."
           append: true
       - name: comment Failure
         if: failure()
@@ -104,7 +104,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: ":x: Meshery Cloud UI build Failed."
+          message: ":x: Cloud Server UI build failed."
           append: true
       - name: Validate Meshery Cloud API
         working-directory: ./meshery-cloud
@@ -117,7 +117,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: ":heavy_check_mark: Meshery Cloud API Validation complete."
+          message: ":heavy_check_mark: Meshery Cloud API validation complete."
           append: true
       - name: comment Failure
         if: failure()
@@ -127,33 +127,51 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: ":x: Meshery Cloud API Validation Failed."
+          message: ":x: Meshery Cloud API validation failed."
           append: true
       - name: Setup Golang
         uses: actions/setup-go@v5
         with:
           go-version: "1.23"
-      - name: Lint UI and Backend
-        working-directory: ./meshery-cloud
-        run: make api-validate-redocly
       - name: Install prettier and eslint
         run: |
            npm i -g prettier;
            npm i -g eslint;
-      - name: Lint UI and Backend
-        run: |
-          cd meshery-cloud
-          make ui-lint-fix
-          make cloud-lint-fix
-      - name: Commit Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_user_name: l5io
-          commit_user_email: l5io@layer5.io
-          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          commit_options: '--signoff'
-          commit_message: '[CI] Lint fix backend/ui'
-          repository: meshery-cloud      
+      # - name: Lint UI and Backend and apply fixes
+      #   run: |
+      #     cd meshery-cloud
+      #     make ui-lint-fix
+      #     make cloud-lint-fix
+      # - name: Commit Changes
+      #   uses: stefanzweifel/git-auto-commit-action@v5
+      #   with:
+      #     commit_user_name: l5io
+      #     commit_user_email: l5io@layer5.io
+      #     commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+      #     commit_options: '--signoff'
+      #     commit_message: '[CI] Lint fix backend/ui'
+      #     repository: meshery-cloud      
       - name: Build Cloud Server
         run: |
           make server
+      - name: comment success
+        if: success()
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5io/meshery-cloud"
+          number: ${{ inputs.pr_number }}
+          id: meshery-cloud
+          message: ":heavy_check_mark: Cloud Server build complete."
+          append: true
+      - name: comment Failure
+        if: failure()
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5io/meshery-cloud"
+          number: ${{ inputs.pr_number }}
+          id: meshery-cloud
+          message: ":x: Cloud Server build failed."
+          append: true
+
