@@ -140,7 +140,7 @@ jobs:
         uses: ./.github/actions/cloud-comment
         with:
           message: ":heavy_check_mark: Cloud Server build complete."
-      - name: comment Failure
+      - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
         with:
