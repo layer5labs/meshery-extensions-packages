@@ -111,6 +111,8 @@ jobs:
         uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Cloud Server UI build failed."
+
+
       - name: Validate Meshery Cloud API
         working-directory: ./meshery-cloud
         run: make api-validate-redocly
@@ -139,6 +141,8 @@ jobs:
       #     commit_options: '--signoff'
       #     commit_message: '[CI] Lint fix backend/ui'
       #     repository: meshery-cloud      
+
+
       - name: Build Cloud Server
         working-directory: ./meshery-cloud
         run: |
