@@ -1,4 +1,4 @@
-name: Meshery Cloud Build On PR Dispatch
+name: Meshery Cloud Build Reusable
 on:
   workflow_call:
     inputs:
@@ -129,3 +129,31 @@ jobs:
           id: meshery-cloud
           message: ":x: Meshery Cloud API Validation Failed."
           append: true
+      - name: Setup Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+      - name: Lint UI and Backend
+        working-directory: ./meshery-cloud
+        run: make api-validate-redocly
+      - name: Install prettier and eslint
+        run: |
+           npm i -g prettier;
+           npm i -g eslint;
+      - name: Lint UI and Backend
+        run: |
+          cd meshery-cloud
+          make ui-lint-fix
+          make cloud-lint-fix
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_user_name: l5io
+          commit_user_email: l5io@layer5.io
+          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit_options: '--signoff'
+          commit_message: '[CI] Lint fix backend/ui'
+          repository: meshery-cloud      
+      - name: Build Cloud Server
+        run: |
+          make server
