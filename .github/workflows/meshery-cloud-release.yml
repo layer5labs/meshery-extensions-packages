@@ -85,7 +85,7 @@ jobs:
           repository: l5io/meshery-cloud
           branch: master
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-          valueFile: 'models/openapi-schema/schema.yml'
+          valueFile: 'server/models/openapi-schema/schema.yml'
           commitChange: true
           propertyPath: 'info.version'
           value: ${{inputs.release-version}}
