@@ -30,20 +30,26 @@ on:
 jobs:
   comment-starting-point:
     runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      PR_NUMBER: ${{ inputs.pr_number }}
     steps:
+      - name: Checkout for composite action
+        uses: actions/checkout@v4
       - name: comment starting point
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: "Starting [Cloud Server Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
   build-meshery-cloud:
     runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      PR_NUMBER: ${{ inputs.pr_number }}
     steps:
-      - name: Checkout Meshery Cloud code
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Checkout Cloud code
         uses: actions/checkout@v4
         with:
           repository: "layer5io/meshery-cloud"
@@ -57,86 +63,60 @@ jobs:
           node-version: ${{ secrets.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: 'meshery-cloud/ui/package-lock.json'
+      - name: Setup Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+
       - name: Install Cloud UI dependencies
         working-directory: ./meshery-cloud
         run: make ui-setup
-      - name: Install Redocly CLI
+      - name: Install Redocly, Prettier, and ESLint
         working-directory: ./meshery-cloud
-        run: npm i -g @redocly/cli@latest
+        run: |
+          npm i -g @redocly/cli@latest
+          npm i -g prettier
+          npm i -g eslint
       - name: comment success
         if: success()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":heavy_check_mark: Cloud UI installing deps complete."
-          append: true
-      - name: comment Failure
+      - name: comment failure
         if: failure()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":x: Cloud UI installing deps failed."
-          append: true
-      - name: Build Meshery Cloud UI
+      
+      
+      - name: Build Cloud UI
         working-directory: ./meshery-cloud
         run: make ui-build
       - name: comment success
         if: success()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":heavy_check_mark: Cloud Server UI build complete."
-          append: true
-      - name: comment Failure
+      - name: comment failure
         if: failure()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":x: Cloud Server UI build failed."
-          append: true
       - name: Validate Meshery Cloud API
         working-directory: ./meshery-cloud
         run: make api-validate-redocly
       - name: comment success
         if: success()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":heavy_check_mark: Meshery Cloud API validation complete."
-          append: true
       - name: comment Failure
         if: failure()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":x: Meshery Cloud API validation failed."
-          append: true
-      - name: Setup Golang
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23"
-      - name: Install prettier and eslint
-        run: |
-           npm i -g prettier;
-           npm i -g eslint;
+
       # - name: Lint UI and Backend and apply fixes
       #   run: |
       #     cd meshery-cloud
@@ -152,26 +132,17 @@ jobs:
       #     commit_message: '[CI] Lint fix backend/ui'
       #     repository: meshery-cloud      
       - name: Build Cloud Server
+        working-directory: ./meshery-cloud
         run: |
           make server
       - name: comment success
         if: success()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":heavy_check_mark: Cloud Server build complete."
-          append: true
       - name: comment Failure
         if: failure()
-        uses: hasura/comment-progress@v2.3.0
+        uses: ./.github/actions/cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5io/meshery-cloud"
-          number: ${{ inputs.pr_number }}
-          id: meshery-cloud
           message: ":x: Cloud Server build failed."
-          append: true
 
