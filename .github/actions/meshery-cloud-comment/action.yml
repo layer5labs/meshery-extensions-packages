@@ -1,0 +1,27 @@
+name: 'Meshery Cloud Comment'
+description: 'Posts progress comments to Meshery Cloud PR with predefined token and PR number'
+inputs:
+  message:
+    description: 'Message to post'
+    required: true
+  append:
+    description: 'Whether to append to existing comment'
+    required: false
+    default: 'true'
+  recreate:
+    description: 'Whether to recreate the comment'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - name: Post comment
+      uses: hasura/comment-progress@v2.3.0
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        repository: "layer5io/meshery-cloud"
+        number: ${{ env.PR_NUMBER }}
+        id: meshery-cloud
+        message: ${{ inputs.message }}
+        append: ${{ inputs.append }}
+        recreate: ${{ inputs.recreate }}

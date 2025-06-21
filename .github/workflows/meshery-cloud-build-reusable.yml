@@ -30,18 +30,22 @@ on:
 jobs:
   comment-starting-point:
     runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      PR_NUMBER: ${{ inputs.pr_number }}
     steps:
       - name: Checkout for composite action
         uses: actions/checkout@v4
       - name: comment starting point
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: "Starting [Cloud Server Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
   build-meshery-cloud:
     runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      PR_NUMBER: ${{ inputs.pr_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,17 +80,13 @@ jobs:
           npm i -g eslint
       - name: comment success
         if: success()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":heavy_check_mark: Cloud UI installing deps complete."
       - name: comment failure
         if: failure()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":x: Cloud UI installing deps failed."
       
       
@@ -95,34 +95,26 @@ jobs:
         run: make ui-build
       - name: comment success
         if: success()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":heavy_check_mark: Cloud Server UI build complete."
       - name: comment failure
         if: failure()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":x: Cloud Server UI build failed."
       - name: Validate Meshery Cloud API
         working-directory: ./meshery-cloud
         run: make api-validate-redocly
       - name: comment success
         if: success()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":heavy_check_mark: Meshery Cloud API validation complete."
       - name: comment Failure
         if: failure()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":x: Meshery Cloud API validation failed."
 
       # - name: Lint UI and Backend and apply fixes
@@ -145,16 +137,12 @@ jobs:
           make server
       - name: comment success
         if: success()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":heavy_check_mark: Cloud Server build complete."
       - name: comment Failure
         if: failure()
-        uses: ./.github/actions/comment-progress
+        uses: ./.github/actions/meshery-cloud-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pr_number: ${{ inputs.pr_number }}
           message: ":x: Cloud Server build failed."
 
