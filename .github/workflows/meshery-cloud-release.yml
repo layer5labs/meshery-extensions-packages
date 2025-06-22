@@ -134,75 +134,72 @@ jobs:
     name: Staging - Docker build and push
     runs-on: ubuntu-24.04
     steps:
-    - name: Checkout Meshery Cloud code
-      uses: actions/checkout@v4
-      with:
-        path: meshery-cloud
-        repository: layer5io/meshery-cloud
-        fetch-depth: 1
-        token: ${{ secrets.GH_ACCESS_TOKEN }}
-        ref: ${{ inputs.branch }}
-    - name: Build Docs
-      working-directory: meshery-cloud
-      run:  |
-        npm i -g @redocly/cli@latest
-        make docs-build
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-    - name: Setup UI Dependencies
-      working-directory: meshery-cloud
-      run: make ui-setup
-    - name: Build RTK Query Codegen
-      working-directory: meshery-cloud
-      run: make ui-api-codegen
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    - name: Docker Meta
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
+      - name: Checkout 🛎️ repo
+        uses: actions/checkout@master
+      - name: Identify Release Values
+        if: "${{ github.event.inputs.release-version}} != 'v' }}"
+        run: |
+          # GIT_TAG=`git symbolic-ref HEAD`
+          if [[ ${GITHUB_REF} = refs/tags* ]]
+          then
+            echo RELEASE_CHANNEL=stable >> $GITHUB_ENV
+          else
+            echo RELEASE_CHANNEL=edge >> $GITHUB_ENV
+          fi
+          LATEST_VERSION=$(git ls-remote --sort='v:refname' --tags | tail -1 | cut -f2 | sed 's/refs\/tags\///g') >> $GITHUB_ENV
+          GIT_VERSION=$(git ls-remote --sort='v:refname' --tags | tail -1 | cut -f2 | sed 's/refs\/tags\///g') >> $GITHUB_ENV
+          GIT_STRIPPED_VERSION=$(git ls-remote --sort='v:refname' --tags | tail -1 | cut -f2 | sed 's/refs\/tags\///g' | cut -c2-)
+          echo "Release channel determined to be $RELEASE_CHANNEL"
+          echo "GIT_LATEST=$LATEST_VERSION" >> $GITHUB_ENV
+          echo "GIT_VERSION=$GIT_VERSION" >> $GITHUB_ENV
+          echo "GIT_STRIPPED_VERSION=$GIT_STRIPPED_VERSION" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Docker Meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
           images: layer5/meshery-cloud
           flavor: |
             latest=true
           tags: |
             type=raw,value=${{inputs.release-environment}}-{{sha}}
+            type=semver,pattern={{version}},value=${{env.GIT_STRIPPED_VERSION}}
             type=raw,value=${{inputs.release-environment}}-{{tag}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
             type=raw,value=${{inputs.release-environment}}-latest
-            type=raw,value=${{inputs.release-environment}}-${{inputs.release-version}}
-            type=raw,value=${{inputs.release-environment}}-${{env.GIT_VERSION}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}        
-    - name: Login to DockerHub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Build and Push
-      uses: docker/build-push-action@v5
-      with:
-        context: meshery-cloud
-        push: true
-        build-args: |
-          ENVIRONMENT=stg
-          GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
-          RELEASE_CHANNEL=${{inputs.release-environment}}
-          TOKEN=${{ secrets.GLOBAL_TOKEN }}
-        tags: ${{ steps.meta.outputs.tags }}
-        platforms: linux/amd64
-    - name: Deploy staging on metal02
-      uses: appleboy/ssh-action@master
-      env:
-          GIT_VERSION: ${{inputs.release-version}}
-      with:
-        host: ${{ secrets.METAL02_HOST }}
-        username: ${{ secrets.METAL02_USERNAME }}
-        key: ${{ secrets.METAL02_KEY }}
-        port: 22
-        envs: GIT_VERSION
-        script: |
-          helm upgrade -f ~/staging-fullstack/staging-layer5-values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+            type=raw,value=${{inputs.release-environment}}-${{env.GIT_VERSION}},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+        #   context: "{{defaultContext}}:install/docker-extension"
+          push: true
+          build-args: |
+            ENVIRONMENT="stg"
+            GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
+            RELEASE_CHANNEL=${{inputs.release-environment}}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/amd64,linux/arm64
+      - name: Deploy staging on metal02
+        uses: appleboy/ssh-action@master
+        env:
+            GIT_VERSION: ${{inputs.release-version}}
+        with:
+          host: ${{ secrets.METAL02_HOST }}
+          username: ${{ secrets.METAL02_USERNAME }}
+          key: ${{ secrets.METAL02_KEY }}
+          port: 22
+          envs: GIT_VERSION
+          script: |
+            helm upgrade -f ~/staging-fullstack/staging-layer5-values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
