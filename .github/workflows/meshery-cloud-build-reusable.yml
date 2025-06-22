@@ -143,6 +143,12 @@ jobs:
       #     repository: meshery-cloud      
 
 
+
+      - name: Install Cloud Server dependencies (Homebrew)
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Install a package with brew
+        run: brew install gobuffalo/tap/pop
+      
       - name: Build Cloud Server
         working-directory: ./meshery-cloud
         run: |
