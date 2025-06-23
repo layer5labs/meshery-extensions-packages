@@ -2,16 +2,13 @@ name: Meshery Extension Build Reusable
 on:
   workflow_call:
     inputs:
-      checkout_ref:
+      pr_commit_sha:
+        description: 'Commit SHA to build'
         required: true
         type: string
       pr_number:
-        default: ""
-        required: false
-        type: string
-      comment_id:
-        default: "comment-pr"
-        required: false
+        description: 'Pull request number'
+        required: true
         type: string
     secrets:
       NODE_VERSION:
@@ -22,16 +19,43 @@ on:
         required: true
 
 jobs:
+  comment-starting-point:
+    runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      PR_NUMBER: ${{ inputs.pr_number }}
+    steps:
+      - name: comment starting point
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: "layer5labs/meshery-extensions"
+          number: ${{ inputs.pr_number }}
+          id: extension-test
+          message: "Starting [Meshery Extensions Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
+          recreate: true
+
   build-meshery-extension:
     runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      PR_NUMBER: ${{ inputs.pr_number }}
     steps:
+      - name: Checkout for composite action
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            .github/actions/extension-comment
+          sparse-checkout-cone-mode: false
+
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v4
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
           fetch-depth: 1
-          ref: ${{ inputs.checkout_ref }}
+          ref: ${{ inputs.pr_commit_sha }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Checkout Meshery code
@@ -42,98 +66,113 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/extension-comment
+        with:
+          message: ":heavy_check_mark: Meshery Extensions and Meshery repository checkouts complete."
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/extension-comment
+        with:
+          message: ":x: Meshery Extensions and Meshery repository checkouts failed."
+
       - name: Setup go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23"
-      - name: setup node
+          go-version: ${{ secrets.GO_VERSION }}
+
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ secrets.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
+
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/extension-comment
+        with:
+          message: ":heavy_check_mark: Go and Node.js setup complete."
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/extension-comment
+        with:
+          message: ":x: Go and Node.js setup failed."
+
       - name: Verify go.mod sync compatibility
         working-directory: meshery-extensions
         run: |
           make graphql-sync-err
+
       - name: comment success
-        if: ${{ success() && github.event.inputs.pr_number != '' }}
-        uses: hasura/comment-progress@v2.3.0
+        if: success()
+        uses: ./.github/actions/extension-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":heavy_check_mark: GraphQL compatibility package check completed."
-          append: true
-      - name: comment Failure
-        if: ${{ failure() && github.event.inputs.pr_number != '' }}
-        uses: hasura/comment-progress@v2.3.0
+          message: ":heavy_check_mark: GraphQL compatibility package check complete."
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/extension-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":x: GraphQL validation compatibility package check Failed: Upcoming PR dependencies are out of sync with Meshery Server default branch."
-          append: true
+          message: ":x: GraphQL compatibility package check failed."
+
       - name: Validate MesheryUI Compatibility Package
         working-directory: ./meshery-extensions
         run: make kanvas-validate-mesheryui-compatibility
+
       - name: comment success
-        if: ${{ success() && github.event.inputs.pr_number != '' }}
-        uses: hasura/comment-progress@v2.3.0
+        if: success()
+        uses: ./.github/actions/extension-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":heavy_check_mark: Kanvas compatibility package check completed."
-          append: true
-      - name: comment Failure
-        if: ${{ failure() && github.event.inputs.pr_number != '' }}
-        uses: hasura/comment-progress@v2.3.0
+          message: ":heavy_check_mark: Kanvas compatibility package check complete."
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/extension-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":x: Kanvas compatibility package check Failed: Upcoming PR dependencies are out of sync with Meshery UI default branch."
-          append: true
+          message: ":x: Kanvas compatibility package check failed."
+
       - name: Build Meshery Extension UI
         working-directory: ./meshery-extensions
-        run: make kanvas-prod # gql build is not done for now
+        run: make kanvas-prod
+
       - name: Build Graphql Plugin
         working-directory: ./meshery-extensions
         run: make graphql
+
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/extension-comment
+        with:
+          message: ":heavy_check_mark: Meshery Extensions UI and GraphQL plugin build complete."
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/extension-comment
+        with:
+          message: ":x: Meshery Extensions UI and GraphQL plugin build failed."
+
       - name: Show runner tree
         run: tree /home/runner/.meshery
-      - name: relocate meshery-extension-ui
+
+      - name: Relocate meshery-extension-ui
         run: mv /home/runner/.meshery/provider/Layer5/*/provider /home/runner/provider
+
       - name: Show runner tree
         run: tree /home/runner/ -L 3
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: meshery-extension-ui
           path: /home/runner/provider
           if-no-files-found: error
-      - name: comment progress
-        if: ${{ success() && github.event.inputs.pr_number != '' }}
-        uses: hasura/comment-progress@v2.3.0
+
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/extension-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":heavy_check_mark: Meshery Extensions build complete."
-          append: true
-      - name: comment Failure
-        if: ${{ failure() && github.event.inputs.pr_number != '' }}
-        uses: hasura/comment-progress@v2.3.0
+          message: ":heavy_check_mark: Meshery Extensions artifact upload complete."
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/extension-comment
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":x: Meshery Extensions build Failed."
-          append: true
+          message: ":x: Meshery Extensions artifact upload failed."
