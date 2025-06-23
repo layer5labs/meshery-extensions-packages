@@ -47,6 +47,7 @@ jobs:
           id: extension-test
           message: "Starting [Meshery Extensions Test](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
+          append: false
 
   build-ui-and-server:
     uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
