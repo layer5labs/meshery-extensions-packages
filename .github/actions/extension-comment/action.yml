@@ -1,0 +1,27 @@
+name: 'Extension Comment'
+description: 'Posts progress comments to Meshery Extensions PRs'
+inputs:
+  message:
+    description: 'Message to post'
+    required: true
+  append:
+    description: 'Whether to append to existing comment'
+    required: false
+    default: 'true'
+  recreate:
+    description: 'Whether to recreate the comment'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - name: Post comment
+      uses: hasura/comment-progress@v2.3.0
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        repository: "layer5labs/meshery-extensions"
+        number: ${{ env.PR_NUMBER }}
+        id: extension-test
+        message: ${{ inputs.message }}
+        append: ${{ inputs.append }}
+        recreate: ${{ inputs.recreate }}
