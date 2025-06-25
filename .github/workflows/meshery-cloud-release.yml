@@ -136,6 +136,12 @@ jobs:
     steps:
       - name: Checkout 🛎️ repo
         uses: actions/checkout@master
+        with:
+          path: meshery-cloud
+          repository: layer5io/meshery-cloud
+          fetch-depth: 1
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          ref: ${{ inputs.branch }}
       - name: Identify Release Values
         if: "${{ github.event.inputs.release-version}} != 'v' }}"
         run: |
