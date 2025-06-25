@@ -27,6 +27,25 @@ on:
         required: true
       LAYER5_CLOUD_TESTING_BOT_PASSWORD:
         required: true
+      GLOBAL_TOKEN:
+        required: true
+      METAL03_HOST:
+        required: true
+      METAL03_KEY:
+        required: true
+      METAL03_USERNAME:
+        required: true
+      METAL02_HOST:
+        required: true
+      METAL02_KEY:
+        required: true
+      METAL02_USERNAME:
+        required: true
+      DOCKER_USERNAME: 
+        required: true
+      DOCKER_PASSWORD: 
+        required: true
+        
 jobs:
   comment-starting-point:
     runs-on: ubuntu-24.04
@@ -76,6 +95,7 @@ jobs:
         with:
           message: ":x: Failed to check out Cloud repo."
 
+
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
       - name: comment success
@@ -88,6 +108,8 @@ jobs:
         uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Failed to setup QEMU"
+
+
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: comment success
@@ -149,6 +171,7 @@ jobs:
             ENVIRONMENT="staging"
             GIT_VERSION=staging-${{env.PR_NUMBER}}
             RELEASE_CHANNEL=staging
+            TOKEN=${{ secrets.GLOBAL_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64,linux/arm64
       - name: comment success
