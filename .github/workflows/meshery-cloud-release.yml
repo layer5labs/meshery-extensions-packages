@@ -217,7 +217,7 @@ jobs:
       working-directory: meshery-cloud
       run:  |
         npm i -g @redocly/cli@latest
-        make docs-build
+        make api-docs-build
     - name: Setup UI Dependencies
       working-directory: meshery-cloud
       run: make ui-setup

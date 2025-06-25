@@ -91,7 +91,7 @@ jobs:
       - name: Build Docs
         run:  |
             npm i -g @redocly/cli@latest
-            make docs-build
+            make api-docs-build
   docker-extension:
     runs-on: ubuntu-24.04
     steps:
