@@ -167,7 +167,7 @@ jobs:
             RELEASE_CHANNEL=staging
             TOKEN=${{ secrets.GLOBAL_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
       - name: comment success
         if: success()
         uses: ./.github/actions/cloud-comment
