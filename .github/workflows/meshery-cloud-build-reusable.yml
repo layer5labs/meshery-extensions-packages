@@ -162,6 +162,8 @@ jobs:
         with:
           push: true
           context: https://github.com/layer5io/meshery-cloud.git#${{ inputs.pr_commit_sha }}
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
           build-args: |
             ENVIRONMENT="staging"
             GIT_VERSION=staging-${{env.PR_NUMBER}}
