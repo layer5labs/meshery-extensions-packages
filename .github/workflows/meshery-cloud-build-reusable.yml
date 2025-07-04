@@ -149,7 +149,7 @@ jobs:
         if: success()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":heavy_check_mark: Logged into Docker Hub <br />          :heavy_check_mark: Building and pushing Cloud container image to Hub"
+          message: ":heavy_check_mark: Logged into Docker Hub <br />          :heavy_check_mark: Building and pushing Cloud container image to Hub (takes approximately 5min 30sec)"
       - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
@@ -200,7 +200,7 @@ jobs:
         if: success()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":white_check_mark: Deployed staging on metal02 <br /> at https://staging-cloud.layer5.io"
+          message: ":white_check_mark: Deployed staging on metal02 at https://staging-cloud.layer5.io"
       - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
