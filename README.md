@@ -24,6 +24,7 @@
 <br />
 
 **Contributor Warning**
+
 ⚠️ Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
 
 Example of a sparse checkout:
@@ -38,6 +39,7 @@ git sparse-checkout add assets
 ℹ️ This repository has multiple functions.
 
 ### Function 1: Layer5 Badges
+
 See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
 
 *Examples*
@@ -52,6 +54,7 @@ See https://badges.layer5.io for the full set and description of the Layer5 Reco
 -->
 
 **Relevant Directories**
+
 - `/assets`: Contains 3 directories
     1. `/assets/badges`: Stores the SVG and PNG representation of badges to be used in emails.
     1. `/assets/meshmap`: Stores the animated gifs, svgs, quicktips etc,
@@ -91,10 +94,12 @@ Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
 Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
 
 ## Purpose of this Repository
-This repository contains Meshery extensions and packages that enable the Meshery ecosystem to grow and evolve. It provides a space for sharing tools, extensions, and assets that help developers and operators build, run, and maintain service meshes effectively.
+
+This repository contains Meshery extensions and packages that enable the Meshery ecosystem to grow and evolve. It provides a space for sharing tools, extensions, and assets that help developers and operators build, run, and maintain infrastructure effectively.
 
 ## Contribution Guide
-We welcome contributions from all members of the community! To get started:
+
+Whether you're just getting started or already familiar with Meshery, you're welcome in the community:
 - See the [Meshery Documentation Site](https://docs.meshery.io/) for guides and best practices.
 - Check out the [Meshery Build & Release Strategy](https://docs.meshery.io/project/build-release).
 - Learn more about the [Meshery UI and Designs](https://www.figma.com/file/VTH3Xp1N7vVcpRnh5f5tDl/Meshery?node-id=0%3A1).
@@ -104,4 +109,4 @@ We welcome contributions from all members of the community! To get started:
 We invite newcomers and experienced contributors alike to join the Meshery and Layer5 communities:
 - Participate in meetings listed on the [Community Calendar](https://meet.layer5.io).
 - Watch recorded meetings and presentations in the [Community Playlist](https://www.youtube.com/playlist?list=PL3A-A6hPO2IMPPqVjuzgqNU5xwnFFn3n0).
-- Get started by submitting the [Newcomer Form](https://layer5.io/newcomer) to gain access to shared resources.
+- Get started by submitting the [Newcomer Form](https://layer5.io/newcomer) .to gain access to community resources and tools.
