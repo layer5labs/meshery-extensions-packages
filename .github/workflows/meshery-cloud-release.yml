@@ -273,7 +273,7 @@ jobs:
     - name: Deploy production on metal04
       uses: appleboy/ssh-action@master
       env:
-          GIT_VERSION: ${{inputs.release-version}}
+          GIT_VERSION: ${{inputs.release-environment}}-${{inputs.release-version}}
           GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       with:
         host: ${{ secrets.METAL04_HOST }}
@@ -282,9 +282,11 @@ jobs:
         port: 22
         envs: 
             GIT_VERSION, GH_ACCESS_TOKEN
+        # It is important to use bash, specifically so that git works
+        # and can use the GH_ACCESS_TOKEN env var properly
         script: |
-          bash
+          bash 
           helm repo update layer5
-          cd aws-m03/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
+          cd deploy/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
           cd ../..
-          helm upgrade --install -f ~/deploy/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod --set=image.tag=production-latest --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+          helm upgrade --install -f ~/deploy/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod --set=image.tag=$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
