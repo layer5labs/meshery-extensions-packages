@@ -45,6 +45,12 @@ on:
         required: true
       METAL02_USERNAME:
         required: true
+      METAL04_HOST:
+        required: true
+      METAL04_KEY:
+        required: true
+      METAL04_USERNAME:
+        required: true
 
   workflow_dispatch:
     inputs:
@@ -264,15 +270,15 @@ jobs:
           TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
-    - name: Deploy production on metal03
+    - name: Deploy production on metal04
       uses: appleboy/ssh-action@master
       env:
           GIT_VERSION: ${{inputs.release-version}}
           GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       with:
-        host: ${{ secrets.METAL03_HOST }}
-        username: ${{ secrets.METAL03_USERNAME }}
-        key: ${{ secrets.METAL03_KEY }}
+        host: ${{ secrets.METAL04_HOST }}
+        username: ${{ secrets.METAL04_USERNAME }}
+        key: ${{ secrets.METAL04_KEY }}
         port: 22
         envs: 
             GIT_VERSION, GH_ACCESS_TOKEN
