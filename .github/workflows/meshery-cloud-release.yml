@@ -225,6 +225,7 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
+        ref: ${{inputs.release-version}}
     - name: Build Docs
       working-directory: meshery-cloud
       run:  |
