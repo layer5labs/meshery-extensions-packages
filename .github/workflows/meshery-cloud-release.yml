@@ -59,9 +59,9 @@ on:
         required: true
         default: "production"
       release-version: 
-        description: "e.g. v0.8.312"
+        description: "e.g. v0.8.312 or 'latest'"
         required: true
-        default: "latest"
+        default: "v0.8.3"
       branch:
         description: "Branch to deploy in the staging environment. If not provided, master branch of the repository will be used."
         default: "master"
