@@ -8,7 +8,7 @@ on:
         default: "staging"
         type: string
       release-version:
-        description: "e.g. v0.6.26"
+        description: "e.g. v0.8.312"
         required: true
         default: "latest"
         type: string
@@ -57,9 +57,9 @@ on:
       release-environment: 
         description: "Staging or Production (lowercase)"
         required: true
-        default: "staging"
+        default: "production"
       release-version: 
-        description: "e.g. v0.6.26"
+        description: "e.g. v0.8.312"
         required: true
         default: "latest"
       branch:
