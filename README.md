@@ -24,6 +24,7 @@
 <br />
 
 **Contributor Warning**
+
 ⚠️ Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
 
 Example of a sparse checkout:
@@ -38,6 +39,7 @@ git sparse-checkout add assets
 ℹ️ This repository has multiple functions.
 
 ### Function 1: Layer5 Badges
+
 See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
 
 *Examples*
@@ -52,6 +54,7 @@ See https://badges.layer5.io for the full set and description of the Layer5 Reco
 -->
 
 **Relevant Directories**
+
 - `/assets`: Contains 3 directories
     1. `/assets/badges`: Stores the SVG and PNG representation of badges to be used in emails.
     1. `/assets/meshmap`: Stores the animated gifs, svgs, quicktips etc,
@@ -90,3 +93,10 @@ Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
 
 Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
 
+
+## Join the Community
+We invite newcomers and experienced contributors alike to join the Meshery and Layer5 communities:
+- Participate in meetings listed on the [Community Calendar](https://meet.layer5.io).
+- Watch recorded meetings and presentations in the [Community Playlist](https://www.youtube.com/playlist?list=PL3A-A6hPO2IMPPqVjuzgqNU5xwnFFn3n0).
+- Get started by submitting the [Newcomer Form](https://layer5.io/newcomer) .to gain access to community resources and tools.
+- If you have questions, join the [Community Slack](https://slack.layer5.io) or ask in the [Discussion Forum](https://discuss.layer5.io/).
