@@ -8,7 +8,7 @@ on:
         default: "staging"
         type: string
       release-version:
-        description: "e.g. v0.6.26"
+        description: "e.g. v0.8.312"
         required: true
         default: "latest"
         type: string
@@ -45,17 +45,23 @@ on:
         required: true
       METAL02_USERNAME:
         required: true
+      METAL04_HOST:
+        required: true
+      METAL04_KEY:
+        required: true
+      METAL04_USERNAME:
+        required: true
 
   workflow_dispatch:
     inputs:
       release-environment: 
         description: "Staging or Production (lowercase)"
         required: true
-        default: "staging"
+        default: "production"
       release-version: 
-        description: "e.g. v0.6.26"
+        description: "e.g. v0.8.312 or 'latest'"
         required: true
-        default: "latest"
+        default: "v0.8.3"
       branch:
         description: "Branch to deploy in the staging environment. If not provided, master branch of the repository will be used."
         default: "master"
@@ -136,6 +142,12 @@ jobs:
     steps:
       - name: Checkout 🛎️ repo
         uses: actions/checkout@master
+        with:
+          path: meshery-cloud
+          repository: layer5io/meshery-cloud
+          fetch-depth: 1
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          ref: ${{ inputs.branch }}
       - name: Identify Release Values
         if: "${{ github.event.inputs.release-version}} != 'v' }}"
         run: |
@@ -199,7 +211,7 @@ jobs:
           port: 22
           envs: GIT_VERSION
           script: |
-            helm upgrade -f ~/staging-fullstack/staging-layer5-values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+            helm upgrade -f ~/staging-fullstack/staging-layer5-values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=staging-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
@@ -213,11 +225,12 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
+        ref: ${{inputs.release-version}}
     - name: Build Docs
       working-directory: meshery-cloud
       run:  |
         npm i -g @redocly/cli@latest
-        make docs-build
+        make api-docs-build
     - name: Setup UI Dependencies
       working-directory: meshery-cloud
       run: make ui-setup
@@ -258,21 +271,23 @@ jobs:
           TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
-    - name: Deploy production on metal03
+    - name: Deploy production on metal04
       uses: appleboy/ssh-action@master
       env:
-          GIT_VERSION: ${{inputs.release-version}}
+          GIT_VERSION: ${{inputs.release-environment}}-${{inputs.release-version}}
           GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       with:
-        host: ${{ secrets.METAL03_HOST }}
-        username: ${{ secrets.METAL03_USERNAME }}
-        key: ${{ secrets.METAL03_KEY }}
+        host: ${{ secrets.METAL04_HOST }}
+        username: ${{ secrets.METAL04_USERNAME }}
+        key: ${{ secrets.METAL04_KEY }}
         port: 22
         envs: 
             GIT_VERSION, GH_ACCESS_TOKEN
+        # It is important to use bash, specifically so that git works
+        # and can use the GH_ACCESS_TOKEN env var properly
         script: |
-          bash
+          bash 
           helm repo update layer5
-          cd aws-m03/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
+          cd deploy/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
           cd ../..
-          helm upgrade -f ~/aws-m03/values.yaml layer5 ~/aws-m03/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod-cloud --set=image.tag=production-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./aws-m03/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+          helm upgrade --install -f ~/deploy/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod --set=image.tag=$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl

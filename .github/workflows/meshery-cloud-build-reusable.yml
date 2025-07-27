@@ -27,6 +27,19 @@ on:
         required: true
       LAYER5_CLOUD_TESTING_BOT_PASSWORD:
         required: true
+      GLOBAL_TOKEN:
+        required: true
+      METAL02_HOST:
+        required: true
+      METAL02_KEY:
+        required: true
+      METAL02_USERNAME:
+        required: true
+      DOCKER_USERNAME: 
+        required: true
+      DOCKER_PASSWORD: 
+        required: true
+        
 jobs:
   comment-starting-point:
     runs-on: ubuntu-24.04
@@ -65,52 +78,183 @@ jobs:
           fetch-depth: 1
           ref: ${{ inputs.pr_commit_sha }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ secrets.NODE_VERSION }}
-          cache: "npm"
-          cache-dependency-path: 'meshery-cloud/ui/package-lock.json'
-      - name: Setup Golang
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23"
-
-
-      - name: Install Cloud UI dependencies
-        working-directory: ./meshery-cloud
-        run: make ui-setup
-      - name: Install Redocly, Prettier, and ESLint
-        working-directory: ./meshery-cloud
-        run: |
-          npm i -g @redocly/cli@latest
-          npm i -g prettier
-          npm i -g eslint
       - name: comment success
         if: success()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":heavy_check_mark: Cloud UI installing deps complete."
+          message: ":heavy_check_mark: Checked out Cloud repo."
       - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":x: Cloud UI installing deps failed."
-      
-      
-      - name: Build Cloud UI
-        working-directory: ./meshery-cloud
-        run: make ui-build
+          message: ":x: Failed to check out Cloud repo."
+
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
       - name: comment success
         if: success()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":heavy_check_mark: Cloud Server UI build complete."
+          message: ":heavy_check_mark: Setup QEMU"
       - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":x: Cloud Server UI build failed."
+          message: ":x: Failed to setup QEMU"
+
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":heavy_check_mark: Setup Docker Buildx"
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: Failed to setup Docker Buildx"
+
+      - name: Docker Meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: layer5/meshery-cloud
+          flavor: |
+            latest=true
+          tags: |
+            type=raw,value=staging-{{sha}}
+            type=raw,value=staging-${{env.PR_NUMBER}}
+            type=raw,value=staging-latest
+            type=raw,value=staging-${{env.GIT_VERSION}}
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":heavy_check_mark: Configured Docker Meta"
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: Failed to configure Docker Meta"
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":heavy_check_mark: Logged into Docker Hub <br />          :heavy_check_mark: Building and pushing Cloud container image to Hub (takes approximately 5min 30sec)"
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: Failed to log into Docker Hub"
+
+        
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: https://github.com/layer5io/meshery-cloud.git#${{ inputs.pr_commit_sha }}
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
+          build-args: |
+            ENVIRONMENT="staging"
+            GIT_VERSION=staging-${{env.PR_NUMBER}}
+            RELEASE_CHANNEL=staging
+            TOKEN=${{ secrets.GLOBAL_TOKEN }}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/amd64
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":heavy_check_mark: Built and pushed Cloud container image to Hub"
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: Failed to build and push Cloud container image to Hub"
+
+          
+      - name: Deploy staging on metal02
+        uses: appleboy/ssh-action@master
+        env:
+            PR_NUMBER: ${{env.PR_NUMBER}}
+        with:
+          host: ${{ secrets.METAL02_HOST }}
+          username: ${{ secrets.METAL02_USERNAME }}
+          key: ${{ secrets.METAL02_KEY }}
+          port: 22
+          envs: PR_NUMBER
+          script: |
+            helm upgrade -f ~/staging-fullstack/staging-layer5-values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+            
+      - name: comment success
+        if: success()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":white_check_mark: Deployed staging on metal02 at https://staging-cloud.layer5.io"
+      - name: comment failure
+        if: failure()
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: Failed to deploy staging on metal02"
+
+
+          
+      # - name: Setup node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ secrets.NODE_VERSION }}
+      #     cache: "npm"
+      #     cache-dependency-path: 'meshery-cloud/ui/package-lock.json'
+      # - name: Setup Golang
+      #   uses: actions/setup-go@v5
+      #   with:
+      #     go-version: "1.23"
+
+
+      # - name: Install Cloud UI dependencies
+      #   working-directory: ./meshery-cloud
+      #   run: make ui-setup
+      # - name: Install Redocly, Prettier, and ESLint
+      #   working-directory: ./meshery-cloud
+      #   run: |
+      #     npm i -g @redocly/cli@latest
+      #     npm i -g prettier
+      #     npm i -g eslint
+      # - name: comment success
+      #   if: success()
+      #   uses: ./.github/actions/cloud-comment
+      #   with:
+      #     message: ":heavy_check_mark: Cloud UI installing deps complete."
+      # - name: comment failure
+      #   if: failure()
+      #   uses: ./.github/actions/cloud-comment
+      #   with:
+      #     message: ":x: Cloud UI installing deps failed."
+      
+      
+      # - name: Build Cloud UI
+      #   working-directory: ./meshery-cloud
+      #   run: make ui-build
+      # - name: comment success
+      #   if: success()
+      #   uses: ./.github/actions/cloud-comment
+      #   with:
+      #     message: ":heavy_check_mark: Cloud Server UI build complete."
+      # - name: comment failure
+      #   if: failure()
+      #   uses: ./.github/actions/cloud-comment
+      #   with:
+      #     message: ":x: Cloud Server UI build failed."
 
 # Temporarily disabled due to issues with the API validation step.
       # - name: Validate Meshery Cloud API
@@ -144,23 +288,26 @@ jobs:
 
 
 
-      - name: Install Cloud Server dependencies (Homebrew)
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Install a package with brew
-        run: brew install gobuffalo/tap/pop
+      # - name: Install Cloud Server dependencies (Homebrew)
+      #   uses: Homebrew/actions/setup-homebrew@master
+      # - name: Install a package with brew
+      #   run: brew install gobuffalo/tap/pop
       
-      - name: Build Cloud Server
-        working-directory: ./meshery-cloud
-        run: |
-          make server
-      - name: comment success
-        if: success()
-        uses: ./.github/actions/cloud-comment
-        with:
-          message: ":heavy_check_mark: Cloud Server build complete."
-      - name: comment failure
-        if: failure()
-        uses: ./.github/actions/cloud-comment
-        with:
-          message: ":x: Cloud Server build failed."
+      # - name: Build Cloud Server
+      #   working-directory: ./meshery-cloud
+      #   run: |
+      #     make server
+      # - name: comment success
+      #   if: success()
+      #   uses: ./.github/actions/cloud-comment
+      #   with:
+      #     message: ":heavy_check_mark: Cloud Server build complete."
+      # - name: comment failure
+      #   if: failure()
+      #   uses: ./.github/actions/cloud-comment
+      #   with:
+      #     message: ":x: Cloud Server build failed."
+
+
+
 

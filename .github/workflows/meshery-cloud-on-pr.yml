@@ -22,6 +22,13 @@ jobs:
       CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
       NODE_VERSION: ${{secrets.NODE_VERSION}}
       GH_ACCESS_TOKEN: ${{secrets.GH_ACCESS_TOKEN}}
+      GLOBAL_TOKEN: ${{secrets.GLOBAL_TOKEN}}
+      METAL02_HOST: ${{secrets.METAL02_HOST}}
+      METAL02_KEY: ${{secrets.METAL02_KEY}}
+      METAL02_USERNAME: ${{secrets.METAL02_USERNAME}}
+      DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+      DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+
       
     with:
       pr_commit_sha: ${{inputs.pr_commit_sha}}

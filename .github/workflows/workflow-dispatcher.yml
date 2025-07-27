@@ -38,4 +38,7 @@ jobs:
       METAL02_HOST: ${{ secrets.METAL02_HOST }}
       METAL02_KEY: ${{ secrets.METAL02_KEY }}
       METAL02_USERNAME: ${{ secrets.METAL02_USERNAME }}
+      METAL04_HOST: ${{ secrets.METAL04_HOST }}
+      METAL04_KEY: ${{ secrets.METAL04_KEY }}
+      METAL04_USERNAME: ${{ secrets.METAL04_USERNAME }}
 

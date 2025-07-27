@@ -127,13 +127,12 @@ jobs:
       - name: Rollout Kanvas
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.METAL03_HOST }}
-          username: ${{ secrets.METAL03_USERNAME }}
-          key: ${{ secrets.METAL03_KEY }}
+          host: ${{ secrets.METAL04_HOST }}
+          username: ${{ secrets.METAL04_USERNAME }}
+          key: ${{ secrets.METAL04_KEY }}
           port: 22
           script: |
-            kubectl set image deployment/meshery meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
-
+            kubectl set image deployment/kanvas meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
         uses: dawidd6/action-send-mail@v4
