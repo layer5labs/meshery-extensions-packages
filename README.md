@@ -93,17 +93,6 @@ Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
 
 Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
 
-## Purpose of this Repository
-
-This repository contains Meshery extensions and packages that enable the Meshery ecosystem to grow and evolve. It provides a space for sharing tools, extensions, and assets that help developers and operators build, run, and maintain infrastructure effectively.
-
-## Contribution Guide
-
-Whether you're just getting started or already familiar with Meshery, you're welcome in the community:
-- See the [Meshery Documentation Site](https://docs.meshery.io/) for guides and best practices.
-- Check out the [Meshery Build & Release Strategy](https://docs.meshery.io/project/build-release).
-- Learn more about the [Meshery UI and Designs](https://www.figma.com/file/VTH3Xp1N7vVcpRnh5f5tDl/Meshery?node-id=0%3A1).
-- If you have questions, join the [Community Slack](https://slack.layer5.io) or ask in the [Discussion Forum](https://discuss.layer5.io/).
 
 ## Join the Community
 We invite newcomers and experienced contributors alike to join the Meshery and Layer5 communities:
