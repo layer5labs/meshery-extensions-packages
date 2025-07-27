@@ -110,3 +110,4 @@ We invite newcomers and experienced contributors alike to join the Meshery and L
 - Participate in meetings listed on the [Community Calendar](https://meet.layer5.io).
 - Watch recorded meetings and presentations in the [Community Playlist](https://www.youtube.com/playlist?list=PL3A-A6hPO2IMPPqVjuzgqNU5xwnFFn3n0).
 - Get started by submitting the [Newcomer Form](https://layer5.io/newcomer) .to gain access to community resources and tools.
+- If you have questions, join the [Community Slack](https://slack.layer5.io) or ask in the [Discussion Forum](https://discuss.layer5.io/).
