@@ -23,15 +23,15 @@
 
 <br />
 
-**Contributor Warning**
-
-⚠️ Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
-
-Example of a sparse checkout:
-```
-git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
-git sparse-checkout add assets
-```
+> [!WARNING]
+>  Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
+>
+> Example of a sparse checkout:
+> 
+> ```shell
+> git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
+> git sparse-checkout add assets
+> ```
 
 
 ## Repo Overview
