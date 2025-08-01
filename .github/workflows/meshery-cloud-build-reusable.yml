@@ -29,7 +29,7 @@ on:
         required: true
       GLOBAL_TOKEN:
         required: true
-      METAL02_HOST:
+      METAL05_HOST:
         required: true
       METAL02_KEY:
         required: true
@@ -183,12 +183,12 @@ jobs:
           message: ":x: Failed to build and push Cloud container image to Hub"
 
           
-      - name: Deploy staging on metal02
+      - name: Deploy staging on metal05
         uses: appleboy/ssh-action@master
         env:
             PR_NUMBER: ${{env.PR_NUMBER}}
         with:
-          host: ${{ secrets.METAL02_HOST }}
+          host: ${{ secrets.METAL05_HOST }}
           username: ${{ secrets.METAL02_USERNAME }}
           key: ${{ secrets.METAL02_KEY }}
           port: 22
@@ -200,12 +200,12 @@ jobs:
         if: success()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":white_check_mark: Deployed staging on metal02 at https://staging-cloud.layer5.io"
+          message: ":white_check_mark: Deployed staging on metal05 at https://staging-cloud.layer5.io"
       - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":x: Failed to deploy staging on metal02"
+          message: ":x: Failed to deploy staging on metal05"
 
 
           
