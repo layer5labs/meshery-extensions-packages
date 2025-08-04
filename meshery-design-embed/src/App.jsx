@@ -3,6 +3,14 @@ import MesheryDesignEmbed from "../lib/main";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  // Meshery Embed Note:
+  // By default, this embed points to https://cloud.layer5.io.
+  // To change the destination, modify the link generation logic or add a custom `host` parameter.
+  const host = "https://meshery.layer5.io";
+  const designId = "embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644";
+  const link = `${host}/designer?designId=${designId}`;
+
   return (
     <>
       <h3> Test Rerenders </h3>
@@ -13,11 +21,18 @@ function App() {
       <div>
         <MesheryDesignEmbed
           embedScriptSrc="embedded-design-embed1.js"
-          embedId="embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644"
+          embedId={designId}
         />
+      </div>
+
+       <div style={{ marginTop: "1rem" }}>
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          <button>Open in Meshery</button>
+        </a>
       </div>
     </>
   );
 }
+
 
 export default App;
