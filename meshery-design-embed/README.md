@@ -31,6 +31,8 @@ Props:
  - embedScriptSrc: "Relative path to the exported design"
  - embedId: "Emebedded design id"
  - style: "Custom styles to the embeded design E.g. backgroundColor, textColor, etc"
+ - enableLink (optional): Show or hide the “Open in Meshery” button. Default: true
+ - host (optional): Target Meshery system. Default: https://cloud.layer5.i
 
 ### Limitations
 

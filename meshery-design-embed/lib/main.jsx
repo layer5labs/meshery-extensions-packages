@@ -34,13 +34,28 @@ const useScript = (url, embedId) => {
 const MesheryDesignEmbed = ({
   embedScriptSrc,
   embedId,
+  host = "https://cloud.layer5.io",
+  enableLink = true,
   style = {},
-  ...props
 }) => {
   useScript(embedScriptSrc, embedId);
+
+  const link = embedId
+    ? `${host}/designer?designId=${embedId}`
+    : host;
   return (
-    <div style={{ width: "100%", height: "30rem", ...style }} {...props}>
+    <div style={{ width: "100%", height: "30rem", ...style }}>
+      {/* Embed script injection (iframe or script tag logic here) */}
       <div id={embedId}></div>
+
+      {/* Optional Open button */}
+      {enableLink && (
+        <div style={{ marginTop: "1rem" }}>
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            <button>Open in Meshery</button>
+          </a>
+        </div>
+      )}
     </div>
   );
 };
