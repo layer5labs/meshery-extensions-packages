@@ -194,7 +194,7 @@ jobs:
           port: 22
           envs: PR_NUMBER
           script: |
-            helm upgrade -f ~/deploy/values.yaml layer5 ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+            helm upgrade -f ~/deploy/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
             
       - name: comment success
         if: success()
