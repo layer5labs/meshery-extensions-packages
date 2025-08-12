@@ -29,8 +29,8 @@ function Design() {
 
 Props:
  - embedScriptSrc: "Relative path to the exported design"
- - embedId: "Emebedded design id"
- - style: "Custom styles to the embeded design E.g. backgroundColor, textColor, etc"
+ - designLink: "Full URL to the embedded design (if provided, shows 'Open in Meshery' button)"
+ - style: "Custom styles to the embedded design E.g. backgroundColor, textColor, etc"
 
 ### Limitations
 

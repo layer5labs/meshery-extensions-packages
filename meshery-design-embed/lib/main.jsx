@@ -33,14 +33,24 @@ const useScript = (url, embedId) => {
 
 const MesheryDesignEmbed = ({
   embedScriptSrc,
-  embedId,
+  designLink,
   style = {},
-  ...props
 }) => {
-  useScript(embedScriptSrc, embedId);
+  useScript(embedScriptSrc, designLink);
+
   return (
-    <div style={{ width: "100%", height: "30rem", ...style }} {...props}>
-      <div id={embedId}></div>
+    <div style={{ width: "100%", height: "30rem", ...style }}>
+      {/* Embed script injection (iframe or script tag logic here) */}
+      <div id={designLink}></div>
+
+      {/* Show button only if designLink exists */}
+      {designLink && (
+        <div style={{ marginTop: "1rem" }}>
+          <a href={designLink} target="_blank" rel="noopener noreferrer">
+            <button>Open in Meshery</button>
+          </a>
+        </div>
+      )}
     </div>
   );
 };
