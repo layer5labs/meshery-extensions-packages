@@ -9,7 +9,7 @@ function App() {
   // To change the destination, modify the host or designId below.
 
   const host = "https://meshery.layer5.io";
-  const designId = "embedded-design-a3d3f26e-4366-44e6-b211-1ba4e1a3e644";
+  const designId = "embedded-design-a95b76ce-ceaf-4bdf-bac7-95a6773168cd";
 
   // if designId exists, append it to the URL
   const link = designId
