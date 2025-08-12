@@ -8,14 +8,13 @@ function App() {
   // By default, this embed points to https://meshery.layer5.io.
   // To change the destination, modify the host or designId below.
 
-  const host = "https://meshery.layer5.io";
+  const host = "https://cloud.layer5.io/catalog/content/design";
   const designId = "embedded-design-a95b76ce-ceaf-4bdf-bac7-95a6773168cd";
 
   // if designId exists, append it to the URL
   const link = designId
-    ? `${host}/designer?designId=${designId}`
+    ? `${host}/${designId}`
     : host;
-
   return (
     <>
       <h3> Test Rerenders </h3>
