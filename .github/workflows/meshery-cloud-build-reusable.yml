@@ -194,7 +194,7 @@ jobs:
           port: 22
           envs: PR_NUMBER
           script: |
-            helm upgrade -f ~/deploy/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+            helm upgrade -f ~/deploy/meshery-cloud/install/environment/staging/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
             
       - name: comment success
         if: success()
@@ -208,105 +208,7 @@ jobs:
           message: ":x: Failed to deploy staging on metal05"
 
 
-          
-      # - name: Setup node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: ${{ secrets.NODE_VERSION }}
-      #     cache: "npm"
-      #     cache-dependency-path: 'meshery-cloud/ui/package-lock.json'
-      # - name: Setup Golang
-      #   uses: actions/setup-go@v5
-      #   with:
-      #     go-version: "1.23"
 
-
-      # - name: Install Cloud UI dependencies
-      #   working-directory: ./meshery-cloud
-      #   run: make ui-setup
-      # - name: Install Redocly, Prettier, and ESLint
-      #   working-directory: ./meshery-cloud
-      #   run: |
-      #     npm i -g @redocly/cli@latest
-      #     npm i -g prettier
-      #     npm i -g eslint
-      # - name: comment success
-      #   if: success()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":heavy_check_mark: Cloud UI installing deps complete."
-      # - name: comment failure
-      #   if: failure()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":x: Cloud UI installing deps failed."
-      
-      
-      # - name: Build Cloud UI
-      #   working-directory: ./meshery-cloud
-      #   run: make ui-build
-      # - name: comment success
-      #   if: success()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":heavy_check_mark: Cloud Server UI build complete."
-      # - name: comment failure
-      #   if: failure()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":x: Cloud Server UI build failed."
-
-# Temporarily disabled due to issues with the API validation step.
-      # - name: Validate Meshery Cloud API
-      #   working-directory: ./meshery-cloud
-      #   run: make api-validate-redocly
-      # - name: comment success
-      #   if: success()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":heavy_check_mark: Meshery Cloud API validation complete."
-      # - name: comment Failure
-      #   if: failure()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":x: Meshery Cloud API validation failed."
-
-      # - name: Lint UI and Backend and apply fixes
-      #   run: |
-      #     cd meshery-cloud
-      #     make ui-lint-fix
-      #     make cloud-lint-fix
-      # - name: Commit Changes
-      #   uses: stefanzweifel/git-auto-commit-action@v5
-      #   with:
-      #     commit_user_name: l5io
-      #     commit_user_email: l5io@layer5.io
-      #     commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-      #     commit_options: '--signoff'
-      #     commit_message: '[CI] Lint fix backend/ui'
-      #     repository: meshery-cloud      
-
-
-
-      # - name: Install Cloud Server dependencies (Homebrew)
-      #   uses: Homebrew/actions/setup-homebrew@master
-      # - name: Install a package with brew
-      #   run: brew install gobuffalo/tap/pop
-      
-      # - name: Build Cloud Server
-      #   working-directory: ./meshery-cloud
-      #   run: |
-      #     make server
-      # - name: comment success
-      #   if: success()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":heavy_check_mark: Cloud Server build complete."
-      # - name: comment failure
-      #   if: failure()
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":x: Cloud Server build failed."
 
 
 
