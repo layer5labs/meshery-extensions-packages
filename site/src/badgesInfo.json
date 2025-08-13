@@ -198,7 +198,7 @@
         },
         {
             "slug": "meshmate",
-            "location": "assets/badges/meshmate/meshmate.png",
+            "imageSource": "assets/badges/meshmate/meshmate.png",
             "title": "MeshMate",
             "description": "This badge is awarded to community members who actively support and guide others, embodying the spirit of collaboration and knowledge sharing in the Layer5 community."
         }
