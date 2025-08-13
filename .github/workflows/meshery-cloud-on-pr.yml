@@ -14,7 +14,6 @@ jobs:
     uses: ./.github/workflows/meshery-cloud-build-reusable.yml
     secrets: 
       PROVIDER_TOKEN: ${{secrets.PROVIDER_TOKEN}}      
-      GO_VERSION: ${{secrets.GO_VERSION}}
       LAYER5_CLOUD_USERNAME: ${{secrets.LAYER5_CLOUD_USERNAME}}
       LAYER5_CLOUD_PASSWORD: ${{secrets.LAYER5_CLOUD_PASSWORD}}
       LAYER5_CLOUD_TESTING_BOT_EMAIL: ${{secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL}}

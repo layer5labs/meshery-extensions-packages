@@ -13,8 +13,6 @@ on:
         required: true
       NODE_VERSION:
         required: true
-      GO_VERSION:
-        required: true
       GH_ACCESS_TOKEN:
         required: true
       CYPRESS_RECORD_KEY:

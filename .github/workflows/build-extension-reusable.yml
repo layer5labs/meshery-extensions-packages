@@ -16,8 +16,6 @@ on:
     secrets:
       NODE_VERSION:
         required: true
-      GO_VERSION:
-        required: true
       GH_ACCESS_TOKEN:
         required: true
 
@@ -45,7 +43,7 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23"
+          go-version: "1.24"
       - name: setup node
         uses: actions/setup-node@v4
         with:
