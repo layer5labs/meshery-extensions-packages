@@ -128,8 +128,8 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.METAL04_HOST }}
-          username: ${{ secrets.METAL04_USERNAME }}
-          key: ${{ secrets.METAL04_KEY }}
+          username: ${{ secrets.METAL_USERNAME }}
+          key: ${{ secrets.METAL_KEY }}
           port: 22
           script: |
             kubectl set image deployment/kanvas meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions

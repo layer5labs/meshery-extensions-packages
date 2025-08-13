@@ -31,9 +31,9 @@ on:
         required: true
       METAL05_HOST:
         required: true
-      METAL02_KEY:
+      METAL_KEY:
         required: true
-      METAL02_USERNAME:
+      METAL_USERNAME:
         required: true
       DOCKER_USERNAME: 
         required: true
@@ -190,8 +190,8 @@ jobs:
             GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         with:
           host: ${{ secrets.METAL05_HOST }}
-          username: ${{ secrets.METAL02_USERNAME }}
-          key: ${{ secrets.METAL02_KEY }}
+          username: ${{ secrets.METAL_USERNAME }}
+          key: ${{ secrets.METAL_KEY }}
           port: 22
           envs: PR_NUMBER
           script: |

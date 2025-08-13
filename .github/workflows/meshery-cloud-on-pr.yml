@@ -24,8 +24,8 @@ jobs:
       GH_ACCESS_TOKEN: ${{secrets.GH_ACCESS_TOKEN}}
       GLOBAL_TOKEN: ${{secrets.GLOBAL_TOKEN}}
       METAL05_HOST: ${{secrets.METAL05_HOST}}
-      METAL02_KEY: ${{secrets.METAL02_KEY}}
-      METAL02_USERNAME: ${{secrets.METAL02_USERNAME}}
+      METAL_KEY: ${{secrets.METAL_KEY}}
+      METAL_USERNAME: ${{secrets.METAL_USERNAME}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
 
