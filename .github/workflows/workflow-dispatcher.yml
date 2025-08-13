@@ -33,12 +33,12 @@ jobs:
       MESHERY_CLOUD_AWS_STG_HOST: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
       GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
       METAL03_HOST: ${{ secrets.METAL03_HOST }}
-      METAL03_KEY: ${{ secrets.METAL03_KEY }}
-      METAL03_USERNAME: ${{ secrets.METAL03_USERNAME }}
+      METAL_KEY: ${{ secrets.METAL_KEY }}
+      METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
       METAL02_HOST: ${{ secrets.METAL02_HOST }}
-      METAL02_KEY: ${{ secrets.METAL02_KEY }}
-      METAL02_USERNAME: ${{ secrets.METAL02_USERNAME }}
+      METAL_KEY: ${{ secrets.METAL_KEY }}
+      METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
       METAL04_HOST: ${{ secrets.METAL04_HOST }}
-      METAL04_KEY: ${{ secrets.METAL04_KEY }}
-      METAL04_USERNAME: ${{ secrets.METAL04_USERNAME }}
+      METAL_KEY: ${{ secrets.METAL_KEY }}
+      METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
 
