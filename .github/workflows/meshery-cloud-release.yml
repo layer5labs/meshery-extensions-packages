@@ -33,23 +33,11 @@ on:
         required: true
       GLOBAL_TOKEN:
         required: true
-      METAL03_HOST:
-        required: true
-      METAL_KEY:
-        required: true
-      METAL_USERNAME:
-        required: true
-      METAL02_HOST:
-        required: true
       METAL_KEY:
         required: true
       METAL_USERNAME:
         required: true
       METAL04_HOST:
-        required: true
-      METAL_KEY:
-        required: true
-      METAL_USERNAME:
         required: true
 
   workflow_dispatch:
@@ -205,7 +193,7 @@ jobs:
         env:
             GIT_VERSION: ${{inputs.release-version}}
         with:
-          host: ${{ secrets.METAL02_HOST }}
+          host: ${{ secrets.METAL05_HOST }}
           username: ${{ secrets.METAL_USERNAME }}
           key: ${{ secrets.METAL_KEY }}
           port: 22

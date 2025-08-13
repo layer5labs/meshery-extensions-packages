@@ -32,13 +32,6 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       MESHERY_CLOUD_AWS_STG_HOST: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
       GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
-      METAL03_HOST: ${{ secrets.METAL03_HOST }}
-      METAL_KEY: ${{ secrets.METAL_KEY }}
-      METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
-      METAL02_HOST: ${{ secrets.METAL02_HOST }}
-      METAL_KEY: ${{ secrets.METAL_KEY }}
-      METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
       METAL04_HOST: ${{ secrets.METAL04_HOST }}
       METAL_KEY: ${{ secrets.METAL_KEY }}
       METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
-
