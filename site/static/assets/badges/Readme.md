@@ -23,6 +23,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Meshery Catalog
 - Meshery Docs
 - Meshery Operator
+- Meshmate
 - Kanvas
 - Kanvas Snapshot
 - MeshMaster Certified

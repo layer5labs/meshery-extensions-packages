@@ -22,6 +22,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - Meshery Docs
 - Meshery Operator
 - Meshery
+- Meshmate
 - Kanvas
 - Kanvas Snapshot
 - Need for Speed
