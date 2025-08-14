@@ -19,6 +19,7 @@ jobs:
           sparse-checkout: |
             install
             site
+            assets
       - name: Install and Build 🔧 
         working-directory: site
         run: |
