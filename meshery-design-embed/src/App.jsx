@@ -16,14 +16,21 @@ function App() {
       <button onClick={() => setCount(count + 1)}>Click</button>
       <p>{count}</p>
 
-      <h3>Meshery Embed</h3>
+      <h3>Meshery Embed - Open Mode (Open Original)</h3>
       <MesheryDesignEmbed
         embedScriptSrc="embedded-design-embed1.js"
         designLink={designLink}
+        mode="open"
+      />
+
+      <h3>Meshery Embed - Clone Mode (Create Independent Copy)</h3>
+      <MesheryDesignEmbed
+        embedScriptSrc="embedded-design-embed1.js"
+        designLink={designLink}
+        mode="clone"
       />
     </>
   );
 }
-
 
 export default App;
