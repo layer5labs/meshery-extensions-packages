@@ -52,7 +52,7 @@ jobs:
           repository: "layer5io/meshery-cloud"
           number: ${{ inputs.pr_number }}
           id: meshery-cloud
-          message: "Starting [Cloud Server Build](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
+          message: "Starting Cloud Server build ([takes approximately 10 min end-to-end](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }}))..."
           recreate: true
   build-meshery-cloud:
     runs-on: ubuntu-24.04
