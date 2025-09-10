@@ -1,6 +1,9 @@
 /* eslint react/prop-types: 0 */
 import { useEffect, useState } from "react";
 
+// Default design link
+const DEFAULT_DESIGN_LINK = "https://cloud.layer5.io/catalog/content/design/embedded-design-a95b76ce-ceaf-4bdf-bac7-95a6773168cd";
+
 const useScript = (url, embedId) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -32,8 +35,8 @@ const useScript = (url, embedId) => {
 };
 
 const MesheryDesignEmbed = ({
-  embedScriptSrc,
-  designLink,
+  embedScriptSrc = "embedded-design-embed1.js", // Add default
+  designLink = DEFAULT_DESIGN_LINK, // Use default if not provided
   style = {},
 }) => {
   useScript(embedScriptSrc, designLink);
@@ -43,14 +46,12 @@ const MesheryDesignEmbed = ({
       {/* Embed script injection (iframe or script tag logic here) */}
       <div id={designLink}></div>
 
-      {/* Show button only if designLink exists */}
-      {designLink && (
-        <div style={{ marginTop: "1rem" }}>
-          <a href={designLink} target="_blank" rel="noopener noreferrer">
-            <button>Open in Meshery</button>
-          </a>
-        </div>
-      )}
+      {/* Show button - always show since we always have a design link now */}
+      <div style={{ marginTop: "1rem" }}>
+        <a href={designLink} target="_blank" rel="noopener noreferrer">
+          <button>Open in Meshery</button>
+        </a>
+      </div>
     </div>
   );
 };
