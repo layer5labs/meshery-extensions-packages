@@ -89,6 +89,13 @@ Find out more at https://meshery.io/extensions/github-action-meshery-snapshot
     - Dark: `/actions-assets/design-assets/<design-id-dark>.png`
 
 
+### Function 4: Embeded Meshery Design
+Meshery Design Embedding ([docs](https://docs.layer5.io/kanvas/designer/embedding-designs/)) enables you to export a design in a format that can be seamlessly integrated into websites, blogs, or platforms supporting HTML, CSS, and JavaScript. This embedded version provides an interactive representation of the design, making it easier to share with infrastructure stakeholders.
+
+**Relevant Directories**
+- `/meshery-design-embed`: Contains the exported design files, including HTML, CSS, JavaScript, and assets like images and fonts. These files can be directly embedded into web pages or applications to showcase the design interactively.
+
+
 ## About Layer5
 
 Layer5's cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. We embrace _developer_-defined infrastructure. We empower developers to change how they write applications, support _operators_ in rethinking how they run modern infrastructure, and enable _product owners_ to regain full-control over their product portfolio.
