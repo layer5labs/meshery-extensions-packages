@@ -30,9 +30,8 @@ const useScript = (url, embedId) => {
 
 const CustomMesheryToolbar = ({ embedId }) => {
   const extractUUID = (str) => {
-    const uuidPattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
-    const match = str.match(uuidPattern);
-    return match ? match[0] : '';
+    const prefix = "embedded-design-";
+    return str.startsWith(prefix) ? str.slice(prefix.length) : "";
   };
 
   return (
