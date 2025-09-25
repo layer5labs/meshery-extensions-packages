@@ -17,6 +17,12 @@
             "location": "assets/badges/hacktoberfest-24-contributor/hacktoberfest-24-contributor.png",
             "title": "Hacktoberfest'24 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
+        },
+        {
+            "slug": "hacktoberfest-25-contributor",
+            "location": "assets/badges/hacktoberfest-contributor-2025/layer5-hacktoberfest-badge-2025.png",
+            "title": "Hacktoberfest'25 Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2025."
         }
     ],
     "achievementBadges": [
