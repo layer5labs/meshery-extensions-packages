@@ -102,7 +102,7 @@ jobs:
           ref: ${{ inputs.branch }}
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.23"
+          go-version: "1.24"
       - name: Install prettier and eslint
         run: |
            npm i -g prettier;
@@ -188,7 +188,7 @@ jobs:
             RELEASE_CHANNEL=${{inputs.release-environment}}
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64,linux/arm64
-      - name: Deploy staging on metal02
+      - name: Deploy staging on metal05
         uses: appleboy/ssh-action@master
         env:
             GIT_VERSION: ${{inputs.release-version}}
@@ -214,7 +214,12 @@ jobs:
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
         ref: ${{inputs.release-version}}
-    - name: Build Docs
+        
+    - name: Update schema.yml version
+      run: |
+          sed -i "s/^  version: .*/  version: \"${{ inputs.release-version }}\"/" meshery-cloud/server/models/openapi-schema/schema.yml
+          
+    - name: Build API Docs
       working-directory: meshery-cloud
       run:  |
         npm i -g @redocly/cli@latest
