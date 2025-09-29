@@ -13,11 +13,24 @@
             "description": "This is a special edition badge and it is awarded to CNCF Ambassadors."
         },
         {
+            "slug": "hacktoberfest-25-contributor",
+            "location": "assets/badges/hacktoberfest-contributor-2025/hacktoberfest2025-badge.png",
+            "title": "Hacktoberfest'25 Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2025."
+        },
+        {
+            "slug": "meshmate",
+            "location": "assets/badges/meshmate/meshmate.png",
+            "title": "MeshMate",
+            "description": "This badge is awarded to community members who actively support and guide others, embodying the spirit of collaboration and knowledge sharing in the Layer5 community."
+        },
+        {
             "slug": "hacktoberfest-24-contributor",
             "location": "assets/badges/hacktoberfest-24-contributor/hacktoberfest-24-contributor.png",
             "title": "Hacktoberfest'24 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
         }
+
     ],
     "achievementBadges": [
         {
@@ -195,12 +208,6 @@
             "imageSource": "assets/badges/sistent-contributor/sistent-contributor.png",
             "title": "Sistent Contributor",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Sistent project as a recognition and appreciation of their efforts."
-        },
-        {
-            "slug": "meshmate",
-            "imageSource": "assets/badges/meshmate/meshmate.png",
-            "title": "MeshMate",
-            "description": "This badge is awarded to community members who actively support and guide others, embodying the spirit of collaboration and knowledge sharing in the Layer5 community."
         }
     ]
 }
