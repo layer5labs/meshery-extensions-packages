@@ -17,6 +17,7 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - First Share
 - GitOps Connected
 - Hacktoberfest Contributor
+- Hacktoberfest'25 Contributor
 - Landscape
 - Longevity Legend
 - Meshery
