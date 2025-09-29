@@ -214,16 +214,11 @@ jobs:
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
         ref: ${{inputs.release-version}}
-    - name: API Docs - Update schema.yml with latest version number
-      uses: fjogeleit/yaml-update-action@v0.15.0
-      with:
-        repository: l5io/meshery-cloud
-        branch: master
-        token: ${{ secrets.GH_ACCESS_TOKEN }}
-        valueFile: 'server/models/openapi-schema/schema.yml'
-        commitChange: false
-        propertyPath: 'info.version'
-        value: ${{inputs.release-version}}
+        
+    - name: Update schema.yml version
+      run: |
+          sed -i "s/^  version: .*/  version: \"${{ inputs.release-version }}\"/" meshery-cloud/server/models/openapi-schema/schema.yml
+          
     - name: Build API Docs
       working-directory: meshery-cloud
       run:  |
