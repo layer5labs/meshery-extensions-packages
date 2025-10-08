@@ -80,6 +80,9 @@ jobs:
           ls ./meshery-extensions/kanvas
           echo "merge"
           cp -R ./meshery-extensions/kanvas/*  ./meshery/
+          echo "updating capabilities with extension version"
+          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${{ env.MESHERY_EXTENSION_VERSION}}/g" ./meshery/capabilities.json
+          cat ./meshery/capabilities.json
           echo "ls meshery"
           ls meshery 
           echo "ls meshery/ui"
