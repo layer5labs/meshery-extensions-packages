@@ -1,6 +1,10 @@
 import React from 'react';
 import CertificationProgram from "../../../static/assets/badges/certification-program/certification-program.png";
 import MeshMasterCertified from "../../../static/assets/badges/meshmaster-certified/meshmaster-certified.png";
+import CertifiedMesheryContributor from "../../../static/assets/badges/certified-meshery-contributor/certified-meshery-contributor.png";
+import CertifiedMesheryAssociate from "../../../static/assets/badges/certified-meshery-associate/certified-meshery-associate.png";
+import CertifiedMesheryProfessional from "../../../static/assets/badges/certified-meshery-professional/certified-meshery-professional.png";
+import CertifiedMesheryExpert from "../../../static/assets/badges/certified-meshery-expert/certified-meshery-expert.png";
 
 import BadgesWrapper from './Badges.styles';
 const jsonData = require('../../badgesInfo.json');
@@ -51,8 +55,20 @@ const Footer = () => {
 <h2 id="certification">Certification Badges</h2>
     <div className="badge-grid">
         <div>
-        <img src={CertificationProgram} alt="Certified Meshery Contributor badge" />
+        <img src={CertifiedMesheryContributor} alt="Certified Meshery Contributor badge" />
           <span>Certified Meshery Contributor</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+        </div>
+        <div>
+        <img src={CertifiedMesheryAssociate} alt="Certified Meshery Associate badge" />
+          <span>Certified Meshery Associate</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+        </div>
+        <div>
+        <img src={CertifiedMesheryProfessional} alt="Certified Meshery Professional badge" />
+          <span>Certified Meshery Professional</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+        </div>
+        <div>
+        <img src={CertifiedMesheryExpert} alt="Certified Meshery Expert badge" />
+          <span>Certified Meshery Expert</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
         </div>
         <div>
         <img src={MeshMasterCertified} alt="Layer5 badges" />
