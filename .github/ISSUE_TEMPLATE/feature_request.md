@@ -21,4 +21,14 @@ assignees: ''
 <!-- [Optional] Any visual diagrams of the desired user interface. -->
 
 ---
-**[Contributor Guide](https://docs.meshery.io/project/contributing)**
+#### [Contributor Guide](https://github.com/layer5labs/meshery-extensions-packages/blob/master/README.md)
+
+> [!WARNING]
+>  Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
+>
+> Example of a sparse checkout:
+> 
+> ```shell
+> git clone --filter=blob:none --sparse https://github.com/layer5labs/meshery-extensions-packages
+> git sparse-checkout add assets
+> ```
