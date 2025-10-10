@@ -89,15 +89,18 @@ const DisplayBadgeSteps = styled.div`
     ? '0 4px 20px rgba(60, 73, 78, 0.08)'
     : '0 4px 20px rgba(0, 0, 0, 0.5)'};
   transition: all 0.3s ease;
+  font-family: 'Qanelas Soft', 'Nunito Sans', sans-serif;
 `;
 
 const StepsList = styled.ol`
+  font-family: 'Qanelas Soft', 'Nunito Sans', sans-serif;
   margin: 0;
   padding-left: 0;
   counter-reset: step-counter;
 `;
 
 const StepItem = styled.li`
+  font-family: 'Qanelas Soft', 'Nunito Sans', sans-serif;
   margin-bottom: 1.5rem;
   line-height: 1.6;
   color: ${({ theme }) => theme === 'light' ? '#667085' : '#c5ccd6'};
@@ -106,7 +109,6 @@ const StepItem = styled.li`
   position: relative;
   padding-left: 3rem;
   counter-increment: step-counter;
-  font-family: 'Open Sans', sans-serif;
 
   &::before {
     content: counter(step-counter);
@@ -171,7 +173,8 @@ const PreviewText = styled.p`
   font-weight: 500;
   text-align: center;
   font-size: 1rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Qanelas Soft', 'Nunito Sans', sans-serif;
+
 `;
 
 const GithubLogoContainer = styled.div`
@@ -277,10 +280,8 @@ const App = () => {
               
               <BannerLogos theme={theme}>
                 <BannerContent theme={theme}>
-                  <h3>
-                    Wear your badge proudly. Embed your Layer5 badges in your GitHub profile
-                  </h3>
-                  <h3>Follow these steps to display your badge:</h3>
+                  <h2 style={{ justifyContent: "center", margin: "1rem auto" }}>Wear your badge proudly.</h2>
+                  <h4 style={{ justifyContent: "center", margin: "1rem auto" }}>Embed your Layer5 badges in your GitHub profile. Follow these steps to display your badge:</h4>
                   <DisplayBadgeStepsParent>
                     <DisplayBadge>
                       <DisplayBadgeSteps theme={theme}>
