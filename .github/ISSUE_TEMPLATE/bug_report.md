@@ -2,7 +2,7 @@
 name: 🐛 General Bug Report
 about: Report an issue to help improve the project.
 title: ''
-labels: 'kind/bug'
+labels: 'kind/bug, help wanted'
 assignees: ''
 ---
 #### Current Behavior
@@ -20,14 +20,6 @@ assignees: ''
 - **Platform:** Docker or Kubernetes
 - **Meshery Server Version:** stable-v
 - **Meshery Client Version:** stable-v
-
-<!-- Optional 
-#### To Reproduce
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
--->
 
 ---
 #### Contributor [Guides](https://docs.meshery.io/project/contributing) and Resources
