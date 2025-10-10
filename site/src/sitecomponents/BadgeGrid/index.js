@@ -60,24 +60,24 @@ const Footer = () => {
         </div>
         <div>
         <img src={CertifiedMesheryAssociate} alt="Certified Meshery Associate badge" />
-          <span>Certified Meshery Associate</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+          <span>Certified Meshery Associate</span> <p>This entry-level certification validates a foundational knowledge of Meshery's core concepts and working knowledge of all major functional components.</p>
         </div>
         <div>
         <img src={CertifiedMesheryProfessional} alt="Certified Meshery Professional badge" />
-          <span>Certified Meshery Professional</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+          <span>Certified Meshery Professional</span> <p>This professional-level certification validates the practical ability to use Meshery for real-world infrastructure design, provisioning, and performance management.</p>
         </div>
         <div>
         <img src={CertifiedMesheryExpert} alt="Certified Meshery Expert badge" />
-          <span>Certified Meshery Expert</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+          <span>Certified Meshery Expert</span> <p>This advanced-level certification validates deep expertise in operating, troubleshooting, and extending the Meshery platform through systems integration.</p>
         </div>
-        <div>
+        {/* <div>
         <img src={MeshMasterCertified} alt="Layer5 badges" />
           <span>MeshMaster</span> <p>This badge is awarded to individuals who have demonstrated a clear and holistic understanding of cloud native infrastructure management.</p>
         </div>
         <div>
         <img src={CertificationProgram} alt="Layer5 badges" />
           <span>Coming Soon...</span> <p>Additional certications are coming soon!</p>
-        </div>
+        </div> */}
       </div>
     </BadgesWrapper>
   )
