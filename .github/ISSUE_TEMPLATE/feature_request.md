@@ -1,8 +1,8 @@
 ---
 name: 💡 Feature Request
-about: Suggest an enhancement to Meshery.
+about: Suggest an enhancement.
 title: ''
-labels: 'kind/enhancement'
+labels: 'kind/enhancement, framework/gatsby, language/css, language/javascript, language/html, help wanted'
 assignees: ''
 ---
 #### Current Behavior
@@ -21,7 +21,10 @@ assignees: ''
 <!-- [Optional] Any visual diagrams of the desired user interface. -->
 
 ---
-#### [Contributor Guide](https://github.com/layer5labs/meshery-extensions-packages/blob/master/README.md)
+
+#### Contributor Guide and Resources
+- 📚 [Contributor Guide](https://github.com/layer5labs/meshery-extensions-packages/blob/master/README.md)
+- 🙋🏾🙋🏼 Questions: [Layer5 Discussion Forum](https://discuss.layer5.io) and [Layer5 Community Slack](http://slack.layer5.io)
 
 > [!WARNING]
 >  Before cloning this repo to your local machine, ensure that you do so sparsely or your clone will take a long time to download / sync.
