@@ -51,6 +51,10 @@ const Footer = () => {
 <h2 id="certification">Certification Badges</h2>
     <div className="badge-grid">
         <div>
+        <img src={CertificationProgram} alt="Certified Meshery Contributor badge" />
+          <span>Certified Meshery Contributor</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+        </div>
+        <div>
         <img src={MeshMasterCertified} alt="Layer5 badges" />
           <span>MeshMaster</span> <p>This badge is awarded to individuals who have demonstrated a clear and holistic understanding of cloud native infrastructure management.</p>
         </div>
