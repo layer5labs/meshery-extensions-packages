@@ -20,6 +20,8 @@ jobs:
             install
             site
             assets
+            static
+            Makefile
       - name: Install and Build 🔧 
         working-directory: site
         run: |
