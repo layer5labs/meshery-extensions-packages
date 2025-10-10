@@ -348,14 +348,14 @@ const App = () => {
                       Join Our Open Source Community
                     </a>
                   </div>
-                  <div>
+                  {/* <div>
                     <a
                       href="/discussion-leaderboard"
                       className="btn-secondary"
                     >
                       Discussion Forum Leaderboard
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </section>
