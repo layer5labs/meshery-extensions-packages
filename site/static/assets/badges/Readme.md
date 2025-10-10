@@ -4,7 +4,6 @@ This folder contains all the Badges. Changing any file in this folder will affec
 ### Badges included in this folder are:
 - Bring a buddy
 - Code Cleanup Crew
-- Certification Program
 - Community
 - Continuous Contributor
 - Docker Extension
@@ -17,17 +16,15 @@ This folder contains all the Badges. Changing any file in this folder will affec
 - First Share
 - GitOps Connected
 - Hacktoberfest Contributor
-- Hacktoberfest'25 Contributor
 - Landscape
 - Longevity Legend
-- Meshery
 - Meshery Catalog
 - Meshery Docs
 - Meshery Operator
+- Meshery
 - Meshmate
 - Kanvas
 - Kanvas Snapshot
-- MeshMaster Certified
 - Need for Speed
 - Nighthawk
 - Patterns
