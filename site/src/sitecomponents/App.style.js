@@ -161,6 +161,11 @@ export const Main = styled.main`
   max-width: 75%;
   margin: 5rem auto;
 
+  ::selection {
+    background: #00b39f;
+    color: #FFFFFF;
+  }
+
   p {
     font-size: 1.05rem;
     text-align: center;
