@@ -22,8 +22,14 @@ jobs:
     steps:
 
       # Step 1: Check out the repository to access local files
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: |
+            .github
+            feature_data.json
+            install
+            Makefile
 
       # Step 2: Install Go (if it's not pre-installed)
       - name: Set up Go
