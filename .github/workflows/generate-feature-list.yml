@@ -6,6 +6,7 @@ on:
       spreadsheet_uri:
         description: 'Link of the spreadsheet containing subscription details.'
         type: string
+        default: https://docs.google.com/spreadsheets/d/e/2PACX-1vQwzrUSKfuSRcpkp7sJTw1cSB63s4HCjYLJeGPWECsvqn222hjaaONQlN4X8auKvlaB0es3BqV5rQyz/pub?gid=829069645&single=true&output=csv
         required: true
 
   schedule:
