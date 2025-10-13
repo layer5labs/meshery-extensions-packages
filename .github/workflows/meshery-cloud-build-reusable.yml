@@ -192,6 +192,7 @@ jobs:
           key: ${{ secrets.METAL_KEY }}
           port: 22
           envs: PR_NUMBER
+          # Note: in the future, we could potentially use `gh repo sync` instead of `git pull`.
           script: |
             bash 
             helm repo update layer5
