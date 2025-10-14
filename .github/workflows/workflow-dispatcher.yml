@@ -33,5 +33,6 @@ jobs:
       MESHERY_CLOUD_AWS_STG_HOST: ${{ secrets.MESHERY_CLOUD_AWS_STG_HOST }}
       GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
       METAL04_HOST: ${{ secrets.METAL04_HOST }}
+      METAL05_HOST: ${{ secrets.METAL05_HOST }}
       METAL_KEY: ${{ secrets.METAL_KEY }}
       METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
