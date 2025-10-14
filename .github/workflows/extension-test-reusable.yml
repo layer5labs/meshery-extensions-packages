@@ -85,28 +85,28 @@ jobs:
           message: ":heavy_check_mark: Setting up test environment..."
           append: true
       - name: Check out Meshery code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: meshery/meshery
           fetch-depth: 1
           path: meshery
       - name: Check out meshery-consul code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
           repository: layer5io/meshery-consul
           path: ./meshery-consul
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: meshery
           path: meshery/server/cmd/
       - name: Setup go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
-          go-version: "1.23"
+          go-version: "1.24.5"
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20.x"
       - name: Create k8s Kind Cluster
@@ -169,7 +169,7 @@ jobs:
           mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
 
       - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions

@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
@@ -57,7 +57,7 @@ jobs:
           retention-days: 14
       - name: Send Email on Production Release Failure
         if: ${{ failure() }}
-        uses: dawidd6/action-send-mail@v4
+        uses: dawidd6/action-send-mail@v6
         env:
           msg: ${{ inputs.project }} production smoke test failure
         with:

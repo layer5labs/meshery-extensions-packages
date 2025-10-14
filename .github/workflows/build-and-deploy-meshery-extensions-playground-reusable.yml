@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout meshery/meshery
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
           path: "meshery"
@@ -26,7 +26,7 @@ jobs:
           ref: ${{ inputs.branch }}
 
       # - name: Checkout kanvas
-      #   uses: actions/checkout@v4
+      #   uses: actions/checkout@v5
       #   with:
       #     fetch-depth: 1
       #     sparse-checkout: |
@@ -35,7 +35,7 @@ jobs:
       #     sparse-checkout-cone-mode: false
 
       - name: Fetch version scripts from meshery-extensions.
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: layer5labs/meshery-extensions
@@ -138,7 +138,7 @@ jobs:
             kubectl set image deployment/kanvas meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
-        uses: dawidd6/action-send-mail@v4
+        uses: dawidd6/action-send-mail@v6
         env:
           msg: ${{ env.reason != '' && env.reason || ' Rollout Kanvas Failure' }}
         with:

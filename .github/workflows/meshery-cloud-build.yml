@@ -55,13 +55,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: API Docs - Install Redocly
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
       - run: npm i -g @redocly/cli@latest
       - name: API Docs - Update schema.yml
         uses: fjogeleit/yaml-update-action@main
@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
             repository: layer5io/meshery-cloud
             fetch-depth: 1
@@ -139,7 +139,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and Push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
         #   context: "{{defaultContext}}:install/docker-extension"
           push: true
@@ -158,10 +158,34 @@ jobs:
             key: ${{ secrets.MESHERY_CLOUD_AWS_PROD_KEY }}
             port: 22
             script: |
+                bash
+                set -e
                 cd meshery-cloud
                 sudo git pull
                 sudo docker pull layer5/meshery-cloud:staging-latest
                 sudo make stg-deploy
+
+      # - name: Send Email on Cloud Release Failure
+      #   if: ${{ failure() }}
+      #   uses: dawidd6/action-send-mail@v6
+      #   env:
+      #     msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
+      #   with:
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     username: ${{ secrets.MAIL_USERNAME }}
+      #     password: ${{ secrets.MAIL_PASSWORD }}
+      #     subject: GitHub Actions - Layer5 Cloud Release Failure
+      #     from: |
+      #       "Layer5 Cloud" <no-reply@layer5.io>
+      #     to: |
+      #       "Layer5 Support" <support@layer5.io>
+      #     html_body: |
+      #       <b>REPO:</b> ${{ github.repository }}<br />  
+      #       <b>WORKFLOW:</b> ${{ github.workflow }}<br />
+      #       <b>JOB:</b> ${{ github.job }}<br />
+      #       <b>REASON:</b> ${{ env.msg }}<br />
+      #       <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
 
       # -
       #   name: Docker Hub Description
