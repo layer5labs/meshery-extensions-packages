@@ -73,7 +73,7 @@ jobs:
           sparse-checkout-cone-mode: false
       
       - name: Checkout Cloud code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: "layer5io/meshery-cloud"
           path: ./meshery-cloud
@@ -182,6 +182,7 @@ jobs:
           message: ":x: Failed to build and push Cloud container image to Hub"
         
       - name: Deploy staging on metal05
+        id: deploy
         uses: appleboy/ssh-action@master
         env:
             PR_NUMBER: ${{env.PR_NUMBER}}
@@ -192,8 +193,9 @@ jobs:
           key: ${{ secrets.METAL_KEY }}
           port: 22
           envs: PR_NUMBER
-          # This script will now exit immediately if any command fails.
+          # This script will exit immediately if any command fails.
           script: |
+            bash
             set -e 
             helm repo update layer5
             cd deploy/meshery-cloud
@@ -210,26 +212,12 @@ jobs:
         if: failure()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":x: Failed to deploy staging on metal05"
+          message: |
+            :x: Failed to deploy staging on metal05
+            
+            **Deployment Script Output:**
+            ```
+            ${{ steps.deploy.outputs.stdout }}
+            ${{ steps.deploy.outputs.stderr }}
+            ```
 
-      - name: Send Email on Cloud Release Failure
-        if: ${{ failure() }}
-        uses: dawidd6/action-send-mail@v4
-        env:
-          msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          subject: GitHub Actions - Layer5 Cloud Release Failure
-          from: |
-            "Layer5 Cloud" <no-reply@layer5.io>
-          to: |
-            "Layer5 Support" <support@layer5.io>
-          html_body: |
-            <b>REPO:</b> ${{ github.repository }}<br />  
-            <b>WORKFLOW:</b> ${{ github.workflow }}<br />
-            <b>JOB:</b> ${{ github.job }}<br />
-            <b>REASON:</b> ${{ env.msg }}<br />
-            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
