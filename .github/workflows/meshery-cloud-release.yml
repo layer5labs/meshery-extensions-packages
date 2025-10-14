@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
@@ -95,16 +95,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Cloud code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: meshery-cloud
           repository: layer5io/meshery-cloud
           fetch-depth: 1
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           ref: ${{ inputs.branch }}
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
-          go-version: "1.24"
+          go-version: "1.24.5"
       - name: Install prettier and eslint
         run: |
            npm i -g prettier;
@@ -209,7 +209,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Checkout Meshery Cloud code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: layer5io/meshery-cloud
         path: meshery-cloud
@@ -281,8 +281,31 @@ jobs:
         # It is important to use bash, specifically so that git works
         # and can use the GH_ACCESS_TOKEN env var properly
         script: |
-          bash 
+          bash
+          set -e
           helm repo update layer5
           cd deploy/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
           cd ../..
           helm upgrade --install -f ~/deploy/meshery-cloud/install/environment/production/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n prod --set=image.tag=$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+
+    - name: Send Email on Cloud Release Failure
+      if: ${{ failure() }}
+      uses: dawidd6/action-send-mail@v6
+      env:
+        msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: GitHub Actions - Layer5 Cloud Release Failure
+        from: |
+          "Layer5 Cloud" <no-reply@layer5.io>
+        to: |
+          "Layer5 Support" <support@layer5.io>
+        html_body: |
+          <b>REPO:</b> ${{ github.repository }}<br />  
+          <b>WORKFLOW:</b> ${{ github.workflow }}<br />
+          <b>JOB:</b> ${{ github.job }}<br />
+          <b>REASON:</b> ${{ env.msg }}<br />
+          <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />

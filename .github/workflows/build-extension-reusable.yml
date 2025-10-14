@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
@@ -33,7 +33,7 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Checkout Meshery code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: meshery/meshery
           path: ./meshery
@@ -41,9 +41,9 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Setup go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
-          go-version: "1.24"
+          go-version: "1.24.5"
       - name: setup node
         uses: actions/setup-node@v4
         with:

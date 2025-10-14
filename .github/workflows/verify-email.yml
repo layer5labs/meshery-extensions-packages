@@ -14,7 +14,7 @@ jobs:
     runs-on: "ubuntu-24.04"
     steps:
       - name: Send email
-        uses: dawidd6/action-send-mail@v4
+        uses: dawidd6/action-send-mail@v6
         with:
           # Required mail server address:
           server_address: smtp.gmail.com

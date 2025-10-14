@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: meshery/meshery
           fetch-depth: 1
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Extensions code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5labs/meshery-extensions
           fetch-depth: 1
@@ -132,7 +132,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Extensions code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5io/meshery-cloud
           fetch-depth: 1
@@ -172,7 +172,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery Extensions code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: layer5io/sistent
           fetch-depth: 1

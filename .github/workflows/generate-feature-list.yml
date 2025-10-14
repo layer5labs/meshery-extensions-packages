@@ -34,9 +34,9 @@ jobs:
 
       # Step 2: Install Go (if it's not pre-installed)
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v6
         with:
-          go-version: "1.23"
+          go-version: "1.24.5"
 
       # Step 3: Set environment variable for spreadsheet URL
       - name: Set spreadsheet URI
