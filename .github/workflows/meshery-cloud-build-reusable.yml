@@ -37,6 +37,10 @@ on:
         required: true
       DOCKER_PASSWORD: 
         required: true
+      MAIL_USERNAME: # <-- Added this secret
+        required: true
+      MAIL_PASSWORD: # <-- Added this secret
+        required: true
         
 jobs:
   comment-starting-point:
@@ -87,7 +91,6 @@ jobs:
         with:
           message: ":x: Failed to check out Cloud repo."
 
-
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
       - name: comment success
@@ -100,7 +103,6 @@ jobs:
         uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Failed to setup QEMU"
-
 
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -147,14 +149,13 @@ jobs:
         if: success()
         uses: ./.github/actions/cloud-comment
         with:
-          message: ":heavy_check_mark: Logged into Docker Hub <br />          :heavy_check_mark: Building and pushing Cloud container image to Hub (takes approximately 5min 30sec)"
+          message: ":heavy_check_mark: Logged into Docker Hub <br />           :heavy_check_mark: Building and pushing Cloud container image to Hub (takes approximately 5min 30sec)"
       - name: comment failure
         if: failure()
         uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Failed to log into Docker Hub"
-
-        
+      
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
@@ -179,8 +180,7 @@ jobs:
         uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Failed to build and push Cloud container image to Hub"
-
-          
+        
       - name: Deploy staging on metal05
         uses: appleboy/ssh-action@master
         env:
@@ -192,11 +192,12 @@ jobs:
           key: ${{ secrets.METAL_KEY }}
           port: 22
           envs: PR_NUMBER
-          # Note: in the future, we could potentially use `gh repo sync` instead of `git pull`.
+          # This script will now exit immediately if any command fails.
           script: |
-            bash 
+            set -e 
             helm repo update layer5
-            cd deploy/meshery-cloud && git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
+            cd deploy/meshery-cloud
+            git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
             cd ../..
             helm upgrade -f ~/deploy/meshery-cloud/install/environment/staging/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
             
@@ -211,9 +212,24 @@ jobs:
         with:
           message: ":x: Failed to deploy staging on metal05"
 
-
-
-
-
-
-
+      - name: Send Email on Cloud Release Failure
+        if: ${{ failure() }}
+        uses: dawidd6/action-send-mail@v4
+        env:
+          msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: GitHub Actions - Layer5 Cloud Release Failure
+          from: |
+            "Layer5 Cloud" <no-reply@layer5.io>
+          to: |
+            "Layer5 Support" <support@layer5.io>
+          html_body: |
+            <b>REPO:</b> ${{ github.repository }}<br />  
+            <b>WORKFLOW:</b> ${{ github.workflow }}<br />
+            <b>JOB:</b> ${{ github.job }}<br />
+            <b>REASON:</b> ${{ env.msg }}<br />
+            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
