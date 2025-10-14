@@ -39,6 +39,8 @@ on:
         required: true
       METAL04_HOST:
         required: true
+      METAL05_HOST:
+        required: true
 
   workflow_dispatch:
     inputs:
@@ -199,7 +201,7 @@ jobs:
           port: 22
           envs: GIT_VERSION
           script: |
-            helm upgrade -f ~/staging-fullstack/meshery-cloud/install/environment/staging/values.yaml layer5 ~/staging-fullstack/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging-fullstack --set=image.tag=staging-$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./staging-fullstack/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
+            helm upgrade --install -f ~/deploy/meshery-cloud/install/environment/staging/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=$GIT_VERSION --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
   prod:
     needs: update-doc-release-version
     if: always() && inputs.release-environment == 'production'
