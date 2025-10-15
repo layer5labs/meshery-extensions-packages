@@ -287,32 +287,33 @@ const App = () => {
                       <DisplayBadgeSteps theme={theme}>
                         <StepsList>
                           <StepItem theme={theme}>
-                            Visit your{' '}
-                            <CloudLink href="https://cloud.layer5.io" theme={theme}>
-                              Layer5 Cloud
-                            </CloudLink>{' '}
-                            Profile to see your earned badges
+                            Visit your Layer5 Cloud
+                            {' '}
+                            <CloudLink href="https://cloud.layer5.io/users" theme={theme}>
+                            user profile
+                            </CloudLink>
+                            {' '} to see badges you have earned
                           </StepItem>
                           <StepItem theme={theme}>
                             Click on the badge you want to display on your profile
                           </StepItem>
                           <StepItem theme={theme}>
-                            Copy the markdown embed code that's displayed below the badge
+                            Copy the markdown embed code that's displayed
                           </StepItem>
                           <StepItem theme={theme}>
-                            Paste the code in your GitHub profile README to showcase your achievement
+                            Paste the code in your GitHub profile README to <a href="https://github.com/mascot-five" target="_blank">showcase your achievement</a>
                           </StepItem>
                         </StepsList>
                       </DisplayBadgeSteps>
                     </DisplayBadge>
                     
-                    <GithubLogoContainer theme={theme}>
+                    <a href="https://github.com/mascot-five" target="_blank"><GithubLogoContainer theme={theme}>
                       <GithubLogo
                         fillColor={fillColor}
                         width="8rem"
                         height="7rem"
                       />
-                    </GithubLogoContainer>
+                    </GithubLogoContainer></a>
                   </DisplayBadgeStepsParent>
                   {/* <ReactPlayer  
               url="https://youtu.be/Do7htKrRzDA"
