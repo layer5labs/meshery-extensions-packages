@@ -25,6 +25,16 @@ export const BadgesWrapper = styled.div`
         min-height: 360px;
         object-fit: contain;
       }
+      .badge-label {
+        font-family: 'Fira Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+        color: #888;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75em;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+        font-weight: 600;
+      } 
     }
 
   }  

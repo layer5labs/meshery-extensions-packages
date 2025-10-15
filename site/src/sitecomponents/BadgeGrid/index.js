@@ -19,6 +19,7 @@ const Footer = () => {
             <div key={badge.slug}>
               <img src={badge.location} alt="Layer5 badges" />
               <span>{badge.title}</span>
+              <span className="badge-label">{badge.label}</span>
               <p>{badge.description}</p>
             </div>
           );
@@ -32,6 +33,7 @@ const Footer = () => {
             <div key={badge.slug}>
               <img src={badge.location} alt="Layer5 badges" />
               <span>{badge.title}</span>
+              <span className="badge-label">{badge.label}</span>
               <p>{badge.description}</p>
             </div>
           );
@@ -46,6 +48,7 @@ const Footer = () => {
             <div key={badge.slug}>
               <img src={badge.imageSource} alt="Layer5 badges" />
               <span>{badge.title}</span>
+              <span className="badge-label">{badge.label}</span>
               <p dangerouslySetInnerHTML={{__html: badge.description}}></p>
             </div>
           );
