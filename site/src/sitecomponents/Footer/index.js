@@ -149,9 +149,9 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://layer5.io/service-mesh-landscape"
+                href="https://docs.kanvas.new"
               >
-                Service Mesh Comparison
+                Visualizing your Kubernetes Clusters
               </a>
             </li>
           </ul>
