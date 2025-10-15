@@ -6,6 +6,7 @@
   "author": "Lee Calcote",
   "dependencies": {
     "@tanstack/react-query": "^4.29.25",
+    "@sistent/sistent": "^0.15.9",
     "@tanstack/react-query-devtools": "^4.29.25",
     "@tanstack/react-table": "^8.9.3",
     "axios": "^1.6.0",
