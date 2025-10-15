@@ -298,7 +298,7 @@ const App = () => {
                             Click on the badge you want to display on your profile
                           </StepItem>
                           <StepItem theme={theme}>
-                            Copy the markdown embed code that's displayed
+                            Copy the embed code that's displayed
                           </StepItem>
                           <StepItem theme={theme}>
                             Paste the code in your GitHub profile README to <a href="https://github.com/mascot-five" target="_blank">showcase your achievement</a>
