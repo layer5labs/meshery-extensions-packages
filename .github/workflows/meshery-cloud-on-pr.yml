@@ -27,6 +27,8 @@ jobs:
       METAL_USERNAME: ${{secrets.METAL_USERNAME}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
+      MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
 
       
     with:
