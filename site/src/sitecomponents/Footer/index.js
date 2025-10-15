@@ -57,13 +57,18 @@ const Footer = () => {
           </h3>
           <ul className="section-categories">
             <li>
-              <a className="category-link" href="https://docs.meshery.io/">
+              <a className="category-link" href="https://docs.layer5.io/">
                 Docs
               </a>
             </li>
             <li>
-              <a className="category-link" href="https://meshery.io/features">
-                Features
+              <a className="category-link" href="https://docs.layer5.io/videos">
+                Videos
+              </a>
+            </li>
+            <li>
+              <a className="category-link" href="https://layer5.io/cloud-native-management/kanvas">
+                Kanvas Features
               </a>
             </li>
             <li>
@@ -71,15 +76,15 @@ const Footer = () => {
                 className="category-link"
                 href="https://layer5.io/cloud-native-management/meshery/integrations"
               >
-                Integrations
+                Kanvas Integrations
               </a>
             </li>
             <li>
               <a
                 className="category-link"
-                href="https://meshery.io/#getting-started"
+                href="https://kanvas.new"
               >
-                Run Meshery
+                Cloud Native Diagramming
               </a>
             </li>
             <li>
@@ -87,14 +92,14 @@ const Footer = () => {
                 className="category-link"
                 href="https://cloud.layer5.io/catalog"
               >
-                Meshery Catalog
+                Cloud Native Patterns
               </a>
             </li>
           </ul>
         </div>
         <div className="footer-links community">
           <h3 className="section-title">
-            <a className="title-link" href="https://meshery.io/community">
+            <a className="title-link" href="https://layer5.io/community">
               Community
             </a>
           </h3>
@@ -112,11 +117,11 @@ const Footer = () => {
               </a>
             </li> */}
             <li>
-              <a className="category-link" href="https://cloud.layer5.io">
-                Layer5 Cloud
+              <a className="category-link" href="https://cloud.layer5.io/academy">
+                Layer5 Academy
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 className="category-link"
                 href="https://layer5.io/community/members"
@@ -131,7 +136,7 @@ const Footer = () => {
               >
                 Community Leaderboard
               </a>
-            </li>
+            </li> */}
             <li>
               <a
                 className="category-link"
@@ -142,7 +147,7 @@ const Footer = () => {
             </li>
             <li>
               <a className="category-link" href="https://layer5.io/subscribe">
-                Mailing Lists
+                Mailing List
               </a>
             </li>
 
@@ -172,7 +177,7 @@ const Footer = () => {
             <li>
               <a
                 className="category-link"
-                href="https://www.youtube.com/channel/UCFL1af7_wdnhHXL1InzaMvA"
+                href="https://www.youtube.com/Layer5io?sub_confirmation=1"
               >
                 <img src={YoutubeIcon} alt="Youtube Icon" />
                 Youtube
@@ -192,11 +197,11 @@ const Footer = () => {
       </div>
       <div className="container flex copyright">
         <div className="text">
-          &copy; {new Date().getFullYear()}- The Layer5 Authors
+          &copy; {new Date().getFullYear()}- Layer5, Inc. All rights reserved.
         </div>
         <div className="text">Empowering engineers all around the world</div>
         <div className="text">
-          <a href="https://layer5.io/about">About</a>
+          <a href="https://layer5.io/company/about">About</a>
         </div>
       </div>
     </FooterWrapper>
