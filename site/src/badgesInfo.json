@@ -2,30 +2,35 @@
     "specialEditionBadges": [
         {
             "slug": "docker-captain",
+            "label": "docker-captain",
             "location": "assets/badges/docker-captain/docker-captain.png",
             "title": "Docker Captain",
             "description": "This is a special edition badge and it is awarded to Docker Captains."
         },
         {
             "slug": "cncf-ambassador",
+            "label": "cncf-ambassador",
             "location": "assets/badges/cncf-ambassador/cncf-ambassador.png",
             "title": "CNCF Ambassador",
             "description": "This is a special edition badge and it is awarded to CNCF Ambassadors."
         },
         {
             "slug": "hacktoberfest-25-contributor",
+            "label": "hacktoberfest25",
             "location": "assets/badges/hacktoberfest-contributor-2025/hacktoberfest25-badge.png",
             "title": "Hacktoberfest'25 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2025."
         },
         {
             "slug": "meshmate",
+            "label": "meshmate",
             "location": "assets/badges/meshmate/meshmate.png",
             "title": "MeshMate",
             "description": "This badge is awarded to community members who actively support and guide others, embodying the spirit of collaboration and knowledge sharing in the Layer5 community."
         },
         {
             "slug": "hacktoberfest-24-contributor",
+            "label": "hacktoberfest-24-contributor",
             "location": "assets/badges/hacktoberfest-24-contributor/hacktoberfest-24-contributor.png",
             "title": "Hacktoberfest'24 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
@@ -35,96 +40,112 @@
     "achievementBadges": [
         {
             "slug": "design-pioneer",
+            "label": "first-design",
             "location": "assets/badges/first-design/first-design.png",
             "title": "Design Pioneer",
             "description": "This badge is awarded upon creating your first design."
         },
         {
             "slug": "code-cleanup-crew",
+            "label": "code-cleanup-crew",
             "location": "assets/badges/code-cleanup-crew/code-cleanup-crew.png",
             "title": "Code Cleanup Crew",
             "description": "This badge is awarded to contributors who help maintain code quality and cleanliness."
         },
         {
             "slug": "security-sentinel",
+            "label": "security-sentinel",
             "location": "assets/badges/security-sentinel/security-sentinel.png",
             "title": "Security Sentinel",
             "description": "This badge is awarded to individuals who contribute to identifying and fixing security vulnerabilities."
         },
         {
             "slug": "longevity-legend",
+            "label": "longevity-legend",
             "location": "assets/badges/longevity-legend/longevity-legend.png",
             "title": "Longevity Legend",
             "description": "This badge is awarded for long-term, sustained contributions to the project over the years."
         },
         {
             "slug": "review-rockstar",
+            "label": "review-rockstar",
             "location": "assets/badges/review-rockstar/review-rockstar.png",
             "title": "Review Rockstar",
             "description": "This badge is awarded to individuals who provide thorough and valuable code reviews."
         },
         {
             "slug": "bring-a-buddy",
+            "label": "bring-a-buddy",
             "location": "assets/badges/bring-a-buddy/bring-a-buddy.png",
             "title": "Bring a Buddy",
             "description": "This badge is awarded to the users who invite someone to Layer5 Cloud."
         },
         {
             "slug": "first-share",
+            "label": "first-share",
             "location": "assets/badges/first-share/first-share.png",
             "title": "Sharing is Caring",
             "description": "This badge is awarded upon first-time sharing one of your Meshery designs."
         },
         {
             "slug": "first-deployment",
+            "label": "first-deployment",
             "location": "assets/badges/first-deployment/first-deployment.png",
             "title": "Shipped",
             "description": "This badge is awarded upon the success of your first design deployment."
         },
         {
             "slug": "need-for-speed",
+            "label": "need-for-speed",
             "location": "assets/badges/need-for-speed/need-for-speed.png",
             "title": "Need for Speed",
             "description": "This badge is awarded upon successful execution of your first Meshery performance test."
         },
         {
             "slug": "first-interactive-terminal-session",
+            "label": "first-interactive-terminal-session",
             "location": "assets/badges/first-interactive-terminal-session/first-interactive-terminal-session.png",
             "title": "Hip Hacker",
             "description": "This badge is awarded the first time that you establish an interactive terminal session with a Kubernetes Pod."
         },
         {
             "slug": "first-log-streaming-session",
+            "label": "first-log-streaming-session",
             "location": "assets/badges/first-log-streaming-session/first-log-streaming-session.png",
             "title": "Log Streamer",
             "description": "This badge is awarded the first time that you stream logs from a Kubernetes Pod."
         },
         {
             "slug": "first-collaborator",
+            "label": "first-collaborator",
             "location": "assets/badges/first-collaborator/first-collaborator.png",
             "title": "GitOps with Friends",
             "description": "This badge is awarded the first time a collaborator saves changes to one of your designs."
         },
         {
             "slug": "gitops-connected",
+            "label": "gitops-connected",
             "location": "assets/badges/gitops-connected/gitops-connected.png",
             "title": "GitOps Connected",
             "description": "This badge is awarded to users upon establishment of a connection with Meshery GitHub App."
         },
         {
             "slug": "meshmap-snapshot",
+            "label": "kanvas-snapshot",
             "location": "assets/badges/meshmap-snapshot/meshmap-snapshot.png",
             "title": "Kanvas Snapshot",
             "description": "This badge is awarded to users upon creation of their first infrastructure screenshot directly in their pull request."
         },
         {
             "slug": "continuous-contributor",
+            "label": "continuous-contributor",
             "location": "assets/badges/continuous-contributor/continuous-contributor.png",
             "title": "Continuous Contributor",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions for a long period of time in Layer5 projects in recognition and appreciation of their efforts."
         },
         {
             "slug": "hacktoberfest-contributor",
+            "label": "hacktoberfest-contributor",
             "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
             "title": "Hacktoberfest'23 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2023."
@@ -133,78 +154,91 @@
     "projectBadges": [
         {
             "slug": "ui-ux",
+            "label": "ui-ux",
             "imageSource": "assets/badges/ui-ux/ui-ux.png",
             "title": "UI/UX",
             "description": "This badge is awarded to the community members who create or improve designs for visual aspects or user flow for any of the websites, flyers, promotions, Meshery UI, and so on in recognition and appreciation of their efforts."
         },
         {
             "slug": "kanvas",
+            "label": "kanvas",
             "imageSource": "assets/badges/kanvas/kanvas.png",
             "title": "Kanvas",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/kanvas'>Kanvas</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "service-mesh-performance",
+            "label": "service-mesh-performance",
             "imageSource": "assets/badges/smp/smp.png",
             "title": "Service Mesh Performance",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Service Mesh Performance project. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "community",
+            "label": "community",
             "imageSource": "assets/badges/community/community.png",
             "title": "Community",
             "description": "This badge is awarded to the community members who repeatedly engage in welcoming, encouraging, and supporting other Layer5 community members. Community members who earn this badge occasionally graduate to undertaking the Community Manager role."
         },
         {
             "slug": "meshery",
+            "label": "meshery",
             "imageSource": "assets/badges/meshery/meshery.png",
             "title": "Meshery",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Meshery project. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "patterns",
+            "label": "patterns",
             "imageSource": "assets/badges/patterns/patterns.png",
             "title": "Patterns",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://service-mesh-patterns.github.io/service-mesh-patterns'>Service Mesh Patterns</a> project in recognition and appreciation of their efforts."
         },
         {
             "slug": "landscape",
+            "label": "landscape",
             "imageSource": "assets/badges/landscape/landscape.png",
             "title": "Landscape",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the layer5.io website."
         },
         {
             "slug": "nighthawk",
+            "label": "nighthawk",
             "imageSource": "assets/badges/nighthawk/nighthawk.png",
             "title": "Nighthawk",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the NightHawk project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "meshery-catalog",
+            "label": "meshery-catalog",
             "imageSource": "assets/badges/meshery-catalog/meshery-catalog.png",
             "title": "Meshery Catalog",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://meshery.io/catalog'>Meshery Catalog</a> of Meshery project in recognition and appreciation of their efforts."
         },
         {
             "slug": "docker-extension",
+            "label": "docker-extension",
             "imageSource": "assets/badges/docker-extension/docker-extension.png",
             "title": "Docker Extension",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Docker Extension of meshery project in recognition and appreciation of their efforts."
         },
         {
             "slug": "meshery-docs",
+            "label": "meshery-docs",
             "imageSource": "assets/badges/meshery-docs/meshery-docs.png",
             "title": "Meshery Docs",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://docs.meshery.io'>Meshery Docs</a> in recognition and appreciation of their efforts."
         },
         {
             "slug": "meshsync",
+            "label": "meshsync",
             "imageSource": "assets/badges/meshsync/meshsync.png",
             "title": "MeshSync",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to MeshSync</a> in recognition and appreciation of their efforts."
         },
         {
             "slug": "sistent-contributor",
+            "label": "sistent-contributor",
             "imageSource": "assets/badges/sistent-contributor/sistent-contributor.png",
             "title": "Sistent Contributor",
             "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Sistent project as a recognition and appreciation of their efforts."
