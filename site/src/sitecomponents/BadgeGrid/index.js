@@ -5,6 +5,7 @@ import CertifiedMesheryContributor from "../../../static/assets/badges/certified
 import CertifiedMesheryAssociate from "../../../static/assets/badges/certified-meshery-associate/certified-meshery-associate.png";
 import CertifiedMesheryProfessional from "../../../static/assets/badges/certified-meshery-professional/certified-meshery-professional.png";
 import CertifiedMesheryExpert from "../../../static/assets/badges/certified-meshery-expert/certified-meshery-expert.png";
+import CertifiedMesheryDeveloper from "../../../static/assets/badges/certified-meshery-developer/certified-meshery-developer.png";
 
 import BadgesWrapper from './Badges.styles';
 const jsonData = require('../../badgesInfo.json');
@@ -60,6 +61,10 @@ const Footer = () => {
         <div>
         <img src={CertifiedMesheryContributor} alt="Certified Meshery Contributor badge" />
           <span>Certified Meshery Contributor</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
+        </div>
+        <div>
+        <img src={CertifiedMesheryDeveloper} alt="Certified Meshery Developer badge" />
+          <span>Certified Meshery Developer</span> <p>This certificate is recognizes individuals who have demonstrated a clear understanding of each major Meshery architectural component, the frameworks, and the process of contribution.</p>
         </div>
         <div>
         <img src={CertifiedMesheryAssociate} alt="Certified Meshery Associate badge" />
