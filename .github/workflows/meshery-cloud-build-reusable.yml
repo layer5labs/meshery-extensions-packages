@@ -194,12 +194,13 @@ jobs:
           port: 22
           envs: PR_NUMBER
           # This script will exit immediately if any command fails.
+          # Alternate sync operation: git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
           script: |
             bash
             set -e 
             helm repo update layer5
             cd deploy/meshery-cloud
-            git pull https://l5io:$GH_ACCESS_TOKEN@github.com/layer5io/meshery-cloud.git master
+            gh repo sync
             cd ../..
             helm upgrade -f ~/deploy/meshery-cloud/install/environment/staging/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
             
