@@ -27,14 +27,41 @@ export const BadgesWrapper = styled.div`
       }
       .badge-label {
         font-family: 'Fira Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
-        color: #888;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 0.75em;
-        letter-spacing: 0.5px;
-        margin-top: 4px;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        background: linear-gradient(135deg, #00b39f 0%, #00d3aa 100%);
+        color: #ffffff;
+        padding: 0.35rem 0.9rem 0.35rem 1.25rem;
+        border-radius: 0 0.75rem 0.75rem 0;
+        font-size: 0.72em;
+        letter-spacing: 0.6px;
+        margin-top: 0.5rem;
         font-weight: 600;
-      } 
+        text-transform: uppercase;
+        box-shadow: 0 4px 12px rgba(0, 179, 159, 0.25);
+      }
+
+      .badge-label::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -0.75rem;
+        width: 0.75rem;
+        height: 100%;
+        background: linear-gradient(135deg, #009783 0%, #00b39f 100%);
+        clip-path: polygon(0 0, 100% 0, 0 100%);
+      }
+
+      .badge-label::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 0 0.75rem 0.75rem 0;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+        pointer-events: none;
+      }
     }
 
   }  
