@@ -1,0 +1,49 @@
+name: Build and Preview Site
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'site/**'
+      - '.github/workflows/build-and-preview-site.yml'
+      - '.github/workflows/deploy-preview-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Build static site
+        working-directory: site
+        run: npm run build
+
+      - name: Package build output
+        run: |
+          rm -f public-dir.zip
+          cd site
+          zip -r ../public-dir.zip public
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-dir
+          path: public-dir.zip
+          retention-days: 3

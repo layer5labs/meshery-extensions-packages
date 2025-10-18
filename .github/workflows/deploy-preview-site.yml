@@ -1,0 +1,57 @@
+name: Deploy Preview Site
+
+on:
+  workflow_run:
+    workflows:
+      - Build and Preview Site
+    types:
+      - completed
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  deploy-preview:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Download site artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GH_ACCESS_TOKEN }}
+          workflow: build-and-preview-site.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: public-dir
+
+      - name: Unzip site bundle
+        run: |
+          rm -rf public
+          unzip public-dir.zip
+          rm -f public-dir.zip
+
+      - name: Deploy to Netlify
+        id: netlify
+        uses: nwtgck/actions-netlify@v1.2.4
+        with:
+          publish-dir: 'public'
+          production-deploy: false
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          enable-commit-comment: false
+          enable-pull-request-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Comment preview URL
+        if: steps.netlify.outputs.deploy-url != ''
+        uses: ./.github/actions/comment-preview-on-pr
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          deploy_url: ${{ steps.netlify.outputs.deploy-url }}
