@@ -1,5 +1,76 @@
 import styled from "styled-components";
 export const BadgesWrapper = styled.div`
+  .badge-section-heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 3rem 0 1.5rem;
+    scroll-margin-top: 6rem;
+    flex-wrap: wrap;
+
+    h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: ${({ theme }) => theme.text};
+    }
+
+    .heading-anchor {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      border: none;
+      background: transparent;
+      color: ${({ theme }) => theme.text};
+      border-radius: 0.375rem;
+      opacity: 0;
+      cursor: pointer;
+      transition: opacity 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    &:hover .heading-anchor,
+    &:focus-within .heading-anchor {
+      opacity: 1;
+    }
+
+    .heading-anchor:hover {
+      color: ${({ theme }) => theme.primary || '#00b39f'};
+      background-color: rgba(0, 179, 159, 0.08);
+    }
+
+    .heading-anchor:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+      opacity: 1;
+    }
+
+    .copy-feedback {
+      font-size: 0.875rem;
+      color: ${({ theme }) => theme.primary || '#00b39f'};
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .copy-feedback.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+
   div.badge-grid {
     display: flex;
     flex-wrap: wrap;
@@ -51,6 +122,20 @@ export const BadgesWrapper = styled.div`
   @media (max-width: 670px) {
     div.badge-grid > div {
       max-width: 95%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .badge-section-heading {
+      gap: 0.5rem;
+
+      .heading-anchor {
+        opacity: 1;
+      }
+
+      .copy-feedback {
+        width: 100%;
+      }
     }
   }
 `;
