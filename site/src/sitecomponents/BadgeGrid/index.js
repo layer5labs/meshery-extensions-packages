@@ -231,6 +231,24 @@ const Footer = () => {
           <p>Additional certifications are coming soon!</p>
         </div> */}
       </div>
+      <SectionHeading
+        id="archived-badges"
+        title="Archived Badges"
+        onCopy={handleCopyLink}
+        feedback={copyFeedback}
+      />
+      <div className="badge-grid">
+        {jsonData.archivedBadges.map((badge) => {
+          return (
+            <div key={badge.slug}>
+              <img src={badge.location} alt="Archived badges" />
+              <span>{badge.title}</span>
+              <span className="badge-label">{badge.label}</span>
+              <p>{badge.description}</p>
+            </div>
+          );
+        })}
+      </div>
     </BadgesWrapper>
   )
 }

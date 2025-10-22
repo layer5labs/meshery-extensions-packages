@@ -27,15 +27,8 @@
             "location": "assets/badges/meshmate/meshmate.png",
             "title": "MeshMate",
             "description": "This badge is awarded to community members who actively support and guide others, embodying the spirit of collaboration and knowledge sharing in the Layer5 community."
-        },
-        {
-            "slug": "hacktoberfest-24-contributor",
-            "label": "hacktoberfest-24-contributor",
-            "location": "assets/badges/hacktoberfest-24-contributor/hacktoberfest-24-contributor.png",
-            "title": "Hacktoberfest'24 Contributor",
-            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
         }
-
+       
     ],
     "achievementBadges": [
         {
@@ -149,6 +142,15 @@
             "location": "assets/badges/hacktoberfest-contributor/hacktoberfest-contributor.png",
             "title": "Hacktoberfest'23 Contributor",
             "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2023."
+        }
+    ],
+    "archivedBadges": [
+        {
+            "slug": "hacktoberfest-24-contributor",
+            "label": "hacktoberfest-24-contributor",
+            "location": "assets/badges/hacktoberfest-24-contributor/hacktoberfest-24-contributor.png",
+            "title": "Hacktoberfest'24 Contributor",
+            "description": "This badge is awarded to the contributors who contribute to any Layer5 project during Hacktoberfest 2024."
         }
     ],
     "projectBadges": [
