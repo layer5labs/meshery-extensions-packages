@@ -160,7 +160,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: https://github.com/layer5io/meshery-cloud.git#${{ inputs.pr_commit_sha }}
+          context: https://github.com/layer5io/meshery-cloud.git#refs/pull/${{ inputs.pr_number }}/head
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
           build-args: |
