@@ -8,11 +8,26 @@ jobs:
   site-preview:
     runs-on: ubuntu-latest
     steps:
+      - name: Free Disk Space 🧹
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo apt-get remove -y '^dotnet-.*'
+          sudo apt-get remove -y '^llvm-.*'
+          sudo apt-get remove -y 'php.*'
+          sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
+          sudo apt-get autoremove -y
+          sudo apt-get clean
+          df -h
+
       - name: Checkout 🛎️
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
         with:
-          persist-credentials: false
-          fetch-depth: 1
+          sparse-checkout: |
+            site
+            script.sh
 
       - name: Install and Build 🔧
         run: |
@@ -24,7 +39,7 @@ jobs:
       - name: Broken Link Check 🔗
         uses: technote-space/broken-link-checker-action@v2
         with:
-          target: ./public/**/*.html  
+          target: ./site/public/**/*.html  
 
       - name: Zip Site
         run: bash ./script.sh
