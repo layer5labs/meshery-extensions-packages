@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            site
+            script.sh
 
       - name: Install and Build 🔧
         run: |
@@ -24,7 +28,9 @@ jobs:
           target: ./site/public/**/*.html  
 
       - name: Zip Site
-        run: bash ./script.sh
+        run: |
+          cd site
+          bash ../script.sh
 
       - name: Upload files
         uses: actions/upload-artifact@master
