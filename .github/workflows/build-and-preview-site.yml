@@ -8,26 +8,8 @@ jobs:
   site-preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Free Disk Space 🧹
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo apt-get remove -y '^dotnet-.*'
-          sudo apt-get remove -y '^llvm-.*'
-          sudo apt-get remove -y 'php.*'
-          sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
-          sudo apt-get autoremove -y
-          sudo apt-get clean
-          df -h
-
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            site
-            script.sh
 
       - name: Install and Build 🔧
         run: |
