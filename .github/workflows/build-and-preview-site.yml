@@ -17,8 +17,13 @@ jobs:
   build-and-upload:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout site sources
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            site
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

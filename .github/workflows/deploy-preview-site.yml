@@ -17,9 +17,12 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout local action
         uses: actions/checkout@v4
         with:
+          sparse-checkout: |
+            .github/actions/comment-preview-on-pr
+          sparse-checkout-cone-mode: true
           fetch-depth: 1
 
       - name: Download site artifact
