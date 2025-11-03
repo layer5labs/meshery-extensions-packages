@@ -41,6 +41,12 @@ on:
         required: true
       METAL05_HOST:
         required: true
+      OCI_BASTION_HOST:
+        required: true
+      OCI_BASTION_USERNAME:
+        required: true
+      OCI_BASTION_KEY:
+        required: true
 
   workflow_dispatch:
     inputs:
@@ -195,9 +201,9 @@ jobs:
         env:
             GIT_VERSION: ${{inputs.release-version}}
         with:
-          host: ${{ secrets.METAL05_HOST }}
-          username: ${{ secrets.METAL_USERNAME }}
-          key: ${{ secrets.METAL_KEY }}
+          host: ${{ secrets.OCI_BASTION_HOST }}
+          username: ${{ secrets.OCI_BASTION_USERNAME }}
+          key: ${{ secrets.OCI_BASTION_KEY }}
           port: 22
           envs: GIT_VERSION
           script: |
