@@ -196,7 +196,7 @@ jobs:
             RELEASE_CHANNEL=${{inputs.release-environment}}
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64,linux/arm64
-      - name: Deploy staging on metal05
+      - name: Deploy staging on OCI OKE
         uses: appleboy/ssh-action@master
         env:
             GIT_VERSION: ${{inputs.release-version}}
