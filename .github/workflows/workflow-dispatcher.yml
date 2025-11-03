@@ -36,3 +36,6 @@ jobs:
       METAL05_HOST: ${{ secrets.METAL05_HOST }}
       METAL_KEY: ${{ secrets.METAL_KEY }}
       METAL_USERNAME: ${{ secrets.METAL_USERNAME }}
+      OCI_BASTION_HOST: ${{ secrets.OCI_BASTION_HOST }}
+      OCI_BASTION_USERNAME: ${{ secrets.OCI_BASTION_USERNAME }}
+      OCI_BASTION_KEY: ${{ secrets.OCI_BASTION_KEY }}
