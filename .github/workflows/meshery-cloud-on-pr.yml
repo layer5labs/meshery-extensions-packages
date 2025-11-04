@@ -29,7 +29,9 @@ jobs:
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
       MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
-
+      OCI_BASTION_HOST: ${{ secrets.OCI_BASTION_HOST }}
+      OCI_BASTION_USERNAME: ${{ secrets.OCI_BASTION_USERNAME }}
+      OCI_BASTION_KEY: ${{ secrets.OCI_BASTION_KEY }}
       
     with:
       pr_commit_sha: ${{inputs.pr_commit_sha}}
