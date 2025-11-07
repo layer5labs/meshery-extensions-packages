@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data:
