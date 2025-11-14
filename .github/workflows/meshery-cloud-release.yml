@@ -31,7 +31,7 @@ on:
         required: true
       MESHERY_CLOUD_AWS_PROD_KEY:
         required: true
-      GLOBAL_TOKEN:
+      GH_ACCESS_TOKEN:
         required: true
       METAL_KEY:
         required: true
@@ -270,7 +270,7 @@ jobs:
           ENVIRONMENT=prod
           GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
           RELEASE_CHANNEL=${{inputs.release-environment}}
-          TOKEN=${{ secrets.GLOBAL_TOKEN }}
+          TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
     - name: Deploy production on metal04

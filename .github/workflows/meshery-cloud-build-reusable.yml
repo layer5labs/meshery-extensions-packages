@@ -25,7 +25,7 @@ on:
         required: true
       LAYER5_CLOUD_TESTING_BOT_PASSWORD:
         required: true
-      GLOBAL_TOKEN:
+      GH_ACCESS_TOKEN:
         required: true
       METAL05_HOST:
         required: true
@@ -173,7 +173,7 @@ jobs:
             ENVIRONMENT="staging"
             GIT_VERSION=staging-${{env.PR_NUMBER}}
             RELEASE_CHANNEL=staging
-            TOKEN=${{ secrets.GLOBAL_TOKEN }}
+            TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64
       - name: comment success
