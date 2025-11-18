@@ -28,6 +28,7 @@ jobs:
              ui
              provider-ui
              server
+             install
              /*
           sparse-checkout-cone-mode: false
 
