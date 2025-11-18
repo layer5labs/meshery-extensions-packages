@@ -28,7 +28,8 @@ jobs:
              ui
              provider-ui
              server
-             install
+             install/docker/*/**
+             install/*
              /*
           sparse-checkout-cone-mode: false
 
