@@ -31,8 +31,6 @@ on:
         required: true
       MESHERY_CLOUD_AWS_PROD_KEY:
         required: true
-      GH_ACCESS_TOKEN:
-        required: true
       METAL_KEY:
         required: true
       METAL_USERNAME:

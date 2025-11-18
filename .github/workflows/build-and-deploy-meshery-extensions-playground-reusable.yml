@@ -24,6 +24,14 @@ jobs:
           path: "meshery"
           repository: meshery/meshery
           ref: ${{ inputs.branch }}
+          sparse-checkout: |
+             ui
+             provider-ui
+             server
+             install/docker/*/**
+             install/*
+             /*
+          sparse-checkout-cone-mode: false
 
       # - name: Checkout kanvas
       #   uses: actions/checkout@v5
