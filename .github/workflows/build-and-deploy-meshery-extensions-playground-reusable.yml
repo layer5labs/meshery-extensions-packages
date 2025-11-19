@@ -143,7 +143,7 @@ jobs:
           port: 22
           script: |
             kubectl config use-context prod 
-            kubectl set image deployment/kanvas meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
+            kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
         uses: dawidd6/action-send-mail@v6
