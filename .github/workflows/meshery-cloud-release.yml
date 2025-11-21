@@ -295,7 +295,7 @@ jobs:
 
     - name: Send Email on Cloud Release Failure
       if: ${{ failure() }}
-      uses: dawidd6/action-send-mail@v6
+      uses: dawidd6/action-send-mail@v5
       env:
         msg: ${{ env.reason != '' && env.reason || ' Workflow Build Failure' }}
       with:
