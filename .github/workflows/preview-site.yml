@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            site
+            script.sh
 
       - name: Download Site dir
         uses: dawidd6/action-download-artifact@v2
