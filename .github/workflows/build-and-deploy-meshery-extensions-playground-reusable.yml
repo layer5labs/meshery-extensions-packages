@@ -81,20 +81,41 @@ jobs:
         # merges the custom kanvas distro at currentrepo/kanvas with the meshery repo checked out to
         # meshery/meshery directory to create a new meshery distro
         run: |
-          ls 
-          echo "ls meshery"
-          ls meshery
-          echo "ls kanvas"
-          ls ./meshery-extensions/kanvas
-          echo "merge"
-          cp -R ./meshery-extensions/kanvas/*  ./meshery/
-          echo "updating capabilities with extension version"
-          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${{ env.MESHERY_EXTENSION_VERSION}}/g" ./meshery/.meshery/capabilities.json
+          #!/usr/bin/env bash
+          set -euo pipefail
+          
+          echo "=== Before merge ==="
+          ls -A
+          echo
+          echo "Contents of meshery/"
+          ls -A meshery || echo "(empty or does not exist yet)"
+          echo
+          echo "Contents of ./meshery-extensions/kanvas/"
+          ls -A ./meshery-extensions/kanvas
+          
+          echo
+          echo "=== Merging everything from kanvas/ into meshery/ (including hidden files) ==="
+          # This copies ALL files and directories, including hidden ones (.meshery, .git, etc.)
+          cp -a ./meshery-extensions/kanvas/. ./meshery/
+          
+          echo
+          echo "=== Updating capabilities.json with extension version ==="
+          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${MESHERY_EXTENSION_VERSION:-unknown}/g" ./meshery/.meshery/capabilities.json
+          
+          echo
+          echo "capabilities.json after substitution:"
           cat ./meshery/.meshery/capabilities.json
-          echo "ls meshery"
-          ls meshery 
-          echo "ls meshery/ui"
-          ls meshery/ui
+          
+          echo
+          echo "=== After merge ==="
+          echo "Top-level in meshery/"
+          ls -A meshery
+          echo
+          echo "Hidden .meshery directory contents:"
+          ls -A meshery/.meshery
+          echo
+          echo "UI directory (example of deep path):"
+          ls -A meshery/ui || echo "(not present)"
 
       - name: Docker build & tag
         working-directory: "./meshery"
