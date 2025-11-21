@@ -89,13 +89,12 @@ jobs:
           echo "merge"
           cp -R ./meshery-extensions/kanvas/*  ./meshery/
           echo "updating capabilities with extension version"
-          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${{ env.MESHERY_EXTENSION_VERSION}}/g" ./meshery/capabilities.json
-          cat ./meshery/capabilities.json
+          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${{ env.MESHERY_EXTENSION_VERSION}}/g" ./meshery/.meshery/capabilities.json
+          cat ./meshery/.meshery/capabilities.json
           echo "ls meshery"
           ls meshery 
           echo "ls meshery/ui"
           ls meshery/ui
-          echo $TOKEN
 
       - name: Docker build & tag
         working-directory: "./meshery"
@@ -138,12 +137,13 @@ jobs:
       - name: Rollout Kanvas
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.METAL04_HOST }}
-          username: ${{ secrets.METAL_USERNAME }}
-          key: ${{ secrets.METAL_KEY }}
+          host: ${{ secrets.OCI_BASTION_HOST }}
+          username: ${{ secrets.OCI_BASTION_USERNAME }}
+          key: ${{ secrets.OCI_BASTION_KEY }}
           port: 22
           script: |
-            kubectl set image deployment/kanvas meshery=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
+            kubectl config use-context prod 
+            kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
         uses: dawidd6/action-send-mail@v6
