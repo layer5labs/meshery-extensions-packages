@@ -166,7 +166,7 @@
             "label": "kanvas",
             "imageSource": "assets/badges/kanvas/kanvas.png",
             "title": "Kanvas",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://layer5.io/cloud-native-management/kanvas'>Kanvas</a> project in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Kanvas project (https://layer5.io/cloud-native-management/kanvas) in recognition and appreciation of their efforts. Community members who earn this badge occasionally become a project maintainer."
         },
         {
             "slug": "service-mesh-performance",
@@ -194,7 +194,7 @@
             "label": "patterns",
             "imageSource": "assets/badges/patterns/patterns.png",
             "title": "Patterns",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://service-mesh-patterns.github.io/service-mesh-patterns'>Service Mesh Patterns</a> project in recognition and appreciation of their efforts."
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Service Mesh Patterns project (https://service-mesh-patterns.github.io/service-mesh-patterns) in recognition and appreciation of their efforts."
         },
         {
             "slug": "landscape",
@@ -215,7 +215,7 @@
             "label": "meshery-catalog",
             "imageSource": "assets/badges/meshery-catalog/meshery-catalog.png",
             "title": "Meshery Catalog",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://meshery.io/catalog'>Meshery Catalog</a> of Meshery project in recognition and appreciation of their efforts."
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Meshery Catalog (https://meshery.io/catalog) of Meshery project in recognition and appreciation of their efforts."
         },
         {
             "slug": "docker-extension",
@@ -229,14 +229,14 @@
             "label": "meshery-docs",
             "imageSource": "assets/badges/meshery-docs/meshery-docs.png",
             "title": "Meshery Docs",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the <a href='https://docs.meshery.io'>Meshery Docs</a> in recognition and appreciation of their efforts."
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to the Meshery Docs (https://docs.meshery.io) in recognition and appreciation of their efforts."
         },
         {
             "slug": "meshsync",
             "label": "meshsync",
             "imageSource": "assets/badges/meshsync/meshsync.png",
             "title": "MeshSync",
-            "description": "This badge is awarded to the community members who make consistent and impactful contributions to MeshSync</a> in recognition and appreciation of their efforts."
+            "description": "This badge is awarded to the community members who make consistent and impactful contributions to MeshSync in recognition and appreciation of their efforts."
         },
         {
             "slug": "sistent-contributor",
