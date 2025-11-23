@@ -3,6 +3,8 @@ on:
   pull_request:
     branches: [master]
     types: [opened, synchronize, reopened]
+    paths:
+      - "site/**"
 
 jobs:
   site-preview:
@@ -25,7 +27,7 @@ jobs:
       - name: Broken Link Check 🔗
         uses: technote-space/broken-link-checker-action@v2
         with:
-          target: ./site/public/**/*.html  
+          target: ./site/public/**/*.html
 
       - name: Zip Site
         run: |
