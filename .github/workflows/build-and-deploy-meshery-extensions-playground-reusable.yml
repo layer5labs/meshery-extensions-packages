@@ -104,7 +104,7 @@ jobs:
           
           echo
           echo "capabilities.json after substitution:"
-          cat ./meshery/.meshery/capabilities.json
+          cat ./meshery/.meshery/provider/Layer5/capabilities.json
           
           echo
           echo "=== After merge ==="
