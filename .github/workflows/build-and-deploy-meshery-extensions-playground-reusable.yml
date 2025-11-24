@@ -13,6 +13,8 @@ on:
 jobs:
   build-and-release:
     name: Build and Rollout Kanvas
+    outputs:
+      meshery_version: ${{ steps.set_vars.outputs.MESHERY_VERSION }}
     env:
       RELEASE_CHANNEL: "kanvas"
     runs-on: ubuntu-24.04
@@ -62,10 +64,12 @@ jobs:
           tree  meshery-extensions;
 
       - name: Fetch Meshery and Extensions version
+        id: set-vars
         run: |
           chmod +x ./meshery-extensions/build/get-meshery-version
           MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-version)
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
+          echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_OUTPUT
 
           chmod +x ./meshery-extensions/build/get-extension-version
           MESHERY_EXTENSION_VERSION=$(./meshery-extensions/build/get-extension-version)
@@ -195,5 +199,5 @@ jobs:
     uses: layer5io/kanvas-docker-extension/.github/workflows/build-and-release.yml@master
     secrets: inherit
     with:
-      version: ${{env.MESHERY_VERSION}}
+      version: ${{need.build-and-release.outputs.meshery_version}}
       release_channel: "kanvas"
