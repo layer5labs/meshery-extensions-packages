@@ -1,5 +1,4 @@
 name: Build and Rollout Kanvas Reusable
-
 on:
   workflow_call:
     inputs:
@@ -15,33 +14,42 @@ jobs:
   build-and-release:
     name: Build and Rollout Kanvas
     outputs:
-      meshery_version: ${{ steps.set-vars.outputs.MESHERY_VERSION }}
+      meshery_version: ${{ steps.set_vars.outputs.MESHERY_VERSION }}
     env:
       RELEASE_CHANNEL: "kanvas"
     runs-on: ubuntu-24.04
-
     steps:
       - name: Checkout meshery/meshery
         uses: actions/checkout@v5
         with:
           fetch-depth: 1
-          path: meshery
+          path: "meshery"
           repository: meshery/meshery
           ref: ${{ inputs.branch }}
           sparse-checkout: |
              ui
              provider-ui
              server
-             install/docker/**
-             install/**
+             install/docker/*/**
+             install/*
+             /*
           sparse-checkout-cone-mode: false
 
-      - name: Fetch version scripts from meshery-extensions
+      # - name: Checkout kanvas
+      #   uses: actions/checkout@v5
+      #   with:
+      #     fetch-depth: 1
+      #     sparse-checkout: |
+      #       kanvas
+      #     path: "kanvas"
+      #     sparse-checkout-cone-mode: false
+
+      - name: Fetch version scripts from meshery-extensions.
         uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: layer5labs/meshery-extensions
-          path: meshery-extensions
+          path: "meshery-extensions"
           fetch-depth: 1
           sparse-checkout: |
             kanvas
@@ -51,20 +59,20 @@ jobs:
 
       - name: File system view
         run: |
-          pwd
-          ls
-          tree meshery-extensions || true
+          pwd;
+          ls;
+          tree  meshery-extensions;
 
       - name: Fetch Meshery and Extensions version
         id: set-vars
         run: |
-          chmod +x meshery-extensions/build/get-meshery-version
-          MESHERY_VERSION=$(meshery-extensions/build/get-meshery-version)
+          chmod +x ./meshery-extensions/build/get-meshery-version
+          MESHERY_VERSION=$(./meshery-extensions/build/get-meshery-version)
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_ENV
           echo "MESHERY_VERSION=$MESHERY_VERSION" >> $GITHUB_OUTPUT
 
-          chmod +x meshery-extensions/build/get-extension-version
-          MESHERY_EXTENSION_VERSION=$(meshery-extensions/build/get-extension-version)
+          chmod +x ./meshery-extensions/build/get-extension-version
+          MESHERY_EXTENSION_VERSION=$(./meshery-extensions/build/get-extension-version)
           echo "MESHERY_EXTENSION_VERSION=$MESHERY_EXTENSION_VERSION" >> $GITHUB_ENV
 
       - name: Docker login
@@ -74,61 +82,80 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Configure kanvas distro
+        # merges the custom kanvas distro at currentrepo/kanvas with the meshery repo checked out to
+        # meshery/meshery directory to create a new meshery distro
         run: |
+          #!/usr/bin/env bash
           set -euo pipefail
-
+          
           echo "=== Before merge ==="
           ls -A
           echo
           echo "Contents of meshery/"
-          ls -A meshery || true
+          ls -A meshery || echo "(empty or does not exist yet)"
           echo
-          echo "Contents of meshery-extensions/kanvas/"
-          ls -A meshery-extensions/kanvas
-
+          echo "Contents of ./meshery-extensions/kanvas/"
+          ls -A ./meshery-extensions/kanvas
+          
           echo
-          echo "=== Merging kanvas into meshery ==="
-          cp -a meshery-extensions/kanvas/. meshery/
-
+          echo "=== Merging everything from kanvas/ into meshery/ (including hidden files) ==="
+          # This copies ALL files and directories, including hidden ones (.meshery, .git, etc.)
+          cp -a ./meshery-extensions/kanvas/. ./meshery/
+          
           echo
-          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${MESHERY_EXTENSION_VERSION:-unknown}/g" meshery/.meshery/provider/Layer5/capabilities.json
+          echo "=== Updating capabilities.json with extension version ==="
+          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${MESHERY_EXTENSION_VERSION:-unknown}/g" ./meshery/.meshery/provider/Layer5/capabilities.json
+          
+          echo
+          echo "capabilities.json after substitution:"
+          cat ./meshery/.meshery/provider/Layer5/capabilities.json
+          
+          echo
+          echo "=== After merge ==="
+          echo "Top-level in meshery/"
+          ls -A meshery
+          echo
+          echo "Hidden .meshery directory contents:"
+          ls -A meshery/.meshery
+          echo
+          echo "UI directory (example of deep path):"
+          ls -A meshery/ui || echo "(not present)"
 
       - name: Docker build & tag
-        working-directory: meshery
+        working-directory: "./meshery"
         run: |
-          DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache \
-            -t layer5/meshery:kanvas-latest \
-            --build-arg TOKEN=${{ secrets.GH_ACCESS_TOKEN }} \
-            --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} \
-            --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} \
-            --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
+          DOCKER_BUILDKIT=1 docker build -f install/docker/Dockerfile --no-cache -t layer5/meshery:kanvas-latest --build-arg TOKEN=${{ secrets.GH_ACCESS_TOKEN }} --build-arg GIT_COMMITSHA=${GITHUB_SHA::8} --build-arg GIT_VERSION=${{ env.MESHERY_VERSION }} --build-arg RELEASE_CHANNEL=${RELEASE_CHANNEL} .
 
       - name: Bundle kanvas extension with the image
-        working-directory: meshery-extensions
+        working-directory: "./meshery-extensions"
         run: |
           wget https://github.com/layer5labs/meshery-extensions-packages/releases/download/${{ env.MESHERY_EXTENSION_VERSION }}/provider-meshery.tar.gz
 
           mkdir extensions-package
           tar xzf provider-meshery.tar.gz -C extensions-package
-
           mkdir -p provider/Layer5/${{ env.MESHERY_EXTENSION_VERSION }}
           mv extensions-package/provider provider/Layer5/${{ env.MESHERY_EXTENSION_VERSION }}
 
+          ls;
+
           docker run -d --name meshery-tmp layer5/meshery:kanvas-latest
-          docker cp -a provider/ meshery-tmp:/home/appuser/.meshery/
-          docker commit meshery-tmp layer5/meshery:kanvas-latest
 
-      - name: Clean up checkout repos
+          docker cp -a ./provider/ meshery-tmp:/home/appuser/.meshery/
+
+          docker container commit meshery-tmp layer5/meshery:kanvas-latest
+      - name: Clean up checkout out repos
         run: |
-          rm -rf meshery
-          rm -rf meshery-extensions
-
+          rm -rf ./meshery 
+          rm -rf ./meshery-extensions
+          
       - name: Docker tag & push
         run: |
+
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
 
           docker push layer5/meshery:kanvas-latest
+
           docker push layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker push layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
 
@@ -140,34 +167,37 @@ jobs:
           key: ${{ secrets.OCI_BASTION_KEY }}
           port: 22
           script: |
-            kubectl config use-context prod
-            kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{ env.MESHERY_VERSION }} -n meshery-extensions
+            kubectl config use-context prod 
+            kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
 
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
         uses: dawidd6/action-send-mail@v6
         env:
-          msg: ${{ env.reason != '' && env.reason || 'Rollout Kanvas Failure' }}
+          msg: ${{ env.reason != '' && env.reason || ' Rollout Kanvas Failure' }}
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: GitHub Actions - Rollout Kanvas Release Failure
-          from: "Meshery Extensions" <no-reply@meshery.io>
-          to: "Layer5 Support" <support@layer5.io>
+          from: |
+            "Meshery Extensions" <no-reply@meshery.io>
+          to: |
+            "Layer5 Support" <support@layer5.io>
           html_body: |
             <b>REPO:</b> ${{ github.repository }}<br />
             <b>WORKFLOW:</b> ${{ github.workflow }}<br />
             <b>JOB:</b> ${{ github.job }}<br />
             <b>REASON:</b> ${{ env.msg }}<br />
-            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">{{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
+            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
 
   build-and-release-docker-extension:
-    needs: [build-and-release]
+    needs:
+      - build-and-release
     name: Build and Release Docker Extension
     uses: layer5io/kanvas-docker-extension/.github/workflows/build-and-release.yml@master
     secrets: inherit
     with:
-      version: ${{ needs.build-and-release.outputs.meshery_version }}
+      version: ${{need.build-and-release.outputs.meshery_version}}
       release_channel: "kanvas"
