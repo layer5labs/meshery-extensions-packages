@@ -14,7 +14,7 @@ jobs:
   build-and-release:
     name: Build and Rollout Kanvas
     outputs:
-      meshery_version: ${{ steps.set_vars.outputs.MESHERY_VERSION }}
+      meshery_version: ${{ steps.set-vars.outputs.MESHERY_VERSION }}
     env:
       RELEASE_CHANNEL: "kanvas"
     runs-on: ubuntu-24.04
@@ -30,7 +30,7 @@ jobs:
              ui
              provider-ui
              server
-             install/docker/*/**
+             install/docker/**
              install/*
              /*
           sparse-checkout-cone-mode: false
@@ -190,7 +190,7 @@ jobs:
             <b>WORKFLOW:</b> ${{ github.workflow }}<br />
             <b>JOB:</b> ${{ github.job }}<br />
             <b>REASON:</b> ${{ env.msg }}<br />
-            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
+            <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">{{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
 
   build-and-release-docker-extension:
     needs:
@@ -199,5 +199,5 @@ jobs:
     uses: layer5io/kanvas-docker-extension/.github/workflows/build-and-release.yml@master
     secrets: inherit
     with:
-      version: ${{need.build-and-release.outputs.meshery_version}}
+      version: ${{ needs.build-and-release.outputs.meshery_version }}
       release_channel: "kanvas"
