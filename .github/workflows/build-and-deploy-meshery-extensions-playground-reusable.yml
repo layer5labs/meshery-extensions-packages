@@ -165,6 +165,7 @@ jobs:
           script: |
             kubectl config use-context prod 
             kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
+
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
         uses: dawidd6/action-send-mail@v6
@@ -186,3 +187,13 @@ jobs:
             <b>JOB:</b> ${{ github.job }}<br />
             <b>REASON:</b> ${{ env.msg }}<br />
             <b>DETAILS:</b> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${{ job.status }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a><br />
+
+  build-and-release-docker-extension:
+    needs:
+      - build-and-release
+    name: Build and Release Docker Extension
+    uses: layer5io/kanvas-docker-extension/.github/workflows/build-and-release.yml@master
+    secrets: inherit
+    with:
+      version: ${{env.MESHERY_VERSION}}
+      release_channel: "kanvas"
