@@ -195,9 +195,18 @@ jobs:
   build-and-release-docker-extension:
     needs:
       - build-and-release
-    name: Build and Release Docker Extension
-    uses: layer5io/kanvas-docker-extension/.github/workflows/build-and-release.yml@master
-    secrets: inherit
-    with:
-      version: ${{ needs.build-and-release.outputs.meshery_version }}
-      release_channel: "kanvas"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release via GitHub API
+        env:
+          TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          TAG: ${{ needs.build-and-release.outputs.meshery_version }}
+          NAME: Kanvas Docker Extension ${{ needs.build-and-release.outputs.meshery_version }}
+          BODY: See https://docs.layer5.io/kanvas/reference/releases/${{ needs.build-and-release.outputs.meshery_version }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg tag "$TAG" --arg name "$NAME" --arg body "$BODY" \
+                  '{tag_name: $tag, name: $name, body: $body, draft: false, prerelease: false}')" \
+            https://api.github.com/repos/layer5io/kanvas-docker-extension/releases
