@@ -100,7 +100,7 @@ jobs:
           
           echo
           echo "=== Updating capabilities.json with extension version ==="
-          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${MESHERY_EXTENSION_VERSION:-unknown}/g" ./meshery/.meshery/capabilities.json
+          sed -i "s/REPLACE_WITH_PACKAGE_VERSION/${MESHERY_EXTENSION_VERSION:-unknown}/g" ./meshery/.meshery/provider/Layer5/capabilities.json
           
           echo
           echo "capabilities.json after substitution:"
