@@ -203,9 +203,9 @@ jobs:
       - name: Create Release via GitHub API
         env:
           TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          TAG: ${{ needs.build-and-release.outputs.meshery_version1- }}
-          NAME: Kanvas Docker Extension ${{ needs.build-and-release.outputs.meshery_version }}
-          BODY: See https://docs.layer5.io/kanvas/reference/releases/${{ needs.build-and-release.outputs.meshery_version }}
+          TAG: ${{ needs.build-and-release.outputs.meshery_extension_version }}
+          NAME: Kanvas Docker Extension ${{ needs.build-and-release.outputs.meshery_extension_version }}
+          BODY: See https://docs.layer5.io/kanvas/reference/releases/${{ needs.build-and-release.outputs.meshery_extension_version }}
         run: |
           curl -X POST \
             -H "Authorization: token $TOKEN" \
