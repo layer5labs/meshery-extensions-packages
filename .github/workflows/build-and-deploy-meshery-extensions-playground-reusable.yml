@@ -15,6 +15,7 @@ jobs:
     name: Build and Rollout Kanvas
     outputs:
       meshery_version: ${{ steps.set-vars.outputs.MESHERY_VERSION }}
+      meshery_extension_version: ${{ steps.set-vars.outputs.MESHERY_EXTENSION_VERSION }}
     env:
       RELEASE_CHANNEL: "kanvas"
     runs-on: ubuntu-24.04
@@ -74,6 +75,7 @@ jobs:
           chmod +x ./meshery-extensions/build/get-extension-version
           MESHERY_EXTENSION_VERSION=$(./meshery-extensions/build/get-extension-version)
           echo "MESHERY_EXTENSION_VERSION=$MESHERY_EXTENSION_VERSION" >> $GITHUB_ENV
+          echo "MESHERY_EXTENSION_VERSION=$MESHERY_EXTENSION_VERSION" >> $GITHUB_OUTPUT
 
       - name: Docker login
         uses: azure/docker-login@v2
@@ -153,11 +155,12 @@ jobs:
 
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
+          docker tag layer5/meshery:kanvas-latest layer5/meshery:kanvas-${{ env.MESHERY_EXTENSION_VERSION }}
 
           docker push layer5/meshery:kanvas-latest
-
           docker push layer5/meshery:kanvas-${GITHUB_SHA::8}
           docker push layer5/meshery:kanvas-${{ env.MESHERY_VERSION }}
+          docker push layer5/meshery:kanvas-${{ env.MESHERY_EXTENSION_VERSION }}
 
       - name: Rollout Kanvas
         uses: appleboy/ssh-action@master
@@ -168,7 +171,7 @@ jobs:
           port: 22
           script: |
             kubectl config use-context prod 
-            kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{env.MESHERY_VERSION}} -n meshery-extensions
+            kubectl set image deployment/kanvas kanvas=layer5/meshery:kanvas-${{env.MESHERY_EXTENSION_VERSION}} -n meshery-extensions
 
       - name: Send Email on Rollout Kanvas Release Failure
         if: ${{ failure() }}
@@ -180,7 +183,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: GitHub Actions - Rollout Kanvas Release Failure
+          subject: GitHub Actions - Rollout Kanvas Release Failure for ${{ env.MESHERY_EXTENSION_VERSION }}
           from: |
             "Meshery Extensions" <no-reply@meshery.io>
           to: |
@@ -200,7 +203,7 @@ jobs:
       - name: Create Release via GitHub API
         env:
           TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          TAG: ${{ needs.build-and-release.outputs.meshery_version }}
+          TAG: ${{ needs.build-and-release.outputs.meshery_version1- }}
           NAME: Kanvas Docker Extension ${{ needs.build-and-release.outputs.meshery_version }}
           BODY: See https://docs.layer5.io/kanvas/reference/releases/${{ needs.build-and-release.outputs.meshery_version }}
         run: |
