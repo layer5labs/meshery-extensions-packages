@@ -198,18 +198,22 @@ jobs:
   build-and-release-docker-extension:
     needs:
       - build-and-release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create Release via GitHub API
-        env:
-          TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          TAG: ${{ needs.build-and-release.outputs.meshery_extension_version }}
-          NAME: Kanvas Docker Extension ${{ needs.build-and-release.outputs.meshery_extension_version }}
-          BODY: See https://docs.layer5.io/kanvas/reference/releases/${{ needs.build-and-release.outputs.meshery_extension_version }}
-        run: |
-          curl -X POST \
-            -H "Authorization: token $TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n --arg tag "$TAG" --arg name "$NAME" --arg body "$BODY" \
-                  '{tag_name: $tag, name: $name, body: $body, draft: false, prerelease: false}')" \
-            https://api.github.com/repos/layer5io/kanvas-docker-extension/releases
+    name: Dispatch (call) Extension Release
+    uses: layer5io/kanvas-docker-extension/.github/workflows/multi-platform.yml@master
+    secrets: inherit
+    with:
+      release-channel: "stable"
+      release-ver: ${{ env.MESHERY_EXTENSION_VERSION }}
+      # - name: Create Release via GitHub API
+      #   env:
+      #     TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      #     TAG: ${{ needs.build-and-release.outputs.meshery_extension_version }}
+      #     NAME: Kanvas Docker Extension ${{ needs.build-and-release.outputs.meshery_extension_version }}
+      #     BODY: See https://docs.layer5.io/kanvas/reference/releases/${{ needs.build-and-release.outputs.meshery_extension_version }}
+      #   run: |
+      #     curl -X POST \
+      #       -H "Authorization: token $TOKEN" \
+      #       -H "Content-Type: application/json" \
+      #       -d "$(jq -n --arg tag "$TAG" --arg name "$NAME" --arg body "$BODY" \
+      #             '{tag_name: $tag, name: $name, body: $body, draft: false, prerelease: false}')" \
+      #       https://api.github.com/repos/layer5io/kanvas-docker-extension/releases
