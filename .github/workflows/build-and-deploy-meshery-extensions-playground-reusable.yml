@@ -198,12 +198,37 @@ jobs:
   build-and-release-docker-extension:
     needs:
       - build-and-release
-    name: Dispatch (call) Extension Release
-    uses: layer5io/kanvas-docker-extension/.github/workflows/multi-platform.yml@master
-    secrets: inherit
-    with:
-      release-channel: "stable"
-      release-ver: ${{ needs.build-and-release.outputs.meshery_extension_version }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Trigger Remote Workflow
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: layer5io
+          repo: kanvas-docker-extension
+          github_token: ${{ secrets.GH_ACCESS_TOKEN}}
+          workflow_file_name: multi-platform.yml
+          ref: master
+          wait_interval: 10
+          inputs: |
+            {
+              "release-channel": "stable",
+              "release-ver": "${{ needs.build-and-release.outputs.meshery_extension_version }}",
+            }
+          trigger_workflow: true
+          wait_workflow: false  
+
+
+    # Alternative #1
+    # Runs workflow locally, causing storage overflow
+    # name: Dispatch (call) Extension Release
+    # uses: layer5io/kanvas-docker-extension/.github/workflows/multi-platform.yml@master
+    # secrets: inherit
+    # with:
+    #   release-channel: "stable"
+    #   release-ver: ${{ needs.build-and-release.outputs.meshery_extension_version }}
+
+
+    # Alternative #2
       # - name: Create Release via GitHub API
       #   env:
       #     TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
