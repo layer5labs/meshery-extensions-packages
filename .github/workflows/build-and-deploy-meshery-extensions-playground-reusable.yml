@@ -203,7 +203,7 @@ jobs:
     secrets: inherit
     with:
       release-channel: "stable"
-      release-ver: ${{ env.MESHERY_EXTENSION_VERSION }}
+      release-ver: ${{ needs.build-and-release.outputs.meshery_extension_version }}
       # - name: Create Release via GitHub API
       #   env:
       #     TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
