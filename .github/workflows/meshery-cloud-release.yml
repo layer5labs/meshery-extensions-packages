@@ -17,6 +17,8 @@ on:
         default: "master"
         type: string
     secrets:
+      GLOBAL_TOKEN:
+        required: true
       GH_ACCESS_TOKEN: 
         required: true
       DOCKER_USERNAME: 
@@ -268,7 +270,7 @@ jobs:
           ENVIRONMENT=prod
           GIT_VERSION=${{inputs.release-environment}}-${{inputs.release-version}}
           RELEASE_CHANNEL=${{inputs.release-environment}}
-          TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
+          TOKEN=${{ secrets.GLOBAL_TOKEN }}
         tags: ${{ steps.meta.outputs.tags }}
         platforms: linux/amd64
     - name: Deploy production on metal04
