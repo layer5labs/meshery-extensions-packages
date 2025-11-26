@@ -10,6 +10,7 @@ jobs:
       pr_number: ${{ github.event.client_payload.pr_number }}
     secrets:
       PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
+      GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       LAYER5_CLOUD_USERNAME: ${{ secrets.LAYER5_CLOUD_USERNAME }}
@@ -24,6 +25,7 @@ jobs:
       release-version: ${{ github.event.client_payload.release_version}}
       branch: ${{ github.event.client_payload.branch || 'master' }}
     secrets:
+      GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       MESHERY_CLOUD_AWS_PROD_HOST: ${{ secrets.MESHERY_CLOUD_AWS_PROD_HOST }}
       MESHERY_CLOUD_AWS_PROD_USERNAME: ${{ secrets.MESHERY_CLOUD_AWS_PROD_USERNAME }}
