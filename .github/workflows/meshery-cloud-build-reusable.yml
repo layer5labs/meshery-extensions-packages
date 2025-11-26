@@ -11,6 +11,8 @@ on:
     secrets:
       PROVIDER_TOKEN:
         required: true
+      GLOBAL_TOKEN:
+        required: true
       NODE_VERSION:
         required: true
       GH_ACCESS_TOKEN:
@@ -171,7 +173,7 @@ jobs:
             ENVIRONMENT="staging"
             GIT_VERSION=staging-${{env.PR_NUMBER}}
             RELEASE_CHANNEL=staging
-            TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
+            TOKEN=${{ secrets.GLOBAL_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64
       - name: comment success
