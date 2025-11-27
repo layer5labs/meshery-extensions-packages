@@ -209,10 +209,10 @@ jobs:
           workflow_file_name: multi-platform.yml
           ref: master
           wait_interval: 10
-          inputs: |
+          client_payload: |
             {
               "release-channel": "stable",
-              "release-ver": "${{ needs.build-and-release.outputs.meshery_extension_version }}",
+              "release-ver": "${{ needs.build-and-release.outputs.meshery_extension_version }}"
             }
           trigger_workflow: true
           wait_workflow: false  
