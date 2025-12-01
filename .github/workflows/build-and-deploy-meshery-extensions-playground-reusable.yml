@@ -200,6 +200,9 @@ jobs:
       - build-and-release
     runs-on: ubuntu-24.04
     steps:
+      - name: Print Extension Version
+        run: |
+          echo "Extension Version: ${{ needs.build-and-release.outputs.meshery_extension_version }}"
       - name: Trigger Remote Workflow
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
