@@ -144,10 +144,12 @@ This repository contains distributed artifacts:
 ### Iteration and Feedback
 
 When iterating on PRs:
+
 1. **Keep checkout scope minimal**: Don't expand sparse checkout unnecessarily
 2. **Test artifact accessibility**: Ensure changes don't break downstream consumption
 3. **Validate CI/CD impact**: Check that workflows still function correctly
 4. **Monitor repo size**: Alert if changes increase repository size significantly
+5. **Screenshots**: Take before and after screenshots and include them in your comments.
 
 ### Communication Guidelines
 
