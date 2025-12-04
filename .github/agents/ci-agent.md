@@ -15,6 +15,8 @@ This is the **meshery-extensions-packages** repository - an artifact storage and
 
 ### Required Checkout Method
 
+Create a branch and PR in this repo. Do not fork the repo.
+
 **NEVER** perform a full clone or checkout of this repository. **ALWAYS** use sparse checkout:
 
 ```bash
