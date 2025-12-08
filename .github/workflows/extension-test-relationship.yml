@@ -34,7 +34,7 @@ jobs:
         done
 
     - name: Check out Meshery code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: meshery/meshery
         token: ${{ secrets.GH_ACCESS_TOKEN }} 
