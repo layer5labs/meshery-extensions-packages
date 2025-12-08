@@ -39,3 +39,5 @@ jobs:
       OCI_BASTION_HOST: ${{ secrets.OCI_BASTION_HOST }}
       OCI_BASTION_USERNAME: ${{ secrets.OCI_BASTION_USERNAME }}
       OCI_BASTION_KEY: ${{ secrets.OCI_BASTION_KEY }}
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
