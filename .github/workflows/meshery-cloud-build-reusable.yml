@@ -27,12 +27,6 @@ on:
         required: true
       LAYER5_CLOUD_TESTING_BOT_PASSWORD:
         required: true
-      METAL05_HOST:
-        required: true
-      METAL_KEY:
-        required: true
-      METAL_USERNAME:
-        required: true
       DOCKER_USERNAME: 
         required: true
       DOCKER_PASSWORD: 
