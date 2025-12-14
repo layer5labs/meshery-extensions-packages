@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "cypress": "^13.1.0"
-  },
-  "dependencies": {
-    "@4tw/cypress-drag-drop": "^2.2.1"
-  }
-}
