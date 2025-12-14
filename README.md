@@ -38,20 +38,7 @@
 
 ℹ️ This repository has multiple functions.
 
-### Function 1: Layer5 Badges
-
-See https://badges.layer5.io for the full set and description of the Layer5 Recognition Program.
-
-*Examples*
-
-[![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshmap/meshmap.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/meshery-operator/meshery-operator.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/docker-extension/docker-extension.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges)
-<!---
-
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-share/first-share.svg)
-![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-log-streaming-session/first-log-streaming-session.svg)
- [![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/bring-a-buddy/bring-a-buddy.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) 
-[![](https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/master/assets/badges/first-application/first-application.svg)](https://cloud.layer5.io/user/090e7114-509a-4046-81f1-9c5fb8daf724?tab=badges) 
--->
+### Function 1: Cloud and Kanvas assets
 
 **Relevant Directories**
 
@@ -64,8 +51,7 @@ See https://badges.layer5.io for the full set and description of the Layer5 Reco
     /assets/organizations/<org-uuid>/desktop.png
     ```
     4. `/assets/kanvas`: Stores images used in Kanvas, such as in designs, roadmaps, flow-charts etc.
-
-        `/assets/kanvas/getting-started/`: Stores images used in the Kanvas Getting Started section in webp format.
+    5. `/assets/kanvas/getting-started/`: Stores images used in the Kanvas Getting Started section in webp format.
     
 
 ### Function 2: Layer5 Cloud Remote Provider Packages
