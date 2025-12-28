@@ -210,7 +210,9 @@ jobs:
         path: meshery-cloud
         fetch-depth: 1
         token: ${{ secrets.GH_ACCESS_TOKEN }}
-        ref: ${{inputs.release-version}}
+        # Allow deploying from a configurable branch/tag (defaults to master) instead of the release version tag,
+        # which may not exist yet when this workflow runs.
+        ref: ${{ inputs.branch }}
         
     - name: Update schema.yml version
       run: |

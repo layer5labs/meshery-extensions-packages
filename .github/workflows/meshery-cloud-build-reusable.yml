@@ -91,6 +91,34 @@ jobs:
         with:
           message: ":x: Failed to check out Cloud repo."
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: ./meshery-cloud/go.mod
+          cache: true
+      - name: Run Go tests with coverage
+        id: go-test
+        working-directory: meshery-cloud
+        continue-on-error: true
+        run: |
+          set -eo pipefail
+          go test ./... -coverprofile=coverage.out
+          total=$(go tool cover -func=coverage.out | awk '/^total:/ {print $3}')
+          echo "total=$total" >> "$GITHUB_OUTPUT"
+      - name: comment coverage success
+        if: steps.go-test.outcome == 'success'
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":bar_chart: Go test coverage (go tool cover): **${{ steps.go-test.outputs.total }}**"
+      - name: comment coverage failure
+        if: steps.go-test.outcome == 'failure'
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: Go tests failed. Coverage report unavailable."
+      - name: Fail on Go test failure
+        if: steps.go-test.outcome == 'failure'
+        run: exit 1
+
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
       - name: comment success
@@ -222,4 +250,3 @@ jobs:
             ${{ steps.deploy.outputs.stdout }}
             ${{ steps.deploy.outputs.stderr }}
             ```
-
