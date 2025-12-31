@@ -90,12 +90,12 @@ jobs:
           repository: meshery/meshery
           fetch-depth: 1
           path: meshery
-      - name: Check out meshery-consul code
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 1
-          repository: layer5io/meshery-consul
-          path: ./meshery-consul
+      # - name: Check out meshery-consul code
+      #   uses: actions/checkout@v6
+      #   with:
+      #     fetch-depth: 1
+      #     repository: layer5io/meshery-consul
+      #     path: ./meshery-consul
       - name: Download artifacts
         uses: actions/download-artifact@v5
         with:
@@ -104,40 +104,40 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v6
         with:
-          go-version: "1.24.5"
+          go-version: "1.25.5"
       - name: Setup node
         uses: actions/setup-node@v6
         with:
           node-version: "20.x"
       - name: Create k8s Kind Cluster
-        uses: helm/kind-action@v1.10.0
+        uses: helm/kind-action@v1.13.0
         with:
           cluster_name: "kind-cluster"
-      - name: Create a out/ folder in meshery ui
+      - name: Create a out/ folder in Meshery UI
         run: |
           mkdir -p meshery/ui/out
           mkdir -p meshery/provider-ui/out/
 
       - name: Download Meshery-ui artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: meshery-ui-build
           path: meshery/ui/out/
 
-      - name: Download Meshery-provider-ui artifacts
-        uses: actions/download-artifact@v4
+      - name: Download Meshery Provider UI artifacts
+        uses: actions/download-artifact@v7
         with:
           name: meshery-provider-ui build
           path: meshery/provider-ui/out/
 
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
-      - name: Run meshery-consul
-        run: |
-          mkdir -p /home/runner/.meshery/bin
-          cd ./meshery-consul
-          go run main.go &
-          sleep 60
+      # - name: Run meshery-consul
+      #   run: |
+      #     mkdir -p /home/runner/.meshery/bin
+      #     cd ./meshery-consul
+      #     go run main.go &
+      #     sleep 60
       - name: Set Release extensions
         run: |
           curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> extension_releases.json
@@ -169,7 +169,7 @@ jobs:
           mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
 
       - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
@@ -240,7 +240,7 @@ jobs:
           path: meshery-extensions/meshmap/test-results/
           retention-days: 30
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         id: test-relationship-results
         if: ${{ !cancelled() && inputs.test_command == 'make test-relationship' }}
         with:
