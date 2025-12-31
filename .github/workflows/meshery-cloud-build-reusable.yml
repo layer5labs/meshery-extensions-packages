@@ -41,6 +41,8 @@ on:
         required: true
       OCI_BASTION_KEY:
         required: true
+      CODECOV_TOKEN:
+        required: true
         
 jobs:
   comment-starting-point:
@@ -119,6 +121,25 @@ jobs:
         if: steps.go-test.outcome == 'failure'
         run: exit 1
 
+      
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: layer5labs/meshery-extensions-packages
+          files: coverage.out
+      - name: comment CodeCov upload success
+        if: steps.go-test.outcome == 'success'
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":bar_chart: CodeCov upload coverage successful."
+      - name: comment CodeCov upload failure
+        if: steps.go-test.outcome == 'failure'
+        uses: ./.github/actions/cloud-comment
+        with:
+          message: ":x: CodeCov upload failure. Coverage report unavailable."
+
+      
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
       - name: comment success
@@ -132,6 +153,7 @@ jobs:
         with:
           message: ":x: Failed to setup QEMU"
 
+
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: comment success
@@ -144,6 +166,7 @@ jobs:
         uses: ./.github/actions/cloud-comment
         with:
           message: ":x: Failed to setup Docker Buildx"
+
 
       - name: Docker Meta
         id: meta
@@ -168,6 +191,7 @@ jobs:
         with:
           message: ":x: Failed to configure Docker Meta"
 
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -184,6 +208,7 @@ jobs:
         with:
           message: ":x: Failed to log into Docker Hub"
       
+
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
@@ -209,6 +234,7 @@ jobs:
         with:
           message: ":x: Failed to build and push Cloud container image to Hub"
         
+
       - name: Deploy staging on OCI OKE
         id: deploy
         uses: appleboy/ssh-action@master
@@ -231,8 +257,7 @@ jobs:
             gh repo sync
             cd ../..
             kubectl config use-context staging 
-            helm upgrade -f ~/deploy/meshery-cloud/install/environment/staging/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl
-            
+            helm upgrade -f ~/deploy/meshery-cloud/install/environment/staging/values.yaml cloud ~/deploy/meshery-cloud/install/kubernetes/helm/layer5-cloud/ -n staging --set=image.tag=staging-$PR_NUMBER --set-file 'kratos.kratos.emailTemplates.recovery.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-recover-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.recovery.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-recover.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.subject'=./deploy/meshery-cloud/config/email-templates/valid/email-verify-subject.body.gotmpl --set-file 'kratos.kratos.emailTemplates.verification.valid.body'=./deploy/meshery-cloud/config/email-templates/valid/email-verify.body.gotmpl            
       - name: comment success
         if: success()
         uses: ./.github/actions/cloud-comment
@@ -244,9 +269,4 @@ jobs:
         with:
           message: |
             :x: Failed to deploy staging on OCI OKE
-            
-            **Deployment Script Output:**
-            ```
-            ${{ steps.deploy.outputs.stdout }}
-            ${{ steps.deploy.outputs.stderr }}
-            ```
+            See [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).
