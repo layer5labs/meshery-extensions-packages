@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Meshery-extensions code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: layer5labs/meshery-extensions
           path: ./meshery-extensions
@@ -33,7 +33,7 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Checkout Meshery code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: meshery/meshery
           path: ./meshery
@@ -43,13 +43,14 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v6
         with:
-          go-version: "1.24.5"
+          go-version: "1.25.5"
       - name: setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ secrets.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: 'meshery-extensions/meshmap/package-lock.json'
+
       - name: Verify go.mod sync compatibility
         working-directory: meshery-extensions
         run: |
@@ -64,7 +65,7 @@ jobs:
           id: extension-test
           message: ":heavy_check_mark: GraphQL compatibility package check completed."
           append: true
-      - name: comment Failure
+      - name: comment failure
         if: ${{ failure() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
@@ -74,6 +75,8 @@ jobs:
           id: extension-test
           message: ":x: GraphQL validation compatibility package check Failed: Upcoming PR dependencies are out of sync with Meshery Server default branch."
           append: true
+      
+          
       - name: Validate MesheryUI Compatibility Package
         working-directory: ./meshery-extensions
         run: make kanvas-validate-mesheryui-compatibility
@@ -87,7 +90,7 @@ jobs:
           id: extension-test
           message: ":heavy_check_mark: Kanvas compatibility package check completed."
           append: true
-      - name: comment Failure
+      - name: comment failure
         if: ${{ failure() && github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
         with:
@@ -110,7 +113,7 @@ jobs:
       - name: Show runner tree
         run: tree /home/runner/ -L 3
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: meshery-extension-ui
           path: /home/runner/provider
