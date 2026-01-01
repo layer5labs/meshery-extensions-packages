@@ -29,6 +29,7 @@ jobs:
       OCI_BASTION_USERNAME: ${{ secrets.OCI_BASTION_USERNAME }}
       OCI_BASTION_KEY: ${{ secrets.OCI_BASTION_KEY }}
       GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       
     with:
       pr_commit_sha: ${{inputs.pr_commit_sha}}
