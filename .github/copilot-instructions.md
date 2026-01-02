@@ -114,13 +114,6 @@ The meshery-extensions-packages repository integrates with multiple related repo
 - Use table-based layouts for maximum compatibility
 - Test responsive behavior for mobile devices
 
-```html
-<!-- Good example - use main or specific tag for stability -->
-<img src="https://raw.githubusercontent.com/layer5labs/meshery-extensions-packages/main/assets/badges/meshmap/meshmap.svg" 
-     alt="MeshMap Badge" 
-     style="max-width: 100%; height: auto;" />
-```
-
 ### 3. CI/CD Workflow Development
 
 **When creating or modifying GitHub Actions workflows:**
