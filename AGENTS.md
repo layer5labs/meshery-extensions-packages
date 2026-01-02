@@ -56,14 +56,14 @@ Understanding the relationship between these repositories is critical:
   - Public URL accessibility requirements
   - Cross-repository references
 
-#### 5. **layer5labs/kanvas-snapshot** (This Repository)
+#### 5. **layer5labs/kanvas-snapshot** (Repository)
 - **Purpose:** GitHub Action for infrastructure-as-code visualization
-- **Technology:** Composite GitHub Action, Node.js, Cypress, Bash
+- **Technology:** Composite GitHub Action, Node.js, Playwright, Bash
 - **Key Features:** Generates visual snapshots of K8s manifests, Helm charts, Docker Compose
 - **Agent Considerations:**
   - Composite action with multiple sub-actions
   - Integration with Meshery Cloud APIs
-  - Cypress E2E testing
+  - Playwright E2E testing
   - Asset upload to meshery-extensions-packages
 
 ## General Principles
@@ -78,25 +78,6 @@ Understanding the relationship between these repositories is critical:
 ### 2. Cross-Repository Awareness
 
 When working on features that span repositories:
-
-```yaml
-# Example: Action that references multiple repos
-- name: Checkout kanvas-snapshot
-  uses: actions/checkout@v4
-  with:
-    repository: layer5labs/kanvas-snapshot
-    path: action
-
-- name: Checkout meshery-extensions-packages (SPARSE!)
-  uses: actions/checkout@v4
-  with:
-    repository: layer5labs/meshery-extensions-packages
-    sparse-checkout: |
-      action-assets
-      design-assets
-    sparse-checkout-cone-mode: false
-    path: packages
-```
 
 ### 3. Understand the Workflow Context
 
@@ -182,35 +163,6 @@ git sparse-checkout disable
 
 ### Pattern 1: Snapshot Generation and Upload
 
-**Flow:** kanvas-snapshot → Meshery Cloud → meshery-extensions-packages
-
-```yaml
-# In kanvas-snapshot action
-name: "Generate and Upload Snapshot"
-steps:
-  # 1. Generate snapshot using Meshery Cloud API
-  - name: Create design snapshot
-    env:
-      MESHERY_TOKEN: ${{ secrets.MESHERY_TOKEN }}
-      DESIGN_ID: ${{ env.APPLICATION_ID }}
-    run: |
-      # Cypress test generates snapshot
-      npm run snapshot
-
-  # 2. Upload to meshery-extensions-packages
-  - name: Upload snapshot
-    run: |
-      node node-file-upload/index.js
-    env:
-      ASSET_LOCATION: action-assets/2024@11
-```
-
-**Agent Considerations:**
-- Ensure proper authentication token handling
-- Verify snapshot generation before upload
-- Handle upload failures gracefully
-- Maintain both light and dark versions
-
 ### Pattern 2: Badge Update Workflows
 
 **Flow:** meshery-cloud → meshery-extensions-packages → User repositories
@@ -290,43 +242,6 @@ jobs:
 ```
 
 ## GitHub Actions Best Practices
-
-### 1. Composite Actions Structure
-
-For reusable actions like kanvas-snapshot:
-
-```yaml
-# action.yml
-name: "Kanvas Snapshot"
-description: "Generates infrastructure visualization"
-inputs:
-  githubToken:
-    description: "GitHub PAT"
-    required: true
-  mesheryToken:
-    description: "Meshery Cloud token"
-    required: true
-  application_type:
-    description: "Type: Kubernetes Manifest, Docker Compose, or Helm Chart"
-    required: true
-
-runs:
-  using: "composite"
-  steps:
-    - name: Validate inputs
-      shell: bash
-      run: |
-        if [[ -z "${{ inputs.mesheryToken }}" ]]; then
-          echo "Error: mesheryToken is required"
-          exit 1
-        fi
-
-    - name: Execute snapshot generation
-      shell: bash
-      run: |
-        # Main logic here
-        ./action/scripts/generate-snapshot.sh
-```
 
 **Key Points:**
 - Use `composite` for multi-step actions
@@ -411,26 +326,6 @@ steps:
       cluster_name: "meshery-test"
 ```
 
-### 5. Artifact Management
-
-```yaml
-- name: Upload snapshot artifacts
-  if: always()
-  uses: actions/upload-artifact@v4
-  with:
-    name: snapshots-${{ github.run_id }}
-    path: |
-      screenshots/*.png
-      logs/*.txt
-    retention-days: 7  # Clean up old artifacts
-
-- name: Download artifacts in dependent job
-  uses: actions/download-artifact@v4
-  with:
-    name: snapshots-${{ github.run_id }}
-    path: ./downloaded-snapshots
-```
-
 ## Testing and Validation
 
 ### 1. Local Testing of Actions
@@ -454,30 +349,7 @@ act -n
 
 ### 2. Integration Testing
 
-```javascript
-// Example Cypress test for snapshot generation
-describe('Snapshot Generation', () => {
-  before(() => {
-    cy.login(Cypress.env('token'))
-  })
 
-  it('should generate snapshot for Kubernetes manifest', () => {
-    cy.uploadDesign({
-      type: 'Kubernetes Manifest',
-      content: cy.fixture('k8s-manifest.yaml')
-    })
-
-    cy.generateSnapshot()
-      .should('have.property', 'imageUrl')
-      .and('match', /https:\/\/.*\.png$/)
-  })
-
-  it('should create both light and dark versions', () => {
-    cy.task('checkFile', 'design-123-light.png').should('exist')
-    cy.task('checkFile', 'design-123-dark.png').should('exist')
-  })
-})
-```
 
 ### 3. Validation Scripts
 
