@@ -41,23 +41,8 @@ jobs:
           id: extension-test
           message: "Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
-  build-ui-and-server:
-    uses: meshery/meshery/.github/workflows/build-ui-server-reusable-workflow.yml@master
 
-  comment-success:
-    runs-on: ubuntu-24.04
-    needs: [build-ui-and-server]
-    if: ${{ github.event.inputs.pr_number != '' }}
-    steps:
-      - name: comment progress
-        uses: hasura/comment-progress@v2.3.0
-        with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
-          message: ":heavy_check_mark: Meshery UI and Meshery Server builds complete."
-          append: true
+
   build-meshery-extension:
     uses: ./.github/workflows/build-extension-reusable.yml
     secrets: inherit
@@ -65,13 +50,15 @@ jobs:
       checkout_ref: ${{ inputs.checkout_ref }}
       pr_number: ${{ inputs.pr_number }}
       comment_id: extension-test
+      
   tests-ui-e2e:
-    needs: [build-ui-and-server, build-meshery-extension]
+    needs: [build-meshery-extension]
     name: UI end-to-end tests
     runs-on: ubuntu-24.04
     outputs:
       test-results: ${{ steps.run_tests.outputs.test-results }}
     steps:
+
       - name: comment progress start
         if: ${{ github.event.inputs.pr_number != '' }}
         uses: hasura/comment-progress@v2.3.0
@@ -82,22 +69,8 @@ jobs:
           id: extension-test
           message: ":heavy_check_mark: Setting up test environment..."
           append: true
-      - name: Check out Meshery code
-        uses: actions/checkout@v5
-        with:
-          repository: meshery/meshery
-          fetch-depth: 1
-          path: meshery
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v5
-        with:
-          name: meshery
-          path: meshery/server/cmd/
-      - name: Setup go
-        uses: actions/setup-go@v6
-        with:
-          go-version: "1.25.5"
+
       - name: Setup node
         uses: actions/setup-node@v6
         with:
@@ -106,26 +79,9 @@ jobs:
         uses: helm/kind-action@v1.13.0
         with:
           cluster_name: "kind-cluster"
-      - name: Create a out/ folder in Meshery UI
-        run: |
-          mkdir -p meshery/ui/out
-          mkdir -p meshery/provider-ui/out/
-
-      - name: Download Meshery-ui artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: meshery-ui-build
-          path: meshery/ui/out/
-
-      - name: Download Meshery Provider UI artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: meshery-provider-ui build
-          path: meshery/provider-ui/out/
-
+          
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
-
 
       - name: Set Release extensions
         run: |
@@ -133,29 +89,35 @@ jobs:
           export TAG=$(jq .[0].tag_name extension_releases.json)
           echo tag=$TAG >> $GITHUB_ENV
           echo $TAG
+
       - name: make directories
         run: |
           echo ${{env.tag}}
           echo ${{env}}
           mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
-      - name: Run backend
+          
+      - name: Run backend (Docker)
         working-directory: meshery
-        env:
-          PROVIDER_BASE_URLS: https://cloud.layer5.io
-          PORT: 9081
-          ADAPTER_URLS: "mesherylocal.layer5.io:10000 mesherylocal.layer5.io:10001 mesherylocal.layer5.io:10002 mesherylocal.layer5.io:10003 mesherylocal.layer5.io:10004 mesherylocal.layer5.io:10008 mesherylocal.layer5.io:10009 mesherylocal.layer5.io:10007"
         run: |
-          cd server/cmd
-          chmod +x ./main
-          BUILD=${{env.tag}} ./main &
+          docker run -d \
+            --name meshery-backend \
+            -p 9081:9081 \
+            -e PROVIDER_BASE_URLS=https://cloud.layer5.io \
+            -e PORT=9081 \
+            -e BUILD=${{ env.tag }} \
+            docker.io/meshery/meshery:edge-latest
+
       - name: Download Meshery-extension-ui artifacts
         uses: actions/download-artifact@v4
         with:
           name: meshery-extension-ui
           path: provider
+          
       - name: Move provider files
         run: |
-          mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
+          #mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
+          docker cp -a /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/  meshery-backend:/home/appuser/.meshery/provider/Meshery/${{env.tag}}/
+          # mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
 
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v6
@@ -166,9 +128,6 @@ jobs:
           ref: ${{ inputs.checkout_ref }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
-      - name: Install Meshery Extension dependencies
-        working-directory: meshery-extensions
-        run: cd meshmap; npm ci; cd ../
 
       - name: show tree
         run: tree  -L 2
