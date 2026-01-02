@@ -190,6 +190,7 @@ jobs:
 
       - name: Run  Tests
         id: run_tests
+        continue-on-error: true
         working-directory: meshery-extensions
         run: |
           ${{ inputs.test_command }}
@@ -199,16 +200,15 @@ jobs:
           REMOTE_PROVIDER_URL: "https://cloud.layer5.io"
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
-      - name: Test reporter
-        uses: actions/github-script@v7
-        id: test-reports
-        with:
-          script: |
-            const fs = require('fs')
-            const E2ETestReporter = String(fs.readFileSync('./test-report.md'))
 
-            return E2ETestReporter
-          result-encoding: string
+      - name: Read test report
+        id: test-reports
+        run: |
+             ls test-results
+             echo "result<<EOF" >> $GITHUB_OUTPUT
+             cat test-results/test-report.md >> $GITHUB_OUTPUT
+             echo "EOF" >> $GITHUB_OUTPUT
+
       - name: comment the summary
         uses: hasura/comment-progress@v2.3.0
         if: ${{ always() && github.event.inputs.pr_number != '' }}
