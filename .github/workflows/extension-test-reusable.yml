@@ -203,7 +203,9 @@ jobs:
 
       - name: Read test report
         id: test-reports
+        working-directory: meshery-extensions
         run: |
+             ls -ah
              ls test-results
              echo "result<<EOF" >> $GITHUB_OUTPUT
              cat test-results/test-report.md >> $GITHUB_OUTPUT
@@ -223,10 +225,11 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         id: playwright-trace
+        
         if: ${{ !cancelled() }}
         with:
           name: playwright-trace
-          path: test-results/
+          path: meshery-extensions/test-results/
           retention-days: 30
 
 
@@ -235,7 +238,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-html-report
-          path: playwright-report
+          path: meshery-extensions/playwright-report
           retention-days: 30
 
 
