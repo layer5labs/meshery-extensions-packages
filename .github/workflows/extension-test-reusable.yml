@@ -116,8 +116,8 @@ jobs:
         run: |
           #mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
           docker exec -u root meshery-backend \
-               mkdir -p /home/appuser/.meshery/provider/Meshery/${{ env.tag }}/provider
-          docker cp -a /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/  meshery-backend:/home/appuser/.meshery/provider/Meshery/${{env.tag}}/
+               mkdir -p /home/appuser/.meshery/provider/Layer5/${{ env.tag }}/provider
+          docker cp -a /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/  meshery-backend:/home/appuser/.meshery/provider/Layer5/${{env.tag}}/
           # mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
 
       - name: Checkout Meshery-extensions code
