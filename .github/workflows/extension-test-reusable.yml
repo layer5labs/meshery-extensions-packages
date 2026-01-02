@@ -168,23 +168,41 @@ jobs:
              ls -ah
              ls test-results
 
-      - name: Read test report
+      - name: Prepare test report
         id: test_reports
         working-directory: meshery-extensions
         run: |
-          DELIM="END_$(uuidgen)"
-          {
-            echo "result<<$DELIM"
-            cat test-results/test-report.md
-            echo "$DELIM"
-          } >> "$GITHUB_OUTPUT"
-
+          REPORT="test-results/test-report.md"
+      
+          # ---- Job Summary (full report) ----
+          if [ -f "$REPORT" ]; then
+            cat "$REPORT" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "_No test report found_" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      
+          # ---- Step Output (first 100 lines only) ----
+          echo "result<<EOF" >> "$GITHUB_OUTPUT"
+          if [ -f "$REPORT" ]; then
+            head -n 100 "$REPORT" >> "$GITHUB_OUTPUT"
+            echo "" >> "$GITHUB_OUTPUT"
+            echo "_(Truncated to first 100 lines. Full report in job summary.)_" >> "$GITHUB_OUTPUT"
+          else
+            echo "_No test report found_" >> "$GITHUB_OUTPUT"
+          fi
+          echo "EOF" >> "$GITHUB_OUTPUT"
+          
       - name: comment the summary
         uses: hasura/comment-progress@v2.3.0
         if: ${{ always() && github.event.inputs.pr_number != '' }}
         with:
           message: |
-            ${{steps.test_reports.outputs.result}}
+            ### 🧪 Test Results (Preview)
+
+            ${{ steps.test_reports.outputs.result }}
+
+            🔗 **Full report:**  
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
