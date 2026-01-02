@@ -104,7 +104,7 @@ jobs:
             -e PROVIDER_BASE_URLS=https://cloud.layer5.io \
             -e PORT=9081 \
             -e BUILD=${{ env.tag }} \
-            docker.io/meshery/meshery:edge-latest
+            docker.io/meshery/meshery:stable-latest
 
       - name: Download Meshery-extension-ui artifacts
         uses: actions/download-artifact@v4
@@ -162,7 +162,7 @@ jobs:
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
 
       - name: Read test report
-        id: test-reports
+        id: test_reports
         working-directory: meshery-extensions
         run: |
              ls -ah
@@ -176,7 +176,7 @@ jobs:
         if: ${{ always() && github.event.inputs.pr_number != '' }}
         with:
           message: |
-            ${{steps.test-reports.outputs.result}}
+            ${{steps.test_reports.outputs.result}}
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           repository: "layer5labs/meshery-extensions"
           number: ${{ inputs.pr_number }}
@@ -184,17 +184,17 @@ jobs:
           append: true
 
       - uses: actions/upload-artifact@v4
-        id: playwright-trace
+        id: playwright_trace
         
         if: ${{ !cancelled() }}
         with:
-          name: playwright-trace
+          name: playwright_trace
           path: meshery-extensions/test-results/
           retention-days: 30
 
 
       - uses: actions/upload-artifact@v4
-        id: html-report
+        id: html_report
         if: ${{ !cancelled() }}
         with:
           name: playwright-html-report
