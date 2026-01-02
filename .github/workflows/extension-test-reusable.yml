@@ -97,7 +97,6 @@ jobs:
           mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
           
       - name: Run backend (Docker)
-        working-directory: meshery
         run: |
           docker run -d \
             --name meshery-backend \
