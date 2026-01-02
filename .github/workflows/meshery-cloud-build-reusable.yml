@@ -17,8 +17,6 @@ on:
         required: true
       GH_ACCESS_TOKEN:
         required: true
-      CYPRESS_RECORD_KEY:
-        required: true
       LAYER5_CLOUD_USERNAME:
         required: true
       LAYER5_CLOUD_PASSWORD:
