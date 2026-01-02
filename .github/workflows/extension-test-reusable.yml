@@ -161,15 +161,23 @@ jobs:
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
 
-      - name: Read test report
-        id: test_reports
+      - name: Ls
+        id: ls
         working-directory: meshery-extensions
         run: |
              ls -ah
              ls test-results
-             echo "result<<EOF" >> $GITHUB_OUTPUT
-             cat test-results/test-report.md >> $GITHUB_OUTPUT
-             echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Read test report
+        id: test_reports
+        working-directory: meshery-extensions
+        run: |
+          DELIM="END_$(uuidgen)"
+          {
+            echo "result<<$DELIM"
+            cat test-results/test-report.md
+            echo "$DELIM"
+          } >> "$GITHUB_OUTPUT"
 
       - name: comment the summary
         uses: hasura/comment-progress@v2.3.0
