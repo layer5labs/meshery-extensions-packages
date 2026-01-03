@@ -221,12 +221,14 @@ jobs:
         run: |
           make sync-kanvas-results KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
-      - name: Commit & push academy to meshery-cloud
+      - name: Commit & push academy to qa
+        if: ${{ !cancelled() }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[Kanvas] Tests results"
           commit_options: '--signoff'
           repository: qa
+          file_pattern: kanvas-results
           commit_user_name: meshery_ci
           commit_user_email: ci@meshery.io
         env:
