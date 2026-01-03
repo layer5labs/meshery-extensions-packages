@@ -219,7 +219,8 @@ jobs:
       - name: Sync results with qa
         working-directory: qa
         run: |
-          make sync-kanvas-results KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
+          ls 
+          make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
       - name: Commit & push academy to qa
         if: ${{ !cancelled() }}
