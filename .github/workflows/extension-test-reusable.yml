@@ -160,6 +160,9 @@ jobs:
           REMOTE_PROVIDER_URL: "https://cloud.layer5.io"
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
+          ALLURE_LABEL_project: Kanvas
+          ALLURE_LABEL_type: e2e
+          
 
       - name: Ls
         id: ls
@@ -210,6 +213,7 @@ jobs:
           append: true
 
       - name: Checkout QA
+        if: ${{ !cancelled() &&  github.event_name == 'push' }}
         uses: actions/checkout@v6
         with:
           repository: meshery-extensions/qa
@@ -217,13 +221,14 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Sync results with qa
+        if: ${{ !cancelled() &&  github.event_name == 'push' }}
         working-directory: qa
         run: |
           ls 
           make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
       - name: Commit & push academy to qa
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() &&  github.event_name == 'push' }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[Kanvas] Sync Kanvas E2E Test Results - ${GITHUB_SHA}"
