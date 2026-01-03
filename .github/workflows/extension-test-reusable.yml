@@ -209,6 +209,29 @@ jobs:
           id: extension-test
           append: true
 
+      - name: Checkout QA
+        uses: actions/checkout@v6
+        with:
+          repository: meshery-extensions/qa
+          path: ./qa
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+      - name: Sync results with qa
+        working-directory: qa
+        run: |
+          make sync-kanvas-results KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
+
+      - name: Commit & push academy to meshery-cloud
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[Kanvas] Tests results"
+          commit_options: '--signoff'
+          repository: qa
+          commit_user_name: meshery_ci
+          commit_user_email: ci@meshery.io
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      
       - uses: actions/upload-artifact@v4
         id: playwright_trace
         
