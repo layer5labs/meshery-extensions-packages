@@ -225,11 +225,11 @@ jobs:
         if: ${{ !cancelled() }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "[Kanvas] Tests results"
+          commit_message: "[Kanvas] Sync Kanvas E2E Test Results - ${GITHUB_SHA}"
           commit_options: '--signoff'
           repository: qa
           file_pattern: kanvas-results
-          commit_user_name: meshery_ci
+          commit_user_name: meshery-ci
           commit_user_email: ci@meshery.io
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
