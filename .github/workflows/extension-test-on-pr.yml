@@ -3,10 +3,10 @@ on:
   workflow_dispatch:
     inputs:
       pr_commit_sha:
-        required: true
+        required: false
         type: string
       pr_number:
-        required: true
+        required: false
         type: string
 
 jobs:
