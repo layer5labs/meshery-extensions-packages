@@ -1,4 +1,5 @@
 name: Meshery Extension Test
+
 on:
   workflow_call:
     inputs:
@@ -27,21 +28,23 @@ on:
       LAYER5_CLOUD_TESTING_BOT_PASSWORD:
         required: true
 
+env:
+  IS_PR: ${{ inputs.pr_number != '' }}
+
 jobs:
   comment-starting-point:
     runs-on: ubuntu-24.04
-    if: ${{ github.event.inputs.pr_number != '' }}
+    if: ${{ env.IS_PR == 'true' }}
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
+          repository: layer5labs/meshery-extensions
           number: ${{ inputs.pr_number }}
           id: extension-test
           message: "Starting [Meshery Extensions tests](https://github.com/layer5labs/meshery-extensions-packages/actions/runs/${{ github.run_id }})..."
           recreate: true
-
 
   build-meshery-extension:
     uses: ./.github/workflows/build-extension-reusable.yml
@@ -50,52 +53,49 @@ jobs:
       checkout_ref: ${{ inputs.checkout_ref }}
       pr_number: ${{ inputs.pr_number }}
       comment_id: extension-test
-      
+
   tests-ui-e2e:
-    needs: [build-meshery-extension]
+    needs: build-meshery-extension
     name: UI end-to-end tests
     runs-on: ubuntu-24.04
     outputs:
       test-results: ${{ steps.run_tests.outputs.test-results }}
-    steps:
 
+    steps:
       - name: comment progress start
-        if: ${{ github.event.inputs.pr_number != '' }}
+        if: ${{ env.IS_PR == 'true' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
+          repository: layer5labs/meshery-extensions
           number: ${{ inputs.pr_number }}
           id: extension-test
           message: ":heavy_check_mark: Setting up test environment..."
           append: true
 
-
       - name: Setup node
         uses: actions/setup-node@v6
         with:
           node-version: "20.x"
+
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.13.0
         with:
-          cluster_name: "kind-cluster"
-          
+          cluster_name: kind-cluster
+
       - name: Update /etc/hosts
         run: echo "127.0.0.1 mesherylocal.layer5.io" | sudo tee -a /etc/hosts
 
       - name: Set Release extensions
         run: |
-          curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases >> extension_releases.json
-          export TAG=$(jq .[0].tag_name extension_releases.json)
-          echo tag=$TAG >> $GITHUB_ENV
-          echo $TAG
+          curl -s https://api.github.com/repos/layer5labs/meshery-extensions-packages/releases > extension_releases.json
+          TAG=$(jq -r '.[0].tag_name' extension_releases.json)
+          echo "tag=$TAG" >> $GITHUB_ENV
 
       - name: make directories
         run: |
-          echo ${{env.tag}}
-          echo ${{env}}
-          mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
-          
+          mkdir -p /home/runner/.meshery/provider/Meshery/${{ env.tag }}/provider/
+
       - name: Run backend (Docker)
         run: |
           docker run -d \
@@ -111,94 +111,79 @@ jobs:
         with:
           name: meshery-extension-ui
           path: provider
-          
+
       - name: Move provider files
         run: |
-          #mkdir -p /home/runner/.meshery/provider/Meshery/${{env.tag}}/provider/
           docker exec -u root meshery-backend \
-               mkdir -p /home/appuser/.meshery/provider/Layer5/${{ env.tag }}/provider
-          docker cp -a /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/  meshery-backend:/home/appuser/.meshery/provider/Layer5/${{env.tag}}/
-          # mv /home/runner/work/meshery-extensions-packages/meshery-extensions-packages/provider/ /home/runner/.meshery/provider/Meshery/${{env.tag}}/
+            mkdir -p /home/appuser/.meshery/provider/Layer5/${{ env.tag }}/provider
+          docker cp provider/. meshery-backend:/home/appuser/.meshery/provider/Layer5/${{ env.tag }}/provider
 
       - name: Checkout Meshery-extensions code
         uses: actions/checkout@v6
         with:
           repository: layer5labs/meshery-extensions
-          path: ./meshery-extensions
-          fetch-depth: 1
+          path: meshery-extensions
           ref: ${{ inputs.checkout_ref }}
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
-
-      - name: show tree
-        run: tree  -L 2
-
       - name: Install Playwright dependencies
         working-directory: meshery-extensions
-        run: ls && make test-setup
+        run: make test-setup
 
-      - name: comment progress start
+      - name: comment progress ready
+        if: ${{ env.IS_PR == 'true' }}
         uses: hasura/comment-progress@v2.3.0
-        if: ${{ github.event.inputs.pr_number != '' }}
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
+          repository: layer5labs/meshery-extensions
           number: ${{ inputs.pr_number }}
           id: extension-test
           message: ":heavy_check_mark: Test environment ready. Starting tests..."
           append: true
 
-      - name: Run  Tests
+      - name: Run Tests
         id: run_tests
         continue-on-error: true
         working-directory: meshery-extensions
-        run: |
-          ${{ inputs.test_command }}
+        run: ${{ inputs.test_command }}
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
-          MESHERY_SERVER_URL: "http://localhost:9081"
-          REMOTE_PROVIDER_URL: "https://cloud.layer5.io"
+          MESHERY_SERVER_URL: http://localhost:9081
+          REMOTE_PROVIDER_URL: https://cloud.layer5.io
           REMOTE_PROVIDER_USER_EMAIL: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_EMAIL }}
           REMOTE_PROVIDER_USER_PASSWORD: ${{ secrets.LAYER5_CLOUD_TESTING_BOT_PASSWORD }}
           ALLURE_LABEL_project: Kanvas
           ALLURE_LABEL_type: e2e
-          
-
-      - name: Ls
-        id: ls
-        working-directory: meshery-extensions
-        run: |
-             ls -ah
-             ls test-results
 
       - name: Prepare test report
         id: test_reports
         working-directory: meshery-extensions
         run: |
           REPORT="test-results/test-report.md"
-      
-          # ---- Job Summary (full report) ----
+
           if [ -f "$REPORT" ]; then
             cat "$REPORT" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "_No test report found_" >> "$GITHUB_STEP_SUMMARY"
           fi
-      
-          # ---- Step Output (first 100 lines only) ----
+
           echo "result<<EOF" >> "$GITHUB_OUTPUT"
           if [ -f "$REPORT" ]; then
             head -n 100 "$REPORT" >> "$GITHUB_OUTPUT"
-            echo "" >> "$GITHUB_OUTPUT"
-            echo "_(Truncated to first 100 lines. Full report in job summary.)_" >> "$GITHUB_OUTPUT"
+            echo "_(Truncated. Full report in job summary.)_" >> "$GITHUB_OUTPUT"
           else
             echo "_No test report found_" >> "$GITHUB_OUTPUT"
           fi
           echo "EOF" >> "$GITHUB_OUTPUT"
-          
+
       - name: comment the summary
+        if: ${{ always() && env.IS_PR == 'true' }}
         uses: hasura/comment-progress@v2.3.0
-        if: ${{ always() && github.event.inputs.pr_number != '' }}
         with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5labs/meshery-extensions
+          number: ${{ inputs.pr_number }}
+          id: extension-test
           message: |
             ### 🧪 Test Results (Preview)
 
@@ -206,77 +191,62 @@ jobs:
 
             🔗 **Full report:**  
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
-          number: ${{ inputs.pr_number }}
-          id: extension-test
           append: true
 
       - name: Checkout QA
-        if: ${{ !cancelled() &&  github.event_name == 'push' }}
+        if: ${{ !cancelled() && env.IS_PR == 'false' }}
         uses: actions/checkout@v6
         with:
           repository: meshery-extensions/qa
-          path: ./qa
+          path: qa
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Sync results with qa
-        if: ${{ !cancelled() &&  github.event_name == 'push' }}
+        if: ${{ !cancelled() && env.IS_PR == 'false' }}
         working-directory: qa
-        run: |
-          ls 
-          make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
+        run: make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
-      - name: Commit & push academy to qa
-        if: ${{ !cancelled() &&  github.event_name == 'push' }}
+      - name: Commit & push results to qa
+        if: ${{ !cancelled() && env.IS_PR == 'false' }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[Kanvas] Sync Kanvas E2E Test Results - ${GITHUB_SHA}"
-          commit_options: '--signoff'
+          commit_options: --signoff
           repository: qa
           file_pattern: kanvas-results
           commit_user_name: meshery-ci
           commit_user_email: ci@meshery.io
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-      
-      - uses: actions/upload-artifact@v4
-        id: playwright_trace
-        
+
+      - name: Upload test artifacts
         if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
         with:
-          name: playwright_trace
-          path: meshery-extensions/test-results/
+          name: playwright-artifacts
+          path: |
+            meshery-extensions/test-results
+            meshery-extensions/playwright-report
           retention-days: 30
-
-
-      - uses: actions/upload-artifact@v4
-        id: html_report
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-html-report
-          path: meshery-extensions/playwright-report
-          retention-days: 30
-
 
       - name: Comment Test failure
+        if: ${{ failure() && env.IS_PR == 'true' }}
         uses: hasura/comment-progress@v2.3.0
-        if: ${{ failure() && github.event.inputs.pr_number != '' }}
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
+          repository: layer5labs/meshery-extensions
           number: ${{ inputs.pr_number }}
           id: extension-test
           message: ":x: One or more tests have failed."
           append: true
 
       - name: Comment Final Status
-        if: ${{ always() && github.event.inputs.pr_number != '' }}
+        if: ${{ always() && env.IS_PR == 'true' }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: "layer5labs/meshery-extensions"
+          repository: layer5labs/meshery-extensions
           number: ${{ inputs.pr_number }}
           id: extension-test
-          message: ":heavy_check_mark: Download Extension [test results](${{ steps.test-results.outputs.artifact-url }})."
+          message: ":heavy_check_mark: Meshery Extension tests completed."
           append: true
