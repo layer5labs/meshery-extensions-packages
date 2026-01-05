@@ -28,13 +28,10 @@ on:
       LAYER5_CLOUD_TESTING_BOT_PASSWORD:
         required: true
 
-env:
-  IS_PR: ${{ inputs.pr_number != '' }}
-
 jobs:
   comment-starting-point:
     runs-on: ubuntu-24.04
-    if: ${{ env.IS_PR == 'true' }}
+    if: ${{ inputs.pr_number != ''  }}
     steps:
       - name: comment starting point
         uses: hasura/comment-progress@v2.3.0
@@ -63,7 +60,7 @@ jobs:
 
     steps:
       - name: comment progress start
-        if: ${{ env.IS_PR == 'true' }}
+        if: ${{ inputs.pr_number != ''  }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -131,7 +128,7 @@ jobs:
         run: make test-setup
 
       - name: comment progress ready
-        if: ${{ env.IS_PR == 'true' }}
+        if: ${{ inputs.pr_number != ''  }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -177,7 +174,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: comment the summary
-        if: ${{ always() && env.IS_PR == 'true' }}
+        if: ${{ always() && inputs.pr_number != ''  }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -194,7 +191,7 @@ jobs:
           append: true
 
       - name: Checkout QA
-        if: ${{ !cancelled() && env.IS_PR == 'false' }}
+        if: ${{ !cancelled() && inputs.pr_number == ''  }}
         uses: actions/checkout@v6
         with:
           repository: meshery-extensions/qa
@@ -202,12 +199,12 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Sync results with qa
-        if: ${{ !cancelled() && env.IS_PR == 'false' }}
+        if: ${{ !cancelled() && inputs.pr_number == ''  }}
         working-directory: qa
         run: make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
       - name: Commit & push results to qa
-        if: ${{ !cancelled() && env.IS_PR == 'false' }}
+        if: ${{ !cancelled() && inputs.pr_number == ''  }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[Kanvas] Sync Kanvas E2E Test Results - ${GITHUB_SHA}"
@@ -230,7 +227,7 @@ jobs:
           retention-days: 30
 
       - name: Comment Test failure
-        if: ${{ failure() && env.IS_PR == 'true' }}
+        if: ${{ failure() && inputs.pr_number != ''  }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -241,7 +238,7 @@ jobs:
           append: true
 
       - name: Comment Final Status
-        if: ${{ always() && env.IS_PR == 'true' }}
+        if: ${{ always() && inputs.pr_number != ''  }}
         uses: hasura/comment-progress@v2.3.0
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
