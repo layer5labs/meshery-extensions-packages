@@ -39,8 +39,6 @@ on:
         required: true
       OCI_BASTION_KEY:
         required: true
-      CODECOV_TOKEN:
-        required: true
         
 jobs:
   comment-starting-point:
@@ -118,24 +116,6 @@ jobs:
       # - name: Fail on Go test failure
       #   if: steps.go-test.outcome == 'failure'
       #   run: exit 1
-
-      
-      # - name: Upload results to Codecov
-      #   uses: codecov/codecov-action@v5
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     slug: layer5labs/meshery-extensions-packages
-      #     files: coverage.out
-      # - name: comment CodeCov upload success
-      #   if: steps.go-test.outcome == 'success'
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":bar_chart: CodeCov upload coverage successful."
-      # - name: comment CodeCov upload failure
-      #   if: steps.go-test.outcome == 'failure'
-      #   uses: ./.github/actions/cloud-comment
-      #   with:
-      #     message: ":x: CodeCov upload failure. Coverage report unavailable."
 
       
       - name: Setup QEMU
