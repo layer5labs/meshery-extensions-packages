@@ -1,0 +1,173 @@
+name: Layer5 Cloud Tests
+
+on:
+  workflow_call:
+    inputs:
+      checkout_ref:
+        description: "Git ref to checkout for testing"
+        required: true
+        type: string
+      pr_number:
+        description: "PR number for comment updates (empty for push events)"
+        default: ""
+        required: false
+        type: string
+      run_integration_tests:
+        description: "Whether to run integration tests"
+        default: false
+        required: false
+        type: boolean
+    secrets:
+      GH_ACCESS_TOKEN:
+        required: true
+
+
+jobs:
+  comment-starting-point:
+    runs-on: ubuntu-24.04
+    if: ${{ inputs.pr_number != '' }}
+    steps:
+      - name: Comment starting point
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: "Starting [Layer5 Cloud Server tests](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})..."
+          recreate: true
+
+  tests:
+    name: Server Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Comment progress - setup
+        if: ${{ inputs.pr_number != '' }}
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: ":heavy_check_mark: Setting up test environment..."
+          append: true
+
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          repository: layer5io/meshery-cloud
+          ref: ${{ inputs.checkout_ref }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+          check-latest: true
+          cache: true
+
+      - name: Download dependencies
+        run: |
+          go mod download
+          go mod verify
+
+      - name: Comment progress - running unit tests
+        if: ${{ inputs.pr_number != '' }}
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: ":heavy_check_mark: Environment ready. Running unit tests..."
+          append: true
+
+      - name: Run unit tests
+        run: make server-unit-tests
+
+      - name: Comment progress - running integration tests
+        if: ${{ inputs.pr_number != '' && inputs.run_integration_tests == true }}
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: ":heavy_check_mark: Unit tests passed. Running integration tests..."
+          append: true
+
+      - name: Run integration tests
+        if: ${{ inputs.run_integration_tests == true }}
+        run: make ENVIRONMENT=staging integration-tests
+
+      - name: Comment test failure
+        if: ${{ failure() && inputs.pr_number != '' }}
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: ":x: Tests failed."
+          append: true
+
+
+      - name: Checkout QA
+        uses: actions/checkout@v4
+        with:
+          repository: meshery-extensions/qa
+          path: qa
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+      - name: Sync results with QA
+        working-directory: qa
+        run: make remote-provider-results-sync REMOTE_PROVIDER_RESULTS_PATH=../allure-results/
+
+      - name: Commit & push results to QA
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[Layer5 Cloud] Sync Server Test Results - ${{ github.sha }}"
+          commit_options: --signoff
+          repository: qa
+          file_pattern: "remote-provider-results/**"
+          commit_user_name: meshery-ci
+          commit_user_email: ci@meshery.io
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+
+  test-status:
+    name: Test Status
+    runs-on: ubuntu-24.04
+    needs: tests
+    if: always()
+    steps:
+      - name: Comment final status - success
+        if: ${{ inputs.pr_number != '' && needs.tests.result == 'success' }}
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: ":heavy_check_mark: All Layer5 Cloud Server tests completed successfully."
+          append: true
+
+      - name: Comment final status - failure
+        if: ${{ inputs.pr_number != '' && needs.tests.result == 'failure' }}
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          repository: layer5io/meshery-cloud
+          number: ${{ inputs.pr_number }}
+          id: cloud-server-test
+          message: ":x: Layer5 Cloud Server tests completed with failures."
+          append: true
+
+      - name: Check test results
+        run: |
+          if [ "${{ needs.tests.result }}" == "failure" ]; then
+            echo "Tests failed"
+            exit 1
+          fi
+          echo "All tests passed"
