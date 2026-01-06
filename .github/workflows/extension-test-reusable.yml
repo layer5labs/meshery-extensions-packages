@@ -201,7 +201,10 @@ jobs:
       - name: Sync results with qa
         if: ${{ !cancelled() && inputs.pr_number == ''  }}
         working-directory: qa
-        run: make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
+        run: |
+          ls .. 
+          ls ../meshery-extensions
+          make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
       - name: Commit & push results to qa
         if: ${{ !cancelled() && inputs.pr_number == ''  }}
