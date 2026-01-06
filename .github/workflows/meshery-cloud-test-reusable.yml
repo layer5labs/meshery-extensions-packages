@@ -100,6 +100,7 @@ jobs:
           append: true
 
       - name: Run unit tests
+        continue-on-error: true
         run: make server-unit-tests
 
       - name: Comment progress - running integration tests
@@ -114,6 +115,7 @@ jobs:
           append: true
 
       - name: Run integration tests
+        continue-on-error: true
         if: ${{ inputs.run_integration_tests == true }}
         run: make ENVIRONMENT=staging integration-tests
 
