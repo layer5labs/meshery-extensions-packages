@@ -21,6 +21,22 @@ on:
       GH_ACCESS_TOKEN:
         required: true
 
+  workflow_dispatch:
+    inputs:
+      checkout_ref:
+        description: "Git ref to checkout for testing"
+        required: true
+        type: string
+      pr_number:
+        description: "PR number for comment updates (leave empty for master/qa runs)"
+        required: false
+        default: ""
+      run_integration_tests:
+        description: "Whether to run integration tests"
+        required: false
+        default: false
+        type: boolean
+
 
 jobs:
   comment-starting-point:
