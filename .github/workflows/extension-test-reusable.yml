@@ -1,6 +1,22 @@
 name: Meshery Extension Test
 
 on:
+
+  workflow_dispatch:
+    inputs:
+      checkout_ref:
+        default: "refs/heads/master"
+        required: true
+        type: string
+      pr_number:
+        default: ""
+        required: false
+        type: string
+      test_command:
+        default: "make test"
+        required: false
+        type: string
+        
   workflow_call:
     inputs:
       checkout_ref:
