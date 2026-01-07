@@ -140,13 +140,13 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Sync results with QA
-        if: ${{ inputs.pr_number != '' }}
+        if: ${{ inputs.pr_number == '' }}
         working-directory: qa
         run: make remote-provider-results-sync REMOTE_PROVIDER_RESULTS_PATH=../allure-results/
 
       - name: Commit & push results to QA
         uses: stefanzweifel/git-auto-commit-action@v5
-        if: ${{ inputs.pr_number != '' }}
+        if: ${{ inputs.pr_number == '' }}
         with:
           commit_message: "[Layer5 Cloud] Sync Server Test Results - ${{ github.sha }}"
           commit_options: --signoff
