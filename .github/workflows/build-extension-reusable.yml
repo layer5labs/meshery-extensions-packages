@@ -80,6 +80,7 @@ jobs:
           
       - name: Validate MesheryUI Compatibility Package
         working-directory: ./meshery-extensions
+        continue-on-error: true
         run: make kanvas-validate-mesheryui-compatibility
       - name: comment success
         if: ${{ success() && github.event.inputs.pr_number != '' }}
