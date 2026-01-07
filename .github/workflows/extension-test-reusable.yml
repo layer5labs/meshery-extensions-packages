@@ -221,6 +221,7 @@ jobs:
         working-directory: qa
         run: |
           ls .. 
+          echo "ls meshery-extensions"
           ls ../meshery-extensions
           make results-kanvas-sync KANVAS_RESULTS_PATH=../meshery-extensions/allure-results
 
