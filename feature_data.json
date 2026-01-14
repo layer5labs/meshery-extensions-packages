@@ -195,6 +195,51 @@
     }
   },
   {
+    "documentation": "https://docs.layer5.io/cloud/catalog/exploring-the-catalog/",
+    "entire_row": {
+      "Category": "Designs",
+      "Documented?": "https://docs.layer5.io/cloud/catalog/exploring-the-catalog/",
+      "Enterprise Comparison Tier": "x",
+      "Feature": "View private designs of the org",
+      "Free Comparison Tier": "",
+      "Function": "View Private Designs",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": "",
+      "Theme (also: Keychain Name)": "Catalog Management"
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/catalog/exploring-the-catalog/",
+    "entire_row": {
+      "Category": "Designs",
+      "Documented?": "https://docs.layer5.io/cloud/catalog/exploring-the-catalog/",
+      "Enterprise Comparison Tier": "x",
+      "Feature": "View public designs of the org",
+      "Free Comparison Tier": "",
+      "Function": "View Public Designs",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": "",
+      "Theme (also: Keychain Name)": "Catalog Management"
+    }
+  },
+  {
+    "documentation": "https://docs.layer5.io/cloud/catalog/exploring-the-catalog/",
+    "entire_row": {
+      "Category": "Designs",
+      "Documented?": "https://docs.layer5.io/cloud/catalog/exploring-the-catalog/",
+      "Enterprise Comparison Tier": "x",
+      "Feature": "View published designs of the org",
+      "Free Comparison Tier": "",
+      "Function": "View Published Designs",
+      "Pricing page?": "",
+      "Subscription Tier": "Free",
+      "Tech": "",
+      "Theme (also: Keychain Name)": "Catalog Management"
+    }
+  },
+  {
     "documentation": "https://docs.meshery.io/guides/configuration-management/creating-a-meshery-design",
     "entire_row": {
       "Category": "Designs",
