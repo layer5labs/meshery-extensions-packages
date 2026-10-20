@@ -204,7 +204,19 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         run: |
-          curl -sL -H "Authorization: token $ACCESS_TOKEN" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/layer5labs/meshery-extensions/releases | jq -r 'map(select(.draft)) | first | .body' > releases.md
+          curl -sL -H "Authorization: token $ACCESS_TOKEN" -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/layer5labs/meshery-extensions/releases?per_page=100" > l5_releases.json
+          jq -r 'map(select(.draft)) | first | .body' l5_releases.json > releases.md
+          DRAFT_ID=$(jq -r 'map(select(.draft)) | first | .id // empty' l5_releases.json)
+          DRAFT_UPDATED=$(jq -r 'map(select(.draft)) | first | .updated_at // empty' l5_releases.json)
+          LAST_PUB=$(jq -r 'map(select(.draft|not)) | first | .published_at // empty' l5_releases.json)
+          # Guard: a draft not refreshed since the last release is a stale leftover, not the live draft.
+          if [ -n "$DRAFT_ID" ] && [[ "$DRAFT_UPDATED" > "$LAST_PUB" ]]; then
+            echo "DRAFT_ID=$DRAFT_ID" >> "$GITHUB_ENV"
+            echo "Using Release Drafter draft $DRAFT_ID (updated $DRAFT_UPDATED)"
+          else
+            echo "::warning::No current Release Drafter draft (id='$DRAFT_ID', updated '$DRAFT_UPDATED', last release '$LAST_PUB'); not promoting a draft."
+          fi
       - name: Release Draft Notes
         uses: actions/github-script@v8
         id: release-draft
@@ -229,6 +241,31 @@ jobs:
           replacesArtifacts: true
           body: |
             ${{ steps.release-draft.outputs.result }}
+      - name: Publish Release Drafter draft on layer5labs/meshery-extensions
+        if: ${{ env.DRAFT_ID != '' }}
+        continue-on-error: true   # worst case falls back to today's behavior (next step creates the release)
+        env:
+          GH_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          REPO: layer5labs/meshery-extensions
+          TAG: ${{ env.LATEST_EXTENSION_VERSION }}
+        run: |
+          set -euo pipefail
+          if existing=$(gh api "repos/$REPO/releases/tags/$TAG" --jq '.id' 2>/dev/null); then
+            echo "Release $TAG already published on $REPO (id $existing); not touching draft $DRAFT_ID."
+            exit 0
+          fi
+          if [ "$(gh api "repos/$REPO/releases/$DRAFT_ID" --jq '.draft')" != "true" ]; then
+            echo "::warning::Release $DRAFT_ID is no longer a draft; skipping."
+            exit 0
+          fi
+          gh api -X PATCH "repos/$REPO/releases/$DRAFT_ID" \
+            -f tag_name="$TAG" \
+            -f target_commitish=master \
+            -f name="Meshery Extensions $TAG" \
+            -F body=@releases.md \
+            -F draft=false \
+            -f make_latest=legacy \
+            --jq '"Published \(.tag_name) from draft \(.id): \(.html_url)"'
       - name: publish stable release on meshery-extensions from tag
         uses: ncipollo/release-action@v1
         with:
