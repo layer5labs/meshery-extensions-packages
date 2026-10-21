@@ -189,26 +189,39 @@ jobs:
             exit 1
           fi
 
-          echo "== plugin.Open inside the image, with the server's toolchain"
-          cat > smoke/main.go <<'GO'
+          echo "== plugin.Open by a loader compiled exactly like the server"
+          # The loader links the server's handlers package and is compiled in the
+          # server's build image, at the server's source path and with its build tags,
+          # so plugin.Open compares the same package hashes the real server would.
+          SERVER_SRC=$(sed -n '/AS meshery-server/,/^FROM /s/^WORKDIR //p' meshery/install/docker/Dockerfile)
+          SERVER_TAGS=$(sed -n '/AS meshery-server/,/^FROM /s/.* -tags \([^ ]*\) .*/\1/p' meshery/install/docker/Dockerfile | head -1)
+          test -n "$SERVER_SRC"
+          mkdir -p meshery/server/cmd/plugincheck
+          cat > meshery/server/cmd/plugincheck/main.go <<'GO'
           package main
 
           import (
           	"fmt"
           	"os"
           	"plugin"
+
+          	_ "github.com/meshery/meshery/server/handlers"
           )
 
           func main() {
-          	if _, err := plugin.Open(os.Args[1]); err != nil {
-          		fmt.Println("plugin.Open failed:", err)
+          	p, err := plugin.Open(os.Args[1])
+          	if err == nil {
+          		_, err = p.Lookup("Run")
+          	}
+          	if err != nil {
+          		fmt.Println("plugin load failed:", err)
           		os.Exit(1)
           	}
           	fmt.Println("plugin.Open ok")
           }
           GO
-          docker run --rm -v "$PWD/smoke:/smoke" -w /smoke -e GOFLAGS=-mod=mod "$GO_IMAGE" \
-            sh -c 'go mod init plugincheck >/dev/null 2>&1; go build -o plugincheck .'
+          docker run --rm -v "$PWD/meshery:$SERVER_SRC" -v "$PWD/smoke:/smoke" -w "$SERVER_SRC/server/cmd/plugincheck" "$GO_IMAGE" \
+            go build ${SERVER_TAGS:+-tags $SERVER_TAGS} -o /smoke/plugincheck .
           docker run --rm -v "$PWD/smoke:/smoke" --entrypoint /smoke/plugincheck "$IMAGE" "$PLUGIN"
 
           echo "== Server stays up across an anonymous page load and an extension load"
