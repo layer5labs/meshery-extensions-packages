@@ -200,11 +200,15 @@ jobs:
             echo "$message"
             exit 1
           }
+      # The GraphQL plugin is compiled inside the Meshery server's build image, at the
+      # server's GOROOT, module cache and source paths. plugin.Open compares package
+      # hashes that include those paths, so a plugin compiled on the runner can never
+      # be loaded by the server in the Kanvas image.
       - name: Build extension
         working-directory: ./meshery-extensions
         run: |
           export PROVIDER_PATH="provider/navigator";
-          make prod;
+          make graphql-in-server-image kanvas-prod;
       - name: Generate Artifact
         working-directory: ${{ env.EXTENSION_BUILD_ROOT }}/${{ env.EXTENSION_VERSION }}
         run: |
