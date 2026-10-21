@@ -221,7 +221,7 @@ jobs:
           }
           GO
           docker run --rm -v "$PWD/meshery:$SERVER_SRC" -v "$PWD/smoke:/smoke" -w "$SERVER_SRC/server/cmd/plugincheck" "$GO_IMAGE" \
-            go build ${SERVER_TAGS:+-tags $SERVER_TAGS} -o /smoke/plugincheck .
+            go build -buildvcs=false ${SERVER_TAGS:+-tags $SERVER_TAGS} -o /smoke/plugincheck .
           docker run --rm -v "$PWD/smoke:/smoke" --entrypoint /smoke/plugincheck "$IMAGE" "$PLUGIN"
 
           echo "== Server stays up across an anonymous page load and an extension load"
