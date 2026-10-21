@@ -24,6 +24,7 @@ jobs:
       EXTENSION_BUILD_ROOT: /home/runner/.meshery/provider/Layer5
     outputs:
       revision: ${{ steps.fetch-versions.outputs.REVISION }}
+      meshery_version: ${{ steps.server-go.outputs.meshery_version }}
     steps:
       - name: Checkout meshery-extensions
         uses: actions/checkout@v7
@@ -81,10 +82,28 @@ jobs:
           repository: meshery/meshery
           ref: ${{ env.MESHERY_VERSION }}
           
-      - name: Setup Go 1.26.4
+      # The GraphQL plugin is loaded into the Meshery server with plugin.Open, which
+      # requires both to be built with exactly the same Go toolchain. A plugin built
+      # with a different one aborts the server with "fatal error: runtime: no plugin
+      # module data" on the first extension load. The version comes from the server's
+      # own Dockerfile (read by the meshery-extensions Makefile), never restated here.
+      - name: Resolve the Meshery server's Go version
+        id: server-go
+        working-directory: ./meshery-extensions
+        run: |
+          GO_VERSION="$(make -s meshery-server-go-version)"
+          if [ -z "$GO_VERSION" ]; then
+            echo "::error::Could not read the Meshery server's Go version from meshery/install/docker/Dockerfile"
+            exit 1
+          fi
+          echo "Meshery server Go version: $GO_VERSION"
+          echo "version=$GO_VERSION" >> "$GITHUB_OUTPUT"
+          echo "meshery_version=$MESHERY_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Go ${{ steps.server-go.outputs.version }}
         uses: actions/setup-go@v6
         with:
-          go-version: "1.27"
+          go-version: ${{ steps.server-go.outputs.version }}
           cache: false
       
       - name: Verify go.mod compatibility
@@ -318,7 +337,11 @@ jobs:
   rollout-kanvas:
     needs: release-kanvas
     name: Build and Rollout Extensions
-    # Rebuilding and packaging the extensions in the Meshery Kanvas build, and rolling them out, will have no effect if the extensions are released independently. This is because the Meshery version will remain the same and will not be redeployed. We will need to access "kanvas.new" to ensure the package gets downloaded. Therefore, we should skip the rollout unless this process or flow changes.
-    if: ${{ fromJSON(needs.release-kanvas.outputs.revision) < 2 }}
+    # The extension package is bundled into the Kanvas image (kanvas.new runs with
+    # SKIP_DOWNLOAD_EXTENSIONS=true), so every extension release, including a new
+    # revision on the same Meshery version, needs a new image to reach kanvas.new.
+    # The server is built from the same Meshery version the plugin was built against.
     secrets: inherit
     uses: ./.github/workflows/build-and-deploy-meshery-extensions-playground-reusable.yml
+    with:
+      branch: ${{ needs.release-kanvas.outputs.meshery_version }}
