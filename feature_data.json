@@ -906,10 +906,10 @@
   },
   {
     "pricing_page": "true",
-    "documentation": "https://docs.layer5.io/kanvas/designer/comments/",
+    "documentation": "https://docs.layer5.io/videos/getting-started/comments/design-reviews-full/",
     "entire_row": {
       "Category": "Design Reviews",
-      "Documented?": "https://docs.layer5.io/kanvas/designer/comments/",
+      "Documented?": "https://docs.layer5.io/videos/getting-started/comments/design-reviews-full/",
       "Enterprise Comparison Tier": "",
       "Feature": "Discuss any design by leaving review comments or notes on a specific design. Control who has access, notify discussion participants with updates, and link from anywhere.",
       "Free Comparison Tier": "",
@@ -1334,7 +1334,7 @@
       "Enterprise Comparison Tier": "",
       "Feature": "Create, update , delete and manage recogntions awarded by your organization",
       "Free Comparison Tier": "",
-      "Function": "Manage Recogntions",
+      "Function": "Manage Recognitions",
       "Pricing page?": "",
       "Subscription Tier": "",
       "Tech": "Cloud",
